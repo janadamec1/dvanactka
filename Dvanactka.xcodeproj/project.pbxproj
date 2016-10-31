@@ -12,6 +12,10 @@
 		4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9019381DC65E16001488D3 /* Main.storyboard */; };
 		4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D90193B1DC65E16001488D3 /* Assets.xcassets */; };
 		4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */; };
+		4D9019491DC669B7001488D3 /* RadniceAktualCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */; };
+		4D90194D1DC67FB6001488D3 /* test_files in Resources */ = {isa = PBXBuildFile; fileRef = 4D90194C1DC67FB6001488D3 /* test_files */; };
+		4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90194E1DC69A0D001488D3 /* EventRecord.swift */; };
+		C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,12 @@
 		4D90193B1DC65E16001488D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D90193E1DC65E17001488D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D9019401DC65E17001488D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadniceAktualCtl.swift; sourceTree = "<group>"; };
+		4D90194C1DC67FB6001488D3 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test_files; sourceTree = "<group>"; };
+		4D90194E1DC69A0D001488D3 /* EventRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRecord.swift; sourceTree = "<group>"; };
+		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
+		BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
+		F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dvanactka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +51,8 @@
 			children = (
 				4D9019331DC65E16001488D3 /* Dvanactka */,
 				4D9019321DC65E16001488D3 /* Products */,
+				DBA60CC5189BA63706E19895 /* Pods */,
+				E3CDB31E01A8E10F30D48DD5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +67,34 @@
 		4D9019331DC65E16001488D3 /* Dvanactka */ = {
 			isa = PBXGroup;
 			children = (
+				4D90194C1DC67FB6001488D3 /* test_files */,
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
 				4D9019361DC65E16001488D3 /* ViewController.swift */,
 				4D9019381DC65E16001488D3 /* Main.storyboard */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
 				4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */,
 				4D9019401DC65E17001488D3 /* Info.plist */,
+				4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */,
+				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 			);
 			path = Dvanactka;
+			sourceTree = "<group>";
+		};
+		DBA60CC5189BA63706E19895 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */,
+				BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E3CDB31E01A8E10F30D48DD5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +104,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D9019431DC65E17001488D3 /* Build configuration list for PBXNativeTarget "Dvanactka" */;
 			buildPhases = (
+				CC5617BF9F63B6AE2DC6946A /* [CP] Check Pods Manifest.lock */,
 				4D90192D1DC65E16001488D3 /* Sources */,
 				4D90192E1DC65E16001488D3 /* Frameworks */,
 				4D90192F1DC65E16001488D3 /* Resources */,
+				8A0E9D480E9C4CA6CBC1B337 /* [CP] Embed Pods Frameworks */,
+				9BCE1CD9B7C8A26B85021933 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,6 +132,7 @@
 				TargetAttributes = {
 					4D9019301DC65E16001488D3 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = E3AKAD9KNP;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -123,6 +160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */,
 				4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */,
 				4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */,
@@ -131,11 +169,61 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8A0E9D480E9C4CA6CBC1B337 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9BCE1CD9B7C8A26B85021933 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC5617BF9F63B6AE2DC6946A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4D90192D1DC65E16001488D3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9019491DC669B7001488D3 /* RadniceAktualCtl.swift in Sources */,
+				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
 				4D9019371DC65E16001488D3 /* ViewController.swift in Sources */,
 				4D9019351DC65E16001488D3 /* AppDelegate.swift in Sources */,
 			);
@@ -181,6 +269,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -203,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -230,6 +319,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -246,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -256,8 +346,11 @@
 		};
 		4D9019441DC65E17001488D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E3AKAD9KNP;
 				INFOPLIST_FILE = Dvanactka/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
@@ -268,8 +361,11 @@
 		};
 		4D9019451DC65E17001488D3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E3AKAD9KNP;
 				INFOPLIST_FILE = Dvanactka/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
@@ -297,6 +393,7 @@
 				4D9019451DC65E17001488D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
