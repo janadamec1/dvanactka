@@ -21,5 +21,15 @@ class ViewController: UIViewController {
     }
 
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "radNews" {
+            let destVC = segue.destination as! RadniceAktualCtl
+            destVC.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsRadNews];
+        }
+        else if segue.identifier == "radAlerts" {
+            let destVC = segue.destination as! RadniceAktualCtl
+            destVC.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsRadAlerts];
+        }
+    }
 }
 

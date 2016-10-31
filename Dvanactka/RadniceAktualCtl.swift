@@ -7,66 +7,29 @@
 //
 
 import UIKit
-import Kanna
-
-// XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
 
 class RadniceAktualCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
-    //@IBOutlet weak var m_lbDate: UILabel!
+    @IBOutlet weak var m_lbDate: UILabel!
     //@IBOutlet weak var m_lbCategory: UILabel!
     
 }
 
 class RadniceAktualCtl: UITableViewController {
-    var m_items: [CRxEventRecord] = [CRxEventRecord]()
+    var m_aDataSource: CRxDataSource?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 50.0;
+        self.tableView.estimatedRowHeight = 90.0;
         
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        //let url = URL(string: "https://www.praha12.cz/")
-        //if let doc = HTML(url: url!, encoding: .utf8) {
-        
-        if let path = Bundle.main.path(forResource: "/test_files/praha12titulka", ofType: "html") {
-            let html = try! String(contentsOfFile: path, encoding: .utf8)
-            if let doc = HTML(html: html, encoding: .utf8) {
-                for node in doc.xpath("//div[@class='titulDoc aktClanky']//li"){
-                    if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
 
-                        if let sLink = a_title["href"] {
-                            aNewRecord.m_sLink = sLink;
-                        }
-                        
-                        if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
-                            let df = DateFormatter();
-                            df.dateFormat = "(dd.MM.yyyy)";
-                            if let date = df.date(from: sDate) {
-                                aNewRecord.m_aDate = date;// as NSDate?
-                            }
-                        }
-                        
-                        if let aTextNode = node.xpath("div[1]").first {
-                            aNewRecord.m_sText = aTextNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
-                            aNewRecord.m_sCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        //dump(aNewRecord)
-                        m_items.append(aNewRecord);
-                    }
-                }
-                
-            }
-        }
     }
 
     // MARK: - Table view data source
@@ -75,33 +38,46 @@ class RadniceAktualCtl: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return m_items.count;
-    }
-
-    //override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-   //     return UITableViewAutomaticDimension;
-    //}
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "radniceAktualCell", for: indexPath) as! RadniceAktualCell
-
-        let rec: CRxEventRecord = m_items[indexPath.row];
-        cell.m_lbTitle.text = rec.m_sTitle;
-        cell.m_lbText.text = rec.m_sText ?? "";
-        var sDateText = "";
-        if let aDate = rec.m_aDate {
-            let df = DateFormatter();
-            df.dateStyle = .short;
-            df.timeStyle = .none;
-            sDateText = df.string(from: aDate);
+        if let ds = m_aDataSource {
+            return ds.m_arrItems.count;
         }
-        //cell.m_lbDate.text = sDateText
-        //cell.m_lbCategory.text = rec.m_sCategory ?? ""
-        cell.setNeedsUpdateConstraints()
-        cell.updateConstraintsIfNeeded()
-        return cell;
+        else {
+            return 0;
+        }
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if let ds = m_aDataSource {
+
+            let cell = tableView.dequeueReusableCell(withIdentifier: "radniceAktualCell", for: indexPath) as! RadniceAktualCell
+
+            let rec: CRxEventRecord = ds.m_arrItems[indexPath.row];
+            cell.m_lbTitle.text = rec.m_sTitle;
+            cell.m_lbText.text = rec.m_sText ?? "";
+            var sDateText = "";
+            if let aDate = rec.m_aDate {
+                let df = DateFormatter();
+                df.dateStyle = .full;
+                df.timeStyle = .none;
+                sDateText = df.string(from: aDate);
+            }
+            cell.m_lbDate.text = sDateText
+            //cell.m_lbCategory.text = rec.m_sCategory ?? ""
+
+            cell.setNeedsUpdateConstraints();
+            cell.updateConstraintsIfNeeded();
+            return cell;
+        }
+        return UITableViewCell()
+    }
+
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        if let ds = m_aDataSource {
+            let rec = ds.m_arrItems[indexPath.row];
+            rec.openLink();
+        }
+    }
     /*
     // MARK: - Navigation
 
