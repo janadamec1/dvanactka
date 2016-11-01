@@ -69,7 +69,7 @@ class RadniceAktualCtl: UITableViewController {
             cell.m_lbDate.text = sDateText
             //cell.m_lbCategory.text = rec.m_sCategory ?? ""
             
-            if rec.m_sLink != nil {
+            if rec.m_sInfoLink != nil {
                 cell.accessoryType = UITableViewCellAccessoryType.detailButton;
             }
             else {
@@ -86,7 +86,7 @@ class RadniceAktualCtl: UITableViewController {
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         if let ds = m_aDataSource {
             let rec = ds.m_arrItems[indexPath.row];
-            rec.openLink();
+            rec.openInfoLink();
         }
     }
     /*
