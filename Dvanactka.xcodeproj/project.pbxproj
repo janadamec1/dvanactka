@@ -15,6 +15,7 @@
 		4D9019491DC669B7001488D3 /* RadniceAktualCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */; };
 		4D90194D1DC67FB6001488D3 /* test_files in Resources */ = {isa = PBXBuildFile; fileRef = 4D90194C1DC67FB6001488D3 /* test_files */; };
 		4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90194E1DC69A0D001488D3 /* EventRecord.swift */; };
+		4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DA2C9021DC8EE8400E28A0E /* Localizable.strings */; };
 		C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,10 @@
 		4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadniceAktualCtl.swift; sourceTree = "<group>"; };
 		4D90194C1DC67FB6001488D3 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test_files; sourceTree = "<group>"; };
 		4D90194E1DC69A0D001488D3 /* EventRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRecord.swift; sourceTree = "<group>"; };
+		4DA2C8FE1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main.strings; sourceTree = "<group>"; };
+		4DA2C8FF1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4DA2C9031DC8EE8E00E28A0E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
 		BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
 		F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dvanactka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +72,7 @@
 		4D9019331DC65E16001488D3 /* Dvanactka */ = {
 			isa = PBXGroup;
 			children = (
+				4DA2C9021DC8EE8400E28A0E /* Localizable.strings */,
 				4D90194C1DC67FB6001488D3 /* test_files */,
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
 				4D9019361DC65E16001488D3 /* ViewController.swift */,
@@ -160,6 +166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */,
 				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */,
 				4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */,
@@ -236,6 +243,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D9019391DC65E16001488D3 /* Base */,
+				4DA2C8FE1DC8EE6600E28A0E /* cs */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -244,9 +252,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D90193E1DC65E17001488D3 /* Base */,
+				4DA2C8FF1DC8EE6600E28A0E /* cs */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
+		};
+		4DA2C9021DC8EE8400E28A0E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4DA2C9011DC8EE8400E28A0E /* cs */,
+				4DA2C9031DC8EE8E00E28A0E /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXVariantGroup section */
 
@@ -255,6 +273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -305,6 +324,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

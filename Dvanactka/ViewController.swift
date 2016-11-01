@@ -30,6 +30,10 @@ class ViewController: UIViewController {
             let destVC = segue.destination as! RadniceAktualCtl
             destVC.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsRadAlerts];
         }
+        else if segue.identifier == "biografProgram" {
+            let destVC = segue.destination as! RadniceAktualCtl
+            destVC.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsBiografProgram];
+        }
     }
 }
 

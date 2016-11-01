@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dsm = CRxDataSourceManager.sharedInstance
         dsm.defineDatasources()
         dsm.refreshRadniceDataSources()
+        dsm.refreshBiografDataSource()
         return true
     }
 

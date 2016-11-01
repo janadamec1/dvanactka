@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "datum"; ObjectID = "471-9b-l7C"; */
+"471-9b-l7C.text" = "datum";
+
+/* Class = "UIButton"; normalTitle = "Biograf"; ObjectID = "4lm-TQ-COZ"; */
+"4lm-TQ-COZ.normalTitle" = "Biograf";
+
+/* Class = "UIButton"; normalTitle = "Radnice upozorneni"; ObjectID = "580-Oh-Zoy"; */
+"580-Oh-Zoy.normalTitle" = "Radnice upozorneni";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "QYB-Pe-tCP"; */
+"QYB-Pe-tCP.text" = "Title";
+
+/* Class = "UILabel"; text = "Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. "; ObjectID = "ckf-Nn-Lxg"; */
+"ckf-Nn-Lxg.text" = "Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. ";
+
+/* Class = "UIButton"; normalTitle = "Radnice aktuality"; ObjectID = "h7f-F6-qnr"; */
+"h7f-F6-qnr.normalTitle" = "Radnice aktuality";

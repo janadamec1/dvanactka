@@ -1,0 +1,654 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		013F22E3C98D2C108CC01643F4A41978 /* xmlmemory.h in Headers */ = {isa = PBXBuildFile; fileRef = FCB6DF824A641A9ED92DF53DE4891994 /* xmlmemory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		086932FA01CDBDD1FDBF243A749CDA0A /* HTMLtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5A14CDD23985C4FD0CD6F2EDA38921 /* HTMLtree.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09C37343D3153E7B2C4699C8301134F7 /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B410BFE2E4A1E42FB7AF131C35DCF6C9 /* libxmlHTMLDocument.swift */; };
+		104732EC5FD1133E088771CEF1211E55 /* Kanna-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 307C437335D5CB687DBF51D2812CAA3E /* Kanna-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1392BB420D1E8BC030CAD3217F1E0749 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA04CCA163DB022E3168D67A635C44 /* libxmlParserOption.swift */; };
+		296C210CD3E6128A361C9BCD66474D13 /* HTMLparser.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BBAB6EA23744CD8FCDDBA06564DFAE /* HTMLparser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		35F530FDEBE7211D0236B2E9A13C126D /* parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E3136843B0023C34BA8D59E6A9CD3A4 /* parser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40B7F8585F832A460392D5A835F7B8BF /* xmlversion.h in Headers */ = {isa = PBXBuildFile; fileRef = E63ACB6325E2DC062844AF0CAF30C09D /* xmlversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40DA3E50C8B8BAEE6B5715E9CD9407A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		474044BBBC3EA47E2EC12A5824CDC20B /* xmlexports.h in Headers */ = {isa = PBXBuildFile; fileRef = C9714D6517C226A123BB0AACD77CA589 /* xmlexports.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5479E29422E34BF5E8EDA58D5F8CA7CE /* xpath.h in Headers */ = {isa = PBXBuildFile; fileRef = 4569D86D4D7745D4CEDAEB52DBA35AB8 /* xpath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A65C297E61D058EC830F154C6A3D05E /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 41257F6FD7E11EA2C399B926D3D6EA31 /* hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		65DDAA453A98EC13B658F0E42C02DC0E /* xmlregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = FCE5E741AA0ED17176672AEC40FCC55B /* xmlregexp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		665DB7B302E0F193BC6FAD392905FD17 /* Pods-Dvanactka-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 687B5C39230E998D6A2E01E77E0E0986 /* Pods-Dvanactka-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		68026603570524846BAFC8E7EC6D31C6 /* xmlIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BA7163FFF01083862DFC1AAD1B54DC6 /* xmlIO.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		70544F9220EB25AC8A712B8E71A056B6 /* Pods-Dvanactka-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CA09B303D7995C6D9D37D6022501D32A /* Pods-Dvanactka-dummy.m */; };
+		73B987ABDD17C57203BCAB95F17E46D4 /* xlink.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF0465C707C1A83B96A05412A63BC41 /* xlink.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		76EE4D36263DA77593B131480A5859C0 /* xmlerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 824DDDB803D68A4BCF13ABA7DEF26F35 /* xmlerror.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		840FD6C3DEAF67B7713F7D770797A359 /* threads.h in Headers */ = {isa = PBXBuildFile; fileRef = A574E6C0C690A505032931300ADF0473 /* threads.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86335F73073BAAF55EA80F0B276F27AF /* xmlstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BD3048D7350BF15FA626909F5524114 /* xmlstring.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8AD55EBBAF2093D57C96EFF7EF21065E /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 4485603EA16D9214011B6FD4C68AAB32 /* dict.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		92D70A4D0C0C0ACE54846544DB80C6F1 /* SAX2.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D7702ECBB8452CF6EDDC0C264DBF47 /* SAX2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9DF7F145C75BC4A50041D40A2488D0AC /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973A14FF39F453263B016432BD8AF064 /* Kanna.swift */; };
+		AF71F9CB74597C5540B4AABD46A2D4CF /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274D1D51BA1761D1909BDC5AC12C975 /* CSS.swift */; };
+		B527B80A2EB1C9931199813BDB5B8751 /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254CF823B8F92C5EEA678E9EB7F4C130 /* libxmlHTMLNode.swift */; };
+		B6E27EA84F085EB7406F1ADCE92D33E8 /* xmlautomata.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BAC5EDC8D07FC829BDD2694446CE82E /* xmlautomata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC2FC26DEB34475B51DED092FDF5E20C /* Kanna-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 959A8F55A625302FB09803C8F11ED532 /* Kanna-dummy.m */; };
+		C7E299D1931158027DEA8AF8251297E8 /* valid.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CF9934D73A383D7D519C7BFE64BE684 /* valid.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CCA53DAED4C5DC3B5B3A7CDB26E0FAC6 /* tree.h in Headers */ = {isa = PBXBuildFile; fileRef = FD846396CB0C4D4C1E4D8D6C7BABCFE2 /* tree.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1559C52395F8176B658218630F4C9F1 /* globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E465286C3DAFE9C3FD0E315D18BB6C /* globals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1C9A4C2BE0A362E3EDA22EDA6162E82 /* xpathInternals.h in Headers */ = {isa = PBXBuildFile; fileRef = FD123AAF26584B9BE9430F67C248CC01 /* xpathInternals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D201A6D8C42505527E3E8E8F878F5191 /* Kanna.h in Headers */ = {isa = PBXBuildFile; fileRef = 98EC7E4A71096E4B74DA620107CDEC45 /* Kanna.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE5576BB6A8A132C3C3E369C34ED9120 /* list.h in Headers */ = {isa = PBXBuildFile; fileRef = 326F654BA0CF11EAB733466C9A90E195 /* list.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E799391D67A1674F473AF95DEFD2E58D /* SAX.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D576009C727A898B8BFD18F07F25CD /* SAX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EBD2A79B11BFC4E7873E6437FBF46CFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		EDCA8F1A5A3EB04732208E329A4D11BC /* encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 96255A80560200A413B9E0FCF158E51D /* encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EED9A3E1DE280B67072C1A39861E2B7E /* entities.h in Headers */ = {isa = PBXBuildFile; fileRef = 8760869530E3BC8D096AD5C0FC1E210A /* entities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2DCFF4BB20855D08F3F0652ECCD9542E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D684AC6B47205706EA61F308B910FE7;
+			remoteInfo = Kanna;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		03E465286C3DAFE9C3FD0E315D18BB6C /* globals.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = globals.h; path = Sources/libxml/globals.h; sourceTree = "<group>"; };
+		0637B2AC6E71195386089E93DAAEA0A2 /* Pods-Dvanactka-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Dvanactka-acknowledgements.plist"; sourceTree = "<group>"; };
+		0A0F2DA49D14A1E058BD21F27391AB3E /* Pods_Dvanactka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Dvanactka.framework; path = "Pods-Dvanactka.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BD3048D7350BF15FA626909F5524114 /* xmlstring.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlstring.h; path = Sources/libxml/xmlstring.h; sourceTree = "<group>"; };
+		1C5A14CDD23985C4FD0CD6F2EDA38921 /* HTMLtree.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HTMLtree.h; path = Sources/libxml/HTMLtree.h; sourceTree = "<group>"; };
+		24D7702ECBB8452CF6EDDC0C264DBF47 /* SAX2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SAX2.h; path = Sources/libxml/SAX2.h; sourceTree = "<group>"; };
+		254CF823B8F92C5EEA678E9EB7F4C130 /* libxmlHTMLNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = libxmlHTMLNode.swift; path = Sources/libxmlHTMLNode.swift; sourceTree = "<group>"; };
+		2BAC5EDC8D07FC829BDD2694446CE82E /* xmlautomata.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlautomata.h; path = Sources/libxml/xmlautomata.h; sourceTree = "<group>"; };
+		2E3136843B0023C34BA8D59E6A9CD3A4 /* parser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = parser.h; path = Sources/libxml/parser.h; sourceTree = "<group>"; };
+		307C437335D5CB687DBF51D2812CAA3E /* Kanna-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Kanna-umbrella.h"; sourceTree = "<group>"; };
+		326F654BA0CF11EAB733466C9A90E195 /* list.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = list.h; path = Sources/libxml/list.h; sourceTree = "<group>"; };
+		356E20D14C94D97BA4ABE38C939451E2 /* Pods-Dvanactka-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Dvanactka-acknowledgements.markdown"; sourceTree = "<group>"; };
+		3BA7163FFF01083862DFC1AAD1B54DC6 /* xmlIO.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlIO.h; path = Sources/libxml/xmlIO.h; sourceTree = "<group>"; };
+		41257F6FD7E11EA2C399B926D3D6EA31 /* hash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hash.h; path = Sources/libxml/hash.h; sourceTree = "<group>"; };
+		4485603EA16D9214011B6FD4C68AAB32 /* dict.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dict.h; path = Sources/libxml/dict.h; sourceTree = "<group>"; };
+		4569D86D4D7745D4CEDAEB52DBA35AB8 /* xpath.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xpath.h; path = Sources/libxml/xpath.h; sourceTree = "<group>"; };
+		5CF9934D73A383D7D519C7BFE64BE684 /* valid.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = valid.h; path = Sources/libxml/valid.h; sourceTree = "<group>"; };
+		62D576009C727A898B8BFD18F07F25CD /* SAX.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SAX.h; path = Sources/libxml/SAX.h; sourceTree = "<group>"; };
+		687B5C39230E998D6A2E01E77E0E0986 /* Pods-Dvanactka-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Dvanactka-umbrella.h"; sourceTree = "<group>"; };
+		824DDDB803D68A4BCF13ABA7DEF26F35 /* xmlerror.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlerror.h; path = Sources/libxml/xmlerror.h; sourceTree = "<group>"; };
+		8760869530E3BC8D096AD5C0FC1E210A /* entities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = entities.h; path = Sources/libxml/entities.h; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		959A8F55A625302FB09803C8F11ED532 /* Kanna-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Kanna-dummy.m"; sourceTree = "<group>"; };
+		96255A80560200A413B9E0FCF158E51D /* encoding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = encoding.h; path = Sources/libxml/encoding.h; sourceTree = "<group>"; };
+		973A14FF39F453263B016432BD8AF064 /* Kanna.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Kanna.swift; path = Sources/Kanna.swift; sourceTree = "<group>"; };
+		98EC7E4A71096E4B74DA620107CDEC45 /* Kanna.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Kanna.h; path = Sources/Kanna.h; sourceTree = "<group>"; };
+		A574E6C0C690A505032931300ADF0473 /* threads.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = threads.h; path = Sources/libxml/threads.h; sourceTree = "<group>"; };
+		AB2380991DA08705B463F791526847EE /* Pods-Dvanactka-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Dvanactka-resources.sh"; sourceTree = "<group>"; };
+		B410BFE2E4A1E42FB7AF131C35DCF6C9 /* libxmlHTMLDocument.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = libxmlHTMLDocument.swift; path = Sources/libxmlHTMLDocument.swift; sourceTree = "<group>"; };
+		B55FE6C62DDE1937A23329F7DE9D7AA2 /* Kanna.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Kanna.modulemap; sourceTree = "<group>"; };
+		C2455F9459D69F2B4F393C3201C4DA5D /* Pods-Dvanactka.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Dvanactka.modulemap"; sourceTree = "<group>"; };
+		C79CCC9968C51F7D4345163E1939812F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7BBAB6EA23744CD8FCDDBA06564DFAE /* HTMLparser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HTMLparser.h; path = Sources/libxml/HTMLparser.h; sourceTree = "<group>"; };
+		C9714D6517C226A123BB0AACD77CA589 /* xmlexports.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlexports.h; path = Sources/libxml/xmlexports.h; sourceTree = "<group>"; };
+		CA09B303D7995C6D9D37D6022501D32A /* Pods-Dvanactka-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Dvanactka-dummy.m"; sourceTree = "<group>"; };
+		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CCBC1455E9933ADD18723F363D0F7078 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
+		CDF0465C707C1A83B96A05412A63BC41 /* xlink.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xlink.h; path = Sources/libxml/xlink.h; sourceTree = "<group>"; };
+		CE5634933B55D1D41C0B0A72541C3C21 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
+		D274D1D51BA1761D1909BDC5AC12C975 /* CSS.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CSS.swift; path = Sources/CSS.swift; sourceTree = "<group>"; };
+		D32EB3A8F1F0A3BCA0B1BBD2830ACDAD /* Kanna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Kanna.framework; path = Kanna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E23B7180DE2AFBF2A36FF2E72E0D1261 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E63ACB6325E2DC062844AF0CAF30C09D /* xmlversion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlversion.h; path = Sources/libxml/xmlversion.h; sourceTree = "<group>"; };
+		ECBDBFB4BDD7213CC2599A077703318B /* Kanna.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Kanna.xcconfig; sourceTree = "<group>"; };
+		ED54BD2B7EA46A69E39C40D59E2A2CD2 /* Pods-Dvanactka-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Dvanactka-frameworks.sh"; sourceTree = "<group>"; };
+		F5AA04CCA163DB022E3168D67A635C44 /* libxmlParserOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = libxmlParserOption.swift; path = Sources/libxmlParserOption.swift; sourceTree = "<group>"; };
+		FB739B1CCADE4786AABB89FB76A0BEC3 /* Kanna-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Kanna-prefix.pch"; sourceTree = "<group>"; };
+		FCB6DF824A641A9ED92DF53DE4891994 /* xmlmemory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlmemory.h; path = Sources/libxml/xmlmemory.h; sourceTree = "<group>"; };
+		FCE5E741AA0ED17176672AEC40FCC55B /* xmlregexp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xmlregexp.h; path = Sources/libxml/xmlregexp.h; sourceTree = "<group>"; };
+		FD123AAF26584B9BE9430F67C248CC01 /* xpathInternals.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = xpathInternals.h; path = Sources/libxml/xpathInternals.h; sourceTree = "<group>"; };
+		FD846396CB0C4D4C1E4D8D6C7BABCFE2 /* tree.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tree.h; path = Sources/libxml/tree.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1DB77D1FEB286F744318D77BCDC9EA3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40DA3E50C8B8BAEE6B5715E9CD9407A3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		823037DE0BF52682CE4819CFD792E482 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBD2A79B11BFC4E7873E6437FBF46CFD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		23E77D1080C575FAE6083E8F442CA0B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D32EB3A8F1F0A3BCA0B1BBD2830ACDAD /* Kanna.framework */,
+				0A0F2DA49D14A1E058BD21F27391AB3E /* Pods_Dvanactka.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				E67B03BB53D74290E6F5C75A448F3C60 /* Pods */,
+				23E77D1080C575FAE6083E8F442CA0B4 /* Products */,
+				FE0A35464889F66C5E96A89DCE63097A /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		BB9850EA428EFF64946E11220D8CE20F /* Pods-Dvanactka */ = {
+			isa = PBXGroup;
+			children = (
+				C79CCC9968C51F7D4345163E1939812F /* Info.plist */,
+				C2455F9459D69F2B4F393C3201C4DA5D /* Pods-Dvanactka.modulemap */,
+				356E20D14C94D97BA4ABE38C939451E2 /* Pods-Dvanactka-acknowledgements.markdown */,
+				0637B2AC6E71195386089E93DAAEA0A2 /* Pods-Dvanactka-acknowledgements.plist */,
+				CA09B303D7995C6D9D37D6022501D32A /* Pods-Dvanactka-dummy.m */,
+				ED54BD2B7EA46A69E39C40D59E2A2CD2 /* Pods-Dvanactka-frameworks.sh */,
+				AB2380991DA08705B463F791526847EE /* Pods-Dvanactka-resources.sh */,
+				687B5C39230E998D6A2E01E77E0E0986 /* Pods-Dvanactka-umbrella.h */,
+				CE5634933B55D1D41C0B0A72541C3C21 /* Pods-Dvanactka.debug.xcconfig */,
+				CCBC1455E9933ADD18723F363D0F7078 /* Pods-Dvanactka.release.xcconfig */,
+			);
+			name = "Pods-Dvanactka";
+			path = "Target Support Files/Pods-Dvanactka";
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E0C79410AAB11B4CD983C858E7BFD6E7 /* Kanna */ = {
+			isa = PBXGroup;
+			children = (
+				D274D1D51BA1761D1909BDC5AC12C975 /* CSS.swift */,
+				4485603EA16D9214011B6FD4C68AAB32 /* dict.h */,
+				96255A80560200A413B9E0FCF158E51D /* encoding.h */,
+				8760869530E3BC8D096AD5C0FC1E210A /* entities.h */,
+				03E465286C3DAFE9C3FD0E315D18BB6C /* globals.h */,
+				41257F6FD7E11EA2C399B926D3D6EA31 /* hash.h */,
+				C7BBAB6EA23744CD8FCDDBA06564DFAE /* HTMLparser.h */,
+				1C5A14CDD23985C4FD0CD6F2EDA38921 /* HTMLtree.h */,
+				98EC7E4A71096E4B74DA620107CDEC45 /* Kanna.h */,
+				973A14FF39F453263B016432BD8AF064 /* Kanna.swift */,
+				B410BFE2E4A1E42FB7AF131C35DCF6C9 /* libxmlHTMLDocument.swift */,
+				254CF823B8F92C5EEA678E9EB7F4C130 /* libxmlHTMLNode.swift */,
+				F5AA04CCA163DB022E3168D67A635C44 /* libxmlParserOption.swift */,
+				326F654BA0CF11EAB733466C9A90E195 /* list.h */,
+				2E3136843B0023C34BA8D59E6A9CD3A4 /* parser.h */,
+				62D576009C727A898B8BFD18F07F25CD /* SAX.h */,
+				24D7702ECBB8452CF6EDDC0C264DBF47 /* SAX2.h */,
+				A574E6C0C690A505032931300ADF0473 /* threads.h */,
+				FD846396CB0C4D4C1E4D8D6C7BABCFE2 /* tree.h */,
+				5CF9934D73A383D7D519C7BFE64BE684 /* valid.h */,
+				CDF0465C707C1A83B96A05412A63BC41 /* xlink.h */,
+				2BAC5EDC8D07FC829BDD2694446CE82E /* xmlautomata.h */,
+				824DDDB803D68A4BCF13ABA7DEF26F35 /* xmlerror.h */,
+				C9714D6517C226A123BB0AACD77CA589 /* xmlexports.h */,
+				3BA7163FFF01083862DFC1AAD1B54DC6 /* xmlIO.h */,
+				FCB6DF824A641A9ED92DF53DE4891994 /* xmlmemory.h */,
+				FCE5E741AA0ED17176672AEC40FCC55B /* xmlregexp.h */,
+				1BD3048D7350BF15FA626909F5524114 /* xmlstring.h */,
+				E63ACB6325E2DC062844AF0CAF30C09D /* xmlversion.h */,
+				4569D86D4D7745D4CEDAEB52DBA35AB8 /* xpath.h */,
+				FD123AAF26584B9BE9430F67C248CC01 /* xpathInternals.h */,
+				FA34A920D56BE2001399F8C5AC0AEE15 /* Support Files */,
+			);
+			name = Kanna;
+			path = Kanna;
+			sourceTree = "<group>";
+		};
+		E67B03BB53D74290E6F5C75A448F3C60 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E0C79410AAB11B4CD983C858E7BFD6E7 /* Kanna */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FA34A920D56BE2001399F8C5AC0AEE15 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E23B7180DE2AFBF2A36FF2E72E0D1261 /* Info.plist */,
+				B55FE6C62DDE1937A23329F7DE9D7AA2 /* Kanna.modulemap */,
+				ECBDBFB4BDD7213CC2599A077703318B /* Kanna.xcconfig */,
+				959A8F55A625302FB09803C8F11ED532 /* Kanna-dummy.m */,
+				FB739B1CCADE4786AABB89FB76A0BEC3 /* Kanna-prefix.pch */,
+				307C437335D5CB687DBF51D2812CAA3E /* Kanna-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Kanna";
+			sourceTree = "<group>";
+		};
+		FE0A35464889F66C5E96A89DCE63097A /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BB9850EA428EFF64946E11220D8CE20F /* Pods-Dvanactka */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8F544006E9BB188E93062A1873133AED /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				665DB7B302E0F193BC6FAD392905FD17 /* Pods-Dvanactka-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0E34F8D097675A6D261C802AE94B997 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AD55EBBAF2093D57C96EFF7EF21065E /* dict.h in Headers */,
+				EDCA8F1A5A3EB04732208E329A4D11BC /* encoding.h in Headers */,
+				EED9A3E1DE280B67072C1A39861E2B7E /* entities.h in Headers */,
+				D1559C52395F8176B658218630F4C9F1 /* globals.h in Headers */,
+				5A65C297E61D058EC830F154C6A3D05E /* hash.h in Headers */,
+				296C210CD3E6128A361C9BCD66474D13 /* HTMLparser.h in Headers */,
+				086932FA01CDBDD1FDBF243A749CDA0A /* HTMLtree.h in Headers */,
+				104732EC5FD1133E088771CEF1211E55 /* Kanna-umbrella.h in Headers */,
+				D201A6D8C42505527E3E8E8F878F5191 /* Kanna.h in Headers */,
+				DE5576BB6A8A132C3C3E369C34ED9120 /* list.h in Headers */,
+				35F530FDEBE7211D0236B2E9A13C126D /* parser.h in Headers */,
+				E799391D67A1674F473AF95DEFD2E58D /* SAX.h in Headers */,
+				92D70A4D0C0C0ACE54846544DB80C6F1 /* SAX2.h in Headers */,
+				840FD6C3DEAF67B7713F7D770797A359 /* threads.h in Headers */,
+				CCA53DAED4C5DC3B5B3A7CDB26E0FAC6 /* tree.h in Headers */,
+				C7E299D1931158027DEA8AF8251297E8 /* valid.h in Headers */,
+				73B987ABDD17C57203BCAB95F17E46D4 /* xlink.h in Headers */,
+				B6E27EA84F085EB7406F1ADCE92D33E8 /* xmlautomata.h in Headers */,
+				76EE4D36263DA77593B131480A5859C0 /* xmlerror.h in Headers */,
+				474044BBBC3EA47E2EC12A5824CDC20B /* xmlexports.h in Headers */,
+				68026603570524846BAFC8E7EC6D31C6 /* xmlIO.h in Headers */,
+				013F22E3C98D2C108CC01643F4A41978 /* xmlmemory.h in Headers */,
+				65DDAA453A98EC13B658F0E42C02DC0E /* xmlregexp.h in Headers */,
+				86335F73073BAAF55EA80F0B276F27AF /* xmlstring.h in Headers */,
+				40B7F8585F832A460392D5A835F7B8BF /* xmlversion.h in Headers */,
+				5479E29422E34BF5E8EDA58D5F8CA7CE /* xpath.h in Headers */,
+				D1C9A4C2BE0A362E3EDA22EDA6162E82 /* xpathInternals.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		176F3E1ACBACC17AAB59AC4071B6D917 /* Pods-Dvanactka */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2390A4BE820F937E9141A0612F0D61E6 /* Build configuration list for PBXNativeTarget "Pods-Dvanactka" */;
+			buildPhases = (
+				98B3186B1C07F8326D7D0E687BDDB102 /* Sources */,
+				823037DE0BF52682CE4819CFD792E482 /* Frameworks */,
+				8F544006E9BB188E93062A1873133AED /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B246DBD64AB12184CCE7E5E93DF6BE3 /* PBXTargetDependency */,
+			);
+			name = "Pods-Dvanactka";
+			productName = "Pods-Dvanactka";
+			productReference = 0A0F2DA49D14A1E058BD21F27391AB3E /* Pods_Dvanactka.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		1D684AC6B47205706EA61F308B910FE7 /* Kanna */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D08E490FF897250C01B5D1675C83945F /* Build configuration list for PBXNativeTarget "Kanna" */;
+			buildPhases = (
+				72240634F593EE6F7D6C15B29A3805CF /* Sources */,
+				1DB77D1FEB286F744318D77BCDC9EA3E /* Frameworks */,
+				C0E34F8D097675A6D261C802AE94B997 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Kanna;
+			productName = Kanna;
+			productReference = D32EB3A8F1F0A3BCA0B1BBD2830ACDAD /* Kanna.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 23E77D1080C575FAE6083E8F442CA0B4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D684AC6B47205706EA61F308B910FE7 /* Kanna */,
+				176F3E1ACBACC17AAB59AC4071B6D917 /* Pods-Dvanactka */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		72240634F593EE6F7D6C15B29A3805CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF71F9CB74597C5540B4AABD46A2D4CF /* CSS.swift in Sources */,
+				BC2FC26DEB34475B51DED092FDF5E20C /* Kanna-dummy.m in Sources */,
+				9DF7F145C75BC4A50041D40A2488D0AC /* Kanna.swift in Sources */,
+				09C37343D3153E7B2C4699C8301134F7 /* libxmlHTMLDocument.swift in Sources */,
+				B527B80A2EB1C9931199813BDB5B8751 /* libxmlHTMLNode.swift in Sources */,
+				1392BB420D1E8BC030CAD3217F1E0749 /* libxmlParserOption.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98B3186B1C07F8326D7D0E687BDDB102 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70544F9220EB25AC8A712B8E71A056B6 /* Pods-Dvanactka-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B246DBD64AB12184CCE7E5E93DF6BE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Kanna;
+			target = 1D684AC6B47205706EA61F308B910FE7 /* Kanna */;
+			targetProxy = 2DCFF4BB20855D08F3F0652ECCD9542E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		04D984CF35CE96F3EE9401B104CB02AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE5634933B55D1D41C0B0A72541C3C21 /* Pods-Dvanactka.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Dvanactka/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Dvanactka/Pods-Dvanactka.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Dvanactka;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		14EF3F34AAC722CDCA30BA1B9232B0B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECBDBFB4BDD7213CC2599A077703318B /* Kanna.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Kanna/Kanna-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Kanna/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Kanna/Kanna.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Kanna;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		347B4765D713B60063C90F51E2AD373D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECBDBFB4BDD7213CC2599A077703318B /* Kanna.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Kanna/Kanna-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Kanna/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Kanna/Kanna.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Kanna;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		66DD88708E04C1FEEF760B730E73BBF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCBC1455E9933ADD18723F363D0F7078 /* Pods-Dvanactka.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Dvanactka/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Dvanactka/Pods-Dvanactka.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Dvanactka;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2390A4BE820F937E9141A0612F0D61E6 /* Build configuration list for PBXNativeTarget "Pods-Dvanactka" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04D984CF35CE96F3EE9401B104CB02AF /* Debug */,
+				66DD88708E04C1FEEF760B730E73BBF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
+				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D08E490FF897250C01B5D1675C83945F /* Build configuration list for PBXNativeTarget "Kanna" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				347B4765D713B60063C90F51E2AD373D /* Debug */,
+				14EF3F34AAC722CDCA30BA1B9232B0B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

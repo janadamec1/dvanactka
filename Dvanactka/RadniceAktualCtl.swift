@@ -22,6 +22,10 @@ class RadniceAktualCtl: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let ds = m_aDataSource {
+            self.title = ds.m_sTitle;
+        }
+        
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 90.0;
         
@@ -64,6 +68,13 @@ class RadniceAktualCtl: UITableViewController {
             }
             cell.m_lbDate.text = sDateText
             //cell.m_lbCategory.text = rec.m_sCategory ?? ""
+            
+            if rec.m_sLink != nil {
+                cell.accessoryType = UITableViewCellAccessoryType.detailButton;
+            }
+            else {
+                cell.accessoryType = UITableViewCellAccessoryType.none;
+            }
 
             cell.setNeedsUpdateConstraints();
             cell.updateConstraintsIfNeeded();

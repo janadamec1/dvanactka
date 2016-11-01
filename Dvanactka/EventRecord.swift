@@ -21,11 +21,10 @@ class CRxEventRecord: NSObject {
     }
     
     func openLink() {
-        if var link = m_sLink {
-            /*if (link.substring(to: 5) == "https") {
-                link = "http"
+        if let link = m_sLink {
+            if let url = URL(string: link) {
+                UIApplication.shared.openURL(url);
             }
-            UIApplication.sharedApplication.openURL(NSURL(string: link));*/
         }
     }
 }
@@ -54,10 +53,12 @@ class CRxDataSourceManager : NSObject {
     
     static let dsRadNews = "dsRadNews";
     static let dsRadAlerts = "dsRadAlerts";
+    static let dsBiografProgram = "dsBiografProgram";
     
     func defineDatasources() {
-        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""));
-        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""));
+        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("Townhall News", comment: ""));
+        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Townhall Alerts", comment: ""));
+        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: NSLocalizedString("Modransky Biograf Program", comment: ""));
     }
     
     func loadData() {
@@ -89,7 +90,13 @@ class CRxDataSourceManager : NSObject {
                     if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
                         let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
                         
-                        if let sLink = a_title["href"] {
+                        if var sLink = a_title["href"] {
+                            if sLink.hasPrefix("http://www.praha12.cz") {
+                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
+                            }
+                            else if !sLink.hasPrefix("http") {
+                                sLink = "https://www.praha12.cz" + sLink;
+                            }
                             aNewRecord.m_sLink = sLink;
                         }
                         
@@ -111,6 +118,7 @@ class CRxDataSourceManager : NSObject {
                         aNewsDS?.m_arrItems.append(aNewRecord);
                     }
                 }
+                aNewsDS?.m_dateLastRefreshed = Date()
 
                 let aAlertsDS = m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
                 
@@ -118,7 +126,13 @@ class CRxDataSourceManager : NSObject {
                     if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
                         let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
                         
-                        if let sLink = a_title["href"] {
+                        if var sLink = a_title["href"] {
+                            if sLink.hasPrefix("http://www.praha12.cz") {
+                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
+                            }
+                            else if !sLink.hasPrefix("http") {
+                                sLink = "https://www.praha12.cz" + sLink;
+                            }
                             aNewRecord.m_sLink = sLink;
                         }
                         
@@ -137,6 +151,64 @@ class CRxDataSourceManager : NSObject {
                         aAlertsDS?.m_arrItems.append(aNewRecord);
                     }
                 }
+                aAlertsDS?.m_dateLastRefreshed = Date()
+            }
+        }
+    }
+    
+    func refreshBiografDataSource() {
+        
+        //let url = URL(string: "http://www.modranskybiograf.cz/klient-349/kino-114/")
+        //if let doc = HTML(url: url!, encoding: .utf8) {
+
+        if let path = Bundle.main.path(forResource: "/test_files/modrbiograf", ofType: "html") {
+            let html = try! String(contentsOfFile: path, encoding: .utf8)
+            if let doc = HTML(html: html, encoding: .utf8) {
+                
+                let aBiografDS = m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
+                
+                let unitFlags : Set<Calendar.Component> = [.day, .month, .year]
+                let aTodayComps = Calendar.current.dateComponents(unitFlags, from: Date())
+
+                for node in doc.xpath("//div[@class='calendar-left-table-tr']") {
+                    if let aLinkNode = node.xpath("a[@class='cal-event-item shortName']").first {
+                        
+                        if let aTitleNode = aLinkNode.xpath("h2").first, let sTitle = aTitleNode.text {
+                            let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                            
+                            var dtc = DateComponents()
+                            if let aDateNode = aLinkNode.xpath("div[@class='ap_date']").first, let sDate = aDateNode.text {
+                                let sParts : [String] = sDate.components(separatedBy: ".");
+                                if sParts.count >= 2 {
+                                    dtc.day = Int(sParts[0]);
+                                    dtc.month = Int(sParts[1]);
+                                    if dtc.day != nil && dtc.month != nil {
+                                        dtc.year = (dtc.month! < aTodayComps.month! ? aTodayComps.year!+1 : aTodayComps.year! )
+                                    }
+                                }
+                            }
+                            if let aTimeNode = aLinkNode.xpath("div[@class='ap_time']").first, let sTime = aTimeNode.text {
+                                let sParts : [String] = sTime.components(separatedBy: ":");
+                                if sParts.count == 2 {
+                                    dtc.hour = Int(sParts[0]);
+                                    dtc.minute = Int(sParts[1]);
+                                }
+                            }
+                            aNewRecord.m_aDate = Calendar.current.date(from: dtc)
+                            if let sLink = aLinkNode["href"] {
+                                aNewRecord.m_sLink = "http://www.modranskybiograf.cz" + sLink;
+                            }
+                            if let sDescription = aLinkNode["title"] {  // remove newlines
+                                let components = sDescription.components(separatedBy: NSCharacterSet.newlines)
+                                aNewRecord.m_sText = components.filter { !$0.isEmpty }.joined(separator: " | ")
+                            }
+
+                            //dump(aNewRecord)
+                            aBiografDS?.m_arrItems.append(aNewRecord);
+                        }
+                    }
+                }
+                aBiografDS?.m_dateLastRefreshed = Date()
             }
         }
     }

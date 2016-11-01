@@ -33,7 +33,7 @@
                                     <segue destination="r8a-Ox-9c9" kind="show" identifier="radNews" id="PtN-Db-qXx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="580-Oh-Zoy">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="580-Oh-Zoy">
                                 <rect key="frame" x="16" y="110" width="153" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="9QE-Ub-IOL"/>
@@ -44,12 +44,22 @@
                                     <segue destination="r8a-Ox-9c9" kind="show" identifier="radAlerts" id="7vt-U7-0gp"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4lm-TQ-COZ">
+                                <rect key="frame" x="16" y="148" width="145" height="30"/>
+                                <state key="normal" title="Biograf"/>
+                                <connections>
+                                    <segue destination="r8a-Ox-9c9" kind="show" identifier="biografProgram" id="hxz-Dz-HXc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="580-Oh-Zoy" firstAttribute="top" secondItem="h7f-F6-qnr" secondAttribute="bottom" constant="8" id="42g-9c-fBV"/>
+                            <constraint firstItem="4lm-TQ-COZ" firstAttribute="leading" secondItem="580-Oh-Zoy" secondAttribute="leading" id="GvP-wq-IKh"/>
+                            <constraint firstItem="4lm-TQ-COZ" firstAttribute="top" secondItem="580-Oh-Zoy" secondAttribute="bottom" constant="8" id="ImY-P7-6UE"/>
                             <constraint firstItem="h7f-F6-qnr" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="QSk-S8-Zsq"/>
                             <constraint firstItem="h7f-F6-qnr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Xyq-9c-QfH"/>
+                            <constraint firstItem="580-Oh-Zoy" firstAttribute="leading" secondItem="h7f-F6-qnr" secondAttribute="leading" id="dpU-Lq-tgQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="oVc-0d-ucD"/>
@@ -62,7 +72,7 @@
         <scene sceneID="v80-EI-8EF">
             <objects>
                 <tableViewController id="r8a-Ox-9c9" customClass="RadniceAktualCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="c89-eW-mlc">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="c89-eW-mlc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -144,6 +154,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="PtN-Db-qXx"/>
+        <segue reference="hxz-Dz-HXc"/>
     </inferredMetricsTieBreakers>
 </document>
