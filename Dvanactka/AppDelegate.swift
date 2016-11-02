@@ -15,13 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let dsm = CRxDataSourceManager.sharedInstance
-        dsm.defineDatasources()
-        //dsm.loadData()
-        //*
-        dsm.refreshRadniceDataSources()
-        dsm.refreshRadEventsDataSource()
-        dsm.refreshBiografDataSource() //*/
+        let dsm = CRxDataSourceManager.sharedInstance;
+        dsm.defineDatasources();
+        dsm.loadData();
+        dsm.refreshAllDataSources();
         return true
     }
 

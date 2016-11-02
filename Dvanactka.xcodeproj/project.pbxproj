@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
+		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
 		4D9019351DC65E16001488D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019341DC65E16001488D3 /* AppDelegate.swift */; };
 		4D9019371DC65E16001488D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019361DC65E16001488D3 /* ViewController.swift */; };
 		4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9019381DC65E16001488D3 /* Main.storyboard */; };
 		4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D90193B1DC65E16001488D3 /* Assets.xcassets */; };
 		4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */; };
-		4D9019491DC669B7001488D3 /* RadniceAktualCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */; };
+		4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019481DC669B7001488D3 /* EventCtl.swift */; };
 		4D90194D1DC67FB6001488D3 /* test_files in Resources */ = {isa = PBXBuildFile; fileRef = 4D90194C1DC67FB6001488D3 /* test_files */; };
 		4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90194E1DC69A0D001488D3 /* EventRecord.swift */; };
 		4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DA2C9021DC8EE8400E28A0E /* Localizable.strings */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D30AABA1DCA87AB00A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4D30AAC01DCA891400A402C9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCtl.swift; sourceTree = "<group>"; };
 		4D9019311DC65E16001488D3 /* Dvanactka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dvanactka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9019341DC65E16001488D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D9019361DC65E16001488D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -27,13 +33,12 @@
 		4D90193B1DC65E16001488D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D90193E1DC65E17001488D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D9019401DC65E17001488D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadniceAktualCtl.swift; sourceTree = "<group>"; };
+		4D9019481DC669B7001488D3 /* EventCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCtl.swift; sourceTree = "<group>"; };
 		4D90194C1DC67FB6001488D3 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test_files; sourceTree = "<group>"; };
 		4D90194E1DC69A0D001488D3 /* EventRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRecord.swift; sourceTree = "<group>"; };
 		4DA2C8FE1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main.strings; sourceTree = "<group>"; };
 		4DA2C8FF1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4DA2C9031DC8EE8E00E28A0E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
 		BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
 		F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dvanactka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,16 +77,18 @@
 		4D9019331DC65E16001488D3 /* Dvanactka */ = {
 			isa = PBXGroup;
 			children = (
-				4DA2C9021DC8EE8400E28A0E /* Localizable.strings */,
-				4D90194C1DC67FB6001488D3 /* test_files */,
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
-				4D9019361DC65E16001488D3 /* ViewController.swift */,
-				4D9019381DC65E16001488D3 /* Main.storyboard */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
-				4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */,
-				4D9019401DC65E17001488D3 /* Info.plist */,
-				4D9019481DC669B7001488D3 /* RadniceAktualCtl.swift */,
+				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
+				4D9019401DC65E17001488D3 /* Info.plist */,
+				4D30AABF1DCA891200A402C9 /* InfoPlist.strings */,
+				4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */,
+				4DA2C9021DC8EE8400E28A0E /* Localizable.strings */,
+				4D9019381DC65E16001488D3 /* Main.storyboard */,
+				4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */,
+				4D90194C1DC67FB6001488D3 /* test_files */,
+				4D9019361DC65E16001488D3 /* ViewController.swift */,
 			);
 			path = Dvanactka;
 			sourceTree = "<group>";
@@ -150,6 +157,7 @@
 			knownRegions = (
 				en,
 				Base,
+				cs,
 			);
 			mainGroup = 4D9019281DC65E16001488D3;
 			productRefGroup = 4D9019321DC65E16001488D3 /* Products */;
@@ -167,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */,
+				4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */,
 				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */,
 				4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */,
@@ -229,7 +238,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D9019491DC669B7001488D3 /* RadniceAktualCtl.swift in Sources */,
+				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
+				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
 				4D9019371DC65E16001488D3 /* ViewController.swift in Sources */,
 				4D9019351DC65E16001488D3 /* AppDelegate.swift in Sources */,
@@ -239,6 +249,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		4D30AABF1DCA891200A402C9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D30AABE1DCA891200A402C9 /* Base */,
+				4D30AAC01DCA891400A402C9 /* cs */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		4D9019381DC65E16001488D3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -261,7 +280,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4DA2C9011DC8EE8400E28A0E /* cs */,
-				4DA2C9031DC8EE8E00E28A0E /* en */,
+				4D30AABA1DCA87AB00A402C9 /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = SOURCE_ROOT;

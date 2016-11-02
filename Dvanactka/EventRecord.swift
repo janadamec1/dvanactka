@@ -22,6 +22,19 @@ class CRxEventRecord: NSObject {
     
     init(title sTitle: String) {
         m_sTitle = sTitle
+        super.init()
+    }
+    
+    static func loadDate(string: String) -> Date? {
+        let df = DateFormatter();
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
+        return df.date(from: string);
+    }
+    
+    static func saveDate(date: Date) -> String {
+        let df = DateFormatter();
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
+        return df.string(from: date);
     }
     
     init?(from jsonItem: [String: AnyObject]) { // load from JSON
@@ -33,11 +46,8 @@ class CRxEventRecord: NSObject {
         if let buyLink = jsonItem["buyLink"] as? String { m_sBuyLink = buyLink }
         if let category = jsonItem["category"] as? String { m_sCategory = category }
         if let text = jsonItem["text"] as? String { m_sText = text }
-        
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        if let date = jsonItem["date"] as? String { m_aDate = df.date(from: date) }
-        if let dateTo = jsonItem["dateTo"] as? String { m_aDateTo = df.date(from: dateTo) }
+        if let date = jsonItem["date"] as? String { m_aDate = CRxEventRecord.loadDate(string: date); }
+        if let dateTo = jsonItem["dateTo"] as? String { m_aDateTo = CRxEventRecord.loadDate(string: dateTo); }
 
         if let locationLat = jsonItem["locationLat"] as? String,
             let locationLong = jsonItem["locationLong"] as? String,
@@ -51,11 +61,8 @@ class CRxEventRecord: NSObject {
         if let buyLink = m_sBuyLink { item["buyLink"] = buyLink as AnyObject }
         if let category = m_sCategory { item["category"] = category as AnyObject }
         if let text = m_sText { item["text"] = text as AnyObject }
-        
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        if let date = m_aDate { item["date"] = df.string(from: date) as AnyObject }
-        if let dateTo = m_aDateTo { item["dateTo"] = df.string(from: dateTo) as AnyObject }
+        if let date = m_aDate { item["date"] = CRxEventRecord.saveDate(date: date) as AnyObject }
+        if let dateTo = m_aDateTo { item["dateTo"] = CRxEventRecord.saveDate(date: dateTo) as AnyObject }
         
         if let location = m_aLocation {
             item["locationLat"] = String(location.coordinate.latitude) as AnyObject
@@ -66,10 +73,9 @@ class CRxEventRecord: NSObject {
     }
     
     func openInfoLink() {
-        if let link = m_sInfoLink {
-            if let url = URL(string: link) {
-                UIApplication.shared.openURL(url)
-            }
+        if let link = m_sInfoLink,
+            let url = URL(string: link) {
+            UIApplication.shared.openURL(url)
         }
     }
 }
@@ -78,42 +84,63 @@ class CRxEventRecord: NSObject {
 class CRxDataSource : NSObject {
     var m_sId: String = ""
     var m_sTitle: String = ""           // human readable
-    var m_nRefreshFreqHours: Int = 24   // refresh after 12 hours
+    var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
+    var m_bShowMap: Bool = false
     var m_dateLastRefreshed: Date?
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
 
-    init(id: String, title: String, refreshFreqHours: Int = 24) {
+    init(id: String, title: String, refreshFreqHours: Int = 18, showMap: Bool = false) {
         m_sId = id;
         m_sTitle = title;
         m_nRefreshFreqHours = refreshFreqHours;
+        m_bShowMap = showMap;
+        super.init()
     }
     
     func loadFromJSON(file: URL) {
+        // decode JSON
         var json: AnyObject
         do {
             let jsonString = try String(contentsOf: file, encoding: .utf8);
-            let jsonData = jsonString.data(using: String.Encoding.utf8)!
+            let jsonData = jsonString.data(using: String.Encoding.utf8)!;
             json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions()) as AnyObject
         } catch { return }
         
-        if let jsonItems = json["items"] as? [[String: AnyObject]] {
+        // load data
+        if let jsonItems = json["items"] as? [[String : AnyObject]] {
+            m_arrItems.removeAll(); // remove old items
             for item in jsonItems {
                 if let aNewRecord = CRxEventRecord(from: item) {
-                    m_arrItems.append(aNewRecord)
+                    m_arrItems.append(aNewRecord);
                 }
                 
             }
         }
+        
+        // load config
+        if let config = json["config"] as? [String : AnyObject] {
+            if let date = config["dateLastRefreshed"] as? String { m_dateLastRefreshed = CRxEventRecord.loadDate(string: date); }
+        }
     }
     
     func saveToJSON(file: URL) {
+        // save data
         var jsonItems = [AnyObject]()
         for item in m_arrItems {
             jsonItems.append(item.saveToJSON() as AnyObject);
         }
         
-        let json = ["items" : jsonItems];
+        var json: [String : AnyObject] = ["items" : jsonItems as AnyObject];
         
+        // save config
+        var config = [String: AnyObject]();
+        if let date = m_dateLastRefreshed { config["dateLastRefreshed"] = CRxEventRecord.saveDate(date: date) as AnyObject }
+        
+        if config.count > 0 {
+            json["config"] = config as AnyObject;
+        }
+        
+        // encode to JSON
         var jsonData: Data!
         do {
             jsonData = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions())
@@ -136,6 +163,8 @@ class CRxDataSourceManager : NSObject {
     static let dsRadAlerts = "dsRadAlerts";
     static let dsRadEvents = "dsRadEvents";
     static let dsBiografProgram = "dsBiografProgram";
+    static let dsCooltour = "dsCooltour";
+    static let dsCoolTrees = "dsCoolTrees";
     
     var m_urlDocumentsDir: URL!
     
@@ -148,6 +177,8 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Townhall Alerts", comment: ""));
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Townhall Events", comment: ""));
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: NSLocalizedString("Modransky Biograf Program", comment: ""));
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Cultural Monuments", comment: ""), refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), refreshFreqHours: 100, showMap: true);
     }
     
     //--------------------------------------------------------------------------
@@ -170,11 +201,44 @@ class CRxDataSourceManager : NSObject {
     //--------------------------------------------------------------------------
     func refreshAllDataSources(force: Bool = false) {
         
+        for dsIt in m_dictDataSources {
+            if dsIt.key != CRxDataSourceManager.dsRadAlerts {
+                refreshDataSource(id: dsIt.key, force: force);
+            }
+        }
     }
     
     //--------------------------------------------------------------------------
     func refreshDataSource(id: String, force: Bool = false) {
-    
+
+        guard let ds = m_dictDataSources[id]
+            else { return; }
+        
+        // check the last refresh date
+        if !force && ds.m_dateLastRefreshed != nil  &&
+                ds.m_dateLastRefreshed!.timeIntervalSince(Date()) < Double(ds.m_nRefreshFreqHours*60*60) {
+            return;
+        }
+        
+        if id == CRxDataSourceManager.dsRadNews || id == CRxDataSourceManager.dsRadAlerts {
+            refreshRadniceDataSources();
+        }
+        else if id == CRxDataSourceManager.dsRadEvents {
+            refreshRadEventsDataSource();
+        }
+        else if id == CRxDataSourceManager.dsBiografProgram {
+            refreshBiografDataSource();
+        }
+        else if id == CRxDataSourceManager.dsCooltour {
+            if let path = Bundle.main.url(forResource: "/test_files/p12kultpamatky", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+            }
+        }
+        else if id == CRxDataSourceManager.dsCoolTrees {
+            if let path = Bundle.main.url(forResource: "/test_files/p12stromy", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+            }
+        }
     }
     
     //--------------------------------------------------------------------------

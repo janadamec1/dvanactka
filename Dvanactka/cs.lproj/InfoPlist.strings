@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Dvanactka
+
+  Created by Jan Adamec on 02.11.16.
+  Copyright © 2016 Jan Adamec. All rights reserved.
+*/
+
+"NSLocationWhenInUseUsageDescription" = "Aplikace setřídí objekty podle vzdálenosti od vás a ukáže vaši pozici na mapě.";

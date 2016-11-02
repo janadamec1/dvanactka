@@ -36,5 +36,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The app will show you the nearest object locations and locate you on map.</string>
 </dict>
 </plist>
