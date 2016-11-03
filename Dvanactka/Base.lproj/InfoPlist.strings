@@ -7,3 +7,4 @@
 */
 
 "NSLocationWhenInUseUsageDescription" = "The app will show you the nearest object locations and locate you on map.";
+"NSCalendarsUsageDescription" = "The app will add the selected event to your calendar.";

@@ -36,7 +36,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>The app will show you the nearest object locations and locate you on map.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The app will show you the nearest object locations and locate you on map.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>The app will add the selected event to your calendar.</string>
 </dict>
 </plist>

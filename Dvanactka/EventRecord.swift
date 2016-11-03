@@ -10,6 +10,16 @@ import UIKit
 import CoreLocation
 import Kanna
 
+class CRxDateInterval: NSObject {
+    var m_dateStart: Date!
+    var m_dateEnd: Date!
+    
+    init(start: Date, end: Date) {
+        m_dateStart = start;
+        m_dateEnd = end;
+    }
+}
+
 class CRxEventRecord: NSObject {
     var m_sTitle: String = ""
     var m_sInfoLink: String?
@@ -18,7 +28,9 @@ class CRxEventRecord: NSObject {
     var m_sText: String?
     var m_aDate: Date?      // date and time of an event start or publish date of an article
     var m_aDateTo: Date?    // date and time of an evend end
+    var m_sAddress: String? // location address
     var m_aLocation: CLLocation?    // event location
+    var m_arrOpeningHours: [Int: CRxDateInterval]?  // dictionary weekday -> interval
     
     init(title sTitle: String) {
         m_sTitle = sTitle
@@ -78,6 +90,12 @@ class CRxEventRecord: NSObject {
             UIApplication.shared.openURL(url)
         }
     }
+    func openBuyLink() {
+        if let link = m_sBuyLink,
+            let url = URL(string: link) {
+            UIApplication.shared.openURL(url)
+        }
+    }
 }
 
 //--------------------------------------------------------------------------
@@ -88,10 +106,18 @@ class CRxDataSource : NSObject {
     var m_bShowMap: Bool = false
     var m_dateLastRefreshed: Date?
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
+    
+    enum DataType {
+        case events
+        case news
+        case places
+    }
+    var m_eType = DataType.news
 
-    init(id: String, title: String, refreshFreqHours: Int = 18, showMap: Bool = false) {
+    init(id: String, title: String, type: DataType, refreshFreqHours: Int = 18, showMap: Bool = false) {
         m_sId = id;
         m_sTitle = title;
+        m_eType = type;
         m_nRefreshFreqHours = refreshFreqHours;
         m_bShowMap = showMap;
         super.init()
@@ -173,12 +199,12 @@ class CRxDataSourceManager : NSObject {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
         
-        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("Townhall News", comment: ""));
-        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Townhall Alerts", comment: ""));
-        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Townhall Events", comment: ""));
-        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: NSLocalizedString("Modransky Biograf Program", comment: ""));
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Cultural Monuments", comment: ""), refreshFreqHours: 100, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("Townhall News", comment: ""), type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Townhall Alerts", comment: ""), type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Townhall Events", comment: ""), type: .events);
+        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský Biograf", type: .events);
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
     }
     
     //--------------------------------------------------------------------------
@@ -412,6 +438,8 @@ class CRxDataSourceManager : NSObject {
         guard let aBiografDS = m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
             else { return }
 
+        let sAddress = "Modřanský biograf\nU Kina 1/44\n143 00 Praha 12 - Modřany";
+        
         //let url = URL(string: "http://www.modranskybiograf.cz/klient-349/kino-114/")
         //if let doc = HTML(url: url!, encoding: .utf8) {
 
@@ -460,6 +488,8 @@ class CRxDataSourceManager : NSObject {
                             if let aBuyLinkNode = aLinkNode.xpath("..//a[@class='cal-event-item-buy-span']").first {
                                 aNewRecord.m_sBuyLink = aBuyLinkNode["href"];
                             }
+                            
+                            aNewRecord.m_sAddress = sAddress;
 
                             //dump(aNewRecord)
                             arrNewItems.append(aNewRecord);

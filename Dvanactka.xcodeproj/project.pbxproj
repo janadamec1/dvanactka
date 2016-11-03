@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
 		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
+		4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6677091DCB340F004876FA /* MapKit.framework */; };
+		4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */; };
+		4D6677101DCB8CDD004876FA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D66770F1DCB8CDD004876FA /* MessageUI.framework */; };
+		4D6677141DCBA4DA004876FA /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6677131DCBA4DA004876FA /* EventKitUI.framework */; };
+		4D66771C1DCBC23E004876FA /* goldstar25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6677161DCBC23E004876FA /* goldstar25.png */; };
+		4D66771D1DCBC23E004876FA /* goldstar25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6677171DCBC23E004876FA /* goldstar25@2x.png */; };
+		4D66771E1DCBC23E004876FA /* goldstar25dis.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6677181DCBC23E004876FA /* goldstar25dis.png */; };
+		4D66771F1DCBC23E004876FA /* goldstar25dis@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6677191DCBC23E004876FA /* goldstar25dis@2x.png */; };
+		4D6677201DCBC23E004876FA /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D66771A1DCBC23E004876FA /* location.png */; };
+		4D6677211DCBC23E004876FA /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D66771B1DCBC23E004876FA /* location@2x.png */; };
 		4D9019351DC65E16001488D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019341DC65E16001488D3 /* AppDelegate.swift */; };
 		4D9019371DC65E16001488D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019361DC65E16001488D3 /* ViewController.swift */; };
 		4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9019381DC65E16001488D3 /* Main.storyboard */; };
@@ -26,6 +36,17 @@
 		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC01DCA891400A402C9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCtl.swift; sourceTree = "<group>"; };
+		4D6677091DCB340F004876FA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailCtl.swift; sourceTree = "<group>"; };
+		4D66770F1DCB8CDD004876FA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		4D6677121DCBA2D4004876FA /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main.strings; sourceTree = "<group>"; };
+		4D6677131DCBA4DA004876FA /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		4D6677161DCBC23E004876FA /* goldstar25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goldstar25.png; path = img/goldstar25.png; sourceTree = "<group>"; };
+		4D6677171DCBC23E004876FA /* goldstar25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "goldstar25@2x.png"; path = "img/goldstar25@2x.png"; sourceTree = "<group>"; };
+		4D6677181DCBC23E004876FA /* goldstar25dis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goldstar25dis.png; path = img/goldstar25dis.png; sourceTree = "<group>"; };
+		4D6677191DCBC23E004876FA /* goldstar25dis@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "goldstar25dis@2x.png"; path = "img/goldstar25dis@2x.png"; sourceTree = "<group>"; };
+		4D66771A1DCBC23E004876FA /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = img/location.png; sourceTree = "<group>"; };
+		4D66771B1DCBC23E004876FA /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@2x.png"; path = "img/location@2x.png"; sourceTree = "<group>"; };
 		4D9019311DC65E16001488D3 /* Dvanactka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dvanactka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9019341DC65E16001488D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D9019361DC65E16001488D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,7 +57,6 @@
 		4D9019481DC669B7001488D3 /* EventCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCtl.swift; sourceTree = "<group>"; };
 		4D90194C1DC67FB6001488D3 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test_files; sourceTree = "<group>"; };
 		4D90194E1DC69A0D001488D3 /* EventRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRecord.swift; sourceTree = "<group>"; };
-		4DA2C8FE1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main.strings; sourceTree = "<group>"; };
 		4DA2C8FF1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
@@ -49,6 +69,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D6677141DCBA4DA004876FA /* EventKitUI.framework in Frameworks */,
+				4D6677101DCB8CDD004876FA /* MessageUI.framework in Frameworks */,
+				4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */,
 				C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,6 +79,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D6677151DCBC226004876FA /* images */ = {
+			isa = PBXGroup;
+			children = (
+				4D6677161DCBC23E004876FA /* goldstar25.png */,
+				4D6677171DCBC23E004876FA /* goldstar25@2x.png */,
+				4D6677181DCBC23E004876FA /* goldstar25dis.png */,
+				4D6677191DCBC23E004876FA /* goldstar25dis@2x.png */,
+				4D66771A1DCBC23E004876FA /* location.png */,
+				4D66771B1DCBC23E004876FA /* location@2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		4D9019281DC65E16001488D3 = {
 			isa = PBXGroup;
 			children = (
@@ -81,12 +117,14 @@
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
+				4D6677151DCBC226004876FA /* images */,
 				4D9019401DC65E17001488D3 /* Info.plist */,
 				4D30AABF1DCA891200A402C9 /* InfoPlist.strings */,
 				4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */,
 				4DA2C9021DC8EE8400E28A0E /* Localizable.strings */,
 				4D9019381DC65E16001488D3 /* Main.storyboard */,
 				4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */,
+				4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */,
 				4D90194C1DC67FB6001488D3 /* test_files */,
 				4D9019361DC65E16001488D3 /* ViewController.swift */,
 			);
@@ -105,6 +143,9 @@
 		E3CDB31E01A8E10F30D48DD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D6677131DCBA4DA004876FA /* EventKitUI.framework */,
+				4D66770F1DCB8CDD004876FA /* MessageUI.framework */,
+				4D6677091DCB340F004876FA /* MapKit.framework */,
 				F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */,
 			);
 			name = Frameworks;
@@ -175,9 +216,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */,
+				4D66771C1DCBC23E004876FA /* goldstar25.png in Resources */,
 				4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */,
+				4D66771E1DCBC23E004876FA /* goldstar25dis.png in Resources */,
 				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */,
+				4D66771F1DCBC23E004876FA /* goldstar25dis@2x.png in Resources */,
+				4D66771D1DCBC23E004876FA /* goldstar25@2x.png in Resources */,
+				4D6677201DCBC23E004876FA /* location.png in Resources */,
+				4D6677211DCBC23E004876FA /* location@2x.png in Resources */,
 				4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */,
 				4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */,
 			);
@@ -238,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */,
 				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
@@ -262,7 +310,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D9019391DC65E16001488D3 /* Base */,
-				4DA2C8FE1DC8EE6600E28A0E /* cs */,
+				4D6677121DCBA2D4004876FA /* cs */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -330,7 +378,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -375,7 +423,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

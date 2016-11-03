@@ -23,6 +23,14 @@ class CRxMapItem : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D {
         return m_rec.m_aLocation!.coordinate;
     }
+    
+    func mapItem() -> MKMapItem {
+        let placemark = MKPlacemark(coordinate:self.coordinate, addressDictionary:nil);
+        let aMapItem = MKMapItem(placemark: placemark);
+        aMapItem.name = self.title;
+        return aMapItem;
+    }
+
 }
 
 class MapCtl: UIViewController, MKMapViewDelegate {
@@ -30,33 +38,38 @@ class MapCtl: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var m_mapView: MKMapView!
     
     var m_aDataSource: CRxDataSource?
+    var m_coordLast = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        let m_locManager = CLLocationManager();
-        //m_locManager.delegate = self;
-        //m_locManager.distanceFilter = 5;
-        
+        //var bUserLocationKnown = false;
         var coordMin = CLLocationCoordinate2D(latitude:0.0, longitude: 0.0)
         var coordMax = CLLocationCoordinate2D(latitude:0.0, longitude: 0.0)
+        var nCount = 0;
 
         if CLLocationManager.locationServicesEnabled() {
             let authStatus = CLLocationManager.authorizationStatus()
-            
-            if authStatus == .notDetermined {
-                m_locManager.requestWhenInUseAuthorization();
-            }
-            //if authStatus == .authorizedWhenInUse || authStatus == .authorizedAlways {
+            if authStatus == .authorizedWhenInUse || authStatus == .authorizedAlways {
                 
-            //}
+                m_mapView.showsUserLocation = true;
+                if (m_coordLast.longitude != 0 || m_coordLast.latitude != 0)
+                {
+                    coordMin = m_coordLast;
+                    coordMax = m_coordLast;
+                    //bUserLocationKnown = true;
+                    //nCount = 1;
+                }
+                
+                // add button to scroll to user location
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "location"), style: .plain, target: self, action: #selector(MapCtl.onBtnLocation));
+            }
         }
 
         m_mapView.delegate = self
         
-        var nCount = 0;
         if let ds = m_aDataSource {
             for item in ds.m_arrItems {
                 if let loc = item.m_aLocation {
@@ -120,15 +133,23 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         }
         return nil
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if let annot = view.annotation,
+            let aMapItem = annot as? CRxMapItem {
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
+            placeCtl.m_aRecord = aMapItem.m_rec;
+            navigationController?.pushViewController(placeCtl, animated: true);
+        }
     }
-    */
-
+    
+    func onBtnLocation() {
+        if let userLoc = m_mapView.userLocation.location {
+            m_coordLast = userLoc.coordinate;
+        }
+        let regView = MKCoordinateRegionMakeWithDistance(m_coordLast, 1000, 1000);
+        m_mapView.setRegion(regView, animated: true);
+    }
 }
