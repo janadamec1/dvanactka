@@ -15,7 +15,7 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbDate: UILabel!
-    
+    @IBOutlet weak var m_btnWebsite: UIButton!
 }
 class EventCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
@@ -76,6 +76,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         let df = DateFormatter();
         df.dateStyle = .full;
         df.timeStyle = .none;
+        let today = Date();
         
         // first add objects to groups
         for rec in ds.m_arrItems {
@@ -87,6 +88,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 guard let date = rec.m_aDate else {
                     continue    // remove recoords without date
                 }
+                if date < today {   // do not show old events
+                    continue;
+                }
                 sCatName = df.string(from: date);
             }
             if m_orderedItems[sCatName] == nil {
@@ -97,17 +101,19 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 m_orderedItems[sCatName]?.append(rec);  // into existing
             }
         }
-        // now sort each group by distance and name (Swift 3 does not support inplace ordering)
-        var sortedItems = [String : [CRxEventRecord]]();
-        for groupIt in m_orderedItems {
-            if ds.m_eType == .places {
-                sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser || ($0.m_distFromUser == $1.m_distFromUser && $0.m_sTitle < $1.m_sTitle) });
+        if ds.m_eType == .places || ds.m_eType == .events {
+            // now sort each group by distance and name (Swift 3 does not support inplace ordering)
+            var sortedItems = [String : [CRxEventRecord]]();
+            for groupIt in m_orderedItems {
+                if ds.m_eType == .places {
+                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser || ($0.m_distFromUser == $1.m_distFromUser && $0.m_sTitle < $1.m_sTitle) });
+                }
+                else if (ds.m_eType == .events) {
+                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
+                }
             }
-            else if (ds.m_eType == .events) {
-                sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
-            }
+            m_orderedItems = sortedItems;
         }
-        m_orderedItems = sortedItems;
     }
     
     func setRecordsDistance() {
@@ -182,7 +188,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 sDateText = df.string(from: aDate);
             }
             cellNews.m_lbDate.text = sDateText
-            cellNews.accessoryType = (rec.m_sInfoLink != nil ? .detailButton : .none);
+            cellNews.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
+            let iBtnTag = btnTag(from: indexPath);
+            cellNews.m_btnWebsite.tag = iBtnTag;
             cell = cellNews;
         }
         else if ds.m_eType == .events {
@@ -192,9 +200,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             var sDateText = "";
             if let aDate = rec.m_aDate {
                 let df = DateFormatter();
-                df.dateStyle = .full;
+                df.dateStyle = .none;
                 df.timeStyle = .short;
                 sDateText = df.string(from: aDate);
+                if let aDateTo = rec.m_aDateTo {
+                    sDateText += "\n- " + df.string(from: aDateTo);
+                }
             }
             else {
                 cellEvent.m_btnAddToCalendar.isHidden = true;
@@ -252,6 +263,13 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     @IBAction func onBtnWebsiteTouched(_ sender: Any) {
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)) {
+            rec.openInfoLink();
+        }
+    }
+
+    @IBAction func onBtnWebsiteNewsTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.openInfoLink();
