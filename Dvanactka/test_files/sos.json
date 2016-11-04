@@ -1,5 +1,35 @@
 {"items":[
 {
+"title":"Web městské části",
+"text":"",
+"infoLink":"https:\/\/www.praha12.cz",
+"category":"informace"
+},
+{
+"title":"Facebook městské části",
+"text":"Praha 12",
+"infoLink":"https:\/\/www.facebook.com\/Praha-12-1010733405609946",
+"category":"informace"
+},
+{
+"title":"FB skupina obyvatel",
+"text":"Modřany, Praha 12",
+"infoLink":"https:\/\/www.facebook.com\/groups\/modrany",
+"category":"informace"
+},
+{
+"title":"FB skupina obyvatel \"Necenzurovaná\"",
+"text":"Modřany, Praha 12 Necenzurovaná",
+"infoLink":"https:\/\/www.facebook.com\/groups\/1677444912493517",
+"category":"informace"
+},
+{
+"title":"Inzertní skupina na FB",
+"text":"Modřanská inzerce",
+"infoLink":"https:\/\/www.facebook.com\/groups\/modranskainzerce",
+"category":"informace"
+},
+{
 "title":"Lékařská služba první pomoci",
 "locationLat":"50.030006",
 "locationLong":"14.4567378",

@@ -21,7 +21,7 @@ class CRxHourInterval: NSObject {
 }
 
 enum CRxCategory: String {
-    case lekarna, prvniPomoc, policie
+    case informace, lekarna, prvniPomoc, policie
     case pamatka, pamatnyStrom, vyznamnyStrom
     case remeslnik, restaurace, obchod
 }
@@ -102,6 +102,7 @@ class CRxEventRecord: NSObject {
     
     static func categoryLocalName(category: CRxCategory) -> String {
         switch category {
+        case .informace: return NSLocalizedString("Information", comment: "");
         case .lekarna: return NSLocalizedString("Pharmacies", comment: "");
         case .prvniPomoc: return NSLocalizedString("First Aid", comment: "");
         case .policie: return NSLocalizedString("Police", comment: "");
@@ -248,7 +249,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský Biograf", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
         m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("SOS Contacts", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
     }
     
     //--------------------------------------------------------------------------

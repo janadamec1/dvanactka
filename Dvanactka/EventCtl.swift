@@ -106,7 +106,8 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             var sortedItems = [String : [CRxEventRecord]]();
             for groupIt in m_orderedItems {
                 if ds.m_eType == .places {
-                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser || ($0.m_distFromUser == $1.m_distFromUser && $0.m_sTitle < $1.m_sTitle) });
+                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser });
+                    //sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser || ($0.m_distFromUser == $1.m_distFromUser && $0.m_sTitle < $1.m_sTitle) });
                 }
                 else if (ds.m_eType == .events) {
                     sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
@@ -223,7 +224,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         else if ds.m_eType == .places {
             let cellPlace = tableView.dequeueReusableCell(withIdentifier: "cellPlace", for: indexPath) as! PlaceCell
             cellPlace.m_lbTitle.text = rec.m_sTitle;
-            var sDistance = "  ";
+            var sDistance = "";
             if m_bUserLocationAcquired && rec.m_aLocation != nil {
                 if rec.m_distFromUser > 1000 {
                     let km = round(rec.m_distFromUser/10.0)/100.0;
@@ -232,6 +233,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 else {
                     sDistance = "\(Int(rec.m_distFromUser)) m";
                 }
+            }
+            if let text = rec.m_sText {
+                if !sDistance.isEmpty {
+                    sDistance += " | ";
+                }
+                sDistance += text;
+            }
+            if sDistance.isEmpty {
+                sDistance = "  "    // must not be empty, causes strange effects
             }
             cellPlace.m_lbText.text = sDistance;
             cell = cellPlace;
