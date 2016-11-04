@@ -15,14 +15,12 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbDate: UILabel!
-    //@IBOutlet weak var m_lbCategory: UILabel!
     
 }
 class EventCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbDate: UILabel!
-    //@IBOutlet weak var m_lbCategory: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnBuy: UIButton!
     @IBOutlet weak var m_btnAddToCalendar: UIButton!
@@ -36,8 +34,11 @@ class PlaceCell: UITableViewCell {
 
 class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate {
     var m_aDataSource: CRxDataSource?
+    var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
+    var m_orderedCategories = [String]()                // sorted category local names
     var m_locManager = CLLocationManager();
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
+    var m_bUserLocationAcquired = false;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,33 +53,120 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap));
             }
             
-            if ds.m_eType != .places {
-                self.tableView.rowHeight = UITableViewAutomaticDimension;
-                self.tableView.estimatedRowHeight = 90.0;
+            if ds.m_eType == .places {
+                self.tableView.allowsSelection = true;
+                if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                    m_locManager.startUpdatingLocation();
+                }
+            }
+            self.tableView.rowHeight = UITableViewAutomaticDimension;
+            self.tableView.estimatedRowHeight = 90.0;
+        }
+        setRecordsDistance();
+        sortRecords();
+    }
+    
+    func sortRecords() {
+        guard let ds = m_aDataSource else {
+            return
+        }
+        m_orderedItems.removeAll();
+        m_orderedCategories.removeAll();
+        
+        let df = DateFormatter();
+        df.dateStyle = .full;
+        df.timeStyle = .none;
+        
+        // first add objects to groups
+        for rec in ds.m_arrItems {
+            var sCatName = "";
+            switch ds.m_eType {
+            case .news: sCatName = "";    // one category for news
+            case .places: sCatName = CRxEventRecord.categoryLocalName(category: rec.m_eCategory);
+            case .events:   // use date as category
+                guard let date = rec.m_aDate else {
+                    continue    // remove recoords without date
+                }
+                sCatName = df.string(from: date);
+            }
+            if m_orderedItems[sCatName] == nil {
+                m_orderedItems[sCatName] = [rec];   // new category
+                m_orderedCategories.append(sCatName);
+            }
+            else {
+                m_orderedItems[sCatName]?.append(rec);  // into existing
+            }
+        }
+        // now sort each group by distance and name (Swift 3 does not support inplace ordering)
+        var sortedItems = [String : [CRxEventRecord]]();
+        for groupIt in m_orderedItems {
+            if ds.m_eType == .places {
+                sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser || ($0.m_distFromUser == $1.m_distFromUser && $0.m_sTitle < $1.m_sTitle) });
+            }
+            else if (ds.m_eType == .events) {
+                sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
+            }
+        }
+        m_orderedItems = sortedItems;
+    }
+    
+    func setRecordsDistance() {
+        guard let ds = m_aDataSource else {
+            return
+        }
+        if !m_bUserLocationAcquired {
+            return
+        }
+        let locUser = CLLocation(latitude: m_coordLast.latitude, longitude: m_coordLast.longitude);
+        for rec in ds.m_arrItems {
+            if let loc = rec.m_aLocation {
+                rec.m_distFromUser = loc.distance(from: locUser);
             }
         }
     }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return m_orderedCategories.count;
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let ds = m_aDataSource {
-            return ds.m_arrItems.count;
+        if let items = m_orderedItems[m_orderedCategories[section]] {
+            return items.count;
         }
         else {
             return 0;
         }
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (m_orderedCategories.count < 2) {
+            return nil
+        }
+        return m_orderedCategories[section];
+    }
+    
+    func record(at indexPath:IndexPath) -> CRxEventRecord? {
+        if let items = m_orderedItems[m_orderedCategories[indexPath.section]] {
+            return items[indexPath.row];
+        }
+        else {
+            return nil;
+        }
+    }
+    
+    func btnTag(from indexPath:IndexPath) -> Int {
+        return indexPath.section*10000 + indexPath.row;
+    }
+    func btnIndexPath(from tag:Int) -> IndexPath {
+        return IndexPath(row: tag % 10000, section: tag / 10000);
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let ds = m_aDataSource
+        guard let rec = record(at: indexPath),
+            let ds = m_aDataSource
             else {return UITableViewCell();}
-
-        let rec: CRxEventRecord = ds.m_arrItems[indexPath.row];
 
         var cell: UITableViewCell!;
         
@@ -115,31 +203,41 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellEvent.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
             cellEvent.m_btnBuy.isHidden = (rec.m_sBuyLink==nil);
             
-            cellEvent.m_btnWebsite.tag = indexPath.row;
-            cellEvent.m_btnBuy.tag = indexPath.row;
-            cellEvent.m_btnAddToCalendar.tag = indexPath.row;
+            let iBtnTag = btnTag(from: indexPath);
+            cellEvent.m_btnWebsite.tag = iBtnTag;
+            cellEvent.m_btnBuy.tag = iBtnTag;
+            cellEvent.m_btnAddToCalendar.tag = iBtnTag;
             cell = cellEvent;
         }
         else if ds.m_eType == .places {
             let cellPlace = tableView.dequeueReusableCell(withIdentifier: "cellPlace", for: indexPath) as! PlaceCell
             cellPlace.m_lbTitle.text = rec.m_sTitle;
-            cellPlace.m_lbText.text = rec.m_sText ?? "";
+            var sDistance = "  ";
+            if m_bUserLocationAcquired && rec.m_aLocation != nil {
+                if rec.m_distFromUser > 1000 {
+                    let km = round(rec.m_distFromUser/10.0)/100.0;
+                    sDistance = "\(km) km";
+                }
+                else {
+                    sDistance = "\(Int(rec.m_distFromUser)) m";
+                }
+            }
+            cellPlace.m_lbText.text = sDistance;
             cell = cellPlace;
-            self.tableView.allowsSelection = true;
         }
         else {
             cell = UITableViewCell();
         }
         
-        cell.setNeedsUpdateConstraints();
-        cell.updateConstraintsIfNeeded();
+        if ds.m_eType != .places {
+            cell.setNeedsUpdateConstraints();
+            cell.updateConstraintsIfNeeded();
+        }
         return cell;
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let ds = m_aDataSource {
-            let rec = ds.m_arrItems[indexPath.row];
-            
+        if let rec = record(at: indexPath) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
             placeCtl.m_aRecord = rec;
@@ -148,24 +246,21 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        if let ds = m_aDataSource {
-            let rec = ds.m_arrItems[indexPath.row];
+        if let rec = record(at: indexPath) {
             rec.openInfoLink();
         }
     }
     
     @IBAction func onBtnWebsiteTouched(_ sender: Any) {
-        if let ds = m_aDataSource,
-            let btn = sender as? UIButton {
-            let rec = ds.m_arrItems[btn.tag];
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.openInfoLink();
         }
     }
     
     @IBAction func onBtnBuyTouched(_ sender: Any) {
-        if let ds = m_aDataSource,
-            let btn = sender as? UIButton {
-            let rec = ds.m_arrItems[btn.tag];
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.openBuyLink();
         }
     }
@@ -196,20 +291,18 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
                     print("OK")})
                 alertController.addAction(actionOK);
-                self.present(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil);
             }
         })
     }
     
-    func eventEditViewController(_ controller: EKEventEditViewController,
-                                 didCompleteWith action: EKEventEditViewAction){
-        self.dismiss(animated: true, completion: nil)
+    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+        self.dismiss(animated: true, completion: nil);
     }
     
     @IBAction func onBtnCalendarTouched(_ sender: Any) {
-        if let ds = m_aDataSource,
-            let btn = sender as? UIButton {
-            let rec = ds.m_arrItems[btn.tag];
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)) {
             if let startDate = rec.m_aDate {
                 var endDate = rec.m_aDateTo
                 if endDate == nil {
@@ -223,9 +316,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
             m_coordLast = lastLocation.coordinate;
-            //m_bUserLocationAcquired = YES;
+            m_bUserLocationAcquired = true;
             
-            // TODO: reorder items according to distance to user
+            setRecordsDistance();
+            sortRecords();
+            self.tableView.reloadData();
         }
     }
 

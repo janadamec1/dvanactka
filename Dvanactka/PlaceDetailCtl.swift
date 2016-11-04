@@ -30,9 +30,11 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         if let rec = m_aRecord {
             m_lbTitle.text = rec.m_sTitle;
             m_lbText.text = rec.m_sText;
-            m_lbCategory.text = rec.m_sCategory;
             
-            if rec.m_sCategory == nil {
+            if let category = rec.m_eCategory {
+                m_lbCategory.text = CRxEventRecord.categoryLocalName(category: category);
+            }
+            else {
                 m_lbCategory.isHidden = true;
             }
             
@@ -45,7 +47,14 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             }
             
             if let hours = rec.m_arrOpeningHours {
-                // TODO
+                let df = DateFormatter();
+                var sHours = ""
+                for hourIt in hours {
+                    let sWeekDay = df.shortWeekdaySymbols[hourIt.key-1]; //???
+                    let hi = hourIt.value;
+                    sHours += sWeekDay + ": \(hi.m_hourStart/100):\(hi.m_hourStart%100) - \(hi.m_hourEnd/100):\(hi.m_hourEnd%100)\n"
+                }
+                m_lbOpeningHours.text = sHours;
             }
             else {
                 m_lbOpeningHoursTitle.isHidden = true;

@@ -10,27 +10,35 @@ import UIKit
 import CoreLocation
 import Kanna
 
-class CRxDateInterval: NSObject {
-    var m_dateStart: Date!
-    var m_dateEnd: Date!
+class CRxHourInterval: NSObject {
+    var m_hourStart: Int        // int as 1235 = 12:35, or 1000 = 10:00
+    var m_hourEnd: Int
     
-    init(start: Date, end: Date) {
-        m_dateStart = start;
-        m_dateEnd = end;
+    init(start: Int, end: Int) {
+        m_hourStart = start;
+        m_hourEnd = end;
     }
+}
+
+enum CRxCategory: String {
+    case lekarna, policie
+    case pamatka, pamatnyStrom, vyznamnyStrom
+    case remeslnik, restaurace, obchod
 }
 
 class CRxEventRecord: NSObject {
     var m_sTitle: String = ""
     var m_sInfoLink: String?
     var m_sBuyLink: String?
-    var m_sCategory: String?
+    var m_eCategory: CRxCategory?
     var m_sText: String?
     var m_aDate: Date?      // date and time of an event start or publish date of an article
     var m_aDateTo: Date?    // date and time of an evend end
     var m_sAddress: String? // location address
     var m_aLocation: CLLocation?    // event location
-    var m_arrOpeningHours: [Int: CRxDateInterval]?  // dictionary weekday -> interval
+    var m_arrOpeningHours: [Int: CRxHourInterval]?  // dictionary weekday (1 = monday, 7 = sunday) -> hour interval
+    
+    var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude // calculated and set in runtime
     
     init(title sTitle: String) {
         m_sTitle = sTitle
@@ -56,7 +64,7 @@ class CRxEventRecord: NSObject {
         
         if let infoLink = jsonItem["infoLink"] as? String { m_sInfoLink = infoLink }
         if let buyLink = jsonItem["buyLink"] as? String { m_sBuyLink = buyLink }
-        if let category = jsonItem["category"] as? String { m_sCategory = category }
+        if let category = jsonItem["category"] as? String { m_eCategory = CRxCategory(rawValue: category); }
         if let text = jsonItem["text"] as? String { m_sText = text }
         if let date = jsonItem["date"] as? String { m_aDate = CRxEventRecord.loadDate(string: date); }
         if let dateTo = jsonItem["dateTo"] as? String { m_aDateTo = CRxEventRecord.loadDate(string: dateTo); }
@@ -71,7 +79,7 @@ class CRxEventRecord: NSObject {
         var item: [String: AnyObject] = ["title": m_sTitle as AnyObject]
         if let infoLink = m_sInfoLink { item["infoLink"] = infoLink as AnyObject }
         if let buyLink = m_sBuyLink { item["buyLink"] = buyLink as AnyObject }
-        if let category = m_sCategory { item["category"] = category as AnyObject }
+        if let category = m_eCategory { item["category"] = category.rawValue as AnyObject }
         if let text = m_sText { item["text"] = text as AnyObject }
         if let date = m_aDate { item["date"] = CRxEventRecord.saveDate(date: date) as AnyObject }
         if let dateTo = m_aDateTo { item["dateTo"] = CRxEventRecord.saveDate(date: dateTo) as AnyObject }
@@ -84,6 +92,29 @@ class CRxEventRecord: NSObject {
         return item;
     }
     
+    static func categoryLocalName(category: CRxCategory) -> String {
+        switch category {
+        case .lekarna: return NSLocalizedString("Pharmacies", comment: "");
+        case .policie: return NSLocalizedString("Police", comment: "");
+        case .pamatka: return NSLocalizedString("Landmarks", comment: "");
+        case .pamatnyStrom: return NSLocalizedString("Memorial Trees", comment: "");
+        case .vyznamnyStrom: return NSLocalizedString("Significant Trees", comment: "");
+        case .remeslnik: return NSLocalizedString("Artisans", comment: "");
+        case .restaurace: return NSLocalizedString("Restaurants", comment: "");
+        case .obchod: return NSLocalizedString("Shops", comment: "");
+        //default: return category.rawValue;
+        }
+    }
+
+    static func categoryLocalName(category: CRxCategory?) -> String {
+        if let cat = category {
+            return CRxEventRecord.categoryLocalName(category: cat);
+        }
+        else {
+            return "";
+        }
+    }
+
     func openInfoLink() {
         if let link = m_sInfoLink,
             let url = URL(string: link) {
@@ -310,9 +341,9 @@ class CRxDataSourceManager : NSObject {
                         if let aTextNode = node.xpath("div[1]").first {
                             aNewRecord.m_sText = aTextNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
-                        if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
-                            aNewRecord.m_sCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
+                        /*if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
+                            aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
+                        }*/
                         //dump(aNewRecord)
                         arrNewItems.append(aNewRecord);
                     }
