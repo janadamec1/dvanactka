@@ -21,7 +21,7 @@ class CRxHourInterval: NSObject {
 }
 
 enum CRxCategory: String {
-    case lekarna, policie
+    case lekarna, prvniPomoc, policie
     case pamatka, pamatnyStrom, vyznamnyStrom
     case remeslnik, restaurace, obchod
 }
@@ -36,6 +36,8 @@ class CRxEventRecord: NSObject {
     var m_aDateTo: Date?    // date and time of an evend end
     var m_sAddress: String? // location address
     var m_aLocation: CLLocation?    // event location
+    var m_sPhoneNumber: String?
+    var m_sEmail: String?
     var m_arrOpeningHours: [Int: CRxHourInterval]?  // dictionary weekday (1 = monday, 7 = sunday) -> hour interval
     
     var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude // calculated and set in runtime
@@ -66,6 +68,9 @@ class CRxEventRecord: NSObject {
         if let buyLink = jsonItem["buyLink"] as? String { m_sBuyLink = buyLink }
         if let category = jsonItem["category"] as? String { m_eCategory = CRxCategory(rawValue: category); }
         if let text = jsonItem["text"] as? String { m_sText = text }
+        if let phone = jsonItem["phone"] as? String { m_sPhoneNumber = phone }
+        if let email = jsonItem["email"] as? String { m_sEmail = email }
+        if let address = jsonItem["address"] as? String { m_sAddress = address }
         if let date = jsonItem["date"] as? String { m_aDate = CRxEventRecord.loadDate(string: date); }
         if let dateTo = jsonItem["dateTo"] as? String { m_aDateTo = CRxEventRecord.loadDate(string: dateTo); }
 
@@ -81,6 +86,9 @@ class CRxEventRecord: NSObject {
         if let buyLink = m_sBuyLink { item["buyLink"] = buyLink as AnyObject }
         if let category = m_eCategory { item["category"] = category.rawValue as AnyObject }
         if let text = m_sText { item["text"] = text as AnyObject }
+        if let phone = m_sPhoneNumber { item["phone"] = phone as AnyObject }
+        if let email = m_sEmail { item["email"] = email as AnyObject }
+        if let address = m_sAddress { item["address"] = address as AnyObject }
         if let date = m_aDate { item["date"] = CRxEventRecord.saveDate(date: date) as AnyObject }
         if let dateTo = m_aDateTo { item["dateTo"] = CRxEventRecord.saveDate(date: dateTo) as AnyObject }
         
@@ -95,6 +103,7 @@ class CRxEventRecord: NSObject {
     static func categoryLocalName(category: CRxCategory) -> String {
         switch category {
         case .lekarna: return NSLocalizedString("Pharmacies", comment: "");
+        case .prvniPomoc: return NSLocalizedString("First Aid", comment: "");
         case .policie: return NSLocalizedString("Police", comment: "");
         case .pamatka: return NSLocalizedString("Landmarks", comment: "");
         case .pamatnyStrom: return NSLocalizedString("Memorial Trees", comment: "");
@@ -161,8 +170,10 @@ class CRxDataSource : NSObject {
             let jsonString = try String(contentsOf: file, encoding: .utf8);
             let jsonData = jsonString.data(using: String.Encoding.utf8)!;
             json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions()) as AnyObject
-        } catch { return }
-        
+        } catch let error as NSError {
+            print("JSON parsing failed: \(error.localizedDescription)"); return;
+        }
+
         // load data
         if let jsonItems = json["items"] as? [[String : AnyObject]] {
             m_arrItems.removeAll(); // remove old items
@@ -222,6 +233,7 @@ class CRxDataSourceManager : NSObject {
     static let dsBiografProgram = "dsBiografProgram";
     static let dsCooltour = "dsCooltour";
     static let dsCoolTrees = "dsCoolTrees";
+    static let dsSosContacts = "dsSosContacts";
     
     var m_urlDocumentsDir: URL!
     
@@ -236,6 +248,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský Biograf", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
         m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("SOS Contacts", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
     }
     
     //--------------------------------------------------------------------------
@@ -293,6 +306,11 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsCoolTrees {
             if let path = Bundle.main.url(forResource: "/test_files/p12stromy", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+            }
+        }
+        else if id == CRxDataSourceManager.dsSosContacts {
+            if let path = Bundle.main.url(forResource: "/test_files/sos", withExtension: "json") {
                 ds.loadFromJSON(file: path);
             }
         }
