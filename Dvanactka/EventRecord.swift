@@ -11,12 +11,41 @@ import CoreLocation
 import Kanna
 
 class CRxHourInterval: NSObject {
+    var m_weekday: Int          // weekday (1 = monday, 7 = sunday)
     var m_hourStart: Int        // int as 1235 = 12:35, or 1000 = 10:00
     var m_hourEnd: Int
     
-    init(start: Int, end: Int) {
+    init(weekday: Int, start: Int, end: Int) {
+        m_weekday = weekday;
         m_hourStart = start;
         m_hourEnd = end;
+    }
+    
+    init?(from string:String) {
+        if let iColon = string.range(of: ":"),
+                let iHyphen = string.range(of: "-") {
+            let day = string.substring(to: iColon.lowerBound)
+            let hourStart = string.substring(with: Range(uncheckedBounds: (lower: iColon.upperBound, upper: iHyphen.lowerBound)))
+            let hourEnd = string.substring(from: iHyphen.upperBound)
+            if let iDay = Int(day),
+                    let iHourStart = Int(hourStart),
+                    let iHourEnd = Int(hourEnd) {
+                m_weekday = iDay;
+                m_hourStart = iHourStart;
+                m_hourEnd = iHourEnd;
+                super.init()
+            }
+            else {
+                return nil;
+            }
+        }
+        else {
+            return nil;
+        }
+    }
+    
+    func toString() -> String {
+        return "\(m_weekday): \(m_hourStart)-\(m_hourEnd)";
     }
 }
 
@@ -38,7 +67,7 @@ class CRxEventRecord: NSObject {
     var m_aLocation: CLLocation?    // event location
     var m_sPhoneNumber: String?
     var m_sEmail: String?
-    var m_arrOpeningHours: [Int: CRxHourInterval]?  // dictionary weekday (1 = monday, 7 = sunday) -> hour interval
+    var m_arrOpeningHours: [CRxHourInterval]?
     
     var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude // calculated and set in runtime
     
@@ -78,6 +107,16 @@ class CRxEventRecord: NSObject {
             let locationLong = jsonItem["locationLong"] as? String,
             let dLocLat = Double(locationLat),
             let dLocLong = Double(locationLong) { m_aLocation = CLLocation(latitude: dLocLat, longitude: dLocLong) }
+        
+        if let hours = jsonItem["openingHours"] as? String {
+            m_arrOpeningHours = [CRxHourInterval]();
+            let lstDays = hours.replacingOccurrences(of: " ", with: "").components(separatedBy: ",");
+            for dayIt in lstDays {
+                if let interval = CRxHourInterval(from: dayIt) {
+                    m_arrOpeningHours?.append(interval);
+                }
+            }
+        }
     }
     
     func saveToJSON() -> [String: AnyObject] {
@@ -95,6 +134,17 @@ class CRxEventRecord: NSObject {
         if let location = m_aLocation {
             item["locationLat"] = String(location.coordinate.latitude) as AnyObject
             item["locationLong"] = String(location.coordinate.longitude) as AnyObject
+        }
+        
+        if let hours = m_arrOpeningHours {
+            var sVal = "";
+            for it in hours {
+                if sVal.isEmpty {
+                    sVal += ", ";
+                }
+                sVal += it.toString();
+            }
+            item["openingHours"] = sVal as AnyObject;
         }
         
         return item;

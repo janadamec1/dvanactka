@@ -7,7 +7,11 @@
 //
 
 import UIKit
+import MapKit
 import MessageUI
+
+//NOTE: to get the stackview start at the top of scrollview, I had to switch OFF ViewController.adjustScrollViewInsets (even if it should be opposite)
+// see http://fuckingscrollviewautolayout.com
 
 class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_lbTitle: UILabel!
@@ -17,8 +21,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_lbAddress: UILabel!
     @IBOutlet weak var m_lbOpeningHoursTitle: UILabel!
     @IBOutlet weak var m_lbOpeningHours: UILabel!
+    @IBOutlet weak var m_lbOpeningHours2: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
+    @IBOutlet weak var m_btnEmail: UIButton!
+    @IBOutlet weak var m_btnPhone: UIButton!
     @IBOutlet weak var m_btnMap: UIButton!
+    @IBOutlet weak var m_map: MKMapView!
     
     
     var m_aRecord: CRxEventRecord?
@@ -48,21 +56,64 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             
             if let hours = rec.m_arrOpeningHours {
                 let df = DateFormatter();
-                var sHours = ""
-                for hourIt in hours {
-                    let sWeekDay = df.shortWeekdaySymbols[hourIt.key-1]; //???
-                    let hi = hourIt.value;
-                    sHours += sWeekDay + ": \(hi.m_hourStart/100):\(hi.m_hourStart%100) - \(hi.m_hourEnd/100):\(hi.m_hourEnd%100)\n"
+                var sDays = "";
+                var sHours = "";
+                var iLastDay = 0;
+                for it in hours {
+                    let sWeekDay = df.shortWeekdaySymbols[it.m_weekday % 7];
+                    let sStart = String(format: "%d:%02d", (it.m_hourStart/100), (it.m_hourStart%100));
+                    let sEnd = String(format: "%d:%02d", (it.m_hourEnd/100), (it.m_hourEnd%100));
+                    let sRange = " \(sStart) - \(sEnd)";
+                    if iLastDay == it.m_weekday {
+                        sHours += sRange    // another interval within same day
+                    }
+                    else {
+                        if !sHours.isEmpty {
+                            sHours += "\n"
+                            sDays += "\n"
+                        }
+                        sDays += "\(sWeekDay): ";
+                        sHours += sRange;
+                        iLastDay = it.m_weekday
+                    }
                 }
-                m_lbOpeningHours.text = sHours;
+                m_lbOpeningHours.text = sDays;
+                m_lbOpeningHours2.text = sHours;
             }
             else {
                 m_lbOpeningHoursTitle.isHidden = true;
                 m_lbOpeningHours.isHidden = true;
+                m_lbOpeningHours2.isHidden = true;
+            }
+
+            if let link = rec.m_sInfoLink {
+                m_btnWebsite.setTitle(link, for: UIControlState.normal)
+            }
+            else {
+                m_btnWebsite.isHidden = true;
+            }
+            if let email = rec.m_sEmail {
+                m_btnEmail.setTitle(email, for: UIControlState.normal)
+            }
+            else {
+                m_btnEmail.isHidden = true;
+            }
+            if let phone = rec.m_sPhoneNumber {
+                m_btnPhone.setTitle("Tel: " + phone, for: UIControlState.normal)
+            }
+            else {
+                m_btnPhone.isHidden = true;
             }
             
-            m_btnWebsite.isHidden = (rec.m_sInfoLink == nil);
-            m_btnMap.isHidden = (rec.m_aLocation == nil);
+            if let location = rec.m_aLocation {
+                let regView = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500);
+                m_map.setRegion(regView, animated:true);
+                m_map.addAnnotation(CRxMapItem(record: rec));
+            }
+            else {
+                m_map.isHidden = true;
+                m_btnMap.isHidden = true;
+            }
         }
     }
 
@@ -92,6 +143,31 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         if let rec = m_aRecord {
             let aMapItem = CRxMapItem(record: rec);
             aMapItem.mapItem().openInMaps(launchOptions: nil);
+        }
+    }
+    
+    @IBAction func onBtnEmailTouched(_ sender: Any) {
+        guard let rec = m_aRecord,
+            let email = rec.m_sEmail
+            else {return;}
+        
+        let mailer = MFMailComposeViewController();
+        mailer.mailComposeDelegate = self;
+        
+        mailer.setToRecipients(["\(email)"]);
+        mailer.modalPresentationStyle = .formSheet;
+        present(mailer, animated: true, completion: nil);
+    }
+    
+    @IBAction func onBtnPhoneTouched(_ sender: Any) {
+        guard let rec = m_aRecord,
+            let phone = rec.m_sPhoneNumber
+            else {return;}
+        
+        let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
+        
+        if let url = URL(string: "tel://\(cleanedNumber)") {
+            UIApplication.shared.openURL(url);
         }
     }
     
