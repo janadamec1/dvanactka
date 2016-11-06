@@ -22,6 +22,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_lbOpeningHoursTitle: UILabel!
     @IBOutlet weak var m_lbOpeningHours: UILabel!
     @IBOutlet weak var m_lbOpeningHours2: UILabel!
+    @IBOutlet weak var m_lbNote: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnEmail: UIButton!
     @IBOutlet weak var m_btnPhone: UIButton!
@@ -53,7 +54,8 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 m_lbAddressTitle.isHidden = true;
                 m_lbAddress.isHidden = true;
             }
-            
+            m_lbNote.isHidden = true;
+
             if let hours = rec.m_arrOpeningHours {
                 let df = DateFormatter();
                 var sDays = "";
@@ -79,6 +81,41 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 }
                 m_lbOpeningHours.text = sDays;
                 m_lbOpeningHours2.text = sHours;
+            }
+            else if let events = rec.m_arrEvents {
+                var sType = "";
+                var sHours = "";
+                var bHasVok = false;
+                var bHasBio = false;
+                for it in events {
+                    if !sHours.isEmpty {
+                        sHours += "\n"
+                        sType += "\n"
+                    }
+                    sType += it.m_sType + ": ";
+                    sHours += it.toDisplayString();
+                    
+                    if it.m_sType == "obj. odpad" {
+                        bHasVok = true;
+                    }
+                    else if it.m_sType == "bioodpad" || it.m_sType == "větve" {
+                        bHasBio = true;
+                    }
+                    
+                }
+                m_lbOpeningHoursTitle.text = NSLocalizedString("Timetable", comment: "")
+                m_lbOpeningHours.text = sType;
+                m_lbOpeningHours2.text = sHours;
+                
+                if bHasVok || bHasBio {
+                    var sNote = "";
+                    if bHasVok { sNote = NSLocalizedString("Waste.vok.longdesc", comment: ""); }
+                    //if bHasVok && bHasBio { sNote += "\n"; }
+                    //if bHasBio { sNote += NSLocalizedString("Waste.bio.longdesc", comment: ""); }
+                    m_lbNote.text = sNote;
+                    m_lbNote.isHidden = false;
+                }
+
             }
             else {
                 m_lbOpeningHoursTitle.isHidden = true;

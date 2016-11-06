@@ -36,10 +36,10 @@
 		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC01DCA891400A402C9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCtl.swift; sourceTree = "<group>"; };
+		4D4264061DCFD408008ED01F /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main.strings; sourceTree = "<group>"; };
 		4D6677091DCB340F004876FA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailCtl.swift; sourceTree = "<group>"; };
 		4D66770F1DCB8CDD004876FA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		4D6677121DCBA2D4004876FA /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main.strings; sourceTree = "<group>"; };
 		4D6677131DCBA4DA004876FA /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		4D6677161DCBC23E004876FA /* goldstar25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goldstar25.png; path = img/goldstar25.png; sourceTree = "<group>"; };
 		4D6677171DCBC23E004876FA /* goldstar25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "goldstar25@2x.png"; path = "img/goldstar25@2x.png"; sourceTree = "<group>"; };
@@ -310,7 +310,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D9019391DC65E16001488D3 /* Base */,
-				4D6677121DCBA2D4004876FA /* cs */,
+				4D4264061DCFD408008ED01F /* cs */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

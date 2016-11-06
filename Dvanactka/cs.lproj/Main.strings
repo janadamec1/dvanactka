@@ -1,6 +1,6 @@
 
 /* Class = "UILabel"; text = "Opening Hours"; ObjectID = "2wi-TB-T53"; */
-"2wi-TB-T53.text" = "Otevírací doba";
+"2wi-TB-T53.text" = "Otevírací hodiny";
 
 /* Class = "UILabel"; text = "datum"; ObjectID = "471-9b-l7C"; */
 "471-9b-l7C.text" = "datum";
@@ -8,11 +8,8 @@
 /* Class = "UILabel"; text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "; ObjectID = "4G5-n2-Afa"; */
 "4G5-n2-Afa.text" = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text ";
 
-/* Class = "UIButton"; normalTitle = "Biograf"; ObjectID = "4lm-TQ-COZ"; */
-"4lm-TQ-COZ.normalTitle" = "Biograf";
-
-/* Class = "UIButton"; normalTitle = "Radnice upozorneni"; ObjectID = "580-Oh-Zoy"; */
-"580-Oh-Zoy.normalTitle" = "Radnice upozorneni";
+/* Class = "UILabel"; text = "Note"; ObjectID = "4jL-Ru-owg"; */
+"4jL-Ru-owg.text" = "Note";
 
 /* Class = "UILabel"; text = "text text text text text text text text text text text text text text text text "; ObjectID = "6et-kn-i8x"; */
 "6et-kn-i8x.text" = "text text text text text text text text text text text text text text text text ";
@@ -20,29 +17,32 @@
 /* Class = "UIButton"; normalTitle = "Website"; ObjectID = "6qg-xM-OJA"; */
 "6qg-xM-OJA.normalTitle" = "Web";
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "993-jr-BcL"; */
-"993-jr-BcL.text" = "Title";
+/* Class = "UILabel"; text = "Title title title title title title titile"; ObjectID = "993-jr-BcL"; */
+"993-jr-BcL.text" = "Title title title title title title titile";
 
-/* Class = "UIViewController"; title = "Places Map"; ObjectID = "A6g-QX-0Ro"; */
+/* Class = "UIViewController"; title = "Map"; ObjectID = "A6g-QX-0Ro"; */
 "A6g-QX-0Ro.title" = "Mapa";
+
+/* Class = "UINavigationItem"; title = "Dvanactka"; ObjectID = "AaG-gc-ccj"; */
+"AaG-gc-ccj.title" = "[12]";
 
 /* Class = "UILabel"; text = "Address"; ObjectID = "Cxr-O7-u2X"; */
 "Cxr-O7-u2X.text" = "Adresa";
 
-/* Class = "UIViewController"; title = "Place"; ObjectID = "IoX-1s-I15"; */
-"IoX-1s-I15.title" = "Místo";
+/* Class = "UIButton"; normalTitle = "Email"; ObjectID = "HnF-vY-94c"; */
+"HnF-vY-94c.normalTitle" = "Email";
 
-/* Class = "UIButton"; normalTitle = "Stromy"; ObjectID = "J1Z-OK-Ihw"; */
-"J1Z-OK-Ihw.normalTitle" = "Stromy";
+/* Class = "UIButton"; normalTitle = "Navigate"; ObjectID = "Jcs-vc-UN8"; */
+"Jcs-vc-UN8.normalTitle" = "Navigovat";
 
-/* Class = "UIButton"; normalTitle = "Map"; ObjectID = "Jcs-vc-UN8"; */
-"Jcs-vc-UN8.normalTitle" = "Mapa";
-
-/* Class = "UIButton"; normalTitle = "Report issue"; ObjectID = "Jx3-Fi-Nyt"; */
-"Jx3-Fi-Nyt.normalTitle" = "Nahlásit problém";
+/* Class = "UIButton"; normalTitle = "Report mistake"; ObjectID = "Jx3-Fi-Nyt"; */
+"Jx3-Fi-Nyt.normalTitle" = "Nahlásit chybu";
 
 /* Class = "UIButton"; normalTitle = "Add to Calendar"; ObjectID = "K2E-nI-Ubz"; */
 "K2E-nI-Ubz.normalTitle" = "Přidat do kalendáře";
+
+/* Class = "UIButton"; normalTitle = "Website"; ObjectID = "Lq9-ln-0zD"; */
+"Lq9-ln-0zD.normalTitle" = "Web";
 
 /* Class = "UIButton"; normalTitle = "Website"; ObjectID = "Nm0-pv-FdJ"; */
 "Nm0-pv-FdJ.normalTitle" = "Web";
@@ -53,32 +53,29 @@
 /* Class = "UIButton"; normalTitle = "Buy"; ObjectID = "RYH-3t-ore"; */
 "RYH-3t-ore.normalTitle" = "Koupit";
 
-/* Class = "UILabel"; text = "Po: 10:00 - 18:00"; ObjectID = "XlI-hd-9SU"; */
-"XlI-hd-9SU.text" = "Po: 10:00 - 18:00";
+/* Class = "UIButton"; normalTitle = "Phone"; ObjectID = "W6Y-zE-BJw"; */
+"W6Y-zE-BJw.normalTitle" = "Tel";
 
-/* Class = "UILabel"; text = "text text text text text text text text text text text text text text text text "; ObjectID = "YgD-73-Q34"; */
-"YgD-73-Q34.text" = "text text text text text text text text text text text text text text text text ";
+/* Class = "UILabel"; text = "Po: "; ObjectID = "XlI-hd-9SU"; */
+"XlI-hd-9SU.text" = "Po: ";
 
-/* Class = "UIButton"; normalTitle = "Domy"; ObjectID = "aOU-NK-tUG"; */
-"aOU-NK-tUG.normalTitle" = "Domy";
+/* Class = "UILabel"; text = "1234 km"; ObjectID = "YgD-73-Q34"; */
+"YgD-73-Q34.text" = "1234 km";
 
-/* Class = "UILabel"; text = "Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. "; ObjectID = "ckf-Nn-Lxg"; */
-"ckf-Nn-Lxg.text" = "Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. ";
+/* Class = "UILabel"; text = "Label"; ObjectID = "cJ0-vZ-hRZ"; */
+"cJ0-vZ-hRZ.text" = "Label";
 
-/* Class = "UIButton"; normalTitle = "Radnice aktuality"; ObjectID = "h7f-F6-qnr"; */
-"h7f-F6-qnr.normalTitle" = "Radnice aktuality";
-
-/* Class = "UIButton"; normalTitle = "Radnice akce"; ObjectID = "m6f-BI-noI"; */
-"m6f-BI-noI.normalTitle" = "Radnice akce";
+/* Class = "UILabel"; text = "Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. "; ObjectID = "ckf-Nn-Lxg"; */
+"ckf-Nn-Lxg.text" = "Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. ";
 
 /* Class = "UILabel"; text = "category"; ObjectID = "ocB-Ig-57a"; */
 "ocB-Ig-57a.text" = "category";
 
 /* Class = "UITableViewController"; title = "Events"; ObjectID = "r8a-Ox-9c9"; */
-"r8a-Ox-9c9.title" = "Events";
+"r8a-Ox-9c9.title" = "Události";
 
-/* Class = "UILabel"; text = "datum"; ObjectID = "unt-ET-aoo"; */
-"unt-ET-aoo.text" = "datum";
+/* Class = "UILabel"; text = "- 20:25 AM"; ObjectID = "unt-ET-aoo"; */
+"unt-ET-aoo.text" = "- 20:25 AM";
 
 /* Class = "UILabel"; text = "Piskova 10"; ObjectID = "uob-xb-okX"; */
 "uob-xb-okX.text" = "Piskova 10";
@@ -88,3 +85,6 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "w9d-qA-hjD"; */
 "w9d-qA-hjD.text" = "Title";
+
+/* Class = "UILabel"; text = "10:00 - 18:00"; ObjectID = "wLu-x4-dnw"; */
+"wLu-x4-dnw.text" = "10:00 - 18:00";

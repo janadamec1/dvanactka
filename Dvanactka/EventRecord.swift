@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Kanna
 
+// this class is for opening hours
 class CRxHourInterval: NSObject {
     var m_weekday: Int          // weekday (1 = monday, 7 = sunday)
     var m_hourStart: Int        // int as 1235 = 12:35, or 1000 = 10:00
@@ -49,10 +50,68 @@ class CRxHourInterval: NSObject {
     }
 }
 
+// this class is used for waste containers records
+class CRxEventInterval: NSObject {
+    var m_dateStart: Date
+    var m_dateEnd: Date
+    var m_sType: String
+    
+    init(start: Date, end: Date, type: String) {
+        m_dateStart = start;
+        m_dateEnd = end;
+        m_sType = type;
+        super.init()
+    }
+    
+    init?(from string:String) {
+        let items = string.components(separatedBy: ";")
+        if items.count < 3 {
+            return nil;
+        }
+        guard let start = CRxEventRecord.loadDate(string: items[1]),
+            let end = CRxEventRecord.loadDate(string: items[2])
+        else {
+            return nil;
+        }
+        m_sType = items[0];
+        m_dateStart = start;
+        m_dateEnd = end;
+        super.init()
+    }
+    
+    func toString() -> String {
+        return "\(m_sType);\(CRxEventRecord.saveDate(date: m_dateStart));\(CRxEventRecord.saveDate(date: m_dateEnd))";
+    }
+    
+    func toDisplayString() -> String {
+        // strip time from the date, leave day only
+        let calendar = Calendar.current;
+        var dtc = calendar.dateComponents([.year, .month, .day, .weekday], from: m_dateStart);
+        let dayFrom = calendar.date(from: dtc)
+        
+        let df = DateFormatter();
+        let sWeekDay = df.shortWeekdaySymbols[dtc.weekday!-1];
+
+        dtc = calendar.dateComponents([.year, .month, .day], from: m_dateEnd);
+        let dayTo = calendar.date(from: dtc)
+        
+        df.dateStyle = .short;
+        df.timeStyle = .short;
+        let sFrom = df.string(from: m_dateStart);
+        
+        if dayFrom == dayTo {         // skip dayTo when on the same day (different time)
+            df.dateStyle = .none;
+        }
+        let sTo = df.string(from: m_dateEnd);
+        return "\(sWeekDay) \(sFrom) - \(sTo)";
+    }
+}
+
 enum CRxCategory: String {
     case informace, lekarna, prvniPomoc, policie
     case pamatka, pamatnyStrom, vyznamnyStrom
     case remeslnik, restaurace, obchod
+    case waste
 }
 
 class CRxEventRecord: NSObject {
@@ -68,6 +127,7 @@ class CRxEventRecord: NSObject {
     var m_sPhoneNumber: String?
     var m_sEmail: String?
     var m_arrOpeningHours: [CRxHourInterval]?
+    var m_arrEvents: [CRxEventInterval]?
     
     var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude // calculated and set in runtime
     
@@ -117,6 +177,16 @@ class CRxEventRecord: NSObject {
                 }
             }
         }
+        if let events = jsonItem["events"] as? String {
+            m_arrEvents = [CRxEventInterval]();
+            let lstEvents = events.components(separatedBy: "|");
+            for it in lstEvents {
+                if let interval = CRxEventInterval(from: it) {
+                    m_arrEvents?.append(interval)
+                }
+            }
+            
+        }
     }
     
     func saveToJSON() -> [String: AnyObject] {
@@ -139,12 +209,22 @@ class CRxEventRecord: NSObject {
         if let hours = m_arrOpeningHours {
             var sVal = "";
             for it in hours {
-                if sVal.isEmpty {
+                if !sVal.isEmpty {
                     sVal += ", ";
                 }
                 sVal += it.toString();
             }
             item["openingHours"] = sVal as AnyObject;
+        }
+        if let events = m_arrEvents {
+            var sVal = "";
+            for it in events {
+                if !sVal.isEmpty {
+                    sVal += "|";
+                }
+                sVal += it.toString();
+            }
+            item["events"] = sVal as AnyObject;
         }
         
         return item;
@@ -162,6 +242,7 @@ class CRxEventRecord: NSObject {
         case .remeslnik: return NSLocalizedString("Artisans", comment: "");
         case .restaurace: return NSLocalizedString("Restaurants", comment: "");
         case .obchod: return NSLocalizedString("Shops", comment: "");
+        case .waste: return NSLocalizedString("Waste Dumpsters", comment: "");
         //default: return category.rawValue;
         }
     }
@@ -285,6 +366,7 @@ class CRxDataSourceManager : NSObject {
     static let dsCooltour = "dsCooltour";
     static let dsCoolTrees = "dsCoolTrees";
     static let dsSosContacts = "dsSosContacts";
+    static let dsWaste = "dsWaste";
     
     var m_urlDocumentsDir: URL!
     
@@ -293,12 +375,13 @@ class CRxDataSourceManager : NSObject {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
         
-        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("Townhall News", comment: ""), type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Townhall Alerts", comment: ""), type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Townhall Events", comment: ""), type: .events);
+        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), type: .events);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský Biograf", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        //m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), type: .places, showMap: true);
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
     }
     
@@ -358,6 +441,12 @@ class CRxDataSourceManager : NSObject {
         else if id == CRxDataSourceManager.dsCoolTrees {
             if let path = Bundle.main.url(forResource: "/test_files/p12stromy", withExtension: "json") {
                 ds.loadFromJSON(file: path);
+            }
+        }
+        else if id == CRxDataSourceManager.dsWaste {
+            if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+                refreshWasteDataSource();
             }
         }
         else if id == CRxDataSourceManager.dsSosContacts {
@@ -556,6 +645,9 @@ class CRxDataSourceManager : NSObject {
                     if let aLinkNode = node.xpath("a[@class='cal-event-item shortName']").first {
                         
                         if let aTitleNode = aLinkNode.xpath("h2").first, let sTitle = aTitleNode.text {
+                            if sTitle == "KINO NEHRAJE" {
+                                continue;
+                            }
                             let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
                             
                             var dtc = DateComponents()
@@ -600,6 +692,115 @@ class CRxDataSourceManager : NSObject {
                 aBiografDS.m_dateLastRefreshed = Date();
                 save(dataSource: aBiografDS);
             }
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    func findVokLocation(alias: String, ds: CRxDataSource) -> CRxEventRecord? {
+        let sAliasCompressed = alias.replacingOccurrences(of: " ", with: "");
+        for rec in ds.m_arrItems {
+            if let text = rec.m_sText {
+                let sTextCompressed = text.replacingOccurrences(of: " ", with: "");
+                if sTextCompressed.range(of: sAliasCompressed) != nil {
+                    return rec;
+                }
+            }
+        }
+        return nil;
+    }
+    
+    func processWasteDataFile(csv: String, type: String, into ds: CRxDataSource) {
+        
+        var iTimeStartCol = 2;
+        var iTimeEndCol = 3;
+        var iLocCol = 4;
+        var iTypeCol = -1;
+        if type == "bio" {
+            iTimeStartCol = 1;
+            iTimeEndCol = 2;
+            iLocCol = 3;
+            iTypeCol = 5;
+        }
+        
+        let lines = csv.components(separatedBy: .newlines);
+        var nProcessedCount = 0;
+        for line in lines {
+            let lineItems = line.components(separatedBy: ";");
+            if lineItems.count < 5 {
+                continue;
+            }
+            
+            if let rec = findVokLocation(alias: lineItems[iLocCol], ds: ds) {
+                let sDateComps = lineItems[0].components(separatedBy: ".");
+                let sTimeStartComps = lineItems[iTimeStartCol].components(separatedBy: ":")
+                let sTimeEndComps = lineItems[iTimeEndCol].components(separatedBy: ":")
+                if sDateComps.count != 3 || sTimeStartComps.count != 2 || sTimeEndComps.count != 2 {
+                    continue;
+                }
+                
+                var aDateComps = DateComponents();
+                aDateComps.day = Int(sDateComps[0]);
+                aDateComps.month = Int(sDateComps[1]);
+                aDateComps.year = Int(sDateComps[2]);
+                
+                aDateComps.hour = Int(sTimeStartComps[0]);
+                aDateComps.minute = Int(sTimeStartComps[1]);
+                
+                let dateStart = Calendar.current.date(from: aDateComps);
+                
+                aDateComps.hour = Int(sTimeEndComps[0]);
+                aDateComps.minute = Int(sTimeEndComps[1]);
+                let dateEnd = Calendar.current.date(from: aDateComps);
+                
+                if let dateStart = dateStart, let dateEnd = dateEnd {
+                    // add new record to rec
+                    if rec.m_arrEvents == nil {
+                        rec.m_arrEvents = [CRxEventInterval]();
+                    }
+                    
+                    var sRecType = type;
+                    if iTypeCol >= 0 && iTypeCol < lineItems.count {
+                        sRecType = lineItems[iTypeCol]
+                    }
+                    
+                    rec.m_arrEvents?.append(CRxEventInterval(start: dateStart, end: dateEnd, type: sRecType));
+                    nProcessedCount += 1;
+                }
+            }
+        }
+        print("\(type) lines \(lines.count), processed \(nProcessedCount)");
+    }
+    
+    func refreshWasteDataSource() {
+        
+        guard let aVokDS = m_dictDataSources[CRxDataSourceManager.dsWaste]
+            else { return }
+        
+        //if let doc = HTML(url: url!, encoding: .utf8) {
+        if let pathVok = Bundle.main.path(forResource: "/test_files/vok_vok", ofType: "csv"),
+            let pathBio = Bundle.main.path(forResource: "/test_files/vok_bio", ofType: "csv") {
+            
+            // remove all events
+            for rec in aVokDS.m_arrItems {
+                rec.m_arrEvents = nil;
+            }
+
+            let csvVok = try! String(contentsOfFile: pathVok, encoding: .utf8);
+            processWasteDataFile(csv: csvVok, type: "obj. odpad", into: aVokDS);
+
+            let csvBio = try! String(contentsOfFile: pathBio, encoding: .utf8);
+            processWasteDataFile(csv: csvBio, type: "bio", into: aVokDS);
+
+            // sort all events (and fill static info link)
+            for rec in aVokDS.m_arrItems {
+                if let events = rec.m_arrEvents {
+                    rec.m_arrEvents = events.sorted(by: { $0.m_dateStart < $1.m_dateStart });
+                }
+                rec.m_sInfoLink = "https://www.praha12.cz/odpady/ds-1138/";
+            }
+            
+            aVokDS.m_dateLastRefreshed = Date();
+            save(dataSource: aVokDS);
         }
     }
 }

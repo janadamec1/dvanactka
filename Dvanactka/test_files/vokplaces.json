@@ -1,0 +1,275 @@
+{"items":[
+{
+"title":"Botevova x Pejevové",
+"locationLong":"14.41786400771696",
+"locationLat":"50.008200005270645",
+"text":"Křižovatka ulic Botevova a Pejevové",
+"category":"waste"
+},
+{
+"title":"Cílkova",
+"locationLong":"14.443877007923007",
+"locationLat":"50.01449100509505",
+"text":"Cílkova u ÚMČ Praha 12",
+"category":"waste"
+},
+{
+"title":"Dolnojirčanská",
+"locationLong":"14.445243086228862",
+"locationLat":"50.01611403982279",
+"text":"Parkoviště v ulici Dolnojirčanská",
+"category":"waste"
+},
+{
+"title":"Durychova",
+"locationLong":"14.4426139",
+"locationLat":"50.0168122",
+"text":"Durychova – parkoviště u prodejny Jasná\nParkoviště u prodejny Jasná blíže k  ulici Krhanická",
+"category":"waste"
+},
+{
+"title":"Hasova",
+"locationLong":"14.427930007818173",
+"locationLat":"50.01203900490191",
+"text":"Hasova ulice",
+"category":"waste"
+},
+{
+"title":"Hornocholupická u trafa",
+"locationLong":"14.426946007210518",
+"locationLat":"49.99734600511373",
+"text":"Hornocholupická u trafa proti ulici Skalnatá\nHornocholupická – u transformátoru",
+"category":"waste"
+},
+{
+"title":"Cholupický vrch Malá Lada",
+"locationLong":"14.43436430875908",
+"locationLat":"49.99444148076273",
+"text":"Cholupický vrch v ulici Malá Lada\nCholupický vrch, Malá lada u lesa",
+"category":"waste"
+},
+{
+"title":"Hornocholupická x K Ladům",
+"locationLong":"14.436952923690642",
+"locationLat":"49.99345304330027",
+"text":"Křižovatky ulic K Ladům a Hornocholupická",
+"category":"waste"
+},
+{
+"title":"K Dolům x Na Havránce",
+"locationLong":"14.411011007199571",
+"locationLat":"50.002552005430196",
+"text":"Křižovatka ulic K Dolům a Na Havránce\nKřižovatka ulic K dolům a Na Havránce",
+"category":"waste"
+},
+{
+"title":"K Otočce x Zátišská",
+"locationLong":"14.410310007072239",
+"locationLat":"50.013947005219705",
+"text":"Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská",
+"category":"waste"
+},
+{
+"title":"Komořanská",
+"locationLong":"14.409790029570072",
+"locationLat":"49.989846717185564",
+"text":"Komořany – proti restauraci U Bukačů\nKomořany proti restauraci U Bukačů",
+"category":"waste"
+},
+{
+"title":"Krouzova",
+"locationLong":"14.41687200759349",
+"locationLat":"50.00992200518314",
+"text":"Krouzova u automatické telefonní ústředny Modřany",
+"category":"waste"
+},
+{
+"title":"Lešetínská x K Beránku",
+"locationLong":"14.412578007967783",
+"locationLat":"49.9982000050167",
+"text":"Křižovatka ulic Lešetínská a K Beránku",
+"category":"waste"
+},
+{
+"title":"Levského",
+"locationLong":"14.433228007477247",
+"locationLat":"50.00770700521481",
+"text":"Ulice Levského u lesa",
+"category":"waste"
+},
+{
+"title":"Lysinská x Šumavského",
+"locationLong":"14.41097000764704",
+"locationLat":"50.00965600481447",
+"text":"Křižovatka ulic Lysinská a Šumavského",
+"category":"waste"
+},
+{
+"title":"Mráčkova",
+"locationLong":"14.421200007865979",
+"locationLat":"50.01279700534304",
+"text":"Mráčkova u prodejny Billa (Labe)",
+"category":"waste"
+},
+{
+"title":"Na Floře x U Čokoládoven",
+"locationLong":"14.403613006727879",
+"locationLat":"50.01332600527297",
+"text":"Křižovatka ulic Na Floře a U Čokoládoven\nKřižovatka ulic Na Floře a U čokoládoven",
+"category":"waste"
+},
+{
+"title":"Na Stráňkách x K Závorám",
+"locationLong":"14.424131007408741",
+"locationLat":"49.97133700461486",
+"text":"Křižovatka ulic Na Stráňkách a K Závorám\nKřižovatka ulic Na Stráňkách a K závorám",
+"category":"waste"
+},
+{
+"title":"Nad Rážákem x Bojovská",
+"locationLong":"14.41307600696844",
+"locationLat":"50.000877005460616",
+"text":"Křižovatka ulic Nad Ražákem a Bojovská",
+"category":"waste"
+},
+{
+"title":"Nad Teplárnou",
+"locationLong":"14.405267082704569",
+"locationLat":"49.99243998304472",
+"text":"Ulice Nad Teplárnou",
+"category":"waste"
+},
+{
+"title":"Náměstí Antonína Pecáka",
+"locationLong":"14.431916047809404",
+"locationLat":"49.97257776874021",
+"text":"Točná – nám. Antonína Pecáka\nNáměstí Antonína Pecáka",
+"category":"waste"
+},
+{
+"title":"Násirovo náměstí",
+"locationLong":"14.421738007064688",
+"locationLat":"50.00145300514088",
+"text":"Násirovo náměstí\nNásirovo náměstí Baba III",
+"category":"waste"
+},
+{
+"title":"Palmetová x Pod Lesem",
+"locationLong":"14.40963200731891",
+"locationLat":"49.98726000468932",
+"text":"Křižovatka ulic Palmetová a Pod Lesem\nKřižovatka ulic Palmetova a Pod lesem",
+"category":"waste"
+},
+{
+"title":"Pavlíkova",
+"locationLong":"14.45354100762694",
+"locationLat":"50.01139600546314",
+"text":"Pavlíkova ulice – parkoviště u kotelny",
+"category":"waste"
+},
+{
+"title":"Pejevové",
+"locationLong":"14.423621007533692",
+"locationLat":"50.008947005080785",
+"text":"ul. Pejevové parkoviště před školou",
+"category":"waste"
+},
+{
+"title":"Pertoldova x Vokrojova",
+"locationLong":"14.428504007311586",
+"locationLat":"50.00084700493587",
+"text":"Křižovatka ulic Pertoldova a Vokrojova",
+"category":"waste"
+},
+{
+"title":"Ploštilova",
+"locationLong":"14.424134006877877",
+"locationLat":"49.996184005257795",
+"text":"Ploštilova – u hřiště\nPloštilova – pod hřištěm multikára",
+"category":"waste"
+},
+{
+"title":"Rabyňská",
+"locationLong":"14.442122726699347",
+"locationLat":"50.02146944246503",
+"text":"Parkoviště v ulici Rabyňská",
+"category":"waste"
+},
+{
+"title":"Ražická x Ke Kálku",
+"locationLong":"14.447488007591629",
+"locationLat":"49.987289005162516",
+"text":"Cholupice – křižovatka ulic Ražická a Ke Kálku\nKřižovatka ulic Ražická a Ke Kálku",
+"category":"waste"
+},
+{
+"title":"Starý lis x Hájíčkova",
+"locationLong":"14.429003007096028",
+"locationLat":"49.96941100485677",
+"text":"Křižovatka ulic Starý lis a Hájíčkova\nKřižovatka ulic Starý lis a Hájíčkova",
+"category":"waste"
+},
+{
+"title":"U Modřanské školy",
+"locationLong":"14.404281006737907",
+"locationLat":"50.00700700524212",
+"text":"U modřanské školy",
+"category":"waste"
+},
+{
+"title":"Urbánkova",
+"locationLong":"14.430804799515903",
+"locationLat":"50.00217594138188",
+"text":"Baba III – ulice Urbánkova u parkoviště",
+"category":"waste"
+},
+{
+"title":"Zárubova",
+"locationLong":"14.433998006831237",
+"locationLat":"50.013511005203206", 
+"text":"Parkoviště při ulici Zárubova",
+"category":"waste"
+},
+{
+"title":"Darwinova x Voborského",
+"locationLong":"14.4071217",
+"locationLat":"50.0089967", 
+"text":"Křižovatka ulic Darwinova a Voborského",
+"category":"waste"
+},
+{
+"title":"Kolářova x K Beránku",
+"locationLong":"14.4134314",
+"locationLat":"49.9979356", 
+"text":"Křižovatka ulic Kolářova a K Beránku",
+"category":"waste"
+},
+{
+"title":"Lysinská x K Orionce",
+"locationLong":"14.4096383",
+"locationLat":"50.0126414", 
+"text":"Křižovatka ulic Lysinská a K Orionce",
+"category":"waste"
+},
+{
+"title":"Šumavského x Emlerova",
+"locationLong":"14.4125994",
+"locationLat":"50.0102419", 
+"text":"Křižovatka ulic Šumavského a Emlerova",
+"category":"waste"
+},
+{
+"title":"U Klubu x Nad Teplárnou",
+"locationLong":"14.4079042",
+"locationLat":"49.9921042", 
+"text":"Křižovatka ulic U klubu a Nad teplárnou",
+"category":"waste"
+},
+{
+"title":"Do Čtvrti x U Šumavěnky",
+"locationLong":"14.4118161",
+"locationLat":"50.0149303", 
+"text":"Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky",
+"category":"waste"
+},
+]}
