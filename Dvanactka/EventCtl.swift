@@ -29,6 +29,7 @@ class EventCell: UITableViewCell {
 class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
+    @IBOutlet weak var m_imgIcon: UIImageView!
     
 }
 
@@ -244,6 +245,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 sDistance = "  "    // must not be empty, causes strange effects
             }
             cellPlace.m_lbText.text = sDistance;
+            if let category = rec.m_eCategory {
+                cellPlace.m_imgIcon.image = UIImage(named: CRxEventRecord.categoryIconName(category: category));
+            }
+            else {
+                cellPlace.m_imgIcon.image = nil;
+            }
             cell = cellPlace;
         }
         else {

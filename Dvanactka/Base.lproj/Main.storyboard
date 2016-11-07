@@ -222,7 +222,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="jha-pQ-tgK">
                                             <rect key="frame" x="8" y="8" width="271" height="48"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2qs-Dg-kfB">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2qs-Dg-kfB">
                                                     <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="2qs-Dg-kfB" secondAttribute="height" multiplier="1:1" id="w9p-wr-L3l"/>
@@ -256,6 +256,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="m_imgIcon" destination="2qs-Dg-kfB" id="mAe-K2-JwT"/>
                                     <outlet property="m_lbText" destination="YgD-73-Q34" id="caV-he-oxg"/>
                                     <outlet property="m_lbTitle" destination="vgt-u1-koS" id="4ui-ng-aXw"/>
                                 </connections>

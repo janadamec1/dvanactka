@@ -111,7 +111,7 @@ enum CRxCategory: String {
     case informace, lekarna, prvniPomoc, policie
     case pamatka, pamatnyStrom, vyznamnyStrom
     case remeslnik, restaurace, obchod
-    case waste
+    case waste, wasteElectro, wasteTextile
 }
 
 class CRxEventRecord: NSObject {
@@ -243,6 +243,8 @@ class CRxEventRecord: NSObject {
         case .restaurace: return NSLocalizedString("Restaurants", comment: "");
         case .obchod: return NSLocalizedString("Shops", comment: "");
         case .waste: return NSLocalizedString("Waste Dumpsters", comment: "");
+        case .wasteElectro: return NSLocalizedString("Electric Waste", comment: "");
+        case .wasteTextile: return NSLocalizedString("Textile Waste", comment: "");
         //default: return category.rawValue;
         }
     }
@@ -253,6 +255,25 @@ class CRxEventRecord: NSObject {
         }
         else {
             return "";
+        }
+    }
+    
+    static func categoryIconName(category: CRxCategory) -> String {
+        switch category {
+        case .informace: return "c_info";
+        case .lekarna: return "c_pharmacy";
+        case .prvniPomoc: return "c_firstaid";
+        case .policie: return "c_police";
+        case .pamatka: return "c_monument";
+        case .pamatnyStrom: return "c_tree";
+        case .vyznamnyStrom: return "c_tree";
+        case .remeslnik: return "c_work";
+        case .restaurace: return "c_restaurant";
+        case .obchod: return "c_shop";
+        case .waste: return "c_waste";
+        case .wasteElectro: return "c_electrical";
+        case .wasteTextile: return "c_textile";
+        //default: return "";
         }
     }
 
@@ -796,7 +817,11 @@ class CRxDataSourceManager : NSObject {
                 if let events = rec.m_arrEvents {
                     rec.m_arrEvents = events.sorted(by: { $0.m_dateStart < $1.m_dateStart });
                 }
-                rec.m_sInfoLink = "https://www.praha12.cz/odpady/ds-1138/";
+                if let category = rec.m_eCategory {
+                    if category == .waste {
+                        rec.m_sInfoLink = "https://www.praha12.cz/odpady/ds-1138/";
+                    }
+                }
             }
             
             aVokDS.m_dateLastRefreshed = Date();

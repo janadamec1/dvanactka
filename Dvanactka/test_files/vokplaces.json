@@ -1,5 +1,118 @@
 {"items":[
 {
+"title":"Durychova x Otradovická",
+"locationLong":"14.4468244",
+"locationLat":"50.0176119",
+"infoLink":"https:\/\/www.praha12.cz\/vismo\/dokumenty2.asp?id_org=80112&id=20684",
+"category":"wasteElectro"
+},
+{
+"title":"Mráčkova x Daškova",
+"locationLong":"14.4223458",
+"locationLat":"50.0134911",
+"infoLink":"https:\/\/www.praha12.cz\/vismo\/dokumenty2.asp?id_org=80112&id=20684",
+"category":"wasteElectro"
+},
+{
+"title":"Obchodní náměstí",
+"locationLong":"14.4048900",
+"locationLat":"50.0046378",
+"infoLink":"https:\/\/www.praha12.cz\/vismo\/dokumenty2.asp?id_org=80112&id=20684",
+"category":"wasteElectro"
+},
+{
+"title":"Poljanovova x Rilská",
+"locationLong":"14.4273239",
+"locationLat":"50.0083408",
+"infoLink":"https:\/\/www.praha12.cz\/vismo\/dokumenty2.asp?id_org=80112&id=20684",
+"category":"wasteElectro"
+},
+{
+"title":"Pertoldova",
+"locationLong":"14.4272939",
+"locationLat":"50.0006150",
+"infoLink":"https:\/\/www.praha12.cz\/vismo\/dokumenty2.asp?id_org=80112&id=20684",
+"category":"wasteElectro"
+},
+{
+"title":"Obchodní náměstí, Albert",
+"locationLong":"14.4046331",
+"locationLat":"50.0050772",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Pavelkova (Čs. exilu)",
+"locationLong":"14.4285853",
+"locationLat":"50.0002947",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Pavlíkova (Novodvorská)",
+"locationLong":"14.4542058",
+"locationLat":"50.0112450",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"OC Obzor, Albert, Novodvorská",
+"locationLong":"14.4550372",
+"locationLat":"50.0093800",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Hasova",
+"locationLong":"14.4278208",
+"locationLat":"50.0122931",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Vazovova x Levského",
+"locationLong":"14.4363075",
+"locationLat":"50.0057117",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Daškova 1",
+"locationLong":"14.4257878",
+"locationLat":"50.0132994",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Botevova 2",
+"locationLong":"14.4170758",
+"locationLat":"50.0088489",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"U Kamýku",
+"locationLong":"14.4348000",
+"locationLat":"50.0168603",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Durychova, OC Jasná, Albert",
+"locationLong":"14.4430828",
+"locationLat":"50.0168225",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Generála Šišky",
+"locationLong":"14.4530872",
+"locationLat":"50.0063011",
+"infoLink":"http:\/\/www.recyklujemetextil.cz",
+"category":"wasteTextile"
+},
+
+{
 "title":"Botevova x Pejevové",
 "locationLong":"14.41786400771696",
 "locationLat":"50.008200005270645",

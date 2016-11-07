@@ -117,16 +117,26 @@ class MapCtl: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? CRxMapItem {
-            let identifier = "pin"
-            var view: MKPinAnnotationView
-            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-                as? MKPinAnnotationView {
+            var identifier = "pin"
+            if let category = annotation.m_rec.m_eCategory {
+                identifier = category.rawValue; // for reusing
+            }
+            
+            var view: MKAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) {
                 dequeuedView.annotation = annotation
                 view = dequeuedView
-            } else {
-                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            }
+            else {
+                if let category = annotation.m_rec.m_eCategory {
+                    view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                    view.image = UIImage(named: CRxEventRecord.categoryIconName(category: category))
+                }
+                else {
+                    view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                    view.calloutOffset = CGPoint(x: -5, y: 5)
+                }
                 view.canShowCallout = true
-                view.calloutOffset = CGPoint(x: -5, y: 5)
                 view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
             }
             return view
