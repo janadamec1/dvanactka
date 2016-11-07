@@ -10,8 +10,10 @@ import UIKit
 import Kanna
 
 class CRxDataSource : NSObject {
-    var m_sId: String = ""
-    var m_sTitle: String = ""           // human readable
+    var m_sId: String
+    var m_sTitle: String           // human readable
+    var m_sShortTitle: String?
+    var m_sIcon: String
     var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
     var m_bShowMap: Bool = false
     var m_dateLastRefreshed: Date?
@@ -24,9 +26,11 @@ class CRxDataSource : NSObject {
     }
     var m_eType = DataType.news
     
-    init(id: String, title: String, type: DataType, refreshFreqHours: Int = 18, showMap: Bool = false) {
+    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, showMap: Bool = false, shortTitle: String? = nil) {
         m_sId = id;
         m_sTitle = title;
+        m_sShortTitle = shortTitle;
+        m_sIcon = icon;
         m_eType = type;
         m_nRefreshFreqHours = refreshFreqHours;
         m_bShowMap = showMap;
@@ -113,14 +117,14 @@ class CRxDataSourceManager : NSObject {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
         
-        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), type: .events);
-        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", type: .events);
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), icon: "ds_alerts", type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
+        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, shortTitle: "Biograf");
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100, showMap: true);
         //m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), type: .places, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100, showMap: true);
     }
     
     //--------------------------------------------------------------------------

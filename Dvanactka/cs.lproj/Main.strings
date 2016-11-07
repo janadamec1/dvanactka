@@ -20,10 +20,7 @@
 /* Class = "UILabel"; text = "Title title title title title title titile"; ObjectID = "993-jr-BcL"; */
 "993-jr-BcL.text" = "Title title title title title title titile";
 
-/* Class = "UIViewController"; title = "Map"; ObjectID = "A6g-QX-0Ro"; */
-"A6g-QX-0Ro.title" = "";
-
-/* Class = "UINavigationItem"; title = "Dvanactka"; ObjectID = "AaG-gc-ccj"; */
+/* Class = "UINavigationItem"; title = "[12]"; ObjectID = "AaG-gc-ccj"; */
 "AaG-gc-ccj.title" = "[12]";
 
 /* Class = "UILabel"; text = "Address"; ObjectID = "Cxr-O7-u2X"; */
@@ -36,13 +33,13 @@
 "Jcs-vc-UN8.normalTitle" = "Navigovat";
 
 /* Class = "UIButton"; normalTitle = "Report mistake"; ObjectID = "Jx3-Fi-Nyt"; */
-"Jx3-Fi-Nyt.normalTitle" = "Nahlásit chybu";
+"Jx3-Fi-Nyt.normalTitle" = "Nahásit chybu";
 
 /* Class = "UIButton"; normalTitle = "Add to Calendar"; ObjectID = "K2E-nI-Ubz"; */
 "K2E-nI-Ubz.normalTitle" = "Přidat do kalendáře";
 
-/* Class = "UIButton"; normalTitle = "Website"; ObjectID = "Lq9-ln-0zD"; */
-"Lq9-ln-0zD.normalTitle" = "Web";
+/* Class = "UIButton"; normalTitle = "Continue reading on website"; ObjectID = "Lq9-ln-0zD"; */
+"Lq9-ln-0zD.normalTitle" = "Pokračovat ve čtení na webu";
 
 /* Class = "UIButton"; normalTitle = "Website"; ObjectID = "Nm0-pv-FdJ"; */
 "Nm0-pv-FdJ.normalTitle" = "Web";
@@ -54,7 +51,7 @@
 "RYH-3t-ore.normalTitle" = "Koupit";
 
 /* Class = "UIButton"; normalTitle = "Phone"; ObjectID = "W6Y-zE-BJw"; */
-"W6Y-zE-BJw.normalTitle" = "Tel";
+"W6Y-zE-BJw.normalTitle" = "Phone";
 
 /* Class = "UILabel"; text = "Po: "; ObjectID = "XlI-hd-9SU"; */
 "XlI-hd-9SU.text" = "Po: ";
@@ -72,7 +69,7 @@
 "ocB-Ig-57a.text" = "category";
 
 /* Class = "UITableViewController"; title = "Events"; ObjectID = "r8a-Ox-9c9"; */
-"r8a-Ox-9c9.title" = "Události";
+"r8a-Ox-9c9.title" = "Events";
 
 /* Class = "UILabel"; text = "- 20:25 AM"; ObjectID = "unt-ET-aoo"; */
 "unt-ET-aoo.text" = "- 20:25 AM";

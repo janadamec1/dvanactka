@@ -11,7 +11,27 @@ import MapKit
 
 class CRxDSCell : UICollectionViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
+    @IBOutlet weak var m_imgIcon: UIImageView!
     
+    override func draw(_ rect: CGRect) {
+        if let context = UIGraphicsGetCurrentContext() {
+            
+            
+            let colorTop = UIColor(red: 255.0/255.0, green: 199.0/255.0, blue: 58.0/255.0, alpha: 1.0);
+            let colorBot = UIColor(red: 226.0/255.0, green: 73.0/255.0, blue: 0.0/255.0, alpha: 1.0);
+            /*
+            let colorTop = UIColor(red: 100.0/255.0, green: 120.0/255.0, blue: 180.0/255.0, alpha: 1.0);
+            let colorBot = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);*/
+            
+            let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [colorTop.cgColor, colorBot.cgColor] as CFArray, locations: [0, 1])!
+            
+            let path = UIBezierPath(roundedRect: CGRect(x:0, y:0, width: frame.width, height: frame.height), cornerRadius: frame.width/4.0);
+            context.saveGState()
+            path.addClip()
+            context.drawLinearGradient(gradient, start: CGPoint(x:frame.width / 2, y: 0), end: CGPoint(x: frame.width / 2, y: frame.height), options: CGGradientDrawingOptions())
+            context.restoreGState()
+        }
+    }
 }
 
 class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
@@ -64,10 +84,15 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellDS", for: indexPath) as! CRxDSCell
-        cell.backgroundColor = UIColor.lightGray;
         
         if let ds = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_arrSources[indexPath.row]] {
-            cell.m_lbTitle.text = ds.m_sTitle;
+            var sTitle = ds.m_sTitle;
+            if let shortTitle = ds.m_sShortTitle {
+                sTitle = shortTitle;
+            }
+            cell.m_lbTitle.text = sTitle;
+            cell.m_lbTitle.textColor = UIColor.white;
+            cell.m_imgIcon.image = UIImage(named: ds.m_sIcon);
         }
 
         return cell
@@ -77,10 +102,10 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let nItemsPerRow: CGFloat = 2;
+        let nItemsPerRow: CGFloat = 2.0;
         let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
-        let nSpacing = 16*(nItemsPerRow-1);
-        let nMinInsets: CGFloat = 20;
+        let nSpacing = 12*(nItemsPerRow-1);
+        let nMinInsets: CGFloat = 24;
         let nCellWidth = min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
         return CGSize(width: nCellWidth, height: nCellWidth)
  
@@ -91,8 +116,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         let nItemsPerRow: CGFloat = 2.0;
         let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
-        let nSpacing = 16*(nItemsPerRow-1);
-        let nMinInsets: CGFloat = 20;
+        let nSpacing = 12*(nItemsPerRow-1);
+        let nMinInsets: CGFloat = 24;
         let nCellWidth = min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
         
         let leftInset = (nViewWidth - CGFloat(nCellWidth*nItemsPerRow + nSpacing)) / 2; // center
