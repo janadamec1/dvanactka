@@ -32,7 +32,19 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
         }
         
-        m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
+        //m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
+        m_arrSources.append(CRxDataSourceManager.dsRadNews);
+        m_arrSources.append(CRxDataSourceManager.dsRadAlerts);
+        m_arrSources.append(CRxDataSourceManager.dsRadEvents);
+        m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
+        m_arrSources.append(CRxDataSourceManager.dsWaste);
+        m_arrSources.append(CRxDataSourceManager.dsCooltour);
+        m_arrSources.append(CRxDataSourceManager.dsSosContacts);
+        
+        /*// colors: (now done in storyboard
+        navigationController?.navigationBar.barTintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: 180.0/255.0, green: 200.0/255.0, blue: 1.0, alpha: 1.0)]
+        navigationController?.navigationBar.tintColor = .white; // for barButtonItems*/
     }
 
     override func didReceiveMemoryWarning() {

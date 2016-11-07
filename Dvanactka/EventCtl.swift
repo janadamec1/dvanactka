@@ -227,9 +227,13 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellPlace.m_lbTitle.text = rec.m_sTitle;
             var sDistance = "";
             if m_bUserLocationAcquired && rec.m_aLocation != nil {
+                let nf = NumberFormatter()
+                nf.minimumFractionDigits = 2;
+                nf.maximumFractionDigits = 2;
                 if rec.m_distFromUser > 1000 {
-                    let km = round(rec.m_distFromUser/10.0)/100.0;
-                    sDistance = "\(km) km";
+                    if let km = nf.string(from: NSNumber(value: rec.m_distFromUser/1000.0)) {   // using locale
+                        sDistance = "\(km) km";
+                    }
                 }
                 else {
                     sDistance = "\(Int(rec.m_distFromUser)) m";
@@ -262,6 +266,16 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cell.updateConstraintsIfNeeded();
         }
         return cell;
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        view.tintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);    // background
+        if let header = view as? UITableViewHeaderFooterView {          // text
+            header.textLabel?.textColor = .white;
+            //header.contentView.backgroundColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);
+        }
+
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -366,9 +380,4 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         mapCtl.m_coordLast = m_coordLast;
         navigationController?.pushViewController(mapCtl, animated: true);
     }
-    
-    // MARK: - Navigation
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    }*/
 }

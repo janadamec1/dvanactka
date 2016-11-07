@@ -136,7 +136,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 m_btnEmail.isHidden = true;
             }
             if let phone = rec.m_sPhoneNumber {
-                m_btnPhone.setTitle("Tel: " + phone, for: UIControlState.normal)
+                m_btnPhone.setTitle(phone, for: UIControlState.normal)
             }
             else {
                 m_btnPhone.isHidden = true;

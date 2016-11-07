@@ -51,6 +51,7 @@
 		4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019481DC669B7001488D3 /* EventCtl.swift */; };
 		4D90194D1DC67FB6001488D3 /* test_files in Resources */ = {isa = PBXBuildFile; fileRef = 4D90194C1DC67FB6001488D3 /* test_files */; };
 		4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90194E1DC69A0D001488D3 /* EventRecord.swift */; };
+		4D9F14AD1DD103D100841AD8 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9F14AC1DD103D100841AD8 /* DataSource.swift */; };
 		4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DA2C9021DC8EE8400E28A0E /* Localizable.strings */; };
 		C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */; };
 /* End PBXBuildFile section */
@@ -105,6 +106,7 @@
 		4D9019481DC669B7001488D3 /* EventCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCtl.swift; sourceTree = "<group>"; };
 		4D90194C1DC67FB6001488D3 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test_files; sourceTree = "<group>"; };
 		4D90194E1DC69A0D001488D3 /* EventRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRecord.swift; sourceTree = "<group>"; };
+		4D9F14AC1DD103D100841AD8 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		4DA2C8FF1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			children = (
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
+				4D9F14AC1DD103D100841AD8 /* DataSource.swift */,
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 				4D6677151DCBC226004876FA /* img */,
@@ -381,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9F14AD1DD103D100841AD8 /* DataSource.swift in Sources */,
 				4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */,
 				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,

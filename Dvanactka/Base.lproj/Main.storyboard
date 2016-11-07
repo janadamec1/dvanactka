@@ -14,7 +14,7 @@
         <scene sceneID="Dfu-G4-1e1">
             <objects>
                 <collectionViewController id="BoH-OL-fg5" customClass="ViewController" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="3H5-s8-m2t">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="3H5-s8-m2t">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -272,10 +272,10 @@
             </objects>
             <point key="canvasLocation" x="3024.375" y="-503.87323943661971"/>
         </scene>
-        <!--Map-->
+        <!--Map Ctl-->
         <scene sceneID="XPh-y9-Mo6">
             <objects>
-                <viewController storyboardIdentifier="mapCtl" title="Map" id="A6g-QX-0Ro" customClass="MapCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapCtl" id="A6g-QX-0Ro" customClass="MapCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u6A-U5-Tsx"/>
                         <viewControllerLayoutGuide type="bottom" id="axD-3g-lU7"/>
@@ -474,9 +474,14 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pkf-eV-m1o" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="82b-dH-3zf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="82b-dH-3zf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.14117647059999999" green="0.15686274510000001" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.70588235294117641" green="0.78431372549019607" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
