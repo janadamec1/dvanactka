@@ -104,7 +104,6 @@ class CRxDataSourceManager : NSObject {
     static let dsRadEvents = "dsRadEvents";
     static let dsBiografProgram = "dsBiografProgram";
     static let dsCooltour = "dsCooltour";
-    static let dsCoolTrees = "dsCoolTrees";
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
     
@@ -120,7 +119,6 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
-        //m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
     }
@@ -175,11 +173,6 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsCooltour {
             if let path = Bundle.main.url(forResource: "/test_files/p12kultpamatky", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-            }
-        }
-        else if id == CRxDataSourceManager.dsCoolTrees {
-            if let path = Bundle.main.url(forResource: "/test_files/p12stromy", withExtension: "json") {
                 ds.loadFromJSON(file: path);
             }
         }

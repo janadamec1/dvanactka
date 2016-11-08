@@ -75,6 +75,67 @@
             </objects>
             <point key="canvasLocation" x="2233.125" y="-502.81690140845069"/>
         </scene>
+        <!--About the App-->
+        <scene sceneID="UNL-AO-2YP">
+            <objects>
+                <viewController storyboardIdentifier="appInfoCtl" id="RiZ-wt-9Oa" customClass="AppInfoCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uj3-P0-Vl2"/>
+                        <viewControllerLayoutGuide type="bottom" id="3un-3V-wXA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6F0-VL-nFU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HU8-zb-opf">
+                                <rect key="frame" x="16" y="72" width="288" height="480"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-DW-Awc">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="414.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30A-AN-Tt3">
+                                        <rect key="frame" x="0.0" y="422.5" width="288" height="30"/>
+                                        <state key="normal" title="info@p12app.cz"/>
+                                        <connections>
+                                            <action selector="onBtnContactTouched:" destination="RiZ-wt-9Oa" eventType="touchUpInside" id="hgE-Sg-ixM"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Copyright (c) 2016, Jan Adamec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Klo-sB-KKI">
+                                        <rect key="frame" x="0.0" y="460.5" width="288" height="19.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HU8-zb-opf" firstAttribute="top" secondItem="uj3-P0-Vl2" secondAttribute="bottom" constant="8" id="avy-dp-HdW"/>
+                            <constraint firstItem="HU8-zb-opf" firstAttribute="leading" secondItem="6F0-VL-nFU" secondAttribute="leadingMargin" id="m9g-lZ-bO4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HU8-zb-opf" secondAttribute="trailing" id="n3Q-gY-POb"/>
+                            <constraint firstItem="3un-3V-wXA" firstAttribute="top" secondItem="HU8-zb-opf" secondAttribute="bottom" constant="16" id="vXu-JF-eof"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="About the App" id="pU2-om-Lyp">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="QAp-FR-Lsj">
+                            <connections>
+                                <action selector="onBtnDoneTouched:" destination="RiZ-wt-9Oa" id="IqF-sY-Wwo"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="m_lbText" destination="gCb-DW-Awc" id="p5P-Ex-DvF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w8C-QE-ylj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2614" y="344"/>
+        </scene>
         <!--Events-->
         <scene sceneID="v80-EI-8EF">
             <objects>
@@ -312,7 +373,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j1L-f1-FmW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3943.125" y="-803.87323943661977"/>
+            <point key="canvasLocation" x="3943" y="-789"/>
         </scene>
         <!--Place Detail Ctl-->
         <scene sceneID="S4x-P4-KSf">
@@ -519,6 +580,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ree-OL-OyR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1235.625" y="-502.81690140845069"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="MyX-M0-cKa">
+            <objects>
+                <navigationController storyboardIdentifier="appInfoCtlNav" automaticallyAdjustsScrollViewInsets="NO" id="irX-FG-zhv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fzp-BJ-zhz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.14117647059999999" green="0.15686274510000001" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.70588235290000001" green="0.7843137255" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RiZ-wt-9Oa" kind="relationship" relationship="rootViewController" id="UFV-KS-m4A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fGg-iY-Cu9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1721" y="344"/>
         </scene>
     </scenes>
 </document>

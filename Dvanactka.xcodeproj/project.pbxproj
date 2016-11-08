@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
 		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
+		4D3FC6F51DD274A8000467D1 /* AppInfoCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3FC6F41DD274A8000467D1 /* AppInfoCtl.swift */; };
 		4D42641B1DD08D62008ED01F /* c_firstaid.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4264071DD08D62008ED01F /* c_firstaid.png */; };
 		4D42641C1DD08D62008ED01F /* c_firstaid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4264081DD08D62008ED01F /* c_firstaid@2x.png */; };
 		4D42641D1DD08D62008ED01F /* c_info.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4264091DD08D62008ED01F /* c_info.png */; };
@@ -68,6 +69,7 @@
 		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC01DCA891400A402C9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCtl.swift; sourceTree = "<group>"; };
+		4D3FC6F41DD274A8000467D1 /* AppInfoCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoCtl.swift; sourceTree = "<group>"; };
 		4D4264071DD08D62008ED01F /* c_firstaid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_firstaid.png; path = img/c_firstaid.png; sourceTree = "<group>"; };
 		4D4264081DD08D62008ED01F /* c_firstaid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_firstaid@2x.png"; path = "img/c_firstaid@2x.png"; sourceTree = "<group>"; };
 		4D4264091DD08D62008ED01F /* c_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_info.png; path = img/c_info.png; sourceTree = "<group>"; };
@@ -120,7 +122,6 @@
 		4D9F14B31DD11A3E00841AD8 /* ds_help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_help.png; path = img/ds_help.png; sourceTree = "<group>"; };
 		4D9F14B41DD11A3E00841AD8 /* ds_landmarks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_landmarks.png; path = img/ds_landmarks.png; sourceTree = "<group>"; };
 		4D9F14B51DD11A3E00841AD8 /* ds_waste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_waste.png; path = img/ds_waste.png; sourceTree = "<group>"; };
-		4DA2C8FF1DC8EE6600E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
 		BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
@@ -208,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
+				4D3FC6F41DD274A8000467D1 /* AppInfoCtl.swift */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
 				4D9F14AC1DD103D100841AD8 /* DataSource.swift */,
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
@@ -414,6 +416,7 @@
 				4D9F14AD1DD103D100841AD8 /* DataSource.swift in Sources */,
 				4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */,
 				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
+				4D3FC6F51DD274A8000467D1 /* AppInfoCtl.swift in Sources */,
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
 				4D9019371DC65E16001488D3 /* ViewController.swift in Sources */,
@@ -445,7 +448,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D90193E1DC65E17001488D3 /* Base */,
-				4DA2C8FF1DC8EE6600E28A0E /* cs */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

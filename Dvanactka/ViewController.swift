@@ -51,6 +51,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
         }
         
+        let btnInfo = UIButton(type: .infoLight);
+        btnInfo.addTarget(self, action: #selector(ViewController.onBtnInfo), for: .touchUpInside);
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btnInfo);
+        
         //m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
         m_arrSources.append(CRxDataSourceManager.dsRadNews);
         m_arrSources.append(CRxDataSourceManager.dsRadAlerts);
@@ -164,6 +169,13 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             let destVC = segue.destination as! EventsCtl
             destVC.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_sDsSelected];
         }
+    }
+    
+    //---------------------------------------------------------------------------
+    func onBtnInfo() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let appInfoCrl = storyboard.instantiateViewController(withIdentifier: "appInfoCtlNav")
+        present(appInfoCrl, animated: true, completion: nil);
     }
 }
 
