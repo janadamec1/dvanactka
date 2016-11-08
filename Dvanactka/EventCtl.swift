@@ -50,11 +50,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         if let ds = m_aDataSource {
             self.title = ds.m_sTitle;
             
-            if (ds.m_bShowMap) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap));
-            }
-            
             if ds.m_eType == .places {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap));
+
                 self.tableView.allowsSelection = true;
                 if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                     m_locManager.startUpdatingLocation();
@@ -180,6 +178,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         
         if ds.m_eType == .news {
             let cellNews = tableView.dequeueReusableCell(withIdentifier: "cellNews", for: indexPath) as! NewsCell
+            // Localization
+            cellNews.m_btnWebsite.setTitle(NSLocalizedString("Continue reading on website", comment: ""), for: .normal);
+
             cellNews.m_lbTitle.text = rec.m_sTitle;
             cellNews.m_lbText.text = rec.m_sText ?? "";
             var sDateText = "";
@@ -197,6 +198,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         else if ds.m_eType == .events {
             let cellEvent = tableView.dequeueReusableCell(withIdentifier: "cellEvent", for: indexPath) as! EventCell
+            // Localization
+            cellEvent.m_btnWebsite.setTitle(NSLocalizedString("Website", comment: ""), for: .normal);
+            cellEvent.m_btnBuy.setTitle(NSLocalizedString("Buy", comment: ""), for: .normal);
+            cellEvent.m_btnAddToCalendar.setTitle(NSLocalizedString("Add to Calendar", comment: ""), for: .normal);
+            
             cellEvent.m_lbTitle.text = rec.m_sTitle;
             cellEvent.m_lbText.text = rec.m_sText ?? "";
             var sDateText = "";

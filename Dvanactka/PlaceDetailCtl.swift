@@ -28,14 +28,22 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_btnPhone: UIButton!
     @IBOutlet weak var m_btnMap: UIButton!
     @IBOutlet weak var m_map: MKMapView!
+    @IBOutlet weak var m_lbShowNotifications: UILabel!
+    @IBOutlet weak var m_chkShowNotifications: UISwitch!
+    @IBOutlet weak var m_btnNavigate: UIButton!
+    @IBOutlet weak var m_btnReportMistake: UIButton!
     
     
     var m_aRecord: CRxEventRecord?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        // Localizatation
+        m_lbAddressTitle.text = NSLocalizedString("Address", comment: "")
+        m_lbShowNotifications.text = NSLocalizedString("Show notifications", comment: "")
+        m_btnNavigate.setTitle(NSLocalizedString("Navigate", comment: ""), for: .normal);
+        m_btnReportMistake.setTitle(NSLocalizedString("Report mistake", comment: ""), for: .normal);
+        
         if let rec = m_aRecord {
             m_lbTitle.text = rec.m_sTitle;
             m_lbText.text = rec.m_sText;
@@ -55,6 +63,8 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 m_lbAddress.isHidden = true;
             }
             m_lbNote.isHidden = true;
+            m_lbShowNotifications.isHidden = true;
+            m_chkShowNotifications.isHidden = true;
 
             if let hours = rec.m_arrOpeningHours {
                 let df = DateFormatter();
@@ -115,12 +125,23 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                     m_lbNote.text = sNote;
                     m_lbNote.isHidden = false;
                 }
-
+                m_lbShowNotifications.isHidden = false;
+                m_chkShowNotifications.isHidden = false;
             }
             else {
                 m_lbOpeningHoursTitle.isHidden = true;
                 m_lbOpeningHours.isHidden = true;
                 m_lbOpeningHours2.isHidden = true;
+            }
+            
+            if let category = rec.m_eCategory {
+                if category == .wasteTextile {
+                    m_lbNote.text = NSLocalizedString("Waste.textile.longdesc", comment: "");
+                    m_lbNote.isHidden = false;
+                } else if category == .wasteElectro {
+                    m_lbNote.text = NSLocalizedString("Waste.electro.longdesc", comment: "");
+                    m_lbNote.isHidden = false;
+                }
             }
 
             if let link = rec.m_sInfoLink {
@@ -179,7 +200,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBAction func onBtnMapTouched(_ sender: Any) {
         if let rec = m_aRecord {
             let aMapItem = CRxMapItem(record: rec);
-            aMapItem.mapItem().openInMaps(launchOptions: nil);
+            aMapItem.mapItem().openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]);
         }
     }
     
@@ -192,6 +213,14 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         mailer.mailComposeDelegate = self;
         
         mailer.setToRecipients(["\(email)"]);
+        
+        if let category = rec.m_eCategory {
+            if category == .wasteTextile || category == .waste || category == .wasteElectro {
+                mailer.setSubject(rec.m_sTitle + ", Praha 12 - " + CRxEventRecord.categoryLocalName(category: category));
+                mailer.setMessageBody(NSLocalizedString("(Please describe problem here)", comment:"") , isHTML: false);
+            }
+        }
+        
         mailer.modalPresentationStyle = .formSheet;
         present(mailer, animated: true, completion: nil);
     }
@@ -218,7 +247,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients(["info@roomarranger.com"]);
-            mailer.setSubject("\(rec.m_sTitle) - problem (iOS)");
+            mailer.setSubject(rec.m_sTitle + " - " + CRxEventRecord.categoryLocalName(category: rec.m_eCategory) + " - problem (iOS)");
             mailer.setMessageBody(NSLocalizedString("(Please describe problem here)", comment:"") , isHTML: false);
             mailer.modalPresentationStyle = .formSheet;
             present(mailer, animated: true, completion: nil);

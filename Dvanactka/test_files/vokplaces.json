@@ -35,10 +35,19 @@
 "category":"wasteElectro"
 },
 {
+"title":"OC Obzor, Albert, Novodvorská",
+"locationLong":"14.4554747",
+"locationLat":"50.0088681",
+"infoLink":"https:\/\/www.praha12.cz\/vismo\/dokumenty2.asp?id_org=80112&id=20684",
+"category":"wasteElectro"
+},
+{
 "title":"Obchodní náměstí, Albert",
 "locationLong":"14.4046331",
 "locationLat":"50.0050772",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -46,6 +55,8 @@
 "locationLong":"14.4285853",
 "locationLat":"50.0002947",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -53,6 +64,8 @@
 "locationLong":"14.4542058",
 "locationLat":"50.0112450",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -60,6 +73,8 @@
 "locationLong":"14.4550372",
 "locationLat":"50.0093800",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -67,6 +82,8 @@
 "locationLong":"14.4278208",
 "locationLat":"50.0122931",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -74,6 +91,8 @@
 "locationLong":"14.4363075",
 "locationLat":"50.0057117",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -81,6 +100,8 @@
 "locationLong":"14.4257878",
 "locationLat":"50.0132994",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -88,6 +109,8 @@
 "locationLong":"14.4170758",
 "locationLat":"50.0088489",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -95,6 +118,8 @@
 "locationLong":"14.4348000",
 "locationLat":"50.0168603",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -102,6 +127,8 @@
 "locationLong":"14.4430828",
 "locationLat":"50.0168225",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 {
@@ -109,6 +136,8 @@
 "locationLong":"14.4530872",
 "locationLat":"50.0063011",
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
+"phone":"739 495 757",
+"email":"potex@potex.cz",
 "category":"wasteTextile"
 },
 

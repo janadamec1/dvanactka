@@ -15,7 +15,6 @@ class CRxDataSource : NSObject {
     var m_sShortTitle: String?
     var m_sIcon: String
     var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
-    var m_bShowMap: Bool = false
     var m_dateLastRefreshed: Date?
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
     
@@ -26,14 +25,13 @@ class CRxDataSource : NSObject {
     }
     var m_eType = DataType.news
     
-    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, showMap: Bool = false, shortTitle: String? = nil) {
+    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil) {
         m_sId = id;
         m_sTitle = title;
         m_sShortTitle = shortTitle;
         m_sIcon = icon;
         m_eType = type;
         m_nRefreshFreqHours = refreshFreqHours;
-        m_bShowMap = showMap;
         super.init()
     }
     
@@ -120,11 +118,11 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), icon: "ds_alerts", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
-        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, shortTitle: "Biograf");
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100, showMap: true);
-        //m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, showMap: true);
-        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100, showMap: true);
+        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
+        //m_dictDataSources[CRxDataSourceManager.dsCoolTrees] = CRxDataSource(id: CRxDataSourceManager.dsCoolTrees, title: NSLocalizedString("Memorial Trees", comment: ""), type: .places, refreshFreqHours: 100);
+        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
+        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
     }
     
     //--------------------------------------------------------------------------
@@ -464,6 +462,8 @@ class CRxDataSourceManager : NSObject {
             iTypeCol = 5;
         }
         
+        let aCalendar = Calendar.current;
+        
         let lines = csv.components(separatedBy: .newlines);
         var nProcessedCount = 0;
         for line in lines {
@@ -488,11 +488,19 @@ class CRxDataSourceManager : NSObject {
                 aDateComps.hour = Int(sTimeStartComps[0]);
                 aDateComps.minute = Int(sTimeStartComps[1]);
                 
-                let dateStart = Calendar.current.date(from: aDateComps);
+                var dateStart = aCalendar.date(from: aDateComps);
                 
                 aDateComps.hour = Int(sTimeEndComps[0]);
                 aDateComps.minute = Int(sTimeEndComps[1]);
-                let dateEnd = Calendar.current.date(from: aDateComps);
+                var dateEnd = aCalendar.date(from: aDateComps);
+                
+                if lineItems[iTimeStartCol] == "0:00" && lineItems[iTimeEndCol] == "0:00" {
+                    // exception, duration is entire weekend
+                    aDateComps.hour = 15;
+                    dateStart = aCalendar.date(from: aDateComps);
+                    aDateComps.hour = 8;
+                    dateEnd = aCalendar.date(from: aDateComps)?.addingTimeInterval(3*24*60*60); // add 3 days (weekend)
+                }
                 
                 if let dateStart = dateStart, let dateEnd = dateEnd {
                     // add new record to rec
