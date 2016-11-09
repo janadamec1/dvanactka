@@ -6,6 +6,22 @@
 <title>Kalendář akcí: Praha 12</title>
 
 
+		<style type="text/css" media="screen">@import "/html/images/barvy1.css";</style>
+		<style type="text/css" media="screen">@import "/html/images/barvy2.css";</style>
+		<style type="text/css" media="screen">@import "/aspinclude/vismoweb5/html/obecne.css";</style>
+<style type="text/css" media="screen">@import "/aspinclude/vismoweb5/html/kalendarAkci2.css";</style>
+		<style type="text/css" media="screen">@import "/html/styly.css";</style>
+		<style type="text/css" media="screen">@import "/html/layout.css";</style>
+		<style type="text/css" media="screen">@import "/html/styly_str.css";</style>
+		<style type="text/css" media="screen">@import "/aspinclude/vismoweb5/html/vismo_special.css";</style>
+
+		<style type="text/css" media="screen">@import "/aspinclude/vismoweb5/html/strom.css";</style>
+		<style type="text/css" media="screen">@import "/aspinclude/vismoweb5/html/frm_all.css";</style>
+		<style type="text/css" media="screen">@import "/aspinclude/vismoweb5/html/frm_vyhledavani.css";</style>
+<script src="/aspinclude/vismoweb5/html/getDate.js" type="text/javascript"></script>
+<script type="text/JavaScript" src="/aspinclude/vismoweb5/html/voliviewer_light.js"></script>
+<script type="text/JavaScript">try{prepareTitles('Doleva','Doprava','První','Poslední','Zavřít;Zmenšit do okna prohlížeče;Zvětšit do původní velikosti;Vypnout centrování obrázku;Zapnout centrování obrázku;Načítání obrázku...;Zobrazit detail;Odeslat pohlednici;Galerie tohoto obrázku;Originál;Přehrát;Z galerie;Poslat jako pohlednici;Zobrazit detail;na straně;Spustit/zastavit','Otevřít prohlížeč obrázků');}catch(e){}</script>
+
 <link rel="stylesheet"  media="print" type="text/css" href="/html/tisk.css">
 
 <script src="/aspinclude/vismoweb5/html/tisk.js" type="text/javascript"></script>
@@ -39,7 +55,7 @@
   })();
 
 </script>
-</head><body>
+</head><body onload="OpenCalendar();">
 
 <div id="celek">
     <h2 class="cist">Volba jazyka</h2>
@@ -54,7 +70,7 @@
    <ul id="lista" class="inline">
       <li class="first"><a href="/vismo/formulare2.asp?id_f=50">Ptejte se</a></li>
       <li><a href="/abo">Odběr novinek</a></li> 
-       <li><a href="/aspinclude/vismoweb5/reset/grafika.asp?grafika=1" rel="nofollow"><strong>Zapnout grafiku</strong></a></li>
+       <li><a href="/aspinclude/vismoweb5/reset/grafika.asp?grafika=0" rel="nofollow">Vypnout grafiku</a></li>
 
 
         <li><a href="/mapa-stranek">Mapa stránek</a></li>
@@ -62,8 +78,8 @@
     	<li class="skip"><a href="#hlobsah">Hlavní obsah</a></li>
     	<li><a href="javascript:void(0);" onClick="tisk()">Vytisknout</a></li>
 			
-				<li><a href="/vismo/ZaslatEmailem.asp?strTitle=Kalend%C3%A1%C5%99+akc%C3%AD&amp;url=http%3A%2F%2Fwww%2Epraha12%2Ecz%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50%26stranka%3D1">Doporučit</a></li>
-			<li><a href="https://www.praha12.cz/AA/index.asp?app=80112&amp;cid=AuthCookie&amp;ReturnUrl=%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50%26stranka%3D1&amp;id_org=80112">Přihlásit se</a></li><li><a href="/AA/register.asp?ReturnUrl=https%3A%2F%2Fwww%2Epraha12%2Ecz%3A443%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50%26stranka%3D1&amp;id_org=80112">Registrovat se</a></li>
+				<li><a href="/vismo/ZaslatEmailem.asp?strTitle=Kalend%C3%A1%C5%99+akc%C3%AD&amp;url=http%3A%2F%2Fwww%2Epraha12%2Ecz%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50">Doporučit</a></li>
+			<li><a href="https://www.praha12.cz/AA/index.asp?app=80112&amp;cid=AuthCookie&amp;ReturnUrl=%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50&amp;id_org=80112">Přihlásit se</a></li><li><a href="/AA/register.asp?ReturnUrl=https%3A%2F%2Fwww%2Epraha12%2Ecz%3A443%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50&amp;id_org=80112">Registrovat se</a></li>
     </ul>
     
     <div class="sf"><hr class="cist"></div>
@@ -76,8 +92,7 @@
             <form action="/vismo/fulltext.asp" method="get">
                 <input type="hidden" name="hledani" value="1">
                 <input id="parsujChyba" type="hidden" name="id_org" value="80112">
-                <input type="hidden" name="stranka" value="1" >
-<input type="hidden" name="pocet" value="50" >
+                <input type="hidden" name="pocet" value="50" >
 
                 <p><label for="hl" class="cist">Hledaný výraz</label> <input  id="hl"  type="text" class="format" name="query" value="" size="16" title="Hledaný výraz"></p>
                 <p class="xbtn"><input class="btn" type="submit" name="submit" value="Hledat">&nbsp;</p>
@@ -164,10 +179,10 @@ Noviny Prahy 12 jsou jedin...">Noviny Prahy 12</a></div><div class="dol"></div>
   </div>
 	<div class="fdatum">
 		<strong>Datum</strong>
-		<div><label for="do">od:</label> <input type="text" class="format" id="do" name="datum_od" value="1.11.2016" maxlength="10">
+		<div><label for="do">od:</label> <input type="text" class="format" id="do" name="datum_od" value="9.11.2016" maxlength="10">
 		<a href="javascript:void(0);" onclick="c_do.toggle();"><img alt="kalendář..." src="/aspinclude/vismoWeb5/html/images/abonent_calendar.gif"></a>
 		</div>
-		<div><label for="dd">do:</label> <input type="text" class="format" id="dd" name="datum_do" value="15.11.2016" maxlength="10">
+		<div><label for="dd">do:</label> <input type="text" class="format" id="dd" name="datum_do" value="23.11.2016" maxlength="10">
 		<a href="javascript:void(0);" onclick="c_dd.toggle();"><img alt="kalendář..." src="/aspinclude/vismoWeb5/html/images/abonent_calendar.gif"></a>
 		</div>
 		</div>
@@ -181,60 +196,56 @@ Noviny Prahy 12 jsou jedin...">Noviny Prahy 12</a></div><div class="dol"></div>
 	</div>
 	<div class="sf">&nbsp;</div>
 </form>
-<hr class="cist"><div id="kalakci"><a name="kaListing"><span class="cist">&nbsp;</span></a><p class="mesice"><a href="/vismo/kalendar-akci.asp?kaNM=1&amp;stranka=1&amp;pocet=50&amp;kaDateO=1.10.2016#kaListing" title="Předchozí měsíc" class="sipka l">&lt;&lt;</a> <a href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=1.11.2016&amp;datum_do=30. 11. 2016">Listopad 2016</a> <a href="/vismo/kalendar-akci.asp?kaNM=1&amp;stranka=1&amp;pocet=50&amp;kaDateO=1.12.2016#kaListing" title="Následující měsíc" class="sipka p">&gt;&gt;</a></p><table class="calcells" summary="" cellspacing="1"><thead><tr><th class="cist"></th><th>Po</th><th>Út</th><th>St</th><th>Čt</th><th>Pá</th><th>So</th><th>Ne</th></tr></thead><tbody><tr><th class="cist">44. týden</th><td class="notmnth"><a id="date_20161031" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=31.10.2016&amp;datum_do=31.10.2016" title="Pouze proběhlé akce, klikněte pro detail">31</a></td><td class="wkday curdate"><a id="date_20161101" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=1. 11. 2016&amp;datum_do=1. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
-Nordic walking, 
-Veřejné setkání - přístavba ZŠ a MŠ Na Beránku">1</a></td><td class="wkday"><a id="date_20161102" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=2. 11. 2016&amp;datum_do=2. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">2</a></td><td class="wkday"><a id="date_20161103" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=3. 11. 2016&amp;datum_do=3. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">3</a></td><td class="wkday">4</td><td class="wkday"><a id="date_20161105" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=5. 11. 2016&amp;datum_do=5. 11. 2016" title="4. Pohádkové řádění, 
-4. Pohádkové řádění, 
-Antistresový program, 
-Kocour Modroočko, 
-Prímová sobota – cvičení pro ženy s Ivou Kolínskou">5</a></td><td class="wkday">6</td></tr><tr><th class="cist">45. týden</th><td class="wkday"><a id="date_20161107" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=7. 11. 2016&amp;datum_do=7. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">7</a></td><td class="wkday"><a id="date_20161108" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=8. 11. 2016&amp;datum_do=8. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
-Nordic walking, 
-Počítačová poradna pro občany Prahy 12 zdarma">8</a></td><td class="wkday"><a id="date_20161109" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=9. 11. 2016&amp;datum_do=9. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+<hr class="cist"><div id="kalakci"><a name="kaListing"><span class="cist">&nbsp;</span></a><p class="mesice"><a href="/vismo/kalendar-akci.asp?kaNM=1&amp;pocet=50&amp;kaDateO=9.10.2016#kaListing" title="Předchozí měsíc" class="sipka l">&lt;&lt;</a> <a href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=1.11.2016&amp;datum_do=30. 11. 2016">Listopad 2016</a> <a href="/vismo/kalendar-akci.asp?kaNM=1&amp;pocet=50&amp;kaDateO=9.12.2016#kaListing" title="Následující měsíc" class="sipka p">&gt;&gt;</a></p><table class="calcells" summary="" cellspacing="1"><thead><tr><th class="cist"></th><th>Po</th><th>Út</th><th>St</th><th>Čt</th><th>Pá</th><th>So</th><th>Ne</th></tr></thead><tbody><tr><th class="cist">44. týden</th><td class="notmnth"><a id="date_20161031" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=31.10.2016&amp;datum_do=31.10.2016" title="Pouze proběhlé akce, klikněte pro detail">31</a></td><td class="wkday"><a id="date_20161101" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=1. 11. 2016&amp;datum_do=1. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">1</a></td><td class="wkday"><a id="date_20161102" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=2. 11. 2016&amp;datum_do=2. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">2</a></td><td class="wkday"><a id="date_20161103" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=3. 11. 2016&amp;datum_do=3. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">3</a></td><td class="wkday"><a id="date_20161104" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=4. 11. 2016&amp;datum_do=4. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">4</a></td><td class="wkday"><a id="date_20161105" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=5. 11. 2016&amp;datum_do=5. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">5</a></td><td class="wkday"><a id="date_20161106" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=6. 11. 2016&amp;datum_do=6. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">6</a></td></tr><tr><th class="cist">45. týden</th><td class="wkday"><a id="date_20161107" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=7. 11. 2016&amp;datum_do=7. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">7</a></td><td class="wkday"><a id="date_20161108" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=8. 11. 2016&amp;datum_do=8. 11. 2016" title="Pouze proběhlé akce, klikněte pro detail">8</a></td><td class="wkday curdate"><a id="date_20161109" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=9. 11. 2016&amp;datum_do=9. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
 Ladislav Klíma v Modřanech, Kamýku a Cholupicích, 
 Operační systémem Windows 10 – začátečníci- počítačový kurz pro seniory, 
 Spokojenost - základ života, 
 Třídím BIOmateriál, 
 Začínáme s tabletem – počítačový kurz pro seniory, 
-Zpívání pro radost">9</a></td><td class="wkday"><a id="date_20161110" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=10. 11. 2016&amp;datum_do=10. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">10</a></td><td class="wkday">11</td><td class="wkday"><a id="date_20161112" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=12. 11. 2016&amp;datum_do=12. 11. 2016" title="Cirkusácká pohádka, 
+Zpívání pro radost, 
+Kdy a kam v listopadu  za zábavou">9</a></td><td class="wkday"><a id="date_20161110" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=10. 11. 2016&amp;datum_do=10. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Kdy a kam v listopadu  za zábavou">10</a></td><td class="wkday"><a id="date_20161111" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=11. 11. 2016&amp;datum_do=11. 11. 2016" title="Kdy a kam v listopadu  za zábavou">11</a></td><td class="wkday"><a id="date_20161112" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=12. 11. 2016&amp;datum_do=12. 11. 2016" title="Cirkusácká pohádka, 
 Jóga smíchu, 
 První pomoc, 
 První pomoc při dopravní nehodě, 
-Šperky z polymeru">12</a></td><td class="wkday">13</td></tr><tr><th class="cist">46. týden</th><td class="wkday"><a id="date_20161114" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=14. 11. 2016&amp;datum_do=14. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">14</a></td><td class="wkday"><a id="date_20161115" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=15. 11. 2016&amp;datum_do=15. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
-Nordic walking">15</a></td><td class="wkday"><a id="date_20161116" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=16. 11. 2016&amp;datum_do=16. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
-Thovt: Hermetické karty a práce s energií, 
-Zpívání pro radost">16</a></td><td class="wkday">17</td><td class="wkday">18</td><td class="wkday"><a id="date_20161119" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=19. 11. 2016&amp;datum_do=19. 11. 2016" title="Komunikace nebo manipulace?, 
-Loupežník a princezna Anka, 
-Tantra jóga Mohendžodáro – žena kněžka-žena čarodějnice">19</a></td><td class="wkday">20</td></tr><tr><th class="cist">47. týden</th><td class="wkday"><a id="date_20161121" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=21. 11. 2016&amp;datum_do=21. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">21</a></td><td class="wkday"><a id="date_20161122" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=22. 11. 2016&amp;datum_do=22. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Šperky z polymeru, 
+Kdy a kam v listopadu  za zábavou">12</a></td><td class="wkday"><a id="date_20161113" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=13. 11. 2016&amp;datum_do=13. 11. 2016" title="Kdy a kam v listopadu  za zábavou">13</a></td></tr><tr><th class="cist">46. týden</th><td class="wkday"><a id="date_20161114" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=14. 11. 2016&amp;datum_do=14. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Kdy a kam v listopadu  za zábavou">14</a></td><td class="wkday"><a id="date_20161115" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=15. 11. 2016&amp;datum_do=15. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
 Nordic walking, 
-Počítačová poradna pro občany Prahy 12 zdarma">22</a></td><td class="wkday"><a id="date_20161123" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=23. 11. 2016&amp;datum_do=23. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Kdy a kam v listopadu  za zábavou">15</a></td><td class="wkday"><a id="date_20161116" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=16. 11. 2016&amp;datum_do=16. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Thovt: Hermetické karty a práce s energií, 
+Zpívání pro radost, 
+Kdy a kam v listopadu  za zábavou">16</a></td><td class="wkday"><a id="date_20161117" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=17. 11. 2016&amp;datum_do=17. 11. 2016" title="Kdy a kam v listopadu  za zábavou">17</a></td><td class="wkday"><a id="date_20161118" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=18. 11. 2016&amp;datum_do=18. 11. 2016" title="Kdy a kam v listopadu  za zábavou">18</a></td><td class="wkday"><a id="date_20161119" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=19. 11. 2016&amp;datum_do=19. 11. 2016" title="Komunikace nebo manipulace?, 
+Loupežník a princezna Anka, 
+Tantra jóga Mohendžodáro – žena kněžka-žena čarodějnice, 
+Kdy a kam v listopadu  za zábavou">19</a></td><td class="wkday"><a id="date_20161120" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=20. 11. 2016&amp;datum_do=20. 11. 2016" title="Kdy a kam v listopadu  za zábavou">20</a></td></tr><tr><th class="cist">47. týden</th><td class="wkday"><a id="date_20161121" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=21. 11. 2016&amp;datum_do=21. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Komentovaná prohlídka Poslanecké sněmovny a Senátu, 
+Kdy a kam v listopadu  za zábavou">21</a></td><td class="wkday"><a id="date_20161122" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=22. 11. 2016&amp;datum_do=22. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Nordic walking, 
+Počítačová poradna pro občany Prahy 12 zdarma, 
+Kdy a kam v listopadu  za zábavou">22</a></td><td class="wkday"><a id="date_20161123" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=23. 11. 2016&amp;datum_do=23. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
 Tarotové karty, 
-Zpívání pro radost">23</a></td><td class="wkday"><a id="date_20161124" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=24. 11. 2016&amp;datum_do=24. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Zpívání pro radost, 
+Kdy a kam v listopadu  za zábavou">23</a></td><td class="wkday"><a id="date_20161124" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=24. 11. 2016&amp;datum_do=24. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
 Osvětová kampaň k rizikům závislosti na legálních i nelegálních látkách, 
 Rodinné konstelace na téma Já a vztahy – vztah k matce a otci (k mužské a ženské energii), 
 Večery s rodinnými konstelacemi – volný cyklus na téma: Já a vztahy - vztah k matce a otci (k mužské a ženské energii), 
-Zdobení perníčků">24</a></td><td class="wkday">25</td><td class="wkday"><a id="date_20161126" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=26. 11. 2016&amp;datum_do=26. 11. 2016" title="Červená Karkulka aneb To je ale náhodička, 
+Zdobení perníčků, 
+Kdy a kam v listopadu  za zábavou">24</a></td><td class="wkday"><a id="date_20161125" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=25. 11. 2016&amp;datum_do=25. 11. 2016" title="Kdy a kam v listopadu  za zábavou">25</a></td><td class="wkday"><a id="date_20161126" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=26. 11. 2016&amp;datum_do=26. 11. 2016" title="Červená Karkulka aneb To je ale náhodička, 
 Čchi kung pěti elementů, 
-Orientální tanec – Drum sola">26</a></td><td class="wkday"><a id="date_20161127" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=27. 11. 2016&amp;datum_do=27. 11. 2016" title="1. adventní neděle">27</a></td></tr><tr><th class="cist">48. týden</th><td class="wkday"><a id="date_20161128" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=28. 11. 2016&amp;datum_do=28. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let">28</a></td><td class="wkday"><a id="date_20161129" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=29. 11. 2016&amp;datum_do=29. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
-Nordic walking">29</a></td><td class="wkday"><a id="date_20161130" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=30. 11. 2016&amp;datum_do=30. 11. 2016" title="Klíč k porozumění sám sobě i lidem okolo, 
+Orientální tanec – Drum sola, 
+Kdy a kam v listopadu  za zábavou">26</a></td><td class="wkday"><a id="date_20161127" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=27. 11. 2016&amp;datum_do=27. 11. 2016" title="1. adventní neděle, 
+Kdy a kam v listopadu  za zábavou">27</a></td></tr><tr><th class="cist">48. týden</th><td class="wkday"><a id="date_20161128" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=28. 11. 2016&amp;datum_do=28. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Kdy a kam v listopadu  za zábavou">28</a></td><td class="wkday"><a id="date_20161129" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=29. 11. 2016&amp;datum_do=29. 11. 2016" title="Klub Sluníčko děti bez rodičů od 2 let, 
+Nordic walking, 
+Kdy a kam v listopadu  za zábavou">29</a></td><td class="wkday"><a id="date_20161130" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=30. 11. 2016&amp;datum_do=30. 11. 2016" title="Klíč k porozumění sám sobě i lidem okolo, 
 Klub Sluníčko děti bez rodičů od 2 let, 
 Vánoční koncert Martina Kociánová a České komorní trio, 
 Vánoční koncert Martiny Kociánové a Českého komorního tria, 
-Zpívání pro radost">30</a></td><td class="notmnth"><a id="date_20161201" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=1.12.2016&amp;datum_do=1.12.2016" title="Rozsvícení vánočního stromu MČ Praha 12 spojené s kulturním programem">1</a></td><td class="notmnth">2</td><td class="notmnth"><a id="date_20161203" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=3.12.2016&amp;datum_do=3.12.2016" title="Vánoce s Choreou">3</a></td><td class="notmnth"><a id="date_20161204" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=4.12.2016&amp;datum_do=4.12.2016" title="2. adventní neděle">4</a></td></tr><tr><th class="cist">49. týden</th><td class="notmnth">5</td><td class="notmnth">6</td><td class="notmnth"><a id="date_20161207" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=7.12.2016&amp;datum_do=7.12.2016" title="František Nedvěd s kapelou – koncert, 
-Vánoční koncert Františka Nedvěda se skupinou TieBreak">7</a></td><td class="notmnth">8</td><td class="notmnth">9</td><td class="notmnth">10</td><td class="notmnth"><a id="date_20161211" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=11.12.2016&amp;datum_do=11.12.2016" title="3. adventní neděle">11</a></td></tr></tbody></table></div><div class="sf">&nbsp;</div></div><hr class="skryt"><div class="obsah" id="kalendarAkci"><h3 class="cvi">Jednodenní akce</h3><div class="dok"><ul class="ui"><li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5949">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>1.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/nordic%2Dwalking/a-5923">Nordic walking</a></strong><div><strong>1.11.2016 10:00 - 11:00</strong></div><div>Půjčení hůlek zdarma; Cena lekce: 20 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1004">Sportovní akce</a></div></li>
-<li><strong><a href="/verejne%2Dsetkani%2Dpristavba%2Dzs%2Da%2Dms%2Dna%2Dberanku/a-5977">Veřejné setkání - přístavba ZŠ a MŠ Na Beránku</a></strong><div><strong>1.11.2016 18:00</strong></div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5950">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>2.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5951">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>3.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/primova%2Dsobota%2Dcviceni%2Dpro%2Dzeny%2Ds%2Divou%2Dkolinskou/a-5928">Prímová sobota – cvičení pro ženy s Ivou Kolínskou</a></strong><div><strong>5.11.2016 9:00</strong></div><div>9.00 – 10.00 P - Class <BR>10.15 – 11.15 Jógalates</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1004">Sportovní akce</a></div></li>
-<li><strong><a href="/antistresovy%2Dprogram/a-5929">Antistresový program</a></strong><div><strong>5.11.2016 10:00 - 17:00</strong></div><div>Cena: 1.200,- za celodenní seminář</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/4%2Dpohadkove%2Dradeni/a-5910">4. Pohádkové řádění</a></strong><div><strong>5.11.2016 14:00 - 17:00</strong></div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=14129">Akce pro děti</a></div></li>
-<li><strong><a href="/4%2Dpohadkove%2Dradeni/a-5911">4. Pohádkové řádění</a></strong><div><strong>5.11.2016 14:00 - 17:00</strong></div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=14129">Akce pro děti</a></div></li>
-<li><strong><a href="/kocour%2Dmodroocko/a-5930">Kocour Modroočko</a></strong><div><strong>5.11.2016 15:00</strong></div><div>Účinkuje: Divadlo Krapet; Vstupné 70 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1003">Kulturní akce</a></div></li>
-<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5952">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>7.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5953">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>8.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/nordic%2Dwalking/a-5924">Nordic walking</a></strong><div><strong>8.11.2016 10:00 - 11:00</strong></div><div>Půjčení hůlek zdarma; Cena lekce: 20 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1004">Sportovní akce</a></div></li>
-<li><strong><a href="/pocitacova%2Dporadna%2Dpro%2Dobcany%2Dprahy%2D12%2Dzdarma/a-5931">Počítačová poradna pro občany Prahy 12 zdarma</a></strong><div><strong>8.11.2016 13:30 - 17:30</strong></div><div>Poradna se zaměřuje na základní otázky, které se vztahují k počítačům, tabletům, internetu a facebooku. <BR>Nutná rezervace místa - jara@kc12.cz,tel. 778 482 787, 241 773 832</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
-<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5954">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>9.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+Zpívání pro radost, 
+Kdy a kam v listopadu  za zábavou">30</a></td><td class="notmnth"><a id="date_20161201" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=1.12.2016&amp;datum_do=1.12.2016" title="Rozsvícení vánočního stromu MČ Praha 12 spojené s kulturním programem">1</a></td><td class="notmnth">2</td><td class="notmnth"><a id="date_20161203" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=3.12.2016&amp;datum_do=3.12.2016" title="Vánoce s Choreou">3</a></td><td class="notmnth"><a id="date_20161204" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=4.12.2016&amp;datum_do=4.12.2016" title="2. adventní neděle">4</a></td></tr><tr><th class="cist">49. týden</th><td class="notmnth">5</td><td class="notmnth">6</td><td class="notmnth"><a id="date_20161207" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=7.12.2016&amp;datum_do=7.12.2016" title="František Nedvěd s kapelou – koncert, 
+Vánoční koncert Františka Nedvěda se skupinou TieBreak">7</a></td><td class="notmnth">8</td><td class="notmnth">9</td><td class="notmnth">10</td><td class="notmnth"><a id="date_20161211" href="/vismo/kalendar-akci.asp?hledani=1&amp;id_org=80112&amp;kdy=-1&amp;datum_od=11.12.2016&amp;datum_do=11.12.2016" title="3. adventní neděle">11</a></td></tr></tbody></table></div><div class="sf">&nbsp;</div></div><hr class="skryt"><div class="obsah" id="kalendarAkci"><h3 class="cvi">Doporučujeme</h3><div class="dok"><ul class="ui"><li><strong><a href="/kdy%2Da%2Dkam%2Dv%2Dlistopadu%2Dza%2Dzabavou/a-5979">Kdy a kam v listopadu  za zábavou</a></strong><div><strong>1.11.2016 - 30.11.2016</strong></div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=48939">Akce městké části</a>, <a href="/ap/hledani=1&amp;typ_akce=1003">Kulturní akce</a>, <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a>, <a href="/ap/hledani=1&amp;typ_akce=1004">Sportovní akce</a></div></li>
+</ul><div class="sf">&nbsp;</div></div><h3 class="cvi">Jednodenní akce</h3><div class="dok"><ul class="ui"><li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5954">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>9.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
 <li><strong><a href="/zpivani%2Dpro%2Dradost/a-5966">Zpívání pro radost</a></strong><div><strong>9.11.2016 10:00 - 11:00</strong></div><div>Lektorka: Marcela Levinská; Cena: 20 Kč za lekci</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
 <li><strong><a href="/zaciname%2Ds%2Dtabletem%2Dpocitacovy%2Dkurz%2Dpro%2Dseniory/a-5933">Začínáme s tabletem – počítačový kurz pro seniory</a></strong><div><strong>9.11.2016 14:00 - 15:30</strong></div><div>středy 9. 11., 16. 11. a 23. 11.2016 ¨; Cena 150 Kč/6 vyuč. hodin</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
 <li><strong><a href="/operacni%2Dsystemem%2Dwindows%2D10%2Dzacatecnici%2Dpocitacovy%2Dkurz%2Dpro%2Dseniory/a-5934">Operační systémem Windows 10 – začátečníci- počítačový kurz pro seniory</a></strong><div><strong>9.11.2016 15:45 - 17:15</strong></div><div>středy 9. 11., 16. 11. a 23. 11.2016 ¨; Cena 360 Kč/6 vyuč. hodin</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
@@ -250,6 +261,20 @@ Vánoční koncert Františka Nedvěda se skupinou TieBreak">7</a></td><td class
 <li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5956">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>14.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
 <li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5957">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>15.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
 <li><strong><a href="/nordic%2Dwalking/a-5925">Nordic walking</a></strong><div><strong>15.11.2016 10:00 - 11:00</strong></div><div>Půjčení hůlek zdarma; Cena lekce: 20 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1004">Sportovní akce</a></div></li>
+<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5958">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>16.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/zpivani%2Dpro%2Dradost/a-5967">Zpívání pro radost</a></strong><div><strong>16.11.2016 10:00 - 11:00</strong></div><div>Lektorka: Marcela Levinská; Cena: 20 Kč za lekci</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/thovt%2Dhermeticke%2Dkarty%2Da%2Dprace%2Ds%2Denergii/a-5971">Thovt: Hermetické karty a práce s energií</a></strong><div><strong>16.11.2016 18:30 - 20:30</strong></div><div>Lektor: Mgr. Miloš Matula; Vstupné: 250 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/komunikace%2Dnebo%2Dmanipulace/a-5941">Komunikace nebo manipulace?</a></strong><div><strong>19.11.2016 9:30 - 16:00</strong></div><div>Lektorka: MgA. Jitka Sedláčková; Cena: 790 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/tantra%2Djoga%2Dmohendzodaro%2Dzena%2Dknezka%2Dzena%2Dcarodejnice/a-5940">Tantra jóga Mohendžodáro – žena kněžka-žena čarodějnice</a></strong><div><strong>19.11.2016 9:30 - 12:30</strong></div><div>S sebou si vezměte šátek na oči. Lektorka: Blanka Milevová; Cena: 290 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/loupeznik%2Da%2Dprincezna%2Danka/a-5942">Loupežník a princezna Anka</a></strong><div><strong>19.11.2016 15:00</strong></div><div>Účinkuje: Divadlo Andromeda; Vstupné 70 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1003">Kulturní akce</a></div></li>
+<li><strong><a href="/komentovana%2Dprohlidka%2Dposlanecke%2Dsnemovny%2Da%2Dsenatu/a-5980">Komentovaná prohlídka Poslanecké sněmovny a Senátu</a></strong><div><strong>21.11.2016</strong></div><div>10:00 - Komentovaná prohlídka Senátu <BR>12:30 - Komentovaná prohlídka Poslanecké sněmovny</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=48939">Akce městké části</a>, <a href="/ap/hledani=1&amp;typ_akce=17921">Akce pro seniory</a>, <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5959">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>21.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5960">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>22.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/nordic%2Dwalking/a-5926">Nordic walking</a></strong><div><strong>22.11.2016 10:00 - 11:00</strong></div><div>Půjčení hůlek zdarma; Cena lekce: 20 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1004">Sportovní akce</a></div></li>
+<li><strong><a href="/pocitacova%2Dporadna%2Dpro%2Dobcany%2Dprahy%2D12%2Dzdarma/a-5932">Počítačová poradna pro občany Prahy 12 zdarma</a></strong><div><strong>22.11.2016 13:30 - 17:30</strong></div><div>Poradna se zaměřuje na základní otázky, které se vztahují k počítačům, tabletům, internetu a facebooku. <BR>Nutná rezervace místa - jara@kc12.cz,tel. 778 482 787, 241 773 832</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/klub%2Dslunicko%2Ddeti%2Dbez%2Drodicu%2Dod%2D2%2Dlet/a-5961">Klub Sluníčko děti bez rodičů od 2 let</a></strong><div><strong>23.11.2016 9:00 - 12:00</strong></div><div>Vstupné 180 Kč/celý 3 hod. blok., 1000 Kč/8 vstupů v měsíci<BR>Lektorka: Renáta Němečková</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/zpivani%2Dpro%2Dradost/a-5968">Zpívání pro radost</a></strong><div><strong>23.11.2016 10:00 - 11:00</strong></div><div>Lektorka: Marcela Levinská; Cena: 20 Kč za lekci</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
+<li><strong><a href="/tarotove%2Dkarty/a-5972">Tarotové karty</a></strong><div><strong>23.11.2016 18:00 - 19:30</strong></div><div>Lektorka: Jana Janouchová; Vstupné: 160 Kč</div><div><strong>Typ akce:</strong> <a href="/ap/hledani=1&amp;typ_akce=1005">Ostatní</a></div></li>
 </ul><div class="sf">&nbsp;</div></div>
 			</div><!-- /obsah (otevírá se v *.asp) -->
 			<div class="sf"></div>
@@ -270,48 +295,10 @@ Vánoční koncert Františka Nedvěda se skupinou TieBreak">7</a></td><td class
 
         <p class="webmaster"><span class="p">web &amp; design <a href="http://webhouse.cz" title="WEBHOUSE, s. r. o." class="patalogo">WEBHOUSE<span>&reg;</span></a>, redakční systém <a class="patalogo" href="http://vismo.cz"><span class="vis">vis</span>mo<span>&reg;</span></a></span></p>
         <p><span class="p">
-        <a href="https://www.praha12.cz/AA/index.asp?app=80112&amp;cid=AuthCookie&amp;ReturnUrl=%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50%26stranka%3D1&amp;id_org=80112">Přihlásit se</a> | <a href="/AA/register.asp?ReturnUrl=https%3A%2F%2Fwww%2Epraha12%2Ecz%3A443%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50%26stranka%3D1&amp;id_org=80112">Registrovat se</a> | <a href="/mverze.asp?url=http%3A%2F%2Fm%2Epraha12%2Ecz%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50%26stranka%3D1">Mobilní verze</a> | <a href="/vismo/prohlaseni.asp">Prohlášení o&nbsp;přístupnosti</a> | <a href="mailto:webmaster@praha12.cz">webmaster@praha12.cz</a></span></p>
+        <a href="https://www.praha12.cz/AA/index.asp?app=80112&amp;cid=AuthCookie&amp;ReturnUrl=%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50&amp;id_org=80112">Přihlásit se</a> | <a href="/AA/register.asp?ReturnUrl=https%3A%2F%2Fwww%2Epraha12%2Ecz%3A443%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50&amp;id_org=80112">Registrovat se</a> | <a href="/mverze.asp?url=http%3A%2F%2Fm%2Epraha12%2Ecz%2Fvismo%2Fkalendar%2Dakci%2Easp%3Fpocet%3D50">Mobilní verze</a> | <a href="/vismo/prohlaseni.asp">Prohlášení o&nbsp;přístupnosti</a> | <a href="mailto:webmaster@praha12.cz">webmaster@praha12.cz</a></span></p>
         <a class="rss" href="/rss"><img src="/html/images/rss.gif" width="67" height="27" alt="RSS"></a>
         <div class="sf">&nbsp;</div>
         </div><!--/pataObsah-->
    </div><!--/pata-->
 </div><!--/celek-->
-
-        <div id="vismo-cookie-wrapper">
-        	<div id="vismo-cookie-panel">
-        		<p>
-        			<span class="vismo-cookie-text">Tento web využívá cookies. Jeho používáním s&nbsp;tím vyjadřujete souhlas.&emsp;<span><a href="https://www.praha12.cz/vismo/prohlaseni.asp#cookies">O cookies</a></span></span>
-        			<span class="vismo-cookie-button"><a id="vismo-cookie-agree-button" href="/vismo/kalendar-akci.asp?stranka=1&amp;pocet=50&amp;cookiesAllowed=1">Rozumím</a></span>
-        			<!-- <span class="vismo-cookie-clear">&nbsp;</span> -->
-        		</p>
-        	</div>
-        </div>
-
-        <script type="text/javascript">
-        	(function() {
-        		var cookieLista       = document.getElementById("vismo-cookie-panel"),
-        		    cookieAgreeButton = document.getElementById("vismo-cookie-agree-button");
-
-        		cookieAgreeButton.onclick = function(e) {
-        			var event = e || window.event;
-        			event.preventDefault();
-        			cookieLista.style.bottom = "-100%";
-
-        			var unset;
-        			var unsetDate = new Date();
-        			unsetDate.setTime(unsetDate.getTime() + (-1 * 24 * 60 * 60 * 1000));
-        			unset = "; expires=" + unsetDate.toGMTString();
-
-        			document.cookie = "cookiesAllowed=" + unset + ";path=/;";
-        			document.cookie = "cookiesAllowed=1" + unset + ";path=/;";
-
-        			var expires;
-        			var date = new Date();
-        			date.setTime(date.getTime() + ((365*5) * 24 * 60 * 60 * 1000));
-        			expires = "; expires=" + date.toGMTString();
-
-        			document.cookie = "cookiesAllowed=1" + expires + ";path=/;";
-        		}
-        	}());
-        </script>
 </body></html>

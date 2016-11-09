@@ -9,6 +9,8 @@
 import UIKit
 import Kanna
 
+private let g_bUseTestFiles = false;
+
 class CRxDataSource : NSObject {
     var m_sId: String
     var m_sTitle: String           // human readable
@@ -151,61 +153,85 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshDataSource(id: String, force: Bool = false) {
+    func refreshDataSource(id: String, force: Bool, completition: ((_ error: String?) -> Void)? = nil) {
         
         guard let ds = m_dictDataSources[id]
-            else { return; }
+            else { completition?("Unknown data source"); return; }
         
         // check the last refresh date
         if !force && ds.m_dateLastRefreshed != nil  &&
             ds.m_dateLastRefreshed!.timeIntervalSince(Date()) < Double(ds.m_nRefreshFreqHours*60*60) {
+            completition?(nil);
             return;
         }
         
         if id == CRxDataSourceManager.dsRadNews || id == CRxDataSourceManager.dsRadAlerts {
-            refreshRadniceDataSources();
+            refreshRadniceDataSources(completition: completition);
+            return;
         }
         else if id == CRxDataSourceManager.dsRadEvents {
-            refreshRadEventsDataSource();
+            refreshRadEventsDataSource(completition: completition);
+            return;
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
-            refreshBiografDataSource();
+            refreshBiografDataSource(completition: completition);
+            return;
         }
         else if id == CRxDataSourceManager.dsCooltour {
             if let path = Bundle.main.url(forResource: "/test_files/p12kultpamatky", withExtension: "json") {
                 ds.loadFromJSON(file: path);
+                completition?(nil);
+                return;
             }
         }
         else if id == CRxDataSourceManager.dsWaste {
             if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
                 ds.loadFromJSON(file: path);
                 refreshWasteDataSource();
+                completition?(nil);
+                return;
             }
         }
         else if id == CRxDataSourceManager.dsSosContacts {
             if let path = Bundle.main.url(forResource: "/test_files/sos", withExtension: "json") {
                 ds.loadFromJSON(file: path);
+                completition?(nil);
+                return;
             }
         }
+        completition?("Unknown data source");
     }
     
     //--------------------------------------------------------------------------
-    func refreshRadniceDataSources() {
+    // downloading daa from URL: http://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
+    // async
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    //--------------------------------------------------------------------------
+    func refreshRadniceDataSources(completition: ((_ error: String?) -> Void)? = nil) {
         
-        // XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: "https://www.praha12.cz/");
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: "/test_files/praha12titulka", withExtension: "html");
+        }
+        guard let url = urlDownload else { completition?("Cannot resolve URL"); return; }
         
-        //let url = URL(string: "https://www.praha12.cz/")
-        //if let doc = HTML(url: url!, encoding: .utf8) {
-        
-        guard let aNewsDS = m_dictDataSources[CRxDataSourceManager.dsRadNews],
-            let aAlertsDS = m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
-            else { return }
-        
-        if let path = Bundle.main.path(forResource: "/test_files/praha12titulka", ofType: "html") {
-            let html = try! String(contentsOfFile: path, encoding: .utf8)
-            if let doc = HTML(html: html, encoding: .utf8) {
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else { completition?(NSLocalizedString("Error when downloading data", comment: "")); return }
+            if let doc = HTML(html:data, encoding: .utf8) {
+
+                // XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
                 
-                var arrNewItems = [CRxEventRecord]()
+                var arrNewsItems = [CRxEventRecord]()
                 
                 for node in doc.xpath("//div[@class='titulDoc aktClanky']//li") {
                     if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
@@ -236,15 +262,12 @@ class CRxDataSourceManager : NSObject {
                          aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
                          }*/
                         //dump(aNewRecord)
-                        arrNewItems.append(aNewRecord);
+                        arrNewsItems.append(aNewRecord);
                     }
                 }
-                aNewsDS.m_arrItems = arrNewItems;
-                aNewsDS.m_dateLastRefreshed = Date();
-                save(dataSource: aNewsDS);
                 
-                arrNewItems.removeAll()
-                
+                var arrAlertItems = [CRxEventRecord]()
+
                 for node in doc.xpath("//div[@class='titulDoc upoClanky']//li") {
                     if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
                         let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -271,26 +294,47 @@ class CRxDataSourceManager : NSObject {
                             aNewRecord.m_sText = aTextNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
                         //dump(aNewRecord)
-                        arrNewItems.append(aNewRecord);
+                        arrAlertItems.append(aNewRecord);
                     }
                 }
-                aAlertsDS.m_arrItems = arrNewItems
-                aAlertsDS.m_dateLastRefreshed = Date()
-                save(dataSource: aAlertsDS)
+                DispatchQueue.main.async() { () -> Void in
+                    guard let aNewsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadNews],
+                        let aAlertsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
+                        else { return }
+                    
+                    if arrNewsItems.count > 0 {
+                        aNewsDS.m_arrItems = arrNewsItems;
+                    }
+                    aNewsDS.m_dateLastRefreshed = Date();
+                    self.save(dataSource: aNewsDS);
+
+                    if arrAlertItems.count > 0 {
+                        aAlertsDS.m_arrItems = arrAlertItems;
+                    }
+                    aAlertsDS.m_dateLastRefreshed = Date()
+                    self.save(dataSource: aAlertsDS)
+                    completition?(nil);
+                }
             }
         }
     }
     //--------------------------------------------------------------------------
-    func refreshRadEventsDataSource() {
+    func refreshRadEventsDataSource(completition: ((_ error: String?) -> Void)? = nil) {
         
-        guard let aEventsDS = m_dictDataSources[CRxDataSourceManager.dsRadEvents]
-            else { return }
-        
-        //let url = URL(string: "https://www.praha12.cz/vismo/kalendar-akci.asp")  //?pocet=50
-        //if let doc = HTML(url: url!, encoding: .utf8) {
-        if let path = Bundle.main.path(forResource: "/test_files/praha12events", ofType: "html") {
-            let html = try! String(contentsOfFile: path, encoding: .utf8)
-            if let doc = HTML(html: html, encoding: .utf8) {
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: "https://www.praha12.cz/vismo/kalendar-akci.asp?pocet=50");
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: "/test_files/praha12events", withExtension: "html");
+        }
+        guard let url = urlDownload else { completition?("Cannot resolve URL"); return; }
+
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else { completition?(NSLocalizedString("Error when downloading data", comment: "")); return }
+            
+            if let doc = HTML(html:data, encoding: .utf8) {
                 
                 var arrNewItems = [CRxEventRecord]()
                 
@@ -347,28 +391,40 @@ class CRxDataSourceManager : NSObject {
                         arrNewItems.append(aNewRecord);
                     }
                 }
-                aEventsDS.m_arrItems = arrNewItems;
-                aEventsDS.m_dateLastRefreshed = Date();
-                save(dataSource: aEventsDS);
+                DispatchQueue.main.async() { () -> Void in
+                    guard let aEventsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadEvents]
+                        else { return }
+                    
+                    if arrNewItems.count > 0 {
+                        aEventsDS.m_arrItems = arrNewItems;
+                    }
+                    aEventsDS.m_dateLastRefreshed = Date();
+                    self.save(dataSource: aEventsDS);
+                    completition?(nil);
+                }
             }
         }
     }
     
     //--------------------------------------------------------------------------
-    func refreshBiografDataSource() {
+    func refreshBiografDataSource(completition: ((_ error: String?) -> Void)? = nil) {
         
-        guard let aBiografDS = m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
-            else { return }
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: "http://www.modranskybiograf.cz/klient-349/kino-114/");
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: "/test_files/modrbiograf", withExtension: "html");
+        }
+        guard let url = urlDownload else { completition?("Cannot resolve URL"); return; }
         
-        let sAddress = "Modřanský biograf\nU Kina 1/44\n143 00 Praha 12 - Modřany";
-        
-        //let url = URL(string: "http://www.modranskybiograf.cz/klient-349/kino-114/")
-        //if let doc = HTML(url: url!, encoding: .utf8) {
-        
-        if let path = Bundle.main.path(forResource: "/test_files/modrbiograf", ofType: "html") {
-            let html = try! String(contentsOfFile: path, encoding: .utf8)
-            if let doc = HTML(html: html, encoding: .utf8) {
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else { completition?(NSLocalizedString("Error when downloading data", comment: "")); return }
+
+            if let doc = HTML(html:data, encoding: .utf8) {
                 
+                let sAddress = "Modřanský biograf\nU Kina 1/44\n143 00 Praha 12 - Modřany";
                 var arrNewItems = [CRxEventRecord]()
                 
                 let unitFlags : Set<Calendar.Component> = [.day, .month, .year]
@@ -421,9 +477,16 @@ class CRxDataSourceManager : NSObject {
                         }
                     }
                 }
-                aBiografDS.m_arrItems = arrNewItems;
-                aBiografDS.m_dateLastRefreshed = Date();
-                save(dataSource: aBiografDS);
+                DispatchQueue.main.async() { () -> Void in
+                    guard let aBiografDS = self.m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
+                        else { return }
+                    if arrNewItems.count > 0 {
+                        aBiografDS.m_arrItems = arrNewItems;
+                    }
+                    aBiografDS.m_dateLastRefreshed = Date();
+                    self.save(dataSource: aBiografDS);
+                    completition?(nil);
+                }
             }
         }
     }
@@ -434,7 +497,7 @@ class CRxDataSourceManager : NSObject {
         for rec in ds.m_arrItems {
             if let text = rec.m_sText {
                 let sTextCompressed = text.replacingOccurrences(of: " ", with: "");
-                if sTextCompressed.range(of: sAliasCompressed) != nil {
+                if sTextCompressed.range(of: sAliasCompressed, options:[.diacriticInsensitive, .caseInsensitive]) != nil {
                     return rec;
                 }
             }
@@ -514,7 +577,7 @@ class CRxDataSourceManager : NSObject {
         print("\(type) lines \(lines.count), processed \(nProcessedCount)");
     }
     
-    func refreshWasteDataSource() {
+    func refreshWasteDataSource(completition: ((_ error: String?) -> Void)? = nil) {
         
         guard let aVokDS = m_dictDataSources[CRxDataSourceManager.dsWaste]
             else { return }

@@ -13,7 +13,7 @@ class CRxMapItem : NSObject, MKAnnotation {
     var m_rec: CRxEventRecord!
 
     init(record: CRxEventRecord) {
-        m_rec = record;
+        m_rec = record.copy() as? CRxEventRecord;       // copy because of ds.refresh
         super.init()
     }
     

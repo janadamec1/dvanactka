@@ -63,6 +63,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         setRecordsDistance();
         sortRecords();
+        
+        let refreshCtl = UIRefreshControl();
+        refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
+        refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
+        refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
+        self.refreshControl = refreshCtl;
     }
     
     func sortRecords() {
@@ -130,6 +136,39 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
         }
     }
+    
+    //---------------------------------------------------------------------------
+    func stringWithLastUpdateDate() -> String {
+        if let ds = m_aDataSource, let date = ds.m_dateLastRefreshed {
+            let sTime = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short);
+            return NSLocalizedString("Last update:", comment: "") + " " + sTime;
+        }
+        else {
+            return NSLocalizedString("Pull main table to refresh", comment:"");
+        }
+    }
+
+    func downloadData() {
+        if let ds = m_aDataSource {
+            CRxDataSourceManager.sharedInstance.refreshDataSource(id: ds.m_sId, force: true) { (error) -> Void in
+                DispatchQueue.main.async() { () -> Void in
+                    if let sErrorText = error {
+                        if let refreshCtl = self.refreshControl {
+                            refreshCtl.attributedTitle = NSAttributedString(string: sErrorText);
+                            Timer.scheduledTimer(timeInterval: 2, target: refreshCtl, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
+                        }
+                    }
+                    else {
+                        self.setRecordsDistance();
+                        self.sortRecords();
+                        self.tableView.reloadData();
+                        self.refreshControl?.attributedTitle = NSAttributedString(string: self.stringWithLastUpdateDate());
+                        self.refreshControl?.endRefreshing();
+                    }
+                }
+            }
+        }
+    }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -153,6 +192,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     func record(at indexPath:IndexPath) -> CRxEventRecord? {
+        if indexPath.section >= m_orderedCategories.count {
+            return nil;
+        }
         if let items = m_orderedItems[m_orderedCategories[indexPath.section]] {
             return items[indexPath.row];
         }
@@ -288,7 +330,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         if let rec = record(at: indexPath) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
-            placeCtl.m_aRecord = rec;
+            placeCtl.m_aRecord = rec.copy() as? CRxEventRecord;     // copy because of ds.refresh
             navigationController?.pushViewController(placeCtl, animated: true);
         }
     }
