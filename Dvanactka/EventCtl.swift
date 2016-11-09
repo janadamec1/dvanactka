@@ -33,7 +33,7 @@ class PlaceCell: UITableViewCell {
     
 }
 
-class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate {
+class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate {
     var m_aDataSource: CRxDataSource?
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
     var m_orderedCategories = [String]()                // sorted category local names
@@ -60,6 +60,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
             self.tableView.estimatedRowHeight = 90.0;
+            
+            if ds.m_bIsBeingRefreshed {
+                ds.delegate = self;
+            }
         }
         setRecordsDistance();
         sortRecords();
@@ -148,25 +152,32 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
 
+    //---------------------------------------------------------------------------
     func downloadData() {
         if let ds = m_aDataSource {
-            CRxDataSourceManager.sharedInstance.refreshDataSource(id: ds.m_sId, force: true) { (error) -> Void in
-                DispatchQueue.main.async() { () -> Void in
-                    if let sErrorText = error {
-                        if let refreshCtl = self.refreshControl {
-                            refreshCtl.attributedTitle = NSAttributedString(string: sErrorText);
-                            Timer.scheduledTimer(timeInterval: 2, target: refreshCtl, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
-                        }
-                    }
-                    else {
-                        self.setRecordsDistance();
-                        self.sortRecords();
-                        self.tableView.reloadData();
-                        self.refreshControl?.attributedTitle = NSAttributedString(string: self.stringWithLastUpdateDate());
-                        self.refreshControl?.endRefreshing();
-                    }
-                }
+            ds.delegate = self;
+            CRxDataSourceManager.sharedInstance.refreshDataSource(id: ds.m_sId, force: true);
+        }
+    }
+    
+    //---------------------------------------------------------------------------
+    func dataSourceRefreshEnded(_ error: String?) { // protocol CRxDataSourceRefreshDelegate
+        if let ds = m_aDataSource {
+            ds.delegate = nil;
+        }
+        
+        if let sErrorText = error {
+            if let refreshCtl = self.refreshControl {
+                refreshCtl.attributedTitle = NSAttributedString(string: sErrorText);
+                Timer.scheduledTimer(timeInterval: 2, target: refreshCtl, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
             }
+        }
+        else {
+            setRecordsDistance();
+            sortRecords();
+            self.tableView.reloadData();
+            self.refreshControl?.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
+            self.refreshControl?.endRefreshing();
         }
     }
 

@@ -11,6 +11,10 @@ import Kanna
 
 private let g_bUseTestFiles = false;
 
+protocol CRxDataSourceRefreshDelegate {
+    func dataSourceRefreshEnded(_ error: String?);
+}
+
 class CRxDataSource : NSObject {
     var m_sId: String
     var m_sTitle: String           // human readable
@@ -18,7 +22,9 @@ class CRxDataSource : NSObject {
     var m_sIcon: String
     var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
     var m_dateLastRefreshed: Date?
+    var m_bIsBeingRefreshed: Bool = false
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
+    var delegate: CRxDataSourceRefreshDelegate?
     
     enum DataType {
         case events
@@ -109,6 +115,7 @@ class CRxDataSourceManager : NSObject {
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
     
+    var m_nNetworkIndicatorUsageCount: Int = 0;
     var m_urlDocumentsDir: URL!
     
     func defineDatasources() {
@@ -143,6 +150,24 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
+    func showNetworkIndicator() {
+        if m_nNetworkIndicatorUsageCount == 0 {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true;
+        }
+        m_nNetworkIndicatorUsageCount += 1;
+    }
+    
+    //--------------------------------------------------------------------------
+    func hideNetworkIndicator() {
+        if m_nNetworkIndicatorUsageCount > 0 {
+            m_nNetworkIndicatorUsageCount -= 1;
+        }
+        if m_nNetworkIndicatorUsageCount == 0 {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false;
+        }
+    }
+    
+    //--------------------------------------------------------------------------
     func refreshAllDataSources(force: Bool = false) {
         
         for dsIt in m_dictDataSources {
@@ -153,34 +178,34 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshDataSource(id: String, force: Bool, completition: ((_ error: String?) -> Void)? = nil) {
+    func refreshDataSource(id: String, force: Bool) {
         
         guard let ds = m_dictDataSources[id]
-            else { completition?("Unknown data source"); return; }
+            else { return; }
         
         // check the last refresh date
         if !force && ds.m_dateLastRefreshed != nil  &&
             ds.m_dateLastRefreshed!.timeIntervalSince(Date()) < Double(ds.m_nRefreshFreqHours*60*60) {
-            completition?(nil);
+            ds.delegate?.dataSourceRefreshEnded(nil);
             return;
         }
         
         if id == CRxDataSourceManager.dsRadNews || id == CRxDataSourceManager.dsRadAlerts {
-            refreshRadniceDataSources(completition: completition);
+            refreshRadniceDataSources();
             return;
         }
         else if id == CRxDataSourceManager.dsRadEvents {
-            refreshRadEventsDataSource(completition: completition);
+            refreshRadEventsDataSource();
             return;
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
-            refreshBiografDataSource(completition: completition);
+            refreshBiografDataSource();
             return;
         }
         else if id == CRxDataSourceManager.dsCooltour {
             if let path = Bundle.main.url(forResource: "/test_files/p12kultpamatky", withExtension: "json") {
                 ds.loadFromJSON(file: path);
-                completition?(nil);
+                ds.delegate?.dataSourceRefreshEnded(nil);
                 return;
             }
         }
@@ -188,18 +213,17 @@ class CRxDataSourceManager : NSObject {
             if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
                 ds.loadFromJSON(file: path);
                 refreshWasteDataSource();
-                completition?(nil);
+                ds.delegate?.dataSourceRefreshEnded(nil);
                 return;
             }
         }
         else if id == CRxDataSourceManager.dsSosContacts {
             if let path = Bundle.main.url(forResource: "/test_files/sos", withExtension: "json") {
                 ds.loadFromJSON(file: path);
-                completition?(nil);
+                ds.delegate?.dataSourceRefreshEnded(nil);
                 return;
             }
         }
-        completition?("Unknown data source");
     }
     
     //--------------------------------------------------------------------------
@@ -213,7 +237,10 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshRadniceDataSources(completition: ((_ error: String?) -> Void)? = nil) {
+    func refreshRadniceDataSources() {
+        guard let aNewsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadNews],
+            let aAlertsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
+            else { return }
         
         var urlDownload: URL?
         if !g_bUseTestFiles {
@@ -222,11 +249,25 @@ class CRxDataSourceManager : NSObject {
         else {
             urlDownload = Bundle.main.url(forResource: "/test_files/praha12titulka", withExtension: "html");
         }
-        guard let url = urlDownload else { completition?("Cannot resolve URL"); return; }
+        guard let url = urlDownload else {
+            aNewsDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL");
+            aAlertsDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return;
+        }
         
+        aNewsDS.m_bIsBeingRefreshed = true;
+        aAlertsDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+
         getDataFromUrl(url: url) { (data, response, error) in
             guard let data = data, error == nil
-                else { completition?(NSLocalizedString("Error when downloading data", comment: "")); return }
+            else {
+                DispatchQueue.main.async() { () -> Void in
+                    aNewsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
+                    aAlertsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
+                    self.hideNetworkIndicator();
+                }
+                return;
+            }
             if let doc = HTML(html:data, encoding: .utf8) {
 
                 // XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
@@ -298,28 +339,31 @@ class CRxDataSourceManager : NSObject {
                     }
                 }
                 DispatchQueue.main.async() { () -> Void in
-                    guard let aNewsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadNews],
-                        let aAlertsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
-                        else { return }
-                    
                     if arrNewsItems.count > 0 {
                         aNewsDS.m_arrItems = arrNewsItems;
                     }
                     aNewsDS.m_dateLastRefreshed = Date();
+                    aNewsDS.m_bIsBeingRefreshed = false;
                     self.save(dataSource: aNewsDS);
 
                     if arrAlertItems.count > 0 {
                         aAlertsDS.m_arrItems = arrAlertItems;
                     }
                     aAlertsDS.m_dateLastRefreshed = Date()
+                    aAlertsDS.m_bIsBeingRefreshed = false;
                     self.save(dataSource: aAlertsDS)
-                    completition?(nil);
+                    self.hideNetworkIndicator();
+
+                    aNewsDS.delegate?.dataSourceRefreshEnded(nil);
+                    aAlertsDS.delegate?.dataSourceRefreshEnded(nil);
                 }
             }
         }
     }
     //--------------------------------------------------------------------------
     func refreshRadEventsDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        guard let aEventsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadEvents]
+            else { return }
         
         var urlDownload: URL?
         if !g_bUseTestFiles {
@@ -328,11 +372,20 @@ class CRxDataSourceManager : NSObject {
         else {
             urlDownload = Bundle.main.url(forResource: "/test_files/praha12events", withExtension: "html");
         }
-        guard let url = urlDownload else { completition?("Cannot resolve URL"); return; }
+        guard let url = urlDownload else { aEventsDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+
+        aEventsDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
 
         getDataFromUrl(url: url) { (data, response, error) in
             guard let data = data, error == nil
-                else { completition?(NSLocalizedString("Error when downloading data", comment: "")); return }
+            else {
+                DispatchQueue.main.async() { () -> Void in
+                    aEventsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
+                    self.hideNetworkIndicator();
+                }
+                return;
+            }
             
             if let doc = HTML(html:data, encoding: .utf8) {
                 
@@ -392,15 +445,14 @@ class CRxDataSourceManager : NSObject {
                     }
                 }
                 DispatchQueue.main.async() { () -> Void in
-                    guard let aEventsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadEvents]
-                        else { return }
-                    
                     if arrNewItems.count > 0 {
                         aEventsDS.m_arrItems = arrNewItems;
                     }
                     aEventsDS.m_dateLastRefreshed = Date();
+                    aEventsDS.m_bIsBeingRefreshed = false;
                     self.save(dataSource: aEventsDS);
-                    completition?(nil);
+                    self.hideNetworkIndicator();
+                    aEventsDS.delegate?.dataSourceRefreshEnded(nil);
                 }
             }
         }
@@ -408,6 +460,8 @@ class CRxDataSourceManager : NSObject {
     
     //--------------------------------------------------------------------------
     func refreshBiografDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        guard let aBiografDS = self.m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
+            else { return }
         
         var urlDownload: URL?
         if !g_bUseTestFiles {
@@ -416,11 +470,20 @@ class CRxDataSourceManager : NSObject {
         else {
             urlDownload = Bundle.main.url(forResource: "/test_files/modrbiograf", withExtension: "html");
         }
-        guard let url = urlDownload else { completition?("Cannot resolve URL"); return; }
+        guard let url = urlDownload else { aBiografDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
         
+        aBiografDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+
         getDataFromUrl(url: url) { (data, response, error) in
             guard let data = data, error == nil
-                else { completition?(NSLocalizedString("Error when downloading data", comment: "")); return }
+            else {
+                DispatchQueue.main.async() { () -> Void in
+                    completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                    self.hideNetworkIndicator();
+                }
+                return;
+            }
 
             if let doc = HTML(html:data, encoding: .utf8) {
                 
@@ -478,14 +541,14 @@ class CRxDataSourceManager : NSObject {
                     }
                 }
                 DispatchQueue.main.async() { () -> Void in
-                    guard let aBiografDS = self.m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
-                        else { return }
                     if arrNewItems.count > 0 {
                         aBiografDS.m_arrItems = arrNewItems;
                     }
                     aBiografDS.m_dateLastRefreshed = Date();
+                    aBiografDS.m_bIsBeingRefreshed = false;
                     self.save(dataSource: aBiografDS);
-                    completition?(nil);
+                    self.hideNetworkIndicator();
+                    aBiografDS.delegate?.dataSourceRefreshEnded(nil);
                 }
             }
         }
