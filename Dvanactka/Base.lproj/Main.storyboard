@@ -195,10 +195,17 @@
                                                     <rect key="frame" x="0.0" y="111.5" width="304" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq9-ln-0zD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="304" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <state key="normal" title="Continue reading on website"/>
                                                             <connections>
                                                                 <action selector="onBtnWebsiteNewsTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="Ezz-6g-vXz"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1WT-pX-zF8">
+                                                            <rect key="frame" x="279" y="0.0" width="25" height="30"/>
+                                                            <state key="normal" image="action.png"/>
+                                                            <connections>
+                                                                <action selector="onBtnActionTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="gXN-eQ-fYS"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -214,6 +221,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="m_btnAction" destination="1WT-pX-zF8" id="a9d-TD-acU"/>
                                     <outlet property="m_btnFavorite" destination="RkT-HH-gx0" id="TjD-pW-qYC"/>
                                     <outlet property="m_btnWebsite" destination="Lq9-ln-0zD" id="GhM-vh-fGj"/>
                                     <outlet property="m_lbDate" destination="471-9b-l7C" id="A7y-7D-oQx"/>
@@ -628,6 +636,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="action.png" width="25" height="25"/>
         <image name="goldstar25dis.png" width="25" height="25"/>
     </resources>
 </document>

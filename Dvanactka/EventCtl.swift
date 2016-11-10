@@ -17,6 +17,7 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbDate: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnFavorite: UIButton!
+    @IBOutlet weak var m_btnAction: UIButton!
 }
 class EventCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
@@ -272,9 +273,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
             cellNews.m_lbDate.text = sDateText
             cellNews.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
+            cellNews.m_btnAction.isHidden = (rec.m_sInfoLink==nil);
             cellNews.m_btnFavorite.setImage(UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis")), for: .normal);
             let iBtnTag = btnTag(from: indexPath);
             cellNews.m_btnWebsite.tag = iBtnTag;
+            cellNews.m_btnAction.tag = iBtnTag;
             cellNews.m_btnFavorite.tag = iBtnTag;
             cell = cellNews;
         }
@@ -404,6 +407,25 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.openBuyLink();
         }
+        
+    }
+    
+    @IBAction func onBtnActionTouched(_ sender: Any) {
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)) {
+            
+            var items = [Any]();
+            if let sText = rec.m_sText {
+                items.append("\(rec.m_sTitle)\n\(sText)" as NSString);
+            }
+            if let sLink = rec.m_sInfoLink,
+                let url = URL(string: sLink) {
+                items.append(url as NSURL)
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil);
+            present(activityViewController, animated: true, completion: nil)
+        }
     }
     
     func addEventToCalendar(_ title: String, description: String?, location: String?, startDate: Date, endDate: Date) {
@@ -488,5 +510,5 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_aSavedNews;
         navigationController?.pushViewController(eventCtl, animated: true);
     }
-
+    
 }
