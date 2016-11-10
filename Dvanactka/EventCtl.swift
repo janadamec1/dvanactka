@@ -44,6 +44,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let refreshCtl = UIRefreshControl();
+        refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
+        refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
+        refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
+        self.refreshControl = refreshCtl;
+
         m_locManager.delegate = self;
         m_locManager.distanceFilter = 5;
 
@@ -60,25 +66,27 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
             self.tableView.estimatedRowHeight = 90.0;
-            
-            if ds.m_bIsBeingRefreshed {
-                ds.delegate = self;
-            }
         }
         setRecordsDistance();
         sortRecords();
-        
-        let refreshCtl = UIRefreshControl();
-        refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
-        refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
-        refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
-        self.refreshControl = refreshCtl;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+
+        guard let ds = m_aDataSource, let refreshCtl = self.refreshControl else { return }
+        if ds.m_bIsBeingRefreshed {
+            ds.delegate = self;
+            
+            // show refresh ctl, has to be when UI is visible (thus viewDidAppear)
+            refreshCtl.beginRefreshing();
+            //self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);
+            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);}, completion: nil);
+        }
     }
     
     func sortRecords() {
-        guard let ds = m_aDataSource else {
-            return
-        }
+        guard let ds = m_aDataSource else { return }
         m_orderedItems.removeAll();
         m_orderedCategories.removeAll();
         
@@ -341,7 +349,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         if let rec = record(at: indexPath) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
-            placeCtl.m_aRecord = rec.copy() as? CRxEventRecord;     // copy because of ds.refresh
+            placeCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
             navigationController?.pushViewController(placeCtl, animated: true);
         }
     }
