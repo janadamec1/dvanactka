@@ -128,7 +128,9 @@ class CRxEventRecord: NSObject {
     var m_arrOpeningHours: [CRxHourInterval]?
     var m_arrEvents: [CRxEventInterval]?
     
-    var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude // calculated and set in runtime
+    // members for display only, not stored or read in the record
+    var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude;
+    var m_bMarkFavorite: Bool = false;      // saved news, marked dumpsters
     
     init(title sTitle: String) {
         m_sTitle = sTitle

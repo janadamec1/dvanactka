@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import MessageUI
+import UserNotifications
 
 //NOTE: to get the stackview start at the top of scrollview, I had to switch OFF ViewController.adjustScrollViewInsets (even if it should be opposite)
 // see http://fuckingscrollviewautolayout.com
@@ -127,6 +128,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 }
                 m_lbShowNotifications.isHidden = false;
                 m_chkShowNotifications.isHidden = false;
+                m_chkShowNotifications.isOn = rec.m_bMarkFavorite;
             }
             else {
                 m_lbOpeningHoursTitle.isHidden = true;
@@ -180,6 +182,16 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onChkNotificationsChanged(_ sender: Any) {
+        if let rec = m_aRecord {
+            rec.m_bMarkFavorite = m_chkShowNotifications.isOn;
+            CRxDataSourceManager.sharedInstance.setFavorite(place: rec.m_sTitle, set: rec.m_bMarkFavorite);
+            
+            let notTypes: UIUserNotificationType = ([.alert, .sound, .badge])
+            let notSettings = UIUserNotificationSettings(types:notTypes, categories:nil);
+            UIApplication.shared.registerUserNotificationSettings(notSettings);
+        }
+    }
 
     /*
     // MARK: - Navigation

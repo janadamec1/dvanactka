@@ -16,6 +16,7 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbDate: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
+    @IBOutlet weak var m_imgFavorite: UIImageView!
 }
 class EventCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
@@ -71,6 +72,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         sortRecords();
     }
     
+    deinit {
+        if let ds = m_aDataSource {
+            ds.delegate = nil;
+        }
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
 
@@ -81,7 +88,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             // show refresh ctl, has to be when UI is visible (thus viewDidAppear)
             refreshCtl.beginRefreshing();
             //self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);
-            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);}, completion: nil);
+            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
+                self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);}
+            );
         }
     }
     
@@ -110,6 +119,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
                 sCatName = df.string(from: date);
             }
+            if ds.m_eType == .places {
+                rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance.m_setPlacesNotified.contains(rec.m_sTitle);
+            }
             if m_orderedItems[sCatName] == nil {
                 m_orderedItems[sCatName] = [rec];   // new category
                 m_orderedCategories.append(sCatName);
@@ -119,12 +131,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
         }
         if ds.m_eType == .places || ds.m_eType == .events {
-            // now sort each group by distance and name (Swift 3 does not support inplace ordering)
+            // now sort each group by distance and name
             var sortedItems = [String : [CRxEventRecord]]();
             for groupIt in m_orderedItems {
                 if ds.m_eType == .places {
-                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser });
-                    //sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_distFromUser < $1.m_distFromUser || ($0.m_distFromUser == $1.m_distFromUser && $0.m_sTitle < $1.m_sTitle) });
+                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {($0.m_bMarkFavorite && !$1.m_bMarkFavorite) || ($0.m_bMarkFavorite == $1.m_bMarkFavorite && $0.m_distFromUser < $1.m_distFromUser) });
                 }
                 else if (ds.m_eType == .events) {
                     sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
@@ -255,6 +266,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellNews.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
             let iBtnTag = btnTag(from: indexPath);
             cellNews.m_btnWebsite.tag = iBtnTag;
+            
+            cellNews.m_imgFavorite.image = UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis"));
+            
             cell = cellNews;
         }
         else if ds.m_eType == .events {
@@ -316,7 +330,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 sDistance = "  "    // must not be empty, causes strange effects
             }
             cellPlace.m_lbText.text = sDistance;
-            if let category = rec.m_eCategory {
+            
+            if rec.m_bMarkFavorite {
+                cellPlace.m_imgIcon.image = UIImage(named: "goldstar25");
+            }
+            else if let category = rec.m_eCategory {
                 cellPlace.m_imgIcon.image = UIImage(named: CRxEventRecord.categoryIconName(category: category));
             }
             else {

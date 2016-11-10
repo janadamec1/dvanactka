@@ -117,6 +117,8 @@ class CRxDataSourceManager : NSObject {
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
     var m_urlDocumentsDir: URL!
+    var m_arrSavedNews = [CRxEventRecord]();    // (records over all news sources)
+    var m_setPlacesNotified: Set<String> = [];  // (titles)
     
     func defineDatasources() {
         
@@ -142,11 +144,101 @@ class CRxDataSourceManager : NSObject {
         for itemIt in m_dictDataSources {
             itemIt.value.loadFromJSON(file: fileForDataSource(id: itemIt.value.m_sId));
         }
+        loadFavorities();
     }
     
     //--------------------------------------------------------------------------
     func save(dataSource: CRxDataSource) {
         dataSource.saveToJSON(file: fileForDataSource(id: dataSource.m_sId));
+    }
+    
+    //--------------------------------------------------------------------------
+    func setFavorite(place: String, set: Bool) {
+        let bFound = m_setPlacesNotified.contains(place);
+        
+        if set && !bFound {
+            m_setPlacesNotified.insert(place);
+            saveFavorities();
+            resetAllNotifications();
+        }
+        else if !set && bFound {
+            m_setPlacesNotified.remove(place);
+            saveFavorities();
+            resetAllNotifications();
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    func saveFavorities() {
+        let sList: String = m_setPlacesNotified.joined(separator: "|");
+        let urlPlaces = m_urlDocumentsDir.appendingPathComponent("favPlaces.txt");
+        do {
+            try sList.write(to: urlPlaces, atomically: false, encoding: .utf8)
+        } catch let error as NSError {
+            print("Saving favorite places failed: \(error.localizedDescription)")
+        }
+        
+        
+    }
+
+    //--------------------------------------------------------------------------
+    func loadFavorities() {
+        let urlPlaces = m_urlDocumentsDir.appendingPathComponent("favPlaces.txt");
+        do {
+            let sLoaded = try String(contentsOf: urlPlaces, encoding: .utf8);
+            m_setPlacesNotified = Set(sLoaded.components(separatedBy: "|").map { $0 });
+        } catch let error as NSError {
+            print("Loading favorite places failed: \(error.localizedDescription)"); return;
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    func resetAllNotifications() {
+        
+        guard let ds = m_dictDataSources[CRxDataSourceManager.dsWaste]
+            else {return}
+        
+        // go through all favorite locations and set notifications to future intervals
+        let manager = CRxDataSourceManager.sharedInstance;
+        let dateNow = Date();
+        var arrNewNotifications = [UILocalNotification]();
+        for rec in ds.m_arrItems {
+            if !manager.m_setPlacesNotified.contains(rec.m_sTitle) {
+                continue;
+            }
+            guard let events = rec.m_arrEvents else { continue }
+            for aEvent in events {
+                if aEvent.m_dateStart > dateNow {
+                    
+                    var aNotification = UILocalNotification();
+                    aNotification.fireDate = aEvent.m_dateStart;
+                    aNotification.timeZone = NSTimeZone.default;
+                    aNotification.alertBody = NSLocalizedString("Dumpster at \(rec.m_sTitle) just arrived (\(aEvent.m_sType))", comment:"");
+                    aNotification.soundName = UILocalNotificationDefaultSoundName;
+                    aNotification.applicationIconBadgeNumber = 1;
+                    arrNewNotifications.append(aNotification);
+                    
+                    // also add a notification one day earlier
+                    let dateBefore = aEvent.m_dateStart.addingTimeInterval(-24*60*60);
+                    if dateBefore > dateNow {
+                        aNotification = UILocalNotification();
+                        aNotification.fireDate = dateBefore;
+                        aNotification.timeZone = NSTimeZone.default;
+                        aNotification.alertBody = NSLocalizedString("Dumpster at \(rec.m_sTitle) tomorrow (\(aEvent.m_sType))", comment:"");
+                        aNotification.soundName = UILocalNotificationDefaultSoundName;
+                        aNotification.applicationIconBadgeNumber = 1;
+                        arrNewNotifications.append(aNotification);
+                    }
+                }
+            }
+        }
+        // set those notifications
+        if !arrNewNotifications.isEmpty {
+            UIApplication.shared.scheduledLocalNotifications = arrNewNotifications;
+        }
+        else {
+            UIApplication.shared.scheduledLocalNotifications = nil;  // remove all our old notifications
+        }
     }
     
     //--------------------------------------------------------------------------
@@ -674,6 +766,7 @@ class CRxDataSourceManager : NSObject {
             
             aVokDS.m_dateLastRefreshed = Date();
             save(dataSource: aVokDS);
+            resetAllNotifications();
         }
     }
 }

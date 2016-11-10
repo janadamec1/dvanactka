@@ -149,35 +149,47 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="135"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K10-Gp-vDd" id="PC5-Bq-9Zu">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="134.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="WRW-Gn-KW7">
                                             <rect key="frame" x="8" y="8" width="304" height="118.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-Pe-tCP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEd-TT-3DB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="25"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-Pe-tCP">
+                                                            <rect key="frame" x="0.0" y="0.0" width="279" height="25"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goldstar25dis.png" translatesAutoresizingMaskIntoConstraints="NO" id="XRZ-LA-BnY">
+                                                            <rect key="frame" x="279" y="0.0" width="25" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="O7p-CE-jna"/>
+                                                                <constraint firstAttribute="height" constant="25" id="vqa-F6-4ON"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="datum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="471-9b-l7C">
-                                                    <rect key="frame" x="0.0" y="24.5" width="304" height="16"/>
+                                                    <rect key="frame" x="0.0" y="29" width="304" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckf-Nn-Lxg">
-                                                    <rect key="frame" x="0.0" y="44.5" width="304" height="34"/>
+                                                    <rect key="frame" x="0.0" y="49" width="304" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gpk-vp-M2u">
-                                                    <rect key="frame" x="0.0" y="82.5" width="304" height="36"/>
+                                                    <rect key="frame" x="0.0" y="87" width="304" height="31.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq9-ln-0zD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="304" height="36"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
                                                             <state key="normal" title="Continue reading on website"/>
                                                             <connections>
                                                                 <action selector="onBtnWebsiteNewsTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="Ezz-6g-vXz"/>
@@ -197,6 +209,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="m_btnWebsite" destination="Lq9-ln-0zD" id="GhM-vh-fGj"/>
+                                    <outlet property="m_imgFavorite" destination="XRZ-LA-BnY" id="onI-yk-6hO"/>
                                     <outlet property="m_lbDate" destination="471-9b-l7C" id="A7y-7D-oQx"/>
                                     <outlet property="m_lbText" destination="ckf-Nn-Lxg" id="xQP-p0-0gC"/>
                                     <outlet property="m_lbTitle" destination="QYB-Pe-tCP" id="e5i-EA-DZ6"/>
@@ -447,18 +460,21 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-Ej-UDY">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-Ej-UDY">
                                                 <rect key="frame" x="0.0" y="203.5" width="304" height="31"/>
                                                 <subviews>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HL4-Uq-q6d">
+                                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="onChkNotificationsChanged:" destination="IoX-1s-I15" eventType="valueChanged" id="JHB-Pb-huQ"/>
+                                                        </connections>
+                                                    </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0a-yw-kBP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="255" height="31"/>
+                                                        <rect key="frame" x="60" y="0.0" width="244" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HL4-Uq-q6d">
-                                                        <rect key="frame" x="255" y="0.0" width="51" height="31"/>
-                                                    </switch>
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xM-OJA">
@@ -605,4 +621,7 @@
             <point key="canvasLocation" x="1721" y="344"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="goldstar25dis.png" width="25" height="25"/>
+    </resources>
 </document>
