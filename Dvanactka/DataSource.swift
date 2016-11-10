@@ -114,10 +114,11 @@ class CRxDataSourceManager : NSObject {
     static let dsCooltour = "dsCooltour";
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
+    static let dsSavedNews = "dsSavedNews";
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
     var m_urlDocumentsDir: URL!
-    var m_arrSavedNews = [CRxEventRecord]();    // (records over all news sources)
+    var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news);    // (records over all news sources)
     var m_setPlacesNotified: Set<String> = [];  // (titles)
     
     func defineDatasources() {
@@ -169,6 +170,43 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
+    func findFavorite(news: CRxEventRecord) -> CRxEventRecord? {
+        let itemToFind = news.recordHash();
+        for rec in m_aSavedNews.m_arrItems {
+            if rec.recordHash() == itemToFind {
+                return rec;
+            }
+        }
+        return nil;
+    }
+    
+    //--------------------------------------------------------------------------
+    func setFavorite(news: CRxEventRecord, set: Bool) {
+        var bFound = false;
+        var bChanged = false;
+        let itemToFind = news.recordHash();
+        for i in 0..<m_aSavedNews.m_arrItems.count {
+            let rec = m_aSavedNews.m_arrItems[i];
+            if rec.recordHash() == itemToFind {
+                bFound = true;
+                if !set {
+                    m_aSavedNews.m_arrItems.remove(at: i);
+                    bChanged = true;
+                }
+                break;
+            }
+        }
+        if set && !bFound {
+            m_aSavedNews.m_arrItems.insert(news, at: 0);
+            bChanged = true;
+        }
+        
+        if bChanged {
+            saveFavorities();
+        }
+    }
+    
+    //--------------------------------------------------------------------------
     func saveFavorities() {
         let sList: String = m_setPlacesNotified.joined(separator: "|");
         let urlPlaces = m_urlDocumentsDir.appendingPathComponent("favPlaces.txt");
@@ -178,7 +216,8 @@ class CRxDataSourceManager : NSObject {
             print("Saving favorite places failed: \(error.localizedDescription)")
         }
         
-        
+        let urlNews = m_urlDocumentsDir.appendingPathComponent("favNews.json");
+        m_aSavedNews.saveToJSON(file: urlNews);
     }
 
     //--------------------------------------------------------------------------
@@ -190,6 +229,9 @@ class CRxDataSourceManager : NSObject {
         } catch let error as NSError {
             print("Loading favorite places failed: \(error.localizedDescription)"); return;
         }
+        
+        let urlNews = m_urlDocumentsDir.appendingPathComponent("favNews.json");
+        m_aSavedNews.loadFromJSON(file: urlNews);
     }
     
     //--------------------------------------------------------------------------

@@ -16,7 +16,7 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbDate: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
-    @IBOutlet weak var m_imgFavorite: UIImageView!
+    @IBOutlet weak var m_btnFavorite: UIButton!
 }
 class EventCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
@@ -64,6 +64,8 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                     m_locManager.startUpdatingLocation();
                 }
+            } else if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Saved", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.savedNews));
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
             self.tableView.estimatedRowHeight = 90.0;
@@ -106,6 +108,14 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         
         // first add objects to groups
         for rec in ds.m_arrItems {
+            // favorities
+            if ds.m_eType == .news {
+                rec.m_bMarkFavorite = (CRxDataSourceManager.sharedInstance.findFavorite(news: rec) != nil);
+                
+            } else if ds.m_eType == .places {
+                rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance.m_setPlacesNotified.contains(rec.m_sTitle);
+            }
+            // categories
             var sCatName = "";
             switch ds.m_eType {
             case .news: sCatName = "";    // one category for news
@@ -119,9 +129,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
                 sCatName = df.string(from: date);
             }
-            if ds.m_eType == .places {
-                rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance.m_setPlacesNotified.contains(rec.m_sTitle);
-            }
+            // categories
             if m_orderedItems[sCatName] == nil {
                 m_orderedItems[sCatName] = [rec];   // new category
                 m_orderedCategories.append(sCatName);
@@ -264,11 +272,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
             cellNews.m_lbDate.text = sDateText
             cellNews.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
+            cellNews.m_btnFavorite.setImage(UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis")), for: .normal);
             let iBtnTag = btnTag(from: indexPath);
             cellNews.m_btnWebsite.tag = iBtnTag;
-            
-            cellNews.m_imgFavorite.image = UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis"));
-            
+            cellNews.m_btnFavorite.tag = iBtnTag;
             cell = cellNews;
         }
         else if ds.m_eType == .events {
@@ -465,4 +472,21 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         mapCtl.m_coordLast = m_coordLast;
         navigationController?.pushViewController(mapCtl, animated: true);
     }
+    
+    @IBAction func onBtnNewsFavorite(_ sender: Any) {
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)) {
+            rec.m_bMarkFavorite = !rec.m_bMarkFavorite;
+            btn.setImage(UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis")), for: .normal);
+            CRxDataSourceManager.sharedInstance.setFavorite(news: rec, set: rec.m_bMarkFavorite);
+        }
+    }
+    
+    func savedNews() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
+        eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_aSavedNews;
+        navigationController?.pushViewController(eventCtl, animated: true);
+    }
+
 }

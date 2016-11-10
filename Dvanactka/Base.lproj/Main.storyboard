@@ -139,57 +139,63 @@
         <!--Events-->
         <scene sceneID="v80-EI-8EF">
             <objects>
-                <tableViewController title="Events" id="r8a-Ox-9c9" customClass="EventsCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="eventCtl" title="Events" id="r8a-Ox-9c9" customClass="EventsCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="c89-eW-mlc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellNews" rowHeight="135" id="K10-Gp-vDd" customClass="NewsCell" customModule="Dvanactka" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="135"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellNews" rowHeight="158" id="K10-Gp-vDd" customClass="NewsCell" customModule="Dvanactka" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="320" height="158"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K10-Gp-vDd" id="PC5-Bq-9Zu">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="157"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="WRW-Gn-KW7">
-                                            <rect key="frame" x="8" y="8" width="304" height="118.5"/>
+                                            <rect key="frame" x="8" y="8" width="304" height="141.5"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEd-TT-3DB">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="25"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="uEd-TT-3DB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="49.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-Pe-tCP">
-                                                            <rect key="frame" x="0.0" y="0.0" width="279" height="25"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title title title title title title title title end" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-Pe-tCP">
+                                                            <rect key="frame" x="0.0" y="0.0" width="275" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="kVR-0o-WiI"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goldstar25dis.png" translatesAutoresizingMaskIntoConstraints="NO" id="XRZ-LA-BnY">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkT-HH-gx0">
                                                             <rect key="frame" x="279" y="0.0" width="25" height="25"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="25" id="O7p-CE-jna"/>
-                                                                <constraint firstAttribute="height" constant="25" id="vqa-F6-4ON"/>
+                                                                <constraint firstAttribute="width" constant="25" id="Tp1-Fu-m9r"/>
                                                             </constraints>
-                                                        </imageView>
+                                                            <state key="normal" image="goldstar25dis.png"/>
+                                                            <connections>
+                                                                <action selector="onBtnNewsFavorite:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="nlj-HK-zOf"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="datum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="471-9b-l7C">
-                                                    <rect key="frame" x="0.0" y="29" width="304" height="16"/>
+                                                    <rect key="frame" x="0.0" y="53.5" width="304" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckf-Nn-Lxg">
-                                                    <rect key="frame" x="0.0" y="49" width="304" height="34"/>
+                                                    <rect key="frame" x="0.0" y="73.5" width="304" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gpk-vp-M2u">
-                                                    <rect key="frame" x="0.0" y="87" width="304" height="31.5"/>
+                                                    <rect key="frame" x="0.0" y="111.5" width="304" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq9-ln-0zD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="304" height="31.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="304" height="30"/>
                                                             <state key="normal" title="Continue reading on website"/>
                                                             <connections>
                                                                 <action selector="onBtnWebsiteNewsTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="Ezz-6g-vXz"/>
@@ -208,15 +214,15 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="m_btnFavorite" destination="RkT-HH-gx0" id="TjD-pW-qYC"/>
                                     <outlet property="m_btnWebsite" destination="Lq9-ln-0zD" id="GhM-vh-fGj"/>
-                                    <outlet property="m_imgFavorite" destination="XRZ-LA-BnY" id="onI-yk-6hO"/>
                                     <outlet property="m_lbDate" destination="471-9b-l7C" id="A7y-7D-oQx"/>
                                     <outlet property="m_lbText" destination="ckf-Nn-Lxg" id="xQP-p0-0gC"/>
                                     <outlet property="m_lbTitle" destination="QYB-Pe-tCP" id="e5i-EA-DZ6"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellEvent" rowHeight="141" id="dJu-ze-iiP" customClass="EventCell" customModule="Dvanactka" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="163" width="320" height="141"/>
+                                <rect key="frame" x="0.0" y="186" width="320" height="141"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dJu-ze-iiP" id="JlW-7r-goa">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
@@ -228,7 +234,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="OQJ-Fw-neA">
                                                     <rect key="frame" x="0.0" y="0.0" width="304" height="49"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title title title title title title titile" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="993-jr-BcL">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title title title title title title titile end" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="993-jr-BcL">
                                                             <rect key="frame" x="0.0" y="0.0" width="208" height="42.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
@@ -297,7 +303,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellPlace" rowHeight="64" id="pgw-EN-LcH" customClass="PlaceCell" customModule="Dvanactka" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="304" width="320" height="64"/>
+                                <rect key="frame" x="0.0" y="327" width="320" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgw-EN-LcH" id="ck6-Kj-omd">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="64"/>

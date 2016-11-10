@@ -290,6 +290,13 @@ class CRxEventRecord: NSObject {
             UIApplication.shared.openURL(url)
         }
     }
+    func recordHash() -> String {
+        var sHash = m_sTitle;
+        if let date = m_aDate {
+            sHash += String(date.timeIntervalSinceReferenceDate);
+        }
+        return sHash;
+    }
 }
 
 //--------------------------------------------------------------------------
