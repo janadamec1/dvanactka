@@ -1,5 +1,10 @@
 {"items":[
 {
+"title":"Často kladené otázky",
+"text":"FAQ",
+"category":"informace"
+},
+{
 "title":"Web městské části",
 "text":"",
 "infoLink":"https:\/\/www.praha12.cz",
@@ -15,12 +20,6 @@
 "title":"FB skupina obyvatel",
 "text":"Modřany, Praha 12",
 "infoLink":"https:\/\/www.facebook.com\/groups\/modrany",
-"category":"informace"
-},
-{
-"title":"FB skupina obyvatel \"Necenzurovaná\"",
-"text":"Modřany, Praha 12 Necenzurovaná",
-"infoLink":"https:\/\/www.facebook.com\/groups\/1677444912493517",
 "category":"informace"
 },
 {

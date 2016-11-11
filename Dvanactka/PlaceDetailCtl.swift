@@ -49,6 +49,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         if let rec = m_aRecord {
             m_lbTitle.text = rec.m_sTitle;
             m_lbText.text = rec.m_sText;
+            substituteRecordText();
             
             if let category = rec.m_eCategory {
                 m_lbCategory.text = CRxEventRecord.categoryLocalName(category: category);
@@ -269,5 +270,19 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil);
+    }
+    
+    func substituteRecordText() {
+        guard let rec = m_aRecord, let text = rec.m_sText
+            else {return;}
+        if text == "FAQ" {
+            let aQuestionAttr = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: m_lbText.font.pointSize+1)];
+            let sNewText = NSMutableAttributedString(string:"Kde se nechat vyfotit na průkazovou fotografii?", attributes: aQuestionAttr);
+            sNewText.append(NSAttributedString(string:"\nVe Fotolabu na Sofijském náměstí.\n\n"));
+            
+            //sNewText.append(NSAttributedString(string:"Doporučíte poskytovatele Internetu?", attributes: aQuestionAttr))
+            //sNewText.append(NSAttributedString(string:"\nUPC, Centrio, Praha12.net.\n\n"));
+            m_lbText.attributedText = sNewText;
+        }
     }
 }

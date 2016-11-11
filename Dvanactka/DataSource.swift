@@ -421,6 +421,8 @@ class CRxDataSourceManager : NSObject {
             guard let data = data, error == nil
             else {
                 DispatchQueue.main.async() { () -> Void in
+                    aNewsDS.m_bIsBeingRefreshed = false;
+                    aAlertsDS.m_bIsBeingRefreshed = false;
                     aNewsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
                     aAlertsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
                     self.hideNetworkIndicator();
@@ -541,6 +543,7 @@ class CRxDataSourceManager : NSObject {
             guard let data = data, error == nil
             else {
                 DispatchQueue.main.async() { () -> Void in
+                    aEventsDS.m_bIsBeingRefreshed = false;
                     aEventsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
                     self.hideNetworkIndicator();
                 }
@@ -639,6 +642,7 @@ class CRxDataSourceManager : NSObject {
             guard let data = data, error == nil
             else {
                 DispatchQueue.main.async() { () -> Void in
+                    aBiografDS.m_bIsBeingRefreshed = false;
                     completition?(NSLocalizedString("Error when downloading data", comment: ""));
                     self.hideNetworkIndicator();
                 }
