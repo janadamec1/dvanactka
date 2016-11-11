@@ -21,9 +21,11 @@ class CRxDataSource : NSObject {
     var m_sShortTitle: String?
     var m_sIcon: String
     var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
+    var m_sLastItemShown: String = ""   // hash of the last record user displayed (to count unread news, etc)
     var m_dateLastRefreshed: Date?
     var m_bIsBeingRefreshed: Bool = false
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
+    var delegates = [CRxDataSourceRefreshDelegate]()
     var delegate: CRxDataSourceRefreshDelegate?
     
     enum DataType {
@@ -43,6 +45,7 @@ class CRxDataSource : NSObject {
         super.init()
     }
     
+    //--------------------------------------------------------------------------
     func loadFromJSON(file: URL) {
         // decode JSON
         var json: AnyObject
@@ -68,9 +71,11 @@ class CRxDataSource : NSObject {
         // load config
         if let config = json["config"] as? [String : AnyObject] {
             if let date = config["dateLastRefreshed"] as? String { m_dateLastRefreshed = CRxEventRecord.loadDate(string: date); }
+            if let lastItemShown = config["lastItemShown"] as? String { m_sLastItemShown = lastItemShown; }
         }
     }
     
+    //--------------------------------------------------------------------------
     func saveToJSON(file: URL) {
         // save data
         var jsonItems = [AnyObject]()
@@ -83,6 +88,7 @@ class CRxDataSource : NSObject {
         // save config
         var config = [String: AnyObject]();
         if let date = m_dateLastRefreshed { config["dateLastRefreshed"] = CRxEventRecord.saveDate(date: date) as AnyObject }
+        config["lastItemShown"] = m_sLastItemShown as AnyObject;
         
         if config.count > 0 {
             json["config"] = config as AnyObject;
@@ -98,8 +104,26 @@ class CRxDataSource : NSObject {
             print("Array to JSON conversion failed: \(error.localizedDescription)")
         }
     }
+    
+    //--------------------------------------------------------------------------
+    func unreadItemsCount() -> Int {
+        if m_eType == .news {
+            if m_sLastItemShown.isEmpty {   // never opened
+                return m_arrItems.count;
+            }
+            for i in 0 ..< m_arrItems.count {
+                let rec = m_arrItems[i];
+                if rec.recordHash() == m_sLastItemShown {
+                    return i;
+                }
+            }
+            return m_arrItems.count;    // read too old news item (all are newer)
+        }
+        return 0;
+    }
 }
 
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 class CRxDataSourceManager : NSObject {
     var m_dictDataSources = [String: CRxDataSource]()   // distionary on data sources, id -> source
@@ -120,7 +144,8 @@ class CRxDataSourceManager : NSObject {
     var m_urlDocumentsDir: URL!
     var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news);    // (records over all news sources)
     var m_setPlacesNotified: Set<String> = [];  // (titles)
-    
+    var delegate: CRxDataSourceRefreshDelegate? // one global delegate (main viewController)
+
     func defineDatasources() {
         
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -488,8 +513,9 @@ class CRxDataSourceManager : NSObject {
                     self.save(dataSource: aAlertsDS)
                     self.hideNetworkIndicator();
 
-                    aNewsDS.delegate?.dataSourceRefreshEnded(nil);
+                    aNewsDS.delegate?.dataSourceRefreshEnded(nil);  // to refresh EventCtl tableView
                     aAlertsDS.delegate?.dataSourceRefreshEnded(nil);
+                    self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
                 }
             }
         }

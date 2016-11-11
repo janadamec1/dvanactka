@@ -12,6 +12,7 @@ import MapKit
 class CRxDSCell : UICollectionViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_imgIcon: UIImageView!
+    var m_lbBadge: UILabel?
     
     /*override func draw(_ rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext() {
@@ -33,7 +34,7 @@ class CRxDSCell : UICollectionViewCell {
     }*/
 }
 
-class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
+class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate, CRxDataSourceRefreshDelegate {
     var m_arrSources = [String]();    // data source ids in order they should appear in the collection
     var m_sDsSelected = "";
     var m_locManager = CLLocationManager();
@@ -64,6 +65,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsWaste);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
+        CRxDataSourceManager.sharedInstance.delegate = self;
         
         /*// colors: (now done in storyboard
         navigationController?.navigationBar.barTintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);
@@ -111,6 +113,52 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.m_imgIcon.layer.shadowOpacity = 0.4;
             cell.m_imgIcon.layer.shadowRadius = 4;
             cell.m_imgIcon.clipsToBounds = false;*/
+            
+            if ds.m_eType != .news {
+                if let lbBadge = cell.m_lbBadge {
+                    lbBadge.isHidden = true;
+                }
+            }
+            else {
+                if cell.m_lbBadge == nil {
+                    let lbBadge = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height:1));
+                    lbBadge.text = "8";
+                    lbBadge.sizeToFit()
+                    var rcFrame = lbBadge.frame.insetBy(dx: -2, dy: -2);
+                    if rcFrame.width < rcFrame.height {
+                        rcFrame = CGRect(x: 0, y: 0, width: rcFrame.height, height:rcFrame.height);
+                    }
+                    rcFrame.origin = CGPoint(x: cell.m_imgIcon.frame.width - rcFrame.width, y: 0);
+                    lbBadge.frame = rcFrame;
+                    
+                    lbBadge.textAlignment = .center;
+                    lbBadge.textColor = UIColor.white;
+                    lbBadge.layer.masksToBounds = true;
+                    lbBadge.layer.cornerRadius = rcFrame.height/2.0;
+                    lbBadge.backgroundColor = UIColor.red;
+                    lbBadge.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]; //it stays at top right
+                    cell.m_lbBadge = lbBadge;
+                    cell.m_imgIcon.addSubview(lbBadge)
+                }
+                if let lbBadge = cell.m_lbBadge {
+                    let iUnread = ds.unreadItemsCount();
+                    if iUnread == 0 {
+                        lbBadge.isHidden = true;
+                    }
+                    else {
+                        lbBadge.text = String(iUnread);
+                        lbBadge.sizeToFit()
+                        var rcFrame = lbBadge.frame.insetBy(dx: -2, dy: -2);
+                        if rcFrame.width < rcFrame.height {
+                            rcFrame = CGRect(x: 0, y: 0, width: rcFrame.height, height:rcFrame.height);
+                        }
+                        rcFrame.origin = CGPoint(x: cell.m_imgIcon.frame.width - rcFrame.width, y: 0);
+                        lbBadge.frame = rcFrame;
+
+                        lbBadge.isHidden = false;
+                    }
+                }
+            }
         }
 
         return cell
@@ -145,6 +193,13 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         m_sDsSelected = m_arrSources[indexPath.row];
+        
+        // hide unread badge
+        if let cell = collectionView.cellForItem(at: indexPath) as? CRxDSCell,
+            let lbBadge = cell.m_lbBadge {
+            lbBadge.isHidden = true;
+        }
+
         performSegue(withIdentifier: "segueEvents", sender: self)
     }
 
@@ -171,6 +226,13 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
+    //---------------------------------------------------------------------------
+    func dataSourceRefreshEnded(_ error: String?) {
+        if error == nil {
+            self.collectionView?.reloadData();  // update badges
+        }
+    }
+
     //---------------------------------------------------------------------------
     func onBtnInfo() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

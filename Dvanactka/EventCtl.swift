@@ -59,6 +59,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             self.title = ds.m_sTitle;
             
             if ds.m_eType == .places {
+                // init location tracking
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap));
 
                 self.tableView.allowsSelection = true;
@@ -66,6 +67,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                     m_locManager.startUpdatingLocation();
                 }
             } else if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
+                // link to saved news
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Saved", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.savedNews));
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -151,6 +153,17 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
             }
             m_orderedItems = sortedItems;
+        }
+        
+        // remember last item shown
+        if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
+            if let recFirst = ds.m_arrItems.first {
+                let sNewRecHash = recFirst.recordHash();
+                if sNewRecHash != ds.m_sLastItemShown { // resave only when something changed
+                    ds.m_sLastItemShown = sNewRecHash;
+                    CRxDataSourceManager.sharedInstance.save(dataSource: ds);
+                }
+            }
         }
     }
     
@@ -263,7 +276,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellNews.m_btnWebsite.setTitle(NSLocalizedString("Continue reading on website", comment: ""), for: .normal);
 
             cellNews.m_lbTitle.text = rec.m_sTitle;
-            cellNews.m_lbText.text = rec.m_sText ?? "";
+            
+            var sNewsText = "";
+            if let sText = rec.m_sText {
+                sNewsText = "(praha12.cz) " + sText;
+            }
+            cellNews.m_lbText.text = sNewsText;
             var sDateText = "";
             if let aDate = rec.m_aDate {
                 let df = DateFormatter();

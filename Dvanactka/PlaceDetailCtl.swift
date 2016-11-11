@@ -40,8 +40,9 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Localizatation
-        m_lbAddressTitle.text = NSLocalizedString("Address", comment: "")
-        m_lbShowNotifications.text = NSLocalizedString("Show notifications", comment: "")
+        m_lbAddressTitle.text = NSLocalizedString("Address", comment: "");
+        m_lbOpeningHoursTitle.text = NSLocalizedString("Opening Hours", comment: "");
+        m_lbShowNotifications.text = NSLocalizedString("Show notifications", comment: "");
         m_btnNavigate.setTitle(NSLocalizedString("Navigate", comment: ""), for: .normal);
         m_btnReportMistake.setTitle(NSLocalizedString("Report mistake", comment: ""), for: .normal);
         
