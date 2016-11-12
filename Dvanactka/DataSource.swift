@@ -34,14 +34,16 @@ class CRxDataSource : NSObject {
         case places
     }
     var m_eType = DataType.news
+    var m_bGroupByCategory = true;     // UI should show sections for each category
     
-    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil) {
+    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true) {
         m_sId = id;
         m_sTitle = title;
         m_sShortTitle = shortTitle;
         m_sIcon = icon;
         m_eType = type;
         m_nRefreshFreqHours = refreshFreqHours;
+        m_bGroupByCategory = groupByCategory;
         super.init()
     }
     
@@ -138,6 +140,7 @@ class CRxDataSourceManager : NSObject {
     static let dsCooltour = "dsCooltour";
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
+    static let dsReportFault = "dsReportFault";
     static let dsSavedNews = "dsSavedNews";
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
@@ -156,8 +159,9 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
-        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
+        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, groupByCategory: false);
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
+        m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
     }
     
     //--------------------------------------------------------------------------
@@ -280,7 +284,7 @@ class CRxDataSourceManager : NSObject {
                     var aNotification = UILocalNotification();
                     aNotification.fireDate = aEvent.m_dateStart;
                     aNotification.timeZone = NSTimeZone.default;
-                    aNotification.alertBody = NSLocalizedString("Dumpster at \(rec.m_sTitle) just arrived (\(aEvent.m_sType))", comment:"");
+                    aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ just arrived (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
                     aNotification.soundName = UILocalNotificationDefaultSoundName;
                     aNotification.applicationIconBadgeNumber = 1;
                     arrNewNotifications.append(aNotification);
@@ -291,7 +295,7 @@ class CRxDataSourceManager : NSObject {
                         aNotification = UILocalNotification();
                         aNotification.fireDate = dateBefore;
                         aNotification.timeZone = NSTimeZone.default;
-                        aNotification.alertBody = NSLocalizedString("Dumpster at \(rec.m_sTitle) tomorrow (\(aEvent.m_sType))", comment:"");
+                        aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ tomorrow (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
                         aNotification.soundName = UILocalNotificationDefaultSoundName;
                         aNotification.applicationIconBadgeNumber = 1;
                         arrNewNotifications.append(aNotification);

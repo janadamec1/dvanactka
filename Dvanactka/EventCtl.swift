@@ -26,13 +26,11 @@ class EventCell: UITableViewCell {
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnBuy: UIButton!
     @IBOutlet weak var m_btnAddToCalendar: UIButton!
-    
 }
 class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_imgIcon: UIImageView!
-    
 }
 
 class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate {
@@ -77,12 +75,14 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         sortRecords();
     }
     
+    //--------------------------------------------------------------------------
     deinit {
         if let ds = m_aDataSource {
             ds.delegate = nil;
         }
     }
 
+    //--------------------------------------------------------------------------
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
 
@@ -99,6 +99,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     func sortRecords() {
         guard let ds = m_aDataSource else { return }
         m_orderedItems.removeAll();
@@ -121,8 +122,14 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             // categories
             var sCatName = "";
             switch ds.m_eType {
-            case .news: sCatName = "";    // one category for news
-            case .places: sCatName = CRxEventRecord.categoryLocalName(category: rec.m_eCategory);
+            case .news: break;    // one category for news
+                
+            case .places:
+                if ds.m_bGroupByCategory {
+                    sCatName = CRxEventRecord.categoryLocalName(category: rec.m_eCategory);
+                }
+                break;
+                
             case .events:   // use date as category
                 guard let date = rec.m_aDate else {
                     continue    // remove recoords without date
@@ -167,6 +174,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     func setRecordsDistance() {
         guard let ds = m_aDataSource else {
             return
@@ -222,11 +230,13 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
 
+    //--------------------------------------------------------------------------
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return m_orderedCategories.count;
     }
 
+    //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let items = m_orderedItems[m_orderedCategories[section]] {
             return items.count;
@@ -236,6 +246,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (m_orderedCategories.count < 2) {
             return nil
@@ -243,6 +254,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         return m_orderedCategories[section];
     }
     
+    //--------------------------------------------------------------------------
     func record(at indexPath:IndexPath) -> CRxEventRecord? {
         if indexPath.section >= m_orderedCategories.count {
             return nil;
@@ -255,6 +267,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     func btnTag(from indexPath:IndexPath) -> Int {
         return indexPath.section*10000 + indexPath.row;
     }
@@ -262,6 +275,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         return IndexPath(row: tag % 10000, section: tag / 10000);
     }
 
+    //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let rec = record(at: indexPath),
@@ -348,11 +362,18 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                     sDistance = "\(Int(rec.m_distFromUser)) m";
                 }
             }
-            if let text = rec.m_sText {
+            var sSubtitle = "";
+            if let cat = rec.m_eCategory {
+                sSubtitle = CRxEventRecord.categoryLocalName(category: cat);
+            }
+            else if let text = rec.m_sText {
+                sSubtitle = text;
+            }
+            if !sSubtitle.isEmpty {
                 if !sDistance.isEmpty {
                     sDistance += " | ";
                 }
-                sDistance += text;
+                sDistance += sSubtitle;
             }
             if sDistance.isEmpty {
                 sDistance = "  "    // must not be empty, causes strange effects
@@ -381,6 +402,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         return cell;
     }
     
+    //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         view.tintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);    // background
@@ -391,6 +413,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
 
     }
     
+    //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let rec = record(at: indexPath) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -400,12 +423,14 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
 
+    //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         if let rec = record(at: indexPath) {
             rec.openInfoLink();
         }
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnWebsiteTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
@@ -413,6 +438,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
 
+    //--------------------------------------------------------------------------
     @IBAction func onBtnWebsiteNewsTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
@@ -420,6 +446,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnBuyTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
@@ -428,6 +455,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnActionTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
@@ -446,6 +474,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     func addEventToCalendar(_ title: String, description: String?, location: String?, startDate: Date, endDate: Date) {
         let eventStore = EKEventStore()
         
@@ -481,6 +510,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         self.dismiss(animated: true, completion: nil);
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnCalendarTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
@@ -494,6 +524,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
             m_coordLast = lastLocation.coordinate;
@@ -505,6 +536,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
 
+    //--------------------------------------------------------------------------
     func showMap() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mapCtl = storyboard.instantiateViewController(withIdentifier: "mapCtl") as! MapCtl
@@ -513,6 +545,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         navigationController?.pushViewController(mapCtl, animated: true);
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnNewsFavorite(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
@@ -522,6 +555,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
+    //--------------------------------------------------------------------------
     func savedNews() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl

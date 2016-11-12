@@ -26,6 +26,10 @@
 	<string>The app will add the selected event to your calendar.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app will show you the nearest object locations and locate you on map.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Used to take a photo of a fault.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Used to select the photo of a fault from your photo library.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

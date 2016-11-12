@@ -20,6 +20,11 @@ class CRxMapItem : NSObject, MKAnnotation {
     var title: String? {
         return m_rec.m_sTitle;
     }
+    
+    var subtitle: String? {
+        return CRxEventRecord.categoryLocalName(category: m_rec.m_eCategory);
+    }
+    
     var coordinate: CLLocationCoordinate2D {
         return m_rec.m_aLocation!.coordinate;
     }
@@ -33,6 +38,7 @@ class CRxMapItem : NSObject, MKAnnotation {
 
 }
 
+//--------------------------------------------------------------------------
 class MapCtl: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var m_mapView: MKMapView!
@@ -110,11 +116,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    //--------------------------------------------------------------------------
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? CRxMapItem {
             var identifier = "pin"
@@ -144,6 +146,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         return nil
     }
     
+    //--------------------------------------------------------------------------
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let annot = view.annotation,
             let aMapItem = annot as? CRxMapItem {
@@ -155,6 +158,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         }
     }
     
+    //--------------------------------------------------------------------------
     func onBtnLocation() {
         if let userLoc = m_mapView.userLocation.location {
             m_coordLast = userLoc.coordinate;

@@ -179,11 +179,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    //--------------------------------------------------------------------------
     @IBAction func onChkNotificationsChanged(_ sender: Any) {
         if let rec = m_aRecord {
             rec.m_bMarkFavorite = m_chkShowNotifications.isOn;
@@ -195,22 +191,14 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+    //--------------------------------------------------------------------------
     @IBAction func onBtnWebsiteTouched(_ sender: Any) {
         if let rec = m_aRecord {
             rec.openInfoLink();
         }
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnMapTouched(_ sender: Any) {
         if let rec = m_aRecord {
             let aMapItem = CRxMapItem(record: rec);
@@ -218,6 +206,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         }
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnEmailTouched(_ sender: Any) {
         guard let rec = m_aRecord,
             let email = rec.m_sEmail
@@ -239,6 +228,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         present(mailer, animated: true, completion: nil);
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnPhoneTouched(_ sender: Any) {
         guard let rec = m_aRecord,
             let phone = rec.m_sPhoneNumber
@@ -251,6 +241,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         }
     }
     
+    //--------------------------------------------------------------------------
     @IBAction func onBtnReportIssueTouched(_ sender: Any) {
         if (MFMailComposeViewController.canSendMail())
         {
@@ -272,6 +263,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil);
     }
     
+    //--------------------------------------------------------------------------
     func substituteRecordText() {
         guard let rec = m_aRecord, let text = rec.m_sText
             else {return;}

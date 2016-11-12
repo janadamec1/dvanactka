@@ -8,3 +8,5 @@
 
 "NSLocationWhenInUseUsageDescription" = "Aplikace setřídí objekty podle vzdálenosti od vás a ukáže vaši pozici na mapě.";
 "NSCalendarsUsageDescription" = "Aplikace přidá vybranou událost do vašeho kalendáře.";
+"NSCameraUsageDescription" = "Použijeme ji pořízení fotografie závady.";
+"NSPhotoLibraryUsageDescription" = "Vyberete fotografi závady z vaší knihovny fotografií.";

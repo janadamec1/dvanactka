@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        application.applicationIconBadgeNumber = 0;
         CRxDataSourceManager.sharedInstance.refreshAllDataSources();
     }
 
@@ -43,6 +44,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        if (application.applicationState == .active)
+        {
+            if let navCtl = application.keyWindow?.rootViewController as? UINavigationController,
+                let currentViewCtl = navCtl.visibleViewController {
+                let alertController = UIAlertController(title: NSLocalizedString("Reminder", comment:""),
+                                                        message: notification.alertBody, preferredStyle: .alert);
+                let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
+                    print("OK")})
+                alertController.addAction(actionOK);
+                currentViewCtl.present(alertController, animated: true, completion: nil);
+            }
+        }
+        // Set icon badge number to zero
+        application.applicationIconBadgeNumber = 0;
     }
 
 

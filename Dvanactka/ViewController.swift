@@ -63,6 +63,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsRadEvents);
         m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
         m_arrSources.append(CRxDataSourceManager.dsWaste);
+        m_arrSources.append(CRxDataSourceManager.dsReportFault);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
         CRxDataSourceManager.sharedInstance.delegate = self;
@@ -200,7 +201,12 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             lbBadge.isHidden = true;
         }
 
-        performSegue(withIdentifier: "segueEvents", sender: self)
+        if m_sDsSelected == CRxDataSourceManager.dsReportFault {
+            performSegue(withIdentifier: "segueReportFault", sender: self)
+        }
+        else {
+            performSegue(withIdentifier: "segueEvents", sender: self)
+        }
     }
 
     //---------------------------------------------------------------------------
