@@ -363,10 +363,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
             }
             var sSubtitle = "";
-            if let cat = rec.m_eCategory {
+            /*if let cat = rec.m_eCategory {
                 sSubtitle = CRxEventRecord.categoryLocalName(category: cat);
             }
-            else if let text = rec.m_sText {
+            else*/ if let text = rec.m_sText {
                 sSubtitle = text;
             }
             if !sSubtitle.isEmpty {

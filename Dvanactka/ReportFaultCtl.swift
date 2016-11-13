@@ -8,11 +8,14 @@
 
 import UIKit
 import MapKit
+import MessageUI
 import Contacts     // for formatting address
 //import AddressBookUI  // for formatting address < iOS 9
 
-class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate, CRxRefineLocDelegate {
+    @IBOutlet weak var m_lbSubject: UILabel!
     @IBOutlet weak var m_edSubject: UITextField!
+    @IBOutlet weak var m_lbPhoto: UILabel!
     @IBOutlet weak var m_btnPhoto: UIButton!
     @IBOutlet weak var m_lbDescription: UILabel!
     @IBOutlet weak var m_edDescription: UITextView!
@@ -29,7 +32,8 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         super.viewDidLoad()
         // Localization
         self.title = NSLocalizedString("Report Fault", comment: "");
-        m_edSubject.placeholder = NSLocalizedString("Subject", comment: "");
+        m_lbSubject.text = NSLocalizedString("Subject", comment: "");
+        m_lbPhoto.text = NSLocalizedString("Photo", comment: "");
         m_lbDescription.text = NSLocalizedString("Detailed description", comment: "");
         m_lbLocationTitle.text = NSLocalizedString("Location", comment: "");
         m_btnRefineLocation.setTitle(NSLocalizedString("Refine", comment: ""), for: .normal);
@@ -47,8 +51,60 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     }
 
     //---------------------------------------------------------------------------
+    func showError(message: String, setFocusTo: UITextField? = nil) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert);
+        let actionOK = UIAlertAction(title: "OK", style: .default) { result in
+            if let edit = setFocusTo {
+                edit.becomeFirstResponder();
+            }
+        }
+        alertController.addAction(actionOK);
+        present(alertController, animated: true, completion: nil);
+    }
+    
+    //---------------------------------------------------------------------------
     func onBtnSend() {
+        let sSubject = m_edSubject.text;
+        if sSubject == nil || sSubject!.isEmpty {
+            showError(message: NSLocalizedString("Please fill the subject field.", comment:""), setFocusTo: m_edSubject);
+            return;
+        }
+        if !m_bImageSelected {
+            showError(message: NSLocalizedString("Please select the photo.", comment:""));
+            return;
+        }
+        if m_location == nil {
+            showError(message: NSLocalizedString("Please specify the location.", comment:""));
+            return;
+        }
+        var sMessageBody = "Předmět:\n\(sSubject!)";
+        if let sDesc = m_edDescription.text {
+            sMessageBody += "\n\nPopis:\n" + sDesc;
+        }
+        if let sAddress = m_lbLocation.text {
+            sMessageBody += "\n\n" + sAddress;
+        }
+        if let loc = m_location {
+            // send location as this link: https://mapy.cz/zakladni?x=14.4185889&y=50.0018275&z=17&source=coor&id=14.4185889%2C50.0020275
+            let sMapLink = String(format: "https://mapy.cz/zakladni?x=%.8f&y=%.8f&z=17&source=coor&id=%.8f%%2C%.8f", arguments:[loc.coordinate.longitude, loc.coordinate.latitude, loc.coordinate.longitude, loc.coordinate.latitude]);
+            sMessageBody += "\n" + sMapLink;
+        }
+        sMessageBody += "\n\n";
         
+        let mailer = MFMailComposeViewController();
+        mailer.mailComposeDelegate = self;
+        
+        mailer.setToRecipients(["jadamec@gmail.com"]);
+        mailer.setSubject("P12app hlášení závady: " + sSubject!);
+        mailer.setMessageBody(sMessageBody, isHTML: false);
+        
+        if let image = m_btnPhoto.image(for: .normal),
+            let imageData = UIImageJPEGRepresentation(image, 0.8){
+            mailer.addAttachmentData(imageData, mimeType: "image/jpeg", fileName: "photo.jpg")
+        }
+
+        mailer.modalPresentationStyle = .formSheet;
+        present(mailer, animated: true, completion: nil);
     }
 
     //---------------------------------------------------------------------------
@@ -140,9 +196,24 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     //---------------------------------------------------------------------------
-    @IBAction func onBtnRefineLocationTouched(_ sender: Any) {
+    // MARK: - CRxRefineLocDelegate
+    func locationRefined(_ loc: CLLocation)
+    {
+        m_bLocationRefined = true;
+        displayLocation(loc);
+        decodeAddressFrom(location: loc);
     }
-    
+
+    //---------------------------------------------------------------------------
+    // MARK: - MFMailComposeViewControllerDelegate
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil);
+        
+        if result == .sent {
+            _ = navigationController?.popViewController(animated: true);
+        }
+    }
+
     //---------------------------------------------------------------------------
     // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -166,6 +237,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         if segue.identifier == "segueRefineLoc" {
             let destVC = segue.destination as! RefineLocCtl
             destVC.m_locInit = m_location;
+            destVC.delegate = self;
         }
     }
 }

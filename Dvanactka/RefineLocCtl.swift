@@ -9,15 +9,21 @@
 import UIKit
 import MapKit
 
+protocol CRxRefineLocDelegate {
+    func locationRefined(_ loc: CLLocation);
+}
+
 class RefineLocCtl: UIViewController {
     @IBOutlet weak var m_mapView: MKMapView!
 
     var m_locInit: CLLocation?
+    var m_aPin: MKAnnotation?
+    var delegate: CRxRefineLocDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem:.done, target: self, action: #selector(RefineLocCtl.onBtnDone));
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem:.done, target: self, action: #selector(RefineLocCtl.onBtnDone));
 
         if let loc = m_locInit {
             let regView = MKCoordinateRegionMakeWithDistance(loc.coordinate, 500, 500);
@@ -27,6 +33,8 @@ class RefineLocCtl: UIViewController {
             annotation.coordinate = loc.coordinate;
             annotation.title = NSLocalizedString("Location", comment: "");
             m_mapView.addAnnotation(annotation);
+            
+            m_aPin = annotation;
         }
         else {
             // center will be center of Praha 12
@@ -34,11 +42,41 @@ class RefineLocCtl: UIViewController {
             let regView = MKCoordinateRegionMakeWithDistance(coord, 1500, 3500);
             m_mapView.setRegion(regView, animated: false);
         }
+        
+        if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            m_mapView.showsUserLocation = true;
+        }
+        
+        let aRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(RefineLocCtl.addAnnotation));
+        m_mapView.addGestureRecognizer(aRecognizer);
     }
     
-    func onBtnDone() {
-        dismiss(animated: true, completion: nil);
-        // TODO: send location
+    //---------------------------------------------------------------------------
+    func addAnnotation(gestureRecognizer: UIGestureRecognizer) {
+        
+        if let pin = m_aPin {
+            m_mapView.removeAnnotation(pin);
+        }
+        
+        let ptTouch = gestureRecognizer.location(in: m_mapView);
+        let coord = m_mapView.convert(ptTouch, toCoordinateFrom: m_mapView);
+        let annotation = MKPointAnnotation();
+        annotation.coordinate = coord;
+        m_mapView.addAnnotation(annotation);
+        
+        let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude);
+        m_locInit = loc;
+        m_aPin = annotation;
+        
+        delegate?.locationRefined(loc); // update immediately
     }
+    
+    //---------------------------------------------------------------------------
+    /*func onBtnDone() {
+        if let loc = m_locInit {
+            delegate?.locationRefined(loc);
+        }
+        //dismiss(animated: true, completion: nil);
+    }*/
 
 }
