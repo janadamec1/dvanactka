@@ -59,13 +59,63 @@
 "category":"policie"
 },
 {
-"title":"Městská policie",
+"title":"Městská policie - obvodní ředitelství",
 "locationLat":"50.00107",
 "locationLong":"14.4221574",
 "address":"Násirovo náměstí 1\nPraha 4",
 "phone":"222 025 708",
 "infoLink":"http:\/\/www.mppraha.cz",
 "openingHours":"1: 0-2359, 2: 0-2359, 3: 0-2359, 4: 0-2359, 5: 0-2359, 6: 0-2359, 7: 0-2359",
+"category":"policie"
+},
+{
+"title":"Městská policie - služebna Libuš",
+"locationLat":"50.0048786",
+"locationLong":"14.4616769",
+"address":"Zahrádecká 376\nPraha 4",
+"phone":"244 471 687",
+"infoLink":"http:\/\/www.mppraha.cz",
+"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
+"category":"policie"
+},
+{
+"title":"Městská policie - služebna Točná",
+"locationLat":"49.9728344",
+"locationLong":"14.4316736",
+"address":"náměstí Anonína Pecáka 37\nPraha 4",
+"phone":"241 910 821",
+"infoLink":"http:\/\/www.mppraha.cz",
+"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
+"category":"policie"
+},
+{
+"title":"Městská policie - služebna Modřany",
+"locationLat":"50.0016803",
+"locationLong":"14.4126269",
+"address":"Písková 23\nPraha 4",
+"phone":"244 400 541",
+"infoLink":"http:\/\/www.mppraha.cz",
+"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
+"category":"policie"
+},
+{
+"title":"Městská policie - služebna Komořany",
+"locationLat":"49.9871786",
+"locationLong":"14.4117528",
+"address":"Palmetová 3\nPraha 4",
+"phone":"244 400 507",
+"infoLink":"http:\/\/www.mppraha.cz",
+"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
+"category":"policie"
+},
+{
+"title":"Městská policie - služebna Kamýk",
+"locationLat":"50.0192833",
+"locationLong":"14.4431044",
+"address":"Čechtická 758\nPraha 4",
+"phone":"261 397 309",
+"infoLink":"http:\/\/www.mppraha.cz",
+"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
 "category":"policie"
 },
 {

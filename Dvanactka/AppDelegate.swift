@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dsm.defineDatasources();
         dsm.loadData();
         dsm.refreshAllDataSources();
+        application.applicationIconBadgeNumber = 0;
         return true
     }
 

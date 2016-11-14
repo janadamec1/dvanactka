@@ -348,7 +348,7 @@ class CRxDataSourceManager : NSObject {
         
         // check the last refresh date
         if !force && ds.m_dateLastRefreshed != nil  &&
-            ds.m_dateLastRefreshed!.timeIntervalSince(Date()) < Double(ds.m_nRefreshFreqHours*60*60) {
+            Date().timeIntervalSince(ds.m_dateLastRefreshed!) < Double(ds.m_nRefreshFreqHours*60*60) {
             ds.delegate?.dataSourceRefreshEnded(nil);
             return;
         }
