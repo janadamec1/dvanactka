@@ -76,9 +76,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 var iLastDay = 0;
                 for it in hours {
                     let sWeekDay = df.shortWeekdaySymbols[it.m_weekday % 7];
-                    let sStart = String(format: "%d:%02d", (it.m_hourStart/100), (it.m_hourStart%100));
-                    let sEnd = String(format: "%d:%02d", (it.m_hourEnd/100), (it.m_hourEnd%100));
-                    let sRange = " \(sStart) - \(sEnd)";
+                    let sRange = " " + it.toIntervalDisplayString();
                     if iLastDay == it.m_weekday {
                         sHours += sRange    // another interval within same day
                     }

@@ -363,10 +363,16 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
             }
             var sSubtitle = "";
-            /*if let cat = rec.m_eCategory {
-                sSubtitle = CRxEventRecord.categoryLocalName(category: cat);
+            if let sNextEvent = rec.nextEventOccurenceString() {
+                sSubtitle = sNextEvent;
             }
-            else*/ if let text = rec.m_sText {
+            else if let sTodayHours = rec.todayOpeningHoursString() {
+                sSubtitle = sTodayHours;
+            }
+            /*else if let cat = rec.m_eCategory {
+                sSubtitle = CRxEventRecord.categoryLocalName(category: cat);
+            }*/
+            else if let text = rec.m_sText {
                 sSubtitle = text;
             }
             if !sSubtitle.isEmpty {

@@ -47,8 +47,15 @@ class CRxHourInterval: NSObject {
     func toString() -> String {
         return "\(m_weekday): \(m_hourStart)-\(m_hourEnd)";
     }
+    
+    func toIntervalDisplayString() -> String {
+        let sStart = String(format: "%d:%02d", (m_hourStart/100), (m_hourStart%100));
+        let sEnd = String(format: "%d:%02d", (m_hourEnd/100), (m_hourEnd%100));
+        return "\(sStart) - \(sEnd)";
+    }
 }
 
+//---------------------------------------------------------------------------
 // this class is used for waste containers records
 class CRxEventInterval: NSObject {
     var m_dateStart: Date
@@ -82,6 +89,7 @@ class CRxEventInterval: NSObject {
         return "\(m_sType);\(CRxEventRecord.saveDate(date: m_dateStart));\(CRxEventRecord.saveDate(date: m_dateEnd))";
     }
     
+    //---------------------------------------------------------------------------
     func toDisplayString() -> String {
         // strip time from the date, leave day only
         let calendar = Calendar.current;
@@ -104,8 +112,53 @@ class CRxEventInterval: NSObject {
         let sTo = df.string(from: m_dateEnd);
         return "\(sWeekDay) \(sFrom) - \(sTo)";
     }
+    
+    //---------------------------------------------------------------------------
+    func toRelativeIntervalString() -> String {
+        var sString = "";
+        let dayToday = Date();
+        if dayToday > m_dateEnd {
+            let aDiff = dayToday.timeIntervalSince(m_dateEnd);
+            let nDaysAgo = Int(aDiff/(60*60*24));
+            sString = String(format: NSLocalizedString("%d days ago", comment:""), nDaysAgo)
+        }
+        else {
+            let aDiff = m_dateStart.timeIntervalSince(dayToday);
+            let nMinutes = (Int(aDiff) / 60) % 60;
+            let nHours = (Int(aDiff) / 3600) % 24;
+            let nDays = (Int(aDiff) / (3600*24));
+            
+            if aDiff < 0 {
+                sString = NSLocalizedString("now", comment:"");
+            }
+            else {
+                if nDays > 2 {
+                    sString = String(format: NSLocalizedString("in %d days", comment:""), nDays)
+                }
+                else if nDays > 0 {
+                    sString = String(format: NSLocalizedString("in %d days, %d hours", comment:""), nDays, nHours)
+                }
+                else if nHours > 0 {
+                    sString = String(format: NSLocalizedString("in %d hours, %d minutes", comment:""), nHours, nMinutes)
+                }
+                else {
+                    sString = String(format: NSLocalizedString("in %d minutes", comment:""), nMinutes)
+                }
+            }
+        }
+        if !m_sType.isEmpty {
+            if sString.isEmpty {
+                sString = m_sType;
+            }
+            else {
+                sString += " (\(m_sType))";
+            }
+        }
+        return sString;
+    }
 }
 
+//---------------------------------------------------------------------------
 enum CRxCategory: String {
     case informace, lekarna, prvniPomoc, policie
     case pamatka, pamatnyStrom, vyznamnyStrom
@@ -113,6 +166,7 @@ enum CRxCategory: String {
     case waste, wasteElectro, wasteTextile
 }
 
+//---------------------------------------------------------------------------
 class CRxEventRecord: NSObject {
     var m_sTitle: String = ""
     var m_sInfoLink: String?
@@ -149,6 +203,7 @@ class CRxEventRecord: NSObject {
         return df.string(from: date);
     }
     
+    //---------------------------------------------------------------------------
     init?(from jsonItem: [String: AnyObject]) { // load from JSON
         
         if let title = jsonItem["title"] as? String { m_sTitle = title }
@@ -190,6 +245,7 @@ class CRxEventRecord: NSObject {
         }
     }
     
+    //---------------------------------------------------------------------------
     func saveToJSON() -> [String: AnyObject] {
         var item: [String: AnyObject] = ["title": m_sTitle as AnyObject]
         if let infoLink = m_sInfoLink { item["infoLink"] = infoLink as AnyObject }
@@ -231,6 +287,7 @@ class CRxEventRecord: NSObject {
         return item;
     }
     
+    //---------------------------------------------------------------------------
     static func categoryLocalName(category: CRxCategory) -> String {
         switch category {
         case .informace: return NSLocalizedString("Information", comment: "");
@@ -250,6 +307,7 @@ class CRxEventRecord: NSObject {
         }
     }
 
+    //---------------------------------------------------------------------------
     static func categoryLocalName(category: CRxCategory?) -> String {
         if let cat = category {
             return CRxEventRecord.categoryLocalName(category: cat);
@@ -259,6 +317,7 @@ class CRxEventRecord: NSObject {
         }
     }
     
+    //---------------------------------------------------------------------------
     static func categoryIconName(category: CRxCategory) -> String {
         switch category {
         case .informace: return "c_info";
@@ -278,24 +337,86 @@ class CRxEventRecord: NSObject {
         }
     }
 
+    //---------------------------------------------------------------------------
     func openInfoLink() {
         if let link = m_sInfoLink,
             let url = URL(string: link) {
             UIApplication.shared.openURL(url)
         }
     }
+    
+    //---------------------------------------------------------------------------
     func openBuyLink() {
         if let link = m_sBuyLink,
             let url = URL(string: link) {
             UIApplication.shared.openURL(url)
         }
     }
+
+    //---------------------------------------------------------------------------
     func recordHash() -> String {
         var sHash = m_sTitle;
         if let date = m_aDate {
             sHash += String(date.timeIntervalSinceReferenceDate);
         }
         return sHash;
+    }
+    
+    //---------------------------------------------------------------------------
+    func nextEventOccurence() -> CRxEventInterval? {
+        guard let events = m_arrEvents
+            else { return nil; }
+        // find next container at this location (intervals are pre-sorted)
+        let dayToday = Date();
+        
+        var iBest = 0;
+        for aInt in events {
+            if aInt.m_dateEnd > dayToday {
+                break;
+            }
+            iBest += 1;
+        }
+        if iBest >= events.count {
+            iBest = events.count-1;  // not found, show last past
+        }
+        return events[iBest];
+    }
+    
+    //---------------------------------------------------------------------------
+    func nextEventOccurenceString() -> String? {
+        if let aInt = nextEventOccurence() {
+            return aInt.toRelativeIntervalString();
+        }
+        return nil;
+    }
+    
+    //---------------------------------------------------------------------------
+    func todayOpeningHoursString() -> String? {
+        let dtc = Calendar.current.dateComponents([.weekday], from: Date());
+        guard let hours = m_arrOpeningHours,
+            var iWeekday = dtc.weekday
+            else { return nil; }
+
+        iWeekday -= 1;
+        if iWeekday <= 0 {
+            iWeekday += 7;
+        }
+
+        var sString = "";
+        for aInt in hours {
+            if aInt.m_weekday == iWeekday {
+                if sString.isEmpty {
+                    sString = aInt.toIntervalDisplayString();
+                }
+                else {
+                    sString += " " + aInt.toIntervalDisplayString();
+                }
+            }
+        }
+        if sString.isEmpty {
+            return NSLocalizedString("closed today", comment: "");
+        }
+        return sString;
     }
 }
 
