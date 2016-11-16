@@ -234,7 +234,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         
         let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
         
-        if let url = URL(string: "tel://\(cleanedNumber)") {
+        if let url = URL(string: "telprompt://\(cleanedNumber)") {
             UIApplication.shared.openURL(url);
         }
     }
