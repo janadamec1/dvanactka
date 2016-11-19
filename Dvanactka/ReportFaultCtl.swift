@@ -13,6 +13,7 @@ import Contacts     // for formatting address
 //import AddressBookUI  // for formatting address < iOS 9
 
 class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate, CRxRefineLocDelegate {
+    @IBOutlet weak var m_lbHint: UILabel!
     @IBOutlet weak var m_lbSubject: UILabel!
     @IBOutlet weak var m_edSubject: UITextField!
     @IBOutlet weak var m_lbPhoto: UILabel!
@@ -31,11 +32,12 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Localization
-        self.title = NSLocalizedString("Report Fault", comment: "");
-        m_lbSubject.text = NSLocalizedString("Subject", comment: "");
-        m_lbPhoto.text = NSLocalizedString("Photo", comment: "");
+        //self.title = NSLocalizedString("Report Fault", comment: "");
+        m_lbHint.text = NSLocalizedString("Report illegal dump, fault, problem", comment: "");
+        m_lbSubject.text = NSLocalizedString("Subject", comment: "") + "*";
+        m_lbPhoto.text = NSLocalizedString("Photo", comment: "") + "*";
         m_lbDescription.text = NSLocalizedString("Detailed description", comment: "");
-        m_lbLocationTitle.text = NSLocalizedString("Location", comment: "");
+        m_lbLocationTitle.text = NSLocalizedString("Location", comment: "") + "*";
         m_btnRefineLocation.setTitle(NSLocalizedString("Refine", comment: ""), for: .normal);
         
         m_edSubject.delegate = self;

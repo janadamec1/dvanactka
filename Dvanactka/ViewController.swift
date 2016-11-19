@@ -9,6 +9,9 @@
 import UIKit
 import MapKit
 
+// dark grey color: 62,62,62
+// tint color: 0, 122, 255 (007AFF)
+
 class CRxDSCell : UICollectionViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_imgIcon: UIImageView!
