@@ -24,6 +24,9 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var m_lbLocation: UILabel!
     @IBOutlet weak var m_btnRefineLocation: UIButton!
     
+    @IBOutlet weak var m_scrollView: UIScrollView!
+    @IBOutlet weak var m_keyboardHeightLayoutConstraint: NSLayoutConstraint!
+    
     var m_bImageSelected: Bool = false;
     var m_locManager = CLLocationManager();
     var m_location: CLLocation?
@@ -50,8 +53,15 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             m_locManager.startUpdatingLocation();
         }
+        // for scrolling the vew when keyboard showing / hiding
+        NotificationCenter.default.addObserver(self, selector: #selector(ReportFaultCtl.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil);
     }
-
+    
+    //---------------------------------------------------------------------------
+    deinit {
+        NotificationCenter.default.removeObserver(self);
+    }
+    
     //---------------------------------------------------------------------------
     func showError(message: String, setFocusTo: UITextField? = nil) {
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert);
@@ -62,6 +72,53 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         }
         alertController.addAction(actionOK);
         present(alertController, animated: true, completion: nil);
+    }
+    
+    //---------------------------------------------------------------------------
+    func keyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            let iKeyboardSize = endFrame?.size.height ?? 0.0;
+            let bHiding = ((endFrame?.origin.y)! >= UIScreen.main.bounds.size.height);
+            if bHiding {
+                m_keyboardHeightLayoutConstraint?.constant = 0.0;
+            } else {
+                m_keyboardHeightLayoutConstraint?.constant = iKeyboardSize
+            }
+            // scroll
+            if !bHiding {
+                var aSelField: UIView?
+                if m_edSubject.isFirstResponder {
+                    aSelField = m_edSubject;
+                }
+                else if m_edDescription.isFirstResponder {
+                    aSelField = m_edDescription;
+                }
+                // test if active text input is under keyboard
+                if let textField = aSelField {
+                    var viewRect = view.bounds
+                    viewRect.size.height -= iKeyboardSize;
+                    let p = m_scrollView.convert(textField.center, to: self.view);
+                    if !viewRect.contains(p) {
+                        // scroll the view to have textField.bottom just above the keyboard
+                        var scrollPoint = CGPoint(x: 0, y: textField.frame.origin.y+textField.frame.height - iKeyboardSize);
+                        if scrollPoint.y < 0.0 {
+                            scrollPoint.y = 0.0;
+                        }
+                        m_scrollView.setContentOffset(scrollPoint, animated: true);
+                    }
+                }
+            }
+            UIView.animate(withDuration: duration,
+                           delay: TimeInterval(0),
+                           options: animationCurve,
+                           animations: { self.view.layoutIfNeeded() },
+                           completion: nil)
+        }
     }
     
     //---------------------------------------------------------------------------
