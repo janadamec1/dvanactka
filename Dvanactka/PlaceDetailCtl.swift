@@ -36,6 +36,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     
     
     var m_aRecord: CRxEventRecord?
+    var m_refreshParentDelegate: CRxDetailRefershParentDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -182,6 +183,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         if let rec = m_aRecord {
             rec.m_bMarkFavorite = m_chkShowNotifications.isOn;
             CRxDataSourceManager.sharedInstance.setFavorite(place: rec.m_sTitle, set: rec.m_bMarkFavorite);
+            m_refreshParentDelegate?.detailRequestsRefresh(); // change star icon, resort
             
             let notTypes: UIUserNotificationType = ([.alert, .sound, .badge])
             let notSettings = UIUserNotificationSettings(types:notTypes, categories:nil);

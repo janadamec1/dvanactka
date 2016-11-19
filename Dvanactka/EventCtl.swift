@@ -11,6 +11,10 @@ import MapKit
 import EventKit
 import EventKitUI
 
+protocol CRxDetailRefershParentDelegate {
+    func detailRequestsRefresh();
+}
+
 class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
@@ -33,7 +37,7 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
 
-class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate {
+class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefershParentDelegate {
     var m_aDataSource: CRxDataSource?
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
     var m_orderedCategories = [String]()                // sorted category local names
@@ -41,6 +45,8 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
     var m_bUserLocationAcquired = false;
 
+    var m_refreshParentDelegate: CRxDetailRefershParentDelegate?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -228,6 +234,13 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             self.refreshControl?.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
             self.refreshControl?.endRefreshing();
         }
+    }
+    
+    //--------------------------------------------------------------------------
+    func detailRequestsRefresh()
+    {
+        sortRecords();
+        self.tableView.reloadData();
     }
 
     //--------------------------------------------------------------------------
@@ -425,6 +438,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
             placeCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
+            placeCtl.m_refreshParentDelegate = self;
             navigationController?.pushViewController(placeCtl, animated: true);
         }
     }
@@ -558,6 +572,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             rec.m_bMarkFavorite = !rec.m_bMarkFavorite;
             btn.setImage(UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis")), for: .normal);
             CRxDataSourceManager.sharedInstance.setFavorite(news: rec, set: rec.m_bMarkFavorite);
+            
+            if let ds = m_aDataSource {
+                if ds.m_sId == CRxDataSourceManager.dsSavedNews {
+                    m_refreshParentDelegate?.detailRequestsRefresh();
+                }
+            }
         }
     }
     
@@ -566,6 +586,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
         eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_aSavedNews;
+        eventCtl.m_refreshParentDelegate = self;
         navigationController?.pushViewController(eventCtl, animated: true);
     }
     
