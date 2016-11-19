@@ -103,7 +103,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.m_lbTitle.text = sTitle;
             cell.m_imgIcon.image = UIImage(named: ds.m_sIcon);
             cell.layer.borderWidth = 1.0;
-            cell.layer.borderColor = UIColor(white:0.85, alpha:1.0).cgColor;
+            cell.layer.borderColor = UIColor(white:0, alpha:0.1).cgColor;
+            cell.backgroundColor = UIColor(white:1, alpha:0.3);
 
             /*cell.m_lbTitle.layer.shadowColor = UIColor.black.cgColor;
             cell.m_lbTitle.layer.shadowOffset = CGSize(width: 1, height: 1);
@@ -177,21 +178,32 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let nSpacing = 8*(nItemsPerRow-1);
         let nMinInsets: CGFloat = 24;
         let nCellWidth = min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
-        return CGSize(width: nCellWidth, height: nCellWidth)
- 
+        return CGSize(width: nCellWidth, height: nCellWidth);
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt
         section: Int) -> UIEdgeInsets {
         
+        // calculate cell size based on portait
         let nItemsPerRow: CGFloat = 2.0;
         let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
         let nSpacing = 8*(nItemsPerRow-1);
         let nMinInsets: CGFloat = 24;
         let nCellWidth = min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
+        //let leftInset = (nViewWidth - CGFloat(nCellWidth*nItemsPerRow + nSpacing)) / 2; // center
         
-        let leftInset = (nViewWidth - CGFloat(nCellWidth*nItemsPerRow + nSpacing)) / 2; // center
-        return UIEdgeInsetsMake(nMinInsets, leftInset, nMinInsets, leftInset)
+        // return insets based on current orientation
+        let nRealViewWidth = collectionView.frame.width;
+        let nRealItemsPerRow = floor((nRealViewWidth-2*nMinInsets) / nCellWidth);
+        let nRealSpacing = 8*(nRealItemsPerRow-1);
+        let leftInset = (nRealViewWidth - CGFloat(nCellWidth*nRealItemsPerRow + nRealSpacing)) / 2; // center
+        
+        return UIEdgeInsetsMake(nMinInsets, leftInset, nMinInsets, leftInset);
+    }
+    
+    //---------------------------------------------------------------------------
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        self.collectionView?.collectionViewLayout.invalidateLayout()
     }
     
     //---------------------------------------------------------------------------
