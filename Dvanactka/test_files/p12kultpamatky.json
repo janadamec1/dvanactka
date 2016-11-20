@@ -40,6 +40,59 @@
 "category":"pamatka"
 },
 {
+"title":"Odpočinková louka u Vltavy",
+"locationLat":"49.9917169",
+"locationLong":"14.4014581",
+"text":"Klidné místo u soutoku Vltavy a Berounky",
+"category":"zajimavost"
+},
+{
+"title":"Vltava u přívozu",
+"locationLat":"50.0031931",
+"locationLong":"14.4027186",
+"text":"Oblíbený cíl procházek, krmení vodních ptáků a občas i nutrií.",
+"category":"zajimavost"
+},
+{
+"title":"Letiště Točná",
+"locationLat":"49.9867744",
+"locationLong":"14.4253350",
+"text":"Výletní místo nejenom pro piloty a letecké modeláře, ale díky velkému dětskému hřišti i pro celé rodiny. Dříve zde probíhal výcvik pilotů, motorové létání a plachtění. V hangáru je vidět letoun Lockheed Electra 10 A, který patřil Janu Antonínu Baťovi.",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Letiště_Točná",
+"category":"zajimavost"
+},
+{
+"title":"Záchranná stanice pro volně žijící zvěř",
+"locationLat":"49.9947481",
+"locationLong":"14.4486594",
+"text":"Záchranná stanice může přijímat všechny druhy volně žijících živočichů, kromě rysa, medvěda a vlka. Nejčastějšími zvířecími pacienty v Praze bývají poštolky, rorýsi, holubi, ježci, netopýři a zajíci.",
+"infoLink":"http:\/\/www.lhmp.cz\/eko\/o-nas\/zachranna-stanice-hl-m-prahy",
+"category":"zajimavost"
+},
+{
+"title":"Třešňová alej",
+"locationLat":"49.9831389",
+"locationLong":"14.4509125",
+"text":"Alej se 44 třešňovými stromy byla vysázena 17. 11. 2015 v místě zanikajícího stromořadí a budoucí cyklostezky. Stromy mohla městská část pořídit díky finanční dotaci, již získala vítězstvím v internetovém hlasování s projektem „Výsadba třešňové aleje v Praze 12“.",
+"infoLink":"https:\/\/www.praha12.cz\/praha%2D12%2Dma%2Dnovou%2Dtresnovou%2Dalej\/d-44425\/p1=6422",
+"category":"zajimavost"
+},
+{
+"title":"Modřanská rokle",
+"locationLat":"50.0036583",
+"locationLong":"14.4325286",
+"text":"Erozní zářez Libušského potoka s několika místy s odkrytým geologickým profilem. Ochranářsky význačná svými lužními porosty v okolí potoků a výskytem teplomilných lučních společenstev na svazích, které jsou však ohrožovány nepůvodními vysázenými dřevinami, hlavně trnovníkem akátem.",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Modřanská_rokle",
+"category":"zajimavost"
+},
+{
+"title":"Výhled nad vinicí",
+"locationLat":"50.0118500",
+"locationLong":"14.4043333",
+"text":"Nad Modřanskou vinicí se naskýtá témeř neznámý pohled na soutok Vltavy a Berounky, na Závist s největším keltským oppidem v Čechách a dále až na kraj Brdské vrchoviny.",
+"category":"zajimavost"
+},
+{
 "title":"Dva duby letní v Točné",
 "locationLat":"49.9719361",
 "locationLong":"14.4336608",

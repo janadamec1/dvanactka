@@ -161,7 +161,7 @@ class CRxEventInterval: NSObject {
 //---------------------------------------------------------------------------
 enum CRxCategory: String {
     case informace, lekarna, prvniPomoc, policie
-    case pamatka, pamatnyStrom, vyznamnyStrom
+    case pamatka, pamatnyStrom, vyznamnyStrom, zajimavost
     case remeslnik, restaurace, obchod
     case waste, wasteElectro, wasteTextile
 }
@@ -297,6 +297,7 @@ class CRxEventRecord: NSObject {
         case .pamatka: return NSLocalizedString("Landmarks", comment: "");
         case .pamatnyStrom: return NSLocalizedString("Memorial Trees", comment: "");
         case .vyznamnyStrom: return NSLocalizedString("Significant Trees", comment: "");
+        case .zajimavost: return NSLocalizedString("Points of Interest", comment: "");
         case .remeslnik: return NSLocalizedString("Artisans", comment: "");
         case .restaurace: return NSLocalizedString("Restaurants", comment: "");
         case .obchod: return NSLocalizedString("Shops", comment: "");
@@ -327,6 +328,7 @@ class CRxEventRecord: NSObject {
         case .pamatka: return "c_monument";
         case .pamatnyStrom: return "c_tree";
         case .vyznamnyStrom: return "c_tree";
+        case .zajimavost: return "c_trekking";
         case .remeslnik: return "c_work";
         case .restaurace: return "c_restaurant";
         case .obchod: return "c_shop";
