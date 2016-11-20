@@ -147,7 +147,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 }
             }
 
-            if let link = rec.m_sInfoLink {
+            if let link = rec.m_sInfoLink?.removingPercentEncoding {
                 m_btnWebsite.setTitle(link, for: UIControlState.normal)
             }
             else {
