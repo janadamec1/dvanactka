@@ -42,6 +42,7 @@ class CRxMapItem : NSObject, MKAnnotation {
 class MapCtl: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var m_mapView: MKMapView!
+    @IBOutlet weak var m_segmMapType: UISegmentedControl!
     
     var m_aDataSource: CRxDataSource?
     var m_coordLast = CLLocationCoordinate2D(latitude: 0, longitude: 0)
@@ -49,7 +50,10 @@ class MapCtl: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Localization
+        m_segmMapType.setTitle(NSLocalizedString("Standard", comment:""), forSegmentAt: 0);
+        m_segmMapType.setTitle(NSLocalizedString("Sattelite", comment:""), forSegmentAt: 1);
+        m_segmMapType.setTitle(NSLocalizedString("Hybrid", comment:""), forSegmentAt: 2);
         
         //var bUserLocationKnown = false;
         var coordMin = CLLocationCoordinate2D(latitude:0.0, longitude: 0.0)
@@ -155,6 +159,16 @@ class MapCtl: UIViewController, MKMapViewDelegate {
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
             placeCtl.m_aRecord = aMapItem.m_rec;
             navigationController?.pushViewController(placeCtl, animated: true);
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    @IBAction func onSegmMapTypeChanged(_ sender: Any) {
+        switch m_segmMapType.selectedSegmentIndex {
+        case 0: m_mapView.mapType = .standard;
+        case 1: m_mapView.mapType = .satellite;
+        case 2: m_mapView.mapType = .hybrid;
+        default: print("wrong map type");
         }
     }
     
