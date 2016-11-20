@@ -154,19 +154,20 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 m_orderedItems[sCatName]?.append(rec);  // into existing
             }
         }
-        if ds.m_eType == .places || ds.m_eType == .events {
-            // now sort each group by distance and name
-            var sortedItems = [String : [CRxEventRecord]]();
-            for groupIt in m_orderedItems {
-                if ds.m_eType == .places {
-                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {($0.m_bMarkFavorite && !$1.m_bMarkFavorite) || ($0.m_bMarkFavorite == $1.m_bMarkFavorite && $0.m_distFromUser < $1.m_distFromUser) });
-                }
-                else if (ds.m_eType == .events) {
-                    sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
-                }
+        
+        // now sort each group by distance (places) or date (events, news)
+        var sortedItems = [String : [CRxEventRecord]]();
+        for groupIt in m_orderedItems {
+            switch ds.m_eType {
+            case .news:
+                sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! > $1.m_aDate! });
+            case .events:
+                sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
+            case .places:
+                sortedItems[groupIt.key] = groupIt.value.sorted(by: {($0.m_bMarkFavorite && !$1.m_bMarkFavorite) || ($0.m_bMarkFavorite == $1.m_bMarkFavorite && $0.m_distFromUser < $1.m_distFromUser) });
             }
-            m_orderedItems = sortedItems;
         }
+        m_orderedItems = sortedItems;
         
         // remember last item shown
         if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
@@ -304,17 +305,23 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
 
             cellNews.m_lbTitle.text = rec.m_sTitle;
             
-            var sNewsText = "";
             if let sText = rec.m_sText {
-                sNewsText = "(praha12.cz) " + sText;
+                cellNews.m_lbText.text = sText;
             }
-            cellNews.m_lbText.text = sNewsText;
+            cellNews.m_lbText.isHidden = (rec.m_sText==nil);
+            
             var sDateText = "";
             if let aDate = rec.m_aDate {
                 let df = DateFormatter();
-                df.dateStyle = .full;
                 df.timeStyle = .none;
-                sDateText = df.string(from: aDate);
+                if let aDateTo = rec.m_aDateTo {
+                    df.dateStyle = .medium;
+                    sDateText += df.string(from: aDate) + " - " + df.string(from: aDateTo);
+                }
+                else {
+                    df.dateStyle = .full;
+                    sDateText = df.string(from: aDate);
+                }
             }
             cellNews.m_lbDate.text = sDateText
             cellNews.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);

@@ -69,6 +69,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsReportFault);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
+        m_arrSources.append(CRxDataSourceManager.dsRadDeska);
         CRxDataSourceManager.sharedInstance.delegate = self;
         
         /*// colors: (now done in storyboard

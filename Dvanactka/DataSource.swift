@@ -136,6 +136,7 @@ class CRxDataSourceManager : NSObject {
     static let dsRadNews = "dsRadNews";
     static let dsRadAlerts = "dsRadAlerts";
     static let dsRadEvents = "dsRadEvents";
+    static let dsRadDeska = "dsRadDeska";
     static let dsBiografProgram = "dsBiografProgram";
     static let dsCooltour = "dsCooltour";
     static let dsSosContacts = "dsSosContacts";
@@ -157,6 +158,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), icon: "ds_alerts", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
+        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, groupByCategory: false);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
@@ -361,6 +363,10 @@ class CRxDataSourceManager : NSObject {
             refreshRadEventsDataSource();
             return;
         }
+        else if id == CRxDataSourceManager.dsRadDeska {
+            refreshRadDeskaDataSource();
+            return;
+        }
         else if id == CRxDataSourceManager.dsBiografProgram {
             refreshBiografDataSource();
             return;
@@ -461,8 +467,8 @@ class CRxDataSourceManager : NSObject {
                             }
                         }
                         
-                        if let aTextNode = node.xpath("div[1]").first {
-                            aNewRecord.m_sText = aTextNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
+                        if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
+                            aNewRecord.m_sText = "(praha12.cz) " + sText.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
                         /*if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
                          aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
@@ -496,8 +502,8 @@ class CRxDataSourceManager : NSObject {
                             }
                         }
                         
-                        if let aTextNode = node.xpath("div[1]").first {
-                            aNewRecord.m_sText = aTextNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
+                        if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
+                            aNewRecord.m_sText = "(praha12.cz) " + sText.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
                         //dump(aNewRecord)
                         arrAlertItems.append(aNewRecord);
@@ -603,8 +609,8 @@ class CRxDataSourceManager : NSObject {
                                 }
                             }
                         }
-                        if let aTextNode = node.xpath("div[2]").first {
-                            aNewRecord.m_sText = aTextNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
+                        if let aTextNode = node.xpath("div[2]").first, let sText = aTextNode.text {
+                            aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
                         
                         //dump(aNewRecord)
@@ -620,6 +626,104 @@ class CRxDataSourceManager : NSObject {
                     self.save(dataSource: aEventsDS);
                     self.hideNetworkIndicator();
                     aEventsDS.delegate?.dataSourceRefreshEnded(nil);
+                }
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    func refreshRadDeskaDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        guard let aDeskaDS = self.m_dictDataSources[CRxDataSourceManager.dsRadDeska]
+            else { return }
+        
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: "https://www.praha12.cz/vismo/mapa_deska.asp");
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: "/test_files/praha12deska", withExtension: "html");
+        }
+        guard let url = urlDownload else { aDeskaDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+        
+        aDeskaDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+        
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else {
+                    DispatchQueue.main.async() { () -> Void in
+                        aDeskaDS.m_bIsBeingRefreshed = false;
+                        aDeskaDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
+                        self.hideNetworkIndicator();
+                    }
+                    return;
+            }
+            
+            if let doc = HTML(html:data, encoding: .utf8) {
+                
+                var arrNewItems = [CRxEventRecord]()
+                
+                for node in doc.xpath("//div[@id='ud']/ul/li") {
+                    if let a_title = node.xpath("strong/a").first, let sTitle = a_title.text {
+                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                        
+                        if var sLink = a_title["href"] {
+                            if sLink.hasPrefix("http://www.praha12.cz") {
+                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
+                            }
+                            else if !sLink.hasPrefix("http") {
+                                sLink = "https://www.praha12.cz" + sLink;
+                            }
+                            aNewRecord.m_sInfoLink = sLink;
+                        }
+                        
+                        if let aDateNode = node.xpath("span[1]").first, let sDate = aDateNode.text {
+                            
+                            // find and parse "od: 4.3.2016 do: 5.3.2019)"
+                            var dtc = DateComponents()
+                            let arrParts = sDate.replacingOccurrences(of: ")", with: "").components(separatedBy: .whitespaces);
+                            // find "od:"
+                            if let iFromPart = arrParts.index(of: "od:") {
+                                if iFromPart+1 < arrParts.count {
+                                    let arrDayParts = arrParts[iFromPart+1].components(separatedBy: ".");
+                                    if arrDayParts.count == 3 {
+                                        dtc.day = Int(arrDayParts[0]);
+                                        dtc.month = Int(arrDayParts[1]);
+                                        dtc.year = Int(arrDayParts[2]);
+                                        aNewRecord.m_aDate = Calendar.current.date(from: dtc);
+                                    }
+                                }
+                                if iFromPart+3 < arrParts.count {
+                                    let arrDayParts = arrParts[iFromPart+3].components(separatedBy: ".");
+                                    if arrDayParts.count == 3 {
+                                        dtc.day = Int(arrDayParts[0]);
+                                        dtc.month = Int(arrDayParts[1]);
+                                        dtc.year = Int(arrDayParts[2]);
+                                        aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);
+                                    }
+                                }
+                            }
+                        }
+                        if let aTextNode = node.xpath("div[@class='ktg']").first, let sText = aTextNode.text {
+                            let arrParts = sText.components(separatedBy: ">");
+                            aNewRecord.m_sText = arrParts.last?.trimmingCharacters(in: .whitespacesAndNewlines);
+                        }
+                        
+                        //dump(aNewRecord)
+                        if aNewRecord.m_aDate != nil {
+                            arrNewItems.append(aNewRecord);
+                        }
+                    }
+                }
+                DispatchQueue.main.async() { () -> Void in
+                    if arrNewItems.count > 0 {
+                        aDeskaDS.m_arrItems = arrNewItems;
+                    }
+                    aDeskaDS.m_dateLastRefreshed = Date();
+                    aDeskaDS.m_bIsBeingRefreshed = false;
+                    self.save(dataSource: aDeskaDS);
+                    self.hideNetworkIndicator();
+                    aDeskaDS.delegate?.dataSourceRefreshEnded(nil);
                 }
             }
         }
