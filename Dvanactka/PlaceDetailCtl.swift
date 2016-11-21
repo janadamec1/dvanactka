@@ -272,8 +272,8 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             let sNewText = NSMutableAttributedString(string:"Kde se nechat vyfotit na průkazovou fotografii?", attributes: aQuestionAttr);
             sNewText.append(NSAttributedString(string:"\nVe Fotolabu na Sofijském náměstí.\n\n"));
             
-            //sNewText.append(NSAttributedString(string:"Doporučíte poskytovatele Internetu?", attributes: aQuestionAttr))
-            //sNewText.append(NSAttributedString(string:"\nUPC, Centrio, Praha12.net.\n\n"));
+            sNewText.append(NSAttributedString(string:"Obtížné parkování před poliklinikou?", attributes: aQuestionAttr))
+            sNewText.append(NSAttributedString(string:"\nVolná místa najdete na parkovišti dostupném z ulice Povodňová, od kterého pak projdete pěšky ulicí Amortova. Při parkování přímo před vchodem do polikliniky musíte navíc použít parkovací hodiny.\n\n"));
             m_lbText.attributedText = sNewText;
         }
     }

@@ -37,7 +37,7 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
 
-class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefershParentDelegate {
+class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefershParentDelegate, CRxFilterChangeDelegate {
     var m_aDataSource: CRxDataSource?
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
     var m_orderedCategories = [String]()                // sorted category local names
@@ -72,7 +72,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
             } else if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
                 // link to saved news
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Saved", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.savedNews));
+                var arrBtnItems = [UIBarButtonItem]();
+                arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "star"), style: .plain, target: self, action: #selector(EventsCtl.onSavedNews)));
+                if ds.m_bFilterable {
+                    arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
+                }
+                self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
             self.tableView.estimatedRowHeight = 90.0;
@@ -125,6 +130,17 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             } else if ds.m_eType == .places {
                 rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance.m_setPlacesNotified.contains(rec.m_sTitle);
             }
+            
+            // filter
+            if ds.m_bFilterable {
+                if let setFilter = ds.m_setFilter,
+                    let sFilter = rec.m_sFilter {
+                    if setFilter.contains(sFilter) {
+                        continue;   // skip this record
+                    }
+                }
+            }
+            
             // categories
             var sCatName = "";
             switch ds.m_eType {
@@ -307,8 +323,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             
             if let sText = rec.m_sText {
                 cellNews.m_lbText.text = sText;
+            } else if let sText = rec.m_sFilter {
+                cellNews.m_lbText.text = sText;
+            } else {
+                cellNews.m_lbText.text = nil;
             }
-            cellNews.m_lbText.isHidden = (rec.m_sText==nil);
+            cellNews.m_lbText.isHidden = (cellNews.m_lbText.text==nil);
             
             var sDateText = "";
             if let aDate = rec.m_aDate {
@@ -589,12 +609,44 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     //--------------------------------------------------------------------------
-    func savedNews() {
+    func onSavedNews() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
         eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_aSavedNews;
         eventCtl.m_refreshParentDelegate = self;
         navigationController?.pushViewController(eventCtl, animated: true);
     }
+
+    //--------------------------------------------------------------------------
+    func onDefineFilter() {
+        guard let ds = m_aDataSource else { return }
+        
+        // get the list of filter items
+        var arrFilter = [String]();
+        for rec in ds.m_arrItems {
+            if let sFilter = rec.m_sFilter {
+                if !arrFilter.contains(sFilter) {
+                    arrFilter.append(sFilter);
+                }
+            }
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let filterCtl = storyboard.instantiateViewController(withIdentifier: "filterCtl") as! FilterCtl
+        filterCtl.m_delegate = self;
+        filterCtl.m_arrFilter = arrFilter.sorted();
+        if let setOut = ds.m_setFilter {
+            filterCtl.m_setOut = setOut;
+        }
+        navigationController?.pushViewController(filterCtl, animated: true);
+    }
     
+    //--------------------------------------------------------------------------
+    func filterChanged(setOut: Set<String>) {
+        guard let ds = m_aDataSource else { return }
+        ds.m_setFilter = setOut;
+        CRxDataSourceManager.sharedInstance.save(dataSource: ds);
+        sortRecords();
+        self.tableView.reloadData();
+    }
 }

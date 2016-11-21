@@ -33,10 +33,12 @@ class CRxDataSource : NSObject {
         case news
         case places
     }
-    var m_eType = DataType.news
-    var m_bGroupByCategory = true;     // UI should show sections for each category
+    var m_eType: DataType
+    var m_bGroupByCategory = true       // UI should show sections for each category
+    var m_bFilterable = false           // UI can filter this datasource accoring to records' m_sFilter
+    var m_setFilter: Set<String>?       // contains string that should NOT be shown
     
-    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true) {
+    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true, filterable: Bool = false) {
         m_sId = id;
         m_sTitle = title;
         m_sShortTitle = shortTitle;
@@ -44,6 +46,7 @@ class CRxDataSource : NSObject {
         m_eType = type;
         m_nRefreshFreqHours = refreshFreqHours;
         m_bGroupByCategory = groupByCategory;
+        m_bFilterable = filterable;
         super.init()
     }
     
@@ -74,6 +77,7 @@ class CRxDataSource : NSObject {
         if let config = json["config"] as? [String : AnyObject] {
             if let date = config["dateLastRefreshed"] as? String { m_dateLastRefreshed = CRxEventRecord.loadDate(string: date); }
             if let lastItemShown = config["lastItemShown"] as? String { m_sLastItemShown = lastItemShown; }
+            if let filter = config["filter"] as? String { m_setFilter = Set<String>(filter.components(separatedBy: "|")); }
         }
     }
     
@@ -91,6 +95,7 @@ class CRxDataSource : NSObject {
         var config = [String: AnyObject]();
         if let date = m_dateLastRefreshed { config["dateLastRefreshed"] = CRxEventRecord.saveDate(date: date) as AnyObject }
         config["lastItemShown"] = m_sLastItemShown as AnyObject;
+        if let filter = m_setFilter { config["filter"] = filter.joined(separator: "|") as AnyObject; }
         
         if config.count > 0 {
             json["config"] = config as AnyObject;
@@ -158,7 +163,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), icon: "ds_alerts", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
-        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, groupByCategory: false);
+        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
@@ -706,7 +711,7 @@ class CRxDataSourceManager : NSObject {
                         }
                         if let aTextNode = node.xpath("div[@class='ktg']").first, let sText = aTextNode.text {
                             let arrParts = sText.components(separatedBy: ">");
-                            aNewRecord.m_sText = arrParts.last?.trimmingCharacters(in: .whitespacesAndNewlines);
+                            aNewRecord.m_sFilter = arrParts.last?.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
                         
                         //dump(aNewRecord)

@@ -172,6 +172,7 @@ class CRxEventRecord: NSObject {
     var m_sInfoLink: String?
     var m_sBuyLink: String?
     var m_eCategory: CRxCategory?
+    var m_sFilter: String?  // filter records accoring to this member
     var m_sText: String?
     var m_aDate: Date?      // date and time of an event start or publish date of an article
     var m_aDateTo: Date?    // date and time of an evend end
@@ -212,6 +213,7 @@ class CRxEventRecord: NSObject {
         if let infoLink = jsonItem["infoLink"] as? String { m_sInfoLink = infoLink }
         if let buyLink = jsonItem["buyLink"] as? String { m_sBuyLink = buyLink }
         if let category = jsonItem["category"] as? String { m_eCategory = CRxCategory(rawValue: category); }
+        if let filter = jsonItem["filter"] as? String { m_sFilter = filter }
         if let text = jsonItem["text"] as? String { m_sText = text }
         if let phone = jsonItem["phone"] as? String { m_sPhoneNumber = phone }
         if let email = jsonItem["email"] as? String { m_sEmail = email }
@@ -251,6 +253,7 @@ class CRxEventRecord: NSObject {
         if let infoLink = m_sInfoLink { item["infoLink"] = infoLink as AnyObject }
         if let buyLink = m_sBuyLink { item["buyLink"] = buyLink as AnyObject }
         if let category = m_eCategory { item["category"] = category.rawValue as AnyObject }
+        if let filter = m_sFilter { item["filter"] = filter as AnyObject }
         if let text = m_sText { item["text"] = text as AnyObject }
         if let phone = m_sPhoneNumber { item["phone"] = phone as AnyObject }
         if let email = m_sEmail { item["email"] = email as AnyObject }
