@@ -85,6 +85,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     // MARK: UICollectionViewDataSource
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerCol", for: indexPath);
+        return headerView;
+    }
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1;
     }

@@ -179,7 +179,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
                 self.present(imagePicker, animated: true, completion: nil)
             }
         }
-        let actionGallery = UIAlertAction(title: NSLocalizedString("From photo library", comment:""), style: .default) { result in
+        let actionGallery = UIAlertAction(title: NSLocalizedString("From gallery", comment:""), style: .default) { result in
             if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
                 let imagePicker = UIImagePickerController()
                 imagePicker.delegate = self
