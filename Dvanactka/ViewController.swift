@@ -109,8 +109,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.m_lbTitle.text = sTitle;
             cell.m_imgIcon.image = UIImage(named: ds.m_sIcon);
             cell.layer.borderWidth = 1.0;
-            cell.layer.borderColor = UIColor(white:0, alpha:0.1).cgColor;
-            cell.backgroundColor = UIColor(white:1, alpha:0.3);
+            cell.layer.borderColor = UIColor(white:0, alpha:0.15).cgColor;
 
             /*cell.m_lbTitle.layer.shadowColor = UIColor.black.cgColor;
             cell.m_lbTitle.layer.shadowOffset = CGSize(width: 1, height: 1);

@@ -451,7 +451,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        view.tintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);    // background
+        view.tintColor = UIColor(red: 74.0/255.0, green: 125.0/255.0, blue: 185.0/255.0, alpha: 1.0);    // background
         if let header = view as? UITableViewHeaderFooterView {          // text
             header.textLabel?.textColor = .white;
             //header.contentView.backgroundColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);

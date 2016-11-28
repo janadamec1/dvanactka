@@ -78,6 +78,8 @@
 		4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DA2C9021DC8EE8400E28A0E /* Localizable.strings */; };
 		4DBBD53C1DD522C9000C59D1 /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBBD53A1DD522C9000C59D1 /* action.png */; };
 		4DBBD53D1DD522C9000C59D1 /* action@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBBD53B1DD522C9000C59D1 /* action@2x.png */; };
+		4DBF467C1DEC8DD600E7238D /* p12-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBF467A1DEC8DD600E7238D /* p12-logo@2x.png */; };
+		4DBF467D1DEC8DD600E7238D /* p12-logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBF467B1DEC8DD600E7238D /* p12-logo@3x.png */; };
 		C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +159,8 @@
 		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4DBBD53A1DD522C9000C59D1 /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = action.png; path = img/action.png; sourceTree = "<group>"; };
 		4DBBD53B1DD522C9000C59D1 /* action@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action@2x.png"; path = "img/action@2x.png"; sourceTree = "<group>"; };
+		4DBF467A1DEC8DD600E7238D /* p12-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "p12-logo@2x.png"; path = "img/p12-logo@2x.png"; sourceTree = "<group>"; };
+		4DBF467B1DEC8DD600E7238D /* p12-logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "p12-logo@3x.png"; path = "img/p12-logo@3x.png"; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
 		BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
 		F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dvanactka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +230,8 @@
 				4D66771A1DCBC23E004876FA /* location.png */,
 				4D66771B1DCBC23E004876FA /* location@2x.png */,
 				4D6BC6EA1DE4B416003F241C /* p12-logo.png */,
+				4DBF467A1DEC8DD600E7238D /* p12-logo@2x.png */,
+				4DBF467B1DEC8DD600E7238D /* p12-logo@3x.png */,
 				4D5997AA1DE0935100C4BE86 /* photo.png */,
 				4D5997AB1DE0935100C4BE86 /* photo@2x.png */,
 				4D464C441DE2F525003EC137 /* star.png */,
@@ -388,6 +394,7 @@
 				4D464C3F1DE1F25E003EC137 /* c_trekking@2x.png in Resources */,
 				4D42642B1DD08D62008ED01F /* c_waste.png in Resources */,
 				4D42642E1DD08D62008ED01F /* c_work@2x.png in Resources */,
+				4DBF467C1DEC8DD600E7238D /* p12-logo@2x.png in Resources */,
 				4D66771E1DCBC23E004876FA /* goldstar25dis.png in Resources */,
 				4D4264291DD08D62008ED01F /* c_tree.png in Resources */,
 				4D464C471DE2F525003EC137 /* filter.png in Resources */,
@@ -416,6 +423,7 @@
 				4D9F14AF1DD1135700841AD8 /* ds_news.png in Resources */,
 				4D4264211DD08D62008ED01F /* c_pharmacy.png in Resources */,
 				4D9F14B81DD11A3E00841AD8 /* ds_events.png in Resources */,
+				4DBF467D1DEC8DD600E7238D /* p12-logo@3x.png in Resources */,
 				4D5A802B1DD0ADF0006723B5 /* c_electrical@2x.png in Resources */,
 				4D5A802D1DD0ADF0006723B5 /* c_textile@2x.png in Resources */,
 				4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */,
