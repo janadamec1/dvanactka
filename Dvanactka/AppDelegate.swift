@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dsm.defineDatasources();
         dsm.loadData();
         dsm.refreshAllDataSources();
+        //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
         application.applicationIconBadgeNumber = 0;
         return true
     }

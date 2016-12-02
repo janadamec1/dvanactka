@@ -1,5 +1,58 @@
 {"items":[
 {
+"title":"Sběrný dvůr Modřany",
+"locationLat":"50.0047778",
+"locationLong":"14.4377267",
+"address":"Generála Šišky 4\nPraha 4",
+"phone":"244 400 164",
+"infoLink":"https:\/\/www.praha12.cz\/sprava-bytovych-objektu-praha-modrany\/ds-1099\/p1=6420",
+"openingHours":"1: 830-1700, 2: 830-1700, 3: 830-1700, 4: 830-1700, 5: 830-1700, 6: 830-1500",
+"text":"Za letního času je dvůr otevřen ve všední dny do 18:00",
+"category":"wasteGeneral"
+},
+{
+"title":"Sběrný dvůr Kunratice",
+"locationLat":"50.0107386",
+"locationLong":"14.4678694",
+"address":"VS-EKOPRAG, s. r. o.\nDobronická 892 (vjezd Obrataňská)\nPraha 4",
+"phone":"605 079 049",
+"infoLink":"http:\/\/www.vs-ekoprag.cz",
+"openingHours":"1: 830-1700, 2: 830-1700, 3: 830-1700, 4: 830-1700, 5: 830-1700, 6: 830-1500",
+"text":"Za letního času je dvůr otevřen ve všední dny do 18:00",
+"category":"wasteGeneral"
+},
+{
+"title":"Sběrný dvůr Lhotka",
+"locationLat":"50.0189011",
+"locationLong":"14.4519972",
+"address":"Durychova 972\nPraha 4",
+"phone":"739 202 742",
+"openingHours":"1: 1030-1630, 2: 900-1500, 3: 1030-1630, 4: 900-1500, 5: 900-1500, 6: 900-1200",
+"text":"Za letního času je dvůr otevřen ve Po a St 12:00 - 19:00",
+"category":"wasteGeneral"
+},
+{
+"title":"Sběrna kovu U Soutoku",
+"text":"Výkup železa a barevných kovů",
+"locationLat":"49.9944803",
+"locationLong":"14.4060561",
+"address":"U Soutoku\nPraha4",
+"infoLink":"http:\/\/www.kovo-group.cz",
+"openingHours":"1: 800-1600, 2: 800-1600, 3: 800-1600, 4: 800-1600, 5: 800-1400, 6: 900-1200",
+"category":"wasteGeneral"
+},
+{
+"title":"Sběrna kovu Ve Lhotce",
+"text":"Výkup a prodej druhotných surovin\nPapír (časopisy, noviny, letáky, kartony, kancelářský papír, knihy), železo a barevné kovy (hliník, měď, mosaz, nerez, olovo, zinek, ...)",
+"locationLat":"50.0193289",
+"locationLong":"14.4349906",
+"phone":"777 842 299",
+"address":"Ve Lhotce 814/5\nPraha 4",
+"infoLink":"http:\/\/www.sberne-suroviny-praha-4-lhotka.estranky.cz",
+"openingHours":"1: 830-1600, 2: 830-1600, 3: 830-1600, 4: 830-1600, 5: 830-1400, 6: 830-1200",
+"category":"wasteGeneral"
+},
+{
 "title":"Durychova x Otradovická",
 "locationLong":"14.4468244",
 "locationLat":"50.0176119",
@@ -48,6 +101,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -57,6 +111,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -66,6 +121,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -75,6 +131,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -84,6 +141,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -93,6 +151,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -102,6 +161,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -111,6 +171,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -120,6 +181,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -129,6 +191,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 {
@@ -138,6 +201,7 @@
 "infoLink":"http:\/\/www.recyklujemetextil.cz",
 "phone":"739 495 757",
 "email":"potex@potex.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
 

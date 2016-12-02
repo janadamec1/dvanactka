@@ -31,6 +31,8 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_map: MKMapView!
     @IBOutlet weak var m_lbShowNotifications: UILabel!
     @IBOutlet weak var m_chkShowNotifications: UISwitch!
+    @IBOutlet weak var m_lbNotificationExplanation: UILabel!
+    @IBOutlet weak var m_lbContactNote: UILabel!
     @IBOutlet weak var m_btnNavigate: UIButton!
     @IBOutlet weak var m_btnReportMistake: UIButton!
     
@@ -44,6 +46,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
         m_lbAddressTitle.text = NSLocalizedString("Address", comment: "");
         m_lbOpeningHoursTitle.text = NSLocalizedString("Opening Hours", comment: "");
         m_lbShowNotifications.text = NSLocalizedString("Show notifications", comment: "");
+        m_lbNotificationExplanation.text = NSLocalizedString("Notification.explanation", comment: "");
         m_btnNavigate.setTitle(NSLocalizedString("Navigate", comment: ""), for: .normal);
         m_btnReportMistake.setTitle(NSLocalizedString("Report mistake", comment: ""), for: .normal);
         
@@ -69,6 +72,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             m_lbNote.isHidden = true;
             m_lbShowNotifications.isHidden = true;
             m_chkShowNotifications.isHidden = true;
+            m_lbNotificationExplanation.isHidden = true;
 
             if let hours = rec.m_arrOpeningHours {
                 let df = DateFormatter();
@@ -129,6 +133,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
                 }
                 m_lbShowNotifications.isHidden = false;
                 m_chkShowNotifications.isHidden = false;
+                m_lbNotificationExplanation.isHidden = false;
                 m_chkShowNotifications.isOn = rec.m_bMarkFavorite;
             }
             else {
@@ -152,6 +157,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             }
             else {
                 m_btnWebsite.isHidden = true;
+            }
+            if let contactNote = rec.m_sContactNote {
+                m_lbContactNote.text = contactNote;
+            }
+            else {
+                m_lbContactNote.isHidden = true;
             }
             if let email = rec.m_sEmail {
                 m_btnEmail.setTitle(email, for: UIControlState.normal)

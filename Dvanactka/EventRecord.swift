@@ -163,7 +163,7 @@ enum CRxCategory: String {
     case informace, lekarna, prvniPomoc, policie
     case pamatka, pamatnyStrom, vyznamnyStrom, zajimavost
     case remeslnik, restaurace, obchod
-    case waste, wasteElectro, wasteTextile
+    case waste, wasteElectro, wasteTextile, wasteGeneral
 }
 
 //---------------------------------------------------------------------------
@@ -180,6 +180,7 @@ class CRxEventRecord: NSObject {
     var m_aLocation: CLLocation?    // event location
     var m_sPhoneNumber: String?
     var m_sEmail: String?
+    var m_sContactNote: String?
     var m_arrOpeningHours: [CRxHourInterval]?
     var m_arrEvents: [CRxEventInterval]?
     
@@ -217,6 +218,7 @@ class CRxEventRecord: NSObject {
         if let text = jsonItem["text"] as? String { m_sText = text }
         if let phone = jsonItem["phone"] as? String { m_sPhoneNumber = phone }
         if let email = jsonItem["email"] as? String { m_sEmail = email }
+        if let contactNote = jsonItem["contactNote"] as? String { m_sContactNote = contactNote }
         if let address = jsonItem["address"] as? String { m_sAddress = address }
         if let date = jsonItem["date"] as? String { m_aDate = CRxEventRecord.loadDate(string: date); }
         if let dateTo = jsonItem["dateTo"] as? String { m_aDateTo = CRxEventRecord.loadDate(string: dateTo); }
@@ -257,6 +259,7 @@ class CRxEventRecord: NSObject {
         if let text = m_sText { item["text"] = text as AnyObject }
         if let phone = m_sPhoneNumber { item["phone"] = phone as AnyObject }
         if let email = m_sEmail { item["email"] = email as AnyObject }
+        if let contactNote = m_sContactNote { item["contactNote"] = contactNote as AnyObject }
         if let address = m_sAddress { item["address"] = address as AnyObject }
         if let date = m_aDate { item["date"] = CRxEventRecord.saveDate(date: date) as AnyObject }
         if let dateTo = m_aDateTo { item["dateTo"] = CRxEventRecord.saveDate(date: dateTo) as AnyObject }
@@ -307,6 +310,7 @@ class CRxEventRecord: NSObject {
         case .waste: return NSLocalizedString("Waste Dumpsters", comment: "");
         case .wasteElectro: return NSLocalizedString("Electric Waste", comment: "");
         case .wasteTextile: return NSLocalizedString("Textile Waste", comment: "");
+        case .wasteGeneral: return NSLocalizedString("Waste", comment: "");
         //default: return category.rawValue;
         }
     }
@@ -338,6 +342,7 @@ class CRxEventRecord: NSObject {
         case .waste: return "c_waste";
         case .wasteElectro: return "c_electrical";
         case .wasteTextile: return "c_textile";
+        case .wasteGeneral: return "c_recycle";
         //default: return "";
         }
     }

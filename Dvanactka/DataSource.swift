@@ -25,7 +25,6 @@ class CRxDataSource : NSObject {
     var m_dateLastRefreshed: Date?
     var m_bIsBeingRefreshed: Bool = false
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
-    var delegates = [CRxDataSourceRefreshDelegate]()
     var delegate: CRxDataSourceRefreshDelegate?
     
     enum DataType {
@@ -146,6 +145,7 @@ class CRxDataSourceManager : NSObject {
     static let dsCooltour = "dsCooltour";
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
+    static let dsSpolky = "dsSpolky";
     static let dsReportFault = "dsReportFault";
     static let dsSavedNews = "dsSavedNews";
     
@@ -164,8 +164,9 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), icon: "ds_alerts", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
+        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Landmarks", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
@@ -371,6 +372,9 @@ class CRxDataSourceManager : NSObject {
         else if id == CRxDataSourceManager.dsRadDeska {
             refreshRadDeskaDataSource();
             return;
+        }
+        else if id == CRxDataSourceManager.dsSpolky {
+            refreshSpolkyDataSource();
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
             refreshBiografDataSource();
@@ -729,6 +733,7 @@ class CRxDataSourceManager : NSObject {
                     self.save(dataSource: aDeskaDS);
                     self.hideNetworkIndicator();
                     aDeskaDS.delegate?.dataSourceRefreshEnded(nil);
+                    self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
                 }
             }
         }
@@ -952,6 +957,83 @@ class CRxDataSourceManager : NSObject {
             aVokDS.m_dateLastRefreshed = Date();
             save(dataSource: aVokDS);
             resetAllNotifications();
+        }
+    }
+    //--------------------------------------------------------------------------
+    func refreshSpolkyDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        guard let aDS = self.m_dictDataSources[CRxDataSourceManager.dsSpolky]
+            else { return }
+        
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: "http://www.spolekprokomorany.cz/aktuality/");
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: "/test_files/spolekKomo", withExtension: "html");
+        }
+        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+        
+        aDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+        
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else {
+                    DispatchQueue.main.async() { () -> Void in
+                        aDS.m_bIsBeingRefreshed = false;
+                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                        self.hideNetworkIndicator();
+                    }
+                    return;
+            }
+            
+            if let doc = HTML(html:data, encoding: .utf8) {
+                
+                var arrNewItems = [CRxEventRecord]()
+                
+                for node in doc.xpath("//div[@class='blog-item-content']") {
+                    if let aHeadNode = node.xpath("div[@class='blog-item-head']").first {
+                        
+                        if let aTitleNode = aHeadNode.xpath("h2").first, let sTitle = aTitleNode.text {
+                            let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                            
+                            if let aDateNode = aHeadNode.xpath("div[@class='blog-item-date']").first, let sDate = aDateNode.text {
+                                let sParts : [String] = sDate.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: ".");
+                                if sParts.count >= 3 {
+                                    var dtc = DateComponents()
+                                    dtc.day = Int(sParts[0]);
+                                    dtc.month = Int(sParts[1]);
+                                    dtc.year = Int(sParts[2]);
+                                    aNewRecord.m_aDate = Calendar.current.date(from: dtc)
+                                }
+                            }
+                            if let sLink = aTitleNode.xpath("a").first, let link = sLink["href"] {
+                                aNewRecord.m_sInfoLink = "http://www.spolekprokomorany.cz" + link;
+                            }
+                            
+                            if let sDescription = node.xpath("div/div/div[@class='perex-content']").first, let text = sDescription.text {
+                                aNewRecord.m_sText = text.trimmingCharacters(in: .whitespacesAndNewlines);
+                            }
+                            
+                            //dump(aNewRecord)
+                            if aNewRecord.m_aDate != nil {
+                                aNewRecord.m_sFilter = "Spolek pro Komořany";
+                                arrNewItems.append(aNewRecord);
+                            }
+                        }
+                    }
+                }
+                DispatchQueue.main.async() { () -> Void in
+                    if arrNewItems.count > 0 {
+                        aDS.m_arrItems = arrNewItems;
+                    }
+                    aDS.m_dateLastRefreshed = Date();
+                    aDS.m_bIsBeingRefreshed = false;
+                    self.save(dataSource: aDS);
+                    self.hideNetworkIndicator();
+                    aDS.delegate?.dataSourceRefreshEnded(nil);
+                }
+            }
         }
     }
 }
