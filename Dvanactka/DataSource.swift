@@ -146,6 +146,7 @@ class CRxDataSourceManager : NSObject {
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
     static let dsSpolky = "dsSpolky";
+    static let dsSpolkyList = "dsSpolkyList";
     static let dsReportFault = "dsReportFault";
     static let dsSavedNews = "dsSavedNews";
     
@@ -165,6 +166,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .news, filterable: true);
+        m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("List", comment: ""), icon: "ds_usergroups", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
@@ -380,6 +382,13 @@ class CRxDataSourceManager : NSObject {
             refreshBiografDataSource();
             return;
         }
+        else if id == CRxDataSourceManager.dsSpolkyList {
+            if let path = Bundle.main.url(forResource: "/test_files/spolkyList", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+                ds.delegate?.dataSourceRefreshEnded(nil);
+                return;
+            }
+        }
         else if id == CRxDataSourceManager.dsCooltour {
             if let path = Bundle.main.url(forResource: "/test_files/p12kultpamatky", withExtension: "json") {
                 ds.loadFromJSON(file: path);
@@ -477,11 +486,12 @@ class CRxDataSourceManager : NSObject {
                         }
                         
                         if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
-                            aNewRecord.m_sText = "(praha12.cz) " + sText.trimmingCharacters(in: .whitespacesAndNewlines);
+                            aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
                         /*if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
                          aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
                          }*/
+                        aNewRecord.m_sFilter = "praha12.cz";
                         //dump(aNewRecord)
                         arrNewsItems.append(aNewRecord);
                     }
@@ -512,8 +522,9 @@ class CRxDataSourceManager : NSObject {
                         }
                         
                         if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
-                            aNewRecord.m_sText = "(praha12.cz) " + sText.trimmingCharacters(in: .whitespacesAndNewlines);
+                            aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
                         }
+                        aNewRecord.m_sFilter = "praha12.cz";
                         //dump(aNewRecord)
                         arrAlertItems.append(aNewRecord);
                     }

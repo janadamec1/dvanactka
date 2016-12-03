@@ -62,9 +62,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         if let ds = m_aDataSource {
             self.title = ds.m_sTitle;
             
+            var arrBtnItems = [UIBarButtonItem]();
             if ds.m_eType == .places {
                 // init location tracking
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap));
+                arrBtnItems.append(UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap)));
 
                 self.tableView.allowsSelection = true;
                 if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -72,11 +73,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 }
             } else if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
                 // link to saved news
-                var arrBtnItems = [UIBarButtonItem]();
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "star"), style: .plain, target: self, action: #selector(EventsCtl.onSavedNews)));
                 if ds.m_bFilterable {
                     arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
                 }
+            }
+            if ds.m_sId == CRxDataSourceManager.dsSpolky {
+                arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "bulleted_list"), style: .plain, target: self, action: #selector(EventsCtl.onBtnList)));
+            }
+            if arrBtnItems.count > 0 {
                 self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -321,15 +326,20 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
 
             cellNews.m_lbTitle.text = rec.m_sTitle;
             
-            if let sText = rec.m_sText {
-                cellNews.m_lbText.text = sText;
-            } else if let sText = rec.m_sFilter {
-                cellNews.m_lbText.text = sText;
-            } else {
-                cellNews.m_lbText.text = nil;
+            let sText = NSMutableAttributedString(string:"");
+            if let sRecFilter = rec.m_sFilter {
+                let aBoldAttr = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: cellNews.m_lbText.font.pointSize)];
+                sText.append(NSAttributedString(string:sRecFilter, attributes: aBoldAttr));
             }
-            cellNews.m_lbText.isHidden = (cellNews.m_lbText.text==nil);
-            
+            if let sRecText = rec.m_sText {
+                if sText.length > 0 {
+                    sText.append(NSAttributedString(string:" - "));
+                }
+                sText.append(NSAttributedString(string:sRecText));
+            }
+            cellNews.m_lbText.attributedText = sText;
+            cellNews.m_lbText.isHidden = (sText.length == 0);
+ 
             var sDateText = "";
             if let aDate = rec.m_aDate {
                 let df = DateFormatter();
@@ -617,6 +627,14 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         navigationController?.pushViewController(eventCtl, animated: true);
     }
 
+    //--------------------------------------------------------------------------
+    func onBtnList() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
+        eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsSpolkyList];
+        navigationController?.pushViewController(eventCtl, animated: true);
+    }
+    
     //--------------------------------------------------------------------------
     func onDefineFilter() {
         guard let ds = m_aDataSource else { return }
