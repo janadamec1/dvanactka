@@ -424,6 +424,56 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
+    func refreshHtmlDataSource(sDsId: String, url: String, testFile: String, completition: ((_ error: String?) -> Void)?, htmlCodeHandler: @escaping (_ doc: HTMLDocument, _ arrNewItems: inout [CRxEventRecord]) -> Void) {
+        
+        guard let aDS = self.m_dictDataSources[sDsId]
+            else { return }
+        
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: url);
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: testFile, withExtension: "html");
+        }
+        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+        
+        aDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+        
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else {
+                    DispatchQueue.main.async() { () -> Void in
+                        aDS.m_bIsBeingRefreshed = false;
+                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                        self.hideNetworkIndicator();
+                    }
+                    return;
+            }
+            
+            if let doc = HTML(html:data, encoding: .utf8) {
+                
+                var arrNewItems = [CRxEventRecord]()
+                
+                htmlCodeHandler(doc, &arrNewItems);
+                
+                DispatchQueue.main.async() { () -> Void in
+                    if arrNewItems.count > 0 {
+                        aDS.m_arrItems = arrNewItems;
+                    }
+                    aDS.m_dateLastRefreshed = Date();
+                    aDS.m_bIsBeingRefreshed = false;
+                    self.save(dataSource: aDS);
+                    self.hideNetworkIndicator();
+                    aDS.delegate?.dataSourceRefreshEnded(nil);
+                    self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+                }
+            }
+        }
+    }
+    
+    //--------------------------------------------------------------------------
     func refreshRadniceDataSources() {
         guard let aNewsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadNews],
             let aAlertsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
@@ -554,98 +604,63 @@ class CRxDataSourceManager : NSObject {
     }
     //--------------------------------------------------------------------------
     func refreshRadEventsDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        guard let aEventsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadEvents]
-            else { return }
         
-        var urlDownload: URL?
-        if !g_bUseTestFiles {
-            urlDownload = URL(string: "https://www.praha12.cz/vismo/kalendar-akci.asp?pocet=50");
-        }
-        else {
-            urlDownload = Bundle.main.url(forResource: "/test_files/praha12events", withExtension: "html");
-        }
-        guard let url = urlDownload else { aEventsDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
-
-        aEventsDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
-
-        getDataFromUrl(url: url) { (data, response, error) in
-            guard let data = data, error == nil
-            else {
-                DispatchQueue.main.async() { () -> Void in
-                    aEventsDS.m_bIsBeingRefreshed = false;
-                    aEventsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
-                    self.hideNetworkIndicator();
-                }
-                return;
-            }
-            
-            if let doc = HTML(html:data, encoding: .utf8) {
-                
-                var arrNewItems = [CRxEventRecord]()
-                
-                for node in doc.xpath("//div[@class='dok']//ul[@class='ui']//li") {
-                    if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                        
-                        if var sLink = a_title["href"] {
-                            if sLink.hasPrefix("http://www.praha12.cz") {
-                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                            }
-                            else if !sLink.hasPrefix("http") {
-                                sLink = "https://www.praha12.cz" + sLink;
-                            }
-                            aNewRecord.m_sInfoLink = sLink;
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsRadEvents,
+                              url: "https://www.praha12.cz/vismo/kalendar-akci.asp?pocet=50",
+                              testFile: "/test_files/praha12events",
+                              completition: completition) { (doc, arrNewItems) -> Void in
+                                
+            for node in doc.xpath("//div[@class='dok']//ul[@class='ui']//li") {
+                if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
+                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                    
+                    if var sLink = a_title["href"] {
+                        if sLink.hasPrefix("http://www.praha12.cz") {
+                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
                         }
-                        
-                        if let aDateNode = node.xpath("div[1]").first, let sDate = aDateNode.text {
-                            
-                            // parse 5.11.2016 10:00 - 17:00
-                            var dtc = DateComponents()
-                            let arrParts = sDate.components(separatedBy: .whitespaces);
-                            if arrParts.count >= 1 {
-                                let arrDayParts = arrParts[0].components(separatedBy: ".");
-                                if arrDayParts.count == 3 {
-                                    dtc.day = Int(arrDayParts[0]);
-                                    dtc.month = Int(arrDayParts[1]);
-                                    dtc.year = Int(arrDayParts[2]);
-                                    aNewRecord.m_aDate = Calendar.current.date(from: dtc);  // only date now
-                                }
-                            }
-                            if arrParts.count >= 2 {
-                                let arrTimeParts = arrParts[1].components(separatedBy: ":");
-                                if arrTimeParts.count == 2 {
-                                    dtc.hour = Int(arrTimeParts[0]);
-                                    dtc.minute = Int(arrTimeParts[1]);
-                                    aNewRecord.m_aDate = Calendar.current.date(from: dtc);  // date & time "from"
-                                }
-                            }
-                            if arrParts.count >= 4 {
-                                let arrTimeParts = arrParts[3].components(separatedBy: ":");
-                                if arrTimeParts.count == 2 {
-                                    dtc.hour = Int(arrTimeParts[0]);
-                                    dtc.minute = Int(arrTimeParts[1]);
-                                    aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);  // date & time "to"
-                                }
-                            }
+                        else if !sLink.hasPrefix("http") {
+                            sLink = "https://www.praha12.cz" + sLink;
                         }
-                        if let aTextNode = node.xpath("div[2]").first, let sText = aTextNode.text {
-                            aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        
-                        //dump(aNewRecord)
-                        arrNewItems.append(aNewRecord);
+                        aNewRecord.m_sInfoLink = sLink;
                     }
-                }
-                DispatchQueue.main.async() { () -> Void in
-                    if arrNewItems.count > 0 {
-                        aEventsDS.m_arrItems = arrNewItems;
+                    
+                    if let aDateNode = node.xpath("div[1]").first, let sDate = aDateNode.text {
+                        
+                        // parse 5.11.2016 10:00 - 17:00
+                        var dtc = DateComponents()
+                        let arrParts = sDate.components(separatedBy: .whitespaces);
+                        if arrParts.count >= 1 {
+                            let arrDayParts = arrParts[0].components(separatedBy: ".");
+                            if arrDayParts.count == 3 {
+                                dtc.day = Int(arrDayParts[0]);
+                                dtc.month = Int(arrDayParts[1]);
+                                dtc.year = Int(arrDayParts[2]);
+                                aNewRecord.m_aDate = Calendar.current.date(from: dtc);  // only date now
+                            }
+                        }
+                        if arrParts.count >= 2 {
+                            let arrTimeParts = arrParts[1].components(separatedBy: ":");
+                            if arrTimeParts.count == 2 {
+                                dtc.hour = Int(arrTimeParts[0]);
+                                dtc.minute = Int(arrTimeParts[1]);
+                                aNewRecord.m_aDate = Calendar.current.date(from: dtc);  // date & time "from"
+                            }
+                        }
+                        if arrParts.count >= 4 {
+                            let arrTimeParts = arrParts[3].components(separatedBy: ":");
+                            if arrTimeParts.count == 2 {
+                                dtc.hour = Int(arrTimeParts[0]);
+                                dtc.minute = Int(arrTimeParts[1]);
+                                aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);  // date & time "to"
+                            }
+                        }
                     }
-                    aEventsDS.m_dateLastRefreshed = Date();
-                    aEventsDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aEventsDS);
-                    self.hideNetworkIndicator();
-                    aEventsDS.delegate?.dataSourceRefreshEnded(nil);
+                    if let aTextNode = node.xpath("div[2]").first, let sText = aTextNode.text {
+                        aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
+                    }
+                    
+                    //dump(aNewRecord)
+                    arrNewItems.append(aNewRecord);
                 }
             }
         }
@@ -653,98 +668,62 @@ class CRxDataSourceManager : NSObject {
 
     //--------------------------------------------------------------------------
     func refreshRadDeskaDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        guard let aDeskaDS = self.m_dictDataSources[CRxDataSourceManager.dsRadDeska]
-            else { return }
         
-        var urlDownload: URL?
-        if !g_bUseTestFiles {
-            urlDownload = URL(string: "https://www.praha12.cz/vismo/mapa_deska.asp");
-        }
-        else {
-            urlDownload = Bundle.main.url(forResource: "/test_files/praha12deska", withExtension: "html");
-        }
-        guard let url = urlDownload else { aDeskaDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
-        
-        aDeskaDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
-        
-        getDataFromUrl(url: url) { (data, response, error) in
-            guard let data = data, error == nil
-                else {
-                    DispatchQueue.main.async() { () -> Void in
-                        aDeskaDS.m_bIsBeingRefreshed = false;
-                        aDeskaDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
-                        self.hideNetworkIndicator();
-                    }
-                    return;
-            }
-            
-            if let doc = HTML(html:data, encoding: .utf8) {
-                
-                var arrNewItems = [CRxEventRecord]()
-                
-                for node in doc.xpath("//div[@id='ud']/ul/li") {
-                    if let a_title = node.xpath("strong/a").first, let sTitle = a_title.text {
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                        
-                        if var sLink = a_title["href"] {
-                            if sLink.hasPrefix("http://www.praha12.cz") {
-                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                            }
-                            else if !sLink.hasPrefix("http") {
-                                sLink = "https://www.praha12.cz" + sLink;
-                            }
-                            aNewRecord.m_sInfoLink = sLink;
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsRadDeska,
+                              url: "https://www.praha12.cz/vismo/mapa_deska.asp",
+                              testFile: "/test_files/praha12deska",
+                              completition: completition) { (doc, arrNewItems) -> Void in
+                                
+            for node in doc.xpath("//div[@id='ud']/ul/li") {
+                if let a_title = node.xpath("strong/a").first, let sTitle = a_title.text {
+                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                    
+                    if var sLink = a_title["href"] {
+                        if sLink.hasPrefix("http://www.praha12.cz") {
+                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
                         }
+                        else if !sLink.hasPrefix("http") {
+                            sLink = "https://www.praha12.cz" + sLink;
+                        }
+                        aNewRecord.m_sInfoLink = sLink;
+                    }
+                    
+                    if let aDateNode = node.xpath("span[1]").first, let sDate = aDateNode.text {
                         
-                        if let aDateNode = node.xpath("span[1]").first, let sDate = aDateNode.text {
-                            
-                            // find and parse "od: 4.3.2016 do: 5.3.2019)"
-                            var dtc = DateComponents()
-                            let arrParts = sDate.replacingOccurrences(of: ")", with: "").components(separatedBy: .whitespaces);
-                            // find "od:"
-                            if let iFromPart = arrParts.index(of: "od:") {
-                                if iFromPart+1 < arrParts.count {
-                                    let arrDayParts = arrParts[iFromPart+1].components(separatedBy: ".");
-                                    if arrDayParts.count == 3 {
-                                        dtc.day = Int(arrDayParts[0]);
-                                        dtc.month = Int(arrDayParts[1]);
-                                        dtc.year = Int(arrDayParts[2]);
-                                        aNewRecord.m_aDate = Calendar.current.date(from: dtc);
-                                    }
+                        // find and parse "od: 4.3.2016 do: 5.3.2019)"
+                        var dtc = DateComponents()
+                        let arrParts = sDate.replacingOccurrences(of: ")", with: "").components(separatedBy: .whitespaces);
+                        // find "od:"
+                        if let iFromPart = arrParts.index(of: "od:") {
+                            if iFromPart+1 < arrParts.count {
+                                let arrDayParts = arrParts[iFromPart+1].components(separatedBy: ".");
+                                if arrDayParts.count == 3 {
+                                    dtc.day = Int(arrDayParts[0]);
+                                    dtc.month = Int(arrDayParts[1]);
+                                    dtc.year = Int(arrDayParts[2]);
+                                    aNewRecord.m_aDate = Calendar.current.date(from: dtc);
                                 }
-                                if iFromPart+3 < arrParts.count {
-                                    let arrDayParts = arrParts[iFromPart+3].components(separatedBy: ".");
-                                    if arrDayParts.count == 3 {
-                                        dtc.day = Int(arrDayParts[0]);
-                                        dtc.month = Int(arrDayParts[1]);
-                                        dtc.year = Int(arrDayParts[2]);
-                                        aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);
-                                    }
+                            }
+                            if iFromPart+3 < arrParts.count {
+                                let arrDayParts = arrParts[iFromPart+3].components(separatedBy: ".");
+                                if arrDayParts.count == 3 {
+                                    dtc.day = Int(arrDayParts[0]);
+                                    dtc.month = Int(arrDayParts[1]);
+                                    dtc.year = Int(arrDayParts[2]);
+                                    aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);
                                 }
                             }
                         }
-                        if let aTextNode = node.xpath("div[@class='ktg']").first, let sText = aTextNode.text {
-                            let arrParts = sText.components(separatedBy: ">");
-                            aNewRecord.m_sFilter = arrParts.last?.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        
-                        //dump(aNewRecord)
-                        if aNewRecord.m_aDate != nil {
-                            arrNewItems.append(aNewRecord);
-                        }
                     }
-                }
-                DispatchQueue.main.async() { () -> Void in
-                    if arrNewItems.count > 0 {
-                        aDeskaDS.m_arrItems = arrNewItems;
+                    if let aTextNode = node.xpath("div[@class='ktg']").first, let sText = aTextNode.text {
+                        let arrParts = sText.components(separatedBy: ">");
+                        aNewRecord.m_sFilter = arrParts.last?.trimmingCharacters(in: .whitespacesAndNewlines);
                     }
-                    aDeskaDS.m_dateLastRefreshed = Date();
-                    aDeskaDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aDeskaDS);
-                    self.hideNetworkIndicator();
-                    aDeskaDS.delegate?.dataSourceRefreshEnded(nil);
-                    self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+                    
+                    //dump(aNewRecord)
+                    if aNewRecord.m_aDate != nil {
+                        arrNewItems.append(aNewRecord);
+                    }
                 }
             }
         }
@@ -752,96 +731,62 @@ class CRxDataSourceManager : NSObject {
     
     //--------------------------------------------------------------------------
     func refreshBiografDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        guard let aBiografDS = self.m_dictDataSources[CRxDataSourceManager.dsBiografProgram]
-            else { return }
         
-        var urlDownload: URL?
-        if !g_bUseTestFiles {
-            urlDownload = URL(string: "http://www.modranskybiograf.cz/klient-349/kino-114/");
-        }
-        else {
-            urlDownload = Bundle.main.url(forResource: "/test_files/modrbiograf", withExtension: "html");
-        }
-        guard let url = urlDownload else { aBiografDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
-        
-        aBiografDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
-
-        getDataFromUrl(url: url) { (data, response, error) in
-            guard let data = data, error == nil
-            else {
-                DispatchQueue.main.async() { () -> Void in
-                    aBiografDS.m_bIsBeingRefreshed = false;
-                    completition?(NSLocalizedString("Error when downloading data", comment: ""));
-                    self.hideNetworkIndicator();
-                }
-                return;
-            }
-
-            if let doc = HTML(html:data, encoding: .utf8) {
-                
-                let sAddress = "Modřanský biograf\nU Kina 1/44\n143 00 Praha 12 - Modřany";
-                var arrNewItems = [CRxEventRecord]()
-                
-                let unitFlags : Set<Calendar.Component> = [.day, .month, .year]
-                let aTodayComps = Calendar.current.dateComponents(unitFlags, from: Date())
-                
-                for node in doc.xpath("//div[@class='calendar-left-table-tr']") {
-                    if let aLinkNode = node.xpath("a[@class='cal-event-item shortName']").first {
-                        
-                        if let aTitleNode = aLinkNode.xpath("h2").first, let sTitle = aTitleNode.text {
-                            if sTitle == "KINO NEHRAJE" {
-                                continue;
-                            }
-                            let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                            
-                            var dtc = DateComponents()
-                            if let aDateNode = aLinkNode.xpath("div[@class='ap_date']").first, let sDate = aDateNode.text {
-                                let sParts : [String] = sDate.components(separatedBy: ".");
-                                if sParts.count >= 2 {
-                                    dtc.day = Int(sParts[0]);
-                                    dtc.month = Int(sParts[1]);
-                                    if dtc.day != nil && dtc.month != nil {
-                                        dtc.year = (dtc.month! < aTodayComps.month! ? aTodayComps.year!+1 : aTodayComps.year! )
-                                    }
-                                }
-                            }
-                            if let aTimeNode = aLinkNode.xpath("div[@class='ap_time']").first, let sTime = aTimeNode.text {
-                                let sParts : [String] = sTime.components(separatedBy: ":");
-                                if sParts.count == 2 {
-                                    dtc.hour = Int(sParts[0]);
-                                    dtc.minute = Int(sParts[1]);
-                                }
-                            }
-                            aNewRecord.m_aDate = Calendar.current.date(from: dtc)
-                            
-                            if let sLink = aLinkNode["href"] {
-                                aNewRecord.m_sInfoLink = "http://www.modranskybiograf.cz" + sLink;
-                            }
-                            if let sDescription = aLinkNode["title"] {  // remove newlines
-                                let components = sDescription.components(separatedBy: NSCharacterSet.newlines)
-                                aNewRecord.m_sText = components.filter { !$0.isEmpty }.joined(separator: " | ");
-                            }
-                            if let aBuyLinkNode = aLinkNode.xpath("..//a[@class='cal-event-item-buy-span']").first {
-                                aNewRecord.m_sBuyLink = aBuyLinkNode["href"];
-                            }
-                            
-                            aNewRecord.m_sAddress = sAddress;
-                            
-                            //dump(aNewRecord)
-                            arrNewItems.append(aNewRecord);
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsBiografProgram,
+                              url: "http://www.modranskybiograf.cz/klient-349/kino-114/",
+                              testFile: "/test_files/modrbiograf",
+                              completition: completition) { (doc, arrNewItems) -> Void in
+                                
+            let sAddress = "Modřanský biograf\nU Kina 1/44\n143 00 Praha 12 - Modřany";
+            
+            let unitFlags : Set<Calendar.Component> = [.day, .month, .year]
+            let aTodayComps = Calendar.current.dateComponents(unitFlags, from: Date())
+            
+            for node in doc.xpath("//div[@class='calendar-left-table-tr']") {
+                if let aLinkNode = node.xpath("a[@class='cal-event-item shortName']").first {
+                    
+                    if let aTitleNode = aLinkNode.xpath("h2").first, let sTitle = aTitleNode.text {
+                        if sTitle == "KINO NEHRAJE" {
+                            continue;
                         }
+                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                        
+                        var dtc = DateComponents()
+                        if let aDateNode = aLinkNode.xpath("div[@class='ap_date']").first, let sDate = aDateNode.text {
+                            let sParts : [String] = sDate.components(separatedBy: ".");
+                            if sParts.count >= 2 {
+                                dtc.day = Int(sParts[0]);
+                                dtc.month = Int(sParts[1]);
+                                if dtc.day != nil && dtc.month != nil {
+                                    dtc.year = (dtc.month! < aTodayComps.month! ? aTodayComps.year!+1 : aTodayComps.year! )
+                                }
+                            }
+                        }
+                        if let aTimeNode = aLinkNode.xpath("div[@class='ap_time']").first, let sTime = aTimeNode.text {
+                            let sParts : [String] = sTime.components(separatedBy: ":");
+                            if sParts.count == 2 {
+                                dtc.hour = Int(sParts[0]);
+                                dtc.minute = Int(sParts[1]);
+                            }
+                        }
+                        aNewRecord.m_aDate = Calendar.current.date(from: dtc)
+                        
+                        if let sLink = aLinkNode["href"] {
+                            aNewRecord.m_sInfoLink = "http://www.modranskybiograf.cz" + sLink;
+                        }
+                        if let sDescription = aLinkNode["title"] {  // remove newlines
+                            let components = sDescription.components(separatedBy: NSCharacterSet.newlines)
+                            aNewRecord.m_sText = components.filter { !$0.isEmpty }.joined(separator: " | ");
+                        }
+                        if let aBuyLinkNode = aLinkNode.xpath("..//a[@class='cal-event-item-buy-span']").first {
+                            aNewRecord.m_sBuyLink = aBuyLinkNode["href"];
+                        }
+                        
+                        aNewRecord.m_sAddress = sAddress;
+                        
+                        //dump(aNewRecord)
+                        arrNewItems.append(aNewRecord);
                     }
-                }
-                DispatchQueue.main.async() { () -> Void in
-                    if arrNewItems.count > 0 {
-                        aBiografDS.m_arrItems = arrNewItems;
-                    }
-                    aBiografDS.m_dateLastRefreshed = Date();
-                    aBiografDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aBiografDS);
-                    self.hideNetworkIndicator();
-                    aBiografDS.delegate?.dataSourceRefreshEnded(nil);
                 }
             }
         }
@@ -970,79 +915,43 @@ class CRxDataSourceManager : NSObject {
             resetAllNotifications();
         }
     }
+    
     //--------------------------------------------------------------------------
     func refreshSpolkyDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        guard let aDS = self.m_dictDataSources[CRxDataSourceManager.dsSpolky]
-            else { return }
         
-        var urlDownload: URL?
-        if !g_bUseTestFiles {
-            urlDownload = URL(string: "http://www.spolekprokomorany.cz/aktuality/");
-        }
-        else {
-            urlDownload = Bundle.main.url(forResource: "/test_files/spolekKomo", withExtension: "html");
-        }
-        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
-        
-        aDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
-        
-        getDataFromUrl(url: url) { (data, response, error) in
-            guard let data = data, error == nil
-                else {
-                    DispatchQueue.main.async() { () -> Void in
-                        aDS.m_bIsBeingRefreshed = false;
-                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
-                        self.hideNetworkIndicator();
-                    }
-                    return;
-            }
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsSpolky,
+                              url: "http://www.spolekprokomorany.cz/aktuality/",
+                              testFile: "/test_files/spolekKomo",
+                              completition: completition) { (doc, arrNewItems) -> Void in
             
-            if let doc = HTML(html:data, encoding: .utf8) {
-                
-                var arrNewItems = [CRxEventRecord]()
-                
-                for node in doc.xpath("//div[@class='blog-item-content']") {
-                    if let aHeadNode = node.xpath("div[@class='blog-item-head']").first {
+            let df = DateFormatter();
+            df.dateFormat = "dd.MM.yyyy";
+            
+            for node in doc.xpath("//div[@class='blog-item-content']") {
+                if let aHeadNode = node.xpath("div[@class='blog-item-head']").first {
+                    
+                    if let aTitleNode = aHeadNode.xpath("h2").first, let sTitle = aTitleNode.text {
+                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
                         
-                        if let aTitleNode = aHeadNode.xpath("h2").first, let sTitle = aTitleNode.text {
-                            let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                            
-                            if let aDateNode = aHeadNode.xpath("div[@class='blog-item-date']").first, let sDate = aDateNode.text {
-                                let sParts : [String] = sDate.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: ".");
-                                if sParts.count >= 3 {
-                                    var dtc = DateComponents()
-                                    dtc.day = Int(sParts[0]);
-                                    dtc.month = Int(sParts[1]);
-                                    dtc.year = Int(sParts[2]);
-                                    aNewRecord.m_aDate = Calendar.current.date(from: dtc)
-                                }
-                            }
-                            if let sLink = aTitleNode.xpath("a").first, let link = sLink["href"] {
-                                aNewRecord.m_sInfoLink = "http://www.spolekprokomorany.cz" + link;
-                            }
-                            
-                            if let sDescription = node.xpath("div/div/div[@class='perex-content']").first, let text = sDescription.text {
-                                aNewRecord.m_sText = text.trimmingCharacters(in: .whitespacesAndNewlines);
-                            }
-                            
-                            //dump(aNewRecord)
-                            if aNewRecord.m_aDate != nil {
-                                aNewRecord.m_sFilter = "Spolek pro Komořany";
-                                arrNewItems.append(aNewRecord);
+                        if let aDateNode = aHeadNode.xpath("div[@class='blog-item-date']").first, let sDate = aDateNode.text {
+                            if let date = df.date(from: sDate.trimmingCharacters(in: .whitespacesAndNewlines)) {
+                                aNewRecord.m_aDate = date;
                             }
                         }
+                        if let sLink = aTitleNode.xpath("a").first, let link = sLink["href"] {
+                            aNewRecord.m_sInfoLink = "http://www.spolekprokomorany.cz" + link;
+                        }
+                        
+                        if let sDescription = node.xpath("div/div/div[@class='perex-content']").first, let text = sDescription.text {
+                            aNewRecord.m_sText = text.trimmingCharacters(in: .whitespacesAndNewlines);
+                        }
+                        
+                        //dump(aNewRecord)
+                        if aNewRecord.m_aDate != nil {
+                            aNewRecord.m_sFilter = "Spolek pro Komořany";
+                            arrNewItems.append(aNewRecord);
+                        }
                     }
-                }
-                DispatchQueue.main.async() { () -> Void in
-                    if arrNewItems.count > 0 {
-                        aDS.m_arrItems = arrNewItems;
-                    }
-                    aDS.m_dateLastRefreshed = Date();
-                    aDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aDS);
-                    self.hideNetworkIndicator();
-                    aDS.delegate?.dataSourceRefreshEnded(nil);
                 }
             }
         }
