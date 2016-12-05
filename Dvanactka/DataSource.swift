@@ -127,6 +127,13 @@ class CRxDataSource : NSObject {
         }
         return 0;
     }
+    
+    //--------------------------------------------------------------------------
+    func sortNewsByDate() {
+        if m_eType == .news {
+            m_arrItems = m_arrItems.sorted(by: {$0.m_aDate! > $1.m_aDate! });
+        }
+    }
 }
 
 //--------------------------------------------------------------------------
@@ -138,7 +145,6 @@ class CRxDataSourceManager : NSObject {
     private override init() {}     // "private" prevents others from using the default '()' initializer for this class (so being singleton)
     
     static let dsRadNews = "dsRadNews";
-    static let dsRadAlerts = "dsRadAlerts";
     static let dsRadEvents = "dsRadEvents";
     static let dsRadDeska = "dsRadDeska";
     static let dsBiografProgram = "dsBiografProgram";
@@ -164,7 +170,6 @@ class CRxDataSourceManager : NSObject {
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
         
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsRadAlerts] = CRxDataSource(id: CRxDataSourceManager.dsRadAlerts, title: NSLocalizedString("Alerts", comment: ""), icon: "ds_alerts", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .news, filterable: true);
@@ -350,9 +355,7 @@ class CRxDataSourceManager : NSObject {
     func refreshAllDataSources(force: Bool = false) {
         
         for dsIt in m_dictDataSources {
-            if dsIt.key != CRxDataSourceManager.dsRadAlerts {
-                refreshDataSource(id: dsIt.key, force: force);
-            }
+            refreshDataSource(id: dsIt.key, force: force);
         }
     }
     
@@ -369,7 +372,7 @@ class CRxDataSourceManager : NSObject {
             return;
         }
         
-        if id == CRxDataSourceManager.dsRadNews || id == CRxDataSourceManager.dsRadAlerts {
+        if id == CRxDataSourceManager.dsRadNews {
             refreshRadniceDataSources();
             return;
         }
@@ -473,6 +476,7 @@ class CRxDataSourceManager : NSObject {
                 DispatchQueue.main.async() { () -> Void in
                     if arrNewItems.count > 0 {
                         aDS.m_arrItems = arrNewItems;
+                        aDS.sortNewsByDate();
                     }
                     aDS.m_dateLastRefreshed = Date();
                     aDS.m_bIsBeingRefreshed = false;
@@ -486,134 +490,82 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshRadniceDataSources() {
-        guard let aNewsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadNews],
-            let aAlertsDS = self.m_dictDataSources[CRxDataSourceManager.dsRadAlerts]
-            else { return }
+    func refreshRadniceDataSources(completition: ((_ error: String?) -> Void)? = nil) {
         
-        var urlDownload: URL?
-        if !g_bUseTestFiles {
-            urlDownload = URL(string: "https://www.praha12.cz/");
-        }
-        else {
-            urlDownload = Bundle.main.url(forResource: "/test_files/praha12titulka", withExtension: "html");
-        }
-        guard let url = urlDownload else {
-            aNewsDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL");
-            aAlertsDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return;
-        }
-        
-        aNewsDS.m_bIsBeingRefreshed = true;
-        aAlertsDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
-
-        getDataFromUrl(url: url) { (data, response, error) in
-            guard let data = data, error == nil
-            else {
-                DispatchQueue.main.async() { () -> Void in
-                    aNewsDS.m_bIsBeingRefreshed = false;
-                    aAlertsDS.m_bIsBeingRefreshed = false;
-                    aNewsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
-                    aAlertsDS.delegate?.dataSourceRefreshEnded(NSLocalizedString("Error when downloading data", comment: ""));
-                    self.hideNetworkIndicator();
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsRadNews,
+                              url: "https://www.praha12.cz/",
+                              testFile: "/test_files/praha12titulka",
+                              completition: completition) { (doc, arrNewItems) -> Void in
+                                
+            // XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
+            
+            for node in doc.xpath("//div[@class='titulDoc aktClanky']//li") {
+                if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
+                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                    
+                    if var sLink = a_title["href"] {
+                        if sLink.hasPrefix("http://www.praha12.cz") {
+                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
+                        }
+                        else if !sLink.hasPrefix("http") {
+                            sLink = "https://www.praha12.cz" + sLink;
+                        }
+                        aNewRecord.m_sInfoLink = sLink;
+                    }
+                    
+                    if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
+                        let df = DateFormatter();
+                        df.dateFormat = "(dd.MM.yyyy)";
+                        if let date = df.date(from: sDate) {
+                            aNewRecord.m_aDate = date;// as NSDate?
+                        }
+                    }
+                    
+                    if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
+                        aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
+                    }
+                    /*if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
+                     aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
+                     }*/
+                    aNewRecord.m_sFilter = "praha12.cz";
+                    //dump(aNewRecord)
+                    arrNewItems.append(aNewRecord);
                 }
-                return;
             }
-            if let doc = HTML(html:data, encoding: .utf8) {
-
-                // XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
-                
-                var arrNewsItems = [CRxEventRecord]()
-                
-                for node in doc.xpath("//div[@class='titulDoc aktClanky']//li") {
-                    if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                        
-                        if var sLink = a_title["href"] {
-                            if sLink.hasPrefix("http://www.praha12.cz") {
-                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                            }
-                            else if !sLink.hasPrefix("http") {
-                                sLink = "https://www.praha12.cz" + sLink;
-                            }
-                            aNewRecord.m_sInfoLink = sLink;
+            
+            for node in doc.xpath("//div[@class='titulDoc upoClanky']//li") {
+                if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
+                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                    
+                    if var sLink = a_title["href"] {
+                        if sLink.hasPrefix("http://www.praha12.cz") {
+                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
                         }
-                        
-                        if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
-                            let df = DateFormatter();
-                            df.dateFormat = "(dd.MM.yyyy)";
-                            if let date = df.date(from: sDate) {
-                                aNewRecord.m_aDate = date;// as NSDate?
-                            }
+                        else if !sLink.hasPrefix("http") {
+                            sLink = "https://www.praha12.cz" + sLink;
                         }
-                        
-                        if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
-                            aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        /*if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
-                         aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
-                         }*/
-                        aNewRecord.m_sFilter = "praha12.cz";
-                        //dump(aNewRecord)
-                        arrNewsItems.append(aNewRecord);
+                        aNewRecord.m_sInfoLink = sLink;
                     }
-                }
-                
-                var arrAlertItems = [CRxEventRecord]()
-
-                for node in doc.xpath("//div[@class='titulDoc upoClanky']//li") {
-                    if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                        
-                        if var sLink = a_title["href"] {
-                            if sLink.hasPrefix("http://www.praha12.cz") {
-                                sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                            }
-                            else if !sLink.hasPrefix("http") {
-                                sLink = "https://www.praha12.cz" + sLink;
-                            }
-                            aNewRecord.m_sInfoLink = sLink;
+                    
+                    if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
+                        let df = DateFormatter();
+                        df.dateFormat = "(dd.MM.yyyy)";
+                        if let date = df.date(from: sDate) {
+                            aNewRecord.m_aDate = date;// as NSDate?
                         }
-                        
-                        if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
-                            let df = DateFormatter();
-                            df.dateFormat = "(dd.MM.yyyy)";
-                            if let date = df.date(from: sDate) {
-                                aNewRecord.m_aDate = date;// as NSDate?
-                            }
-                        }
-                        
-                        if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
-                            aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        aNewRecord.m_sFilter = "praha12.cz";
-                        //dump(aNewRecord)
-                        arrAlertItems.append(aNewRecord);
                     }
-                }
-                DispatchQueue.main.async() { () -> Void in
-                    if arrNewsItems.count > 0 {
-                        aNewsDS.m_arrItems = arrNewsItems;
+                    
+                    if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
+                        aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
                     }
-                    aNewsDS.m_dateLastRefreshed = Date();
-                    aNewsDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aNewsDS);
-
-                    if arrAlertItems.count > 0 {
-                        aAlertsDS.m_arrItems = arrAlertItems;
-                    }
-                    aAlertsDS.m_dateLastRefreshed = Date()
-                    aAlertsDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aAlertsDS)
-                    self.hideNetworkIndicator();
-
-                    aNewsDS.delegate?.dataSourceRefreshEnded(nil);  // to refresh EventCtl tableView
-                    aAlertsDS.delegate?.dataSourceRefreshEnded(nil);
-                    self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+                    aNewRecord.m_sFilter = "praha12.cz";
+                    //dump(aNewRecord)
+                    arrNewItems.append(aNewRecord);
                 }
             }
         }
     }
+    
     //--------------------------------------------------------------------------
     func refreshRadEventsDataSource(completition: ((_ error: String?) -> Void)? = nil) {
         

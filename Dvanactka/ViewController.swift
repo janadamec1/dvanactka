@@ -62,7 +62,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         //m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
         m_arrSources.append(CRxDataSourceManager.dsRadNews);
-        m_arrSources.append(CRxDataSourceManager.dsRadAlerts);
+        //m_arrSources.append(CRxDataSourceManager.dsRadAlerts);
         m_arrSources.append(CRxDataSourceManager.dsSpolky);
         m_arrSources.append(CRxDataSourceManager.dsRadEvents);
         m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
