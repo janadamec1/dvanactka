@@ -60,6 +60,7 @@
 		4D5A802B1DD0ADF0006723B5 /* c_electrical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80271DD0ADF0006723B5 /* c_electrical@2x.png */; };
 		4D5A802C1DD0ADF0006723B5 /* c_textile.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80281DD0ADF0006723B5 /* c_textile.png */; };
 		4D5A802D1DD0ADF0006723B5 /* c_textile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80291DD0ADF0006723B5 /* c_textile@2x.png */; };
+		4D663B6C1DF5C07A00145AED /* ds_game.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D663B6B1DF5C07A00145AED /* ds_game.png */; };
 		4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6677091DCB340F004876FA /* MapKit.framework */; };
 		4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */; };
 		4D6677101DCB8CDD004876FA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D66770F1DCB8CDD004876FA /* MessageUI.framework */; };
@@ -90,6 +91,7 @@
 		4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DA2C9021DC8EE8400E28A0E /* Localizable.strings */; };
 		4DBBD53C1DD522C9000C59D1 /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBBD53A1DD522C9000C59D1 /* action.png */; };
 		4DBBD53D1DD522C9000C59D1 /* action@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBBD53B1DD522C9000C59D1 /* action@2x.png */; };
+		4DBBDFD31DF5DBDB00013D67 /* GameCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBBDFD21DF5DBDB00013D67 /* GameCtl.swift */; };
 		4DBF467C1DEC8DD600E7238D /* p12-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBF467A1DEC8DD600E7238D /* p12-logo@2x.png */; };
 		4DBF467D1DEC8DD600E7238D /* p12-logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DBF467B1DEC8DD600E7238D /* p12-logo@3x.png */; };
 		C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */; };
@@ -151,6 +153,7 @@
 		4D5A80271DD0ADF0006723B5 /* c_electrical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_electrical@2x.png"; path = "img/c_electrical@2x.png"; sourceTree = "<group>"; };
 		4D5A80281DD0ADF0006723B5 /* c_textile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_textile.png; path = img/c_textile.png; sourceTree = "<group>"; };
 		4D5A80291DD0ADF0006723B5 /* c_textile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_textile@2x.png"; path = "img/c_textile@2x.png"; sourceTree = "<group>"; };
+		4D663B6B1DF5C07A00145AED /* ds_game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_game.png; path = img/ds_game.png; sourceTree = "<group>"; };
 		4D6677091DCB340F004876FA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailCtl.swift; sourceTree = "<group>"; };
 		4D66770F1DCB8CDD004876FA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -183,6 +186,7 @@
 		4DA2C9011DC8EE8400E28A0E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4DBBD53A1DD522C9000C59D1 /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = action.png; path = img/action.png; sourceTree = "<group>"; };
 		4DBBD53B1DD522C9000C59D1 /* action@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action@2x.png"; path = "img/action@2x.png"; sourceTree = "<group>"; };
+		4DBBDFD21DF5DBDB00013D67 /* GameCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCtl.swift; sourceTree = "<group>"; };
 		4DBF467A1DEC8DD600E7238D /* p12-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "p12-logo@2x.png"; path = "img/p12-logo@2x.png"; sourceTree = "<group>"; };
 		4DBF467B1DEC8DD600E7238D /* p12-logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "p12-logo@3x.png"; path = "img/p12-logo@3x.png"; sourceTree = "<group>"; };
 		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 				4D464C401DE23D14003EC137 /* ds_billboard.png */,
 				4D9F14B11DD11A3E00841AD8 /* ds_biograf.png */,
 				4D9F14B21DD11A3E00841AD8 /* ds_events.png */,
+				4D663B6B1DF5C07A00145AED /* ds_game.png */,
 				4D9F14B31DD11A3E00841AD8 /* ds_help.png */,
 				4D9F14B41DD11A3E00841AD8 /* ds_landmarks.png */,
 				4D9F14AE1DD1135700841AD8 /* ds_news.png */,
@@ -305,6 +310,7 @@
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 				4D464C4C1DE305B2003EC137 /* FilterCtl.swift */,
+				4DBBDFD21DF5DBDB00013D67 /* GameCtl.swift */,
 				4D6677151DCBC226004876FA /* img */,
 				4D9019401DC65E17001488D3 /* Info.plist */,
 				4D30AABF1DCA891200A402C9 /* InfoPlist.strings */,
@@ -419,6 +425,7 @@
 				4D5A802A1DD0ADF0006723B5 /* c_electrical.png in Resources */,
 				4D52699E1DF49FE4008FA122 /* c_usergroups.png in Resources */,
 				4D4264281DD08D62008ED01F /* c_shop@2x.png in Resources */,
+				4D663B6C1DF5C07A00145AED /* ds_game.png in Resources */,
 				4D42641D1DD08D62008ED01F /* c_info.png in Resources */,
 				4D464C4A1DE2F525003EC137 /* star@2x.png in Resources */,
 				4D52699B1DF49FE4008FA122 /* c_children@2x.png in Resources */,
@@ -543,6 +550,7 @@
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
 				4D9019371DC65E16001488D3 /* ViewController.swift in Sources */,
+				4DBBDFD31DF5DBDB00013D67 /* GameCtl.swift in Sources */,
 				4D9019351DC65E16001488D3 /* AppDelegate.swift in Sources */,
 				4D464C4D1DE305B2003EC137 /* FilterCtl.swift in Sources */,
 			);

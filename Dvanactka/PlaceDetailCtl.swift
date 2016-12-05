@@ -14,7 +14,7 @@ import UserNotifications
 //NOTE: to get the stackview start at the top of scrollview, I had to switch OFF ViewController.adjustScrollViewInsets (even if it should be opposite)
 // see http://fuckingscrollviewautolayout.com
 
-class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
+class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKMapViewDelegate {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbCategory: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
@@ -179,8 +179,13 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
             
             if let location = rec.m_aLocation {
                 let regView = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500);
-                m_map.setRegion(regView, animated:true);
+                m_map.setRegion(regView, animated:false);
                 m_map.addAnnotation(CRxMapItem(record: rec));
+                m_map.delegate = self;
+                
+                if rec.m_aLocCheckIn != nil {
+                    m_map.addAnnotation(CRxMapItem(record: rec, forCheckIn: true));
+                }
             }
             else {
                 m_map.isHidden = true;
@@ -212,9 +217,46 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate {
     //--------------------------------------------------------------------------
     @IBAction func onBtnMapTouched(_ sender: Any) {
         if let rec = m_aRecord {
-            let aMapItem = CRxMapItem(record: rec);
+            let aMapItem = CRxMapItem(record: rec, forCheckIn: true);
             aMapItem.mapItem().openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]);
         }
+    }
+    
+    //--------------------------------------------------------------------------
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? CRxMapItem {
+            var identifier = "pin"
+            if !annotation.m_bForCheckIn {
+                if let category = annotation.m_rec.m_eCategory {
+                    identifier = category.rawValue; // for reusing
+                }
+            }
+            
+            var view: MKAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) {
+                dequeuedView.annotation = annotation
+                view = dequeuedView
+            }
+            else if annotation.m_bForCheckIn {
+                let pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                pin.pinTintColor = MKPinAnnotationView.purplePinColor();
+                view = pin;
+                view.calloutOffset = CGPoint(x: -5, y: 5)
+            }
+            else {
+                if let category = annotation.m_rec.m_eCategory {
+                    view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                    view.image = UIImage(named: CRxEventRecord.categoryIconName(category: category))
+                }
+                else {
+                    view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                    view.calloutOffset = CGPoint(x: -5, y: 5)
+                }
+            }
+            view.canShowCallout = false
+            return view
+        }
+        return nil
     }
     
     //--------------------------------------------------------------------------

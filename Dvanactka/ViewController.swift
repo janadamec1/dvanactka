@@ -62,15 +62,15 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         //m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
         m_arrSources.append(CRxDataSourceManager.dsRadNews);
-        //m_arrSources.append(CRxDataSourceManager.dsRadAlerts);
         m_arrSources.append(CRxDataSourceManager.dsSpolky);
         m_arrSources.append(CRxDataSourceManager.dsRadEvents);
         m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
         m_arrSources.append(CRxDataSourceManager.dsWaste);
         m_arrSources.append(CRxDataSourceManager.dsReportFault);
+        m_arrSources.append(CRxDataSourceManager.dsRadDeska);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
-        m_arrSources.append(CRxDataSourceManager.dsRadDeska);
+        m_arrSources.append(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.sharedInstance.delegate = self;
         
         /*// colors: (now done in storyboard
@@ -204,7 +204,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let nRealSpacing = 8*(nRealItemsPerRow-1);
         let leftInset = (nRealViewWidth - CGFloat(nCellWidth*nRealItemsPerRow + nRealSpacing)) / 2; // center
         
-        return UIEdgeInsetsMake(nMinInsets, leftInset, nMinInsets, leftInset);
+        return UIEdgeInsetsMake(nMinInsets, leftInset-1, nMinInsets, leftInset-1);
     }
     
     //---------------------------------------------------------------------------
@@ -224,6 +224,9 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
         if m_sDsSelected == CRxDataSourceManager.dsReportFault {
             performSegue(withIdentifier: "segueReportFault", sender: self)
+        }
+        else if m_sDsSelected == CRxDataSourceManager.dsGame {
+            performSegue(withIdentifier: "segueGame", sender: self)
         }
         else {
             performSegue(withIdentifier: "segueEvents", sender: self)

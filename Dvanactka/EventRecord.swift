@@ -179,6 +179,7 @@ class CRxEventRecord: NSObject {
     var m_aDateTo: Date?    // date and time of an evend end
     var m_sAddress: String? // location address
     var m_aLocation: CLLocation?    // event location
+    var m_aLocCheckIn: CLLocation?  // location for game check-in (usually not preset)
     var m_sPhoneNumber: String?
     var m_sEmail: String?
     var m_sContactNote: String?
@@ -229,6 +230,11 @@ class CRxEventRecord: NSObject {
             let dLocLat = Double(locationLat),
             let dLocLong = Double(locationLong) { m_aLocation = CLLocation(latitude: dLocLat, longitude: dLocLong) }
         
+        if let locationLat = jsonItem["checkinLocationLat"] as? String,
+            let locationLong = jsonItem["checkinLocationLong"] as? String,
+            let dLocLat = Double(locationLat),
+            let dLocLong = Double(locationLong) { m_aLocCheckIn = CLLocation(latitude: dLocLat, longitude: dLocLong) }
+        
         if let hours = jsonItem["openingHours"] as? String {
             m_arrOpeningHours = [CRxHourInterval]();
             let lstDays = hours.replacingOccurrences(of: " ", with: "").components(separatedBy: ",");
@@ -268,6 +274,11 @@ class CRxEventRecord: NSObject {
         if let location = m_aLocation {
             item["locationLat"] = String(location.coordinate.latitude) as AnyObject
             item["locationLong"] = String(location.coordinate.longitude) as AnyObject
+        }
+        
+        if let location = m_aLocCheckIn {
+            item["checkinLocationLat"] = String(location.coordinate.latitude) as AnyObject
+            item["checkinLocationLong"] = String(location.coordinate.longitude) as AnyObject
         }
         
         if let hours = m_arrOpeningHours {

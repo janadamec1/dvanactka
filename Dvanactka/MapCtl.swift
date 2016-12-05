@@ -11,9 +11,11 @@ import MapKit
 
 class CRxMapItem : NSObject, MKAnnotation {
     var m_rec: CRxEventRecord!
+    var m_bForCheckIn: Bool = false;    // this marker is used as checkin location in case the object is off the road
 
-    init(record: CRxEventRecord) {
+    init(record: CRxEventRecord, forCheckIn: Bool = false) {
         m_rec = record;     // addRefs the object, keeps it even when it is deleted in DS during refresh
+        m_bForCheckIn = forCheckIn;
         super.init()
     }
     
@@ -26,6 +28,9 @@ class CRxMapItem : NSObject, MKAnnotation {
     }
     
     var coordinate: CLLocationCoordinate2D {
+        if m_bForCheckIn && m_rec.m_aLocCheckIn != nil {
+            return m_rec.m_aLocCheckIn!.coordinate;
+        }
         return m_rec.m_aLocation!.coordinate;
     }
     

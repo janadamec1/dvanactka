@@ -156,6 +156,7 @@ class CRxDataSourceManager : NSObject {
     static let dsSpolkyProKomo = "dsSpolkyProKomo";
     static let dsSpolkyProxima = "dsSpolkyProxima";
     static let dsReportFault = "dsReportFault";
+    static let dsGame = "dsGame";
     static let dsSavedNews = "dsSavedNews";
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
@@ -179,6 +180,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
+        m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, refreshFreqHours: 1000);
         
         // hidden sources
         m_dictDataSources[CRxDataSourceManager.dsSpolkyProKomo] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyProKomo, title: "Spolek pro Komořany", icon: "ds_usergroups", type: .news);
