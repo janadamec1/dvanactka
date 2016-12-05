@@ -118,6 +118,18 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     //--------------------------------------------------------------------------
     func sortRecords() {
         guard let ds = m_aDataSource else { return }
+        
+        if ds.m_sId == CRxDataSourceManager.dsSpolky {
+            ds.m_arrItems.removeAll();
+            // aggregate from other data sources
+            let arrAssocs = [CRxDataSourceManager.dsSpolkyProKomo, CRxDataSourceManager.dsSpolkyProxima];
+            for sId in arrAssocs {
+                if let dsOther = CRxDataSourceManager.sharedInstance.m_dictDataSources[sId] {
+                    ds.m_arrItems.append(contentsOf: dsOther.m_arrItems);
+                }
+            }
+        }
+        
         m_orderedItems.removeAll();
         m_orderedCategories.removeAll();
         

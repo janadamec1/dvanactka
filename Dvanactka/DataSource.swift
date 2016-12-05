@@ -147,6 +147,8 @@ class CRxDataSourceManager : NSObject {
     static let dsWaste = "dsWaste";
     static let dsSpolky = "dsSpolky";
     static let dsSpolkyList = "dsSpolkyList";
+    static let dsSpolkyProKomo = "dsSpolkyProKomo";
+    static let dsSpolkyProxima = "dsSpolkyProxima";
     static let dsReportFault = "dsReportFault";
     static let dsSavedNews = "dsSavedNews";
     
@@ -172,6 +174,10 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
+        
+        // hidden sources
+        m_dictDataSources[CRxDataSourceManager.dsSpolkyProKomo] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyProKomo, title: "Spolek pro Komořany", icon: "ds_usergroups", type: .news);
+        m_dictDataSources[CRxDataSourceManager.dsSpolkyProxima] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyProxima, title: "Proxima Sociale", icon: "ds_usergroups", type: .news);
     }
     
     //--------------------------------------------------------------------------
@@ -377,6 +383,12 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsSpolky {
             refreshSpolkyDataSource();
+        }
+        else if id == CRxDataSourceManager.dsSpolkyProKomo {
+            refreshSpolkyKomoDataSource();
+        }
+        else if id == CRxDataSourceManager.dsSpolkyProxima {
+            refreshSpolkyProximaDataSource();
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
             refreshBiografDataSource();
@@ -919,11 +931,16 @@ class CRxDataSourceManager : NSObject {
     //--------------------------------------------------------------------------
     func refreshSpolkyDataSource(completition: ((_ error: String?) -> Void)? = nil) {
         
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsSpolky,
+    }
+    
+    //--------------------------------------------------------------------------
+    func refreshSpolkyKomoDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsSpolkyProKomo,
                               url: "http://www.spolekprokomorany.cz/aktuality/",
                               testFile: "/test_files/spolekKomo",
                               completition: completition) { (doc, arrNewItems) -> Void in
-            
+                                
             let df = DateFormatter();
             df.dateFormat = "dd.MM.yyyy";
             
@@ -956,4 +973,45 @@ class CRxDataSourceManager : NSObject {
             }
         }
     }
-}
+    
+    //--------------------------------------------------------------------------
+    func refreshSpolkyProximaDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        
+        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsSpolkyProxima,
+                              url: "http://www.proximasociale.cz/proxima-sociale/aktuality/",
+                              testFile: "/test_files/spolekProxima",
+                              completition: completition) { (doc, arrNewItems) -> Void in
+                              
+            var dtc = DateComponents();
+            let aCalendar = Calendar.current;
+            let arrMonths = ["0", "ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince"];
+            for node in doc.xpath("//div[@class='item clearfix']") {
+                if let aTitleNode = node.xpath("h2").first, let sTitle = aTitleNode.text {
+                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                    
+                    if let sLink = aTitleNode.xpath("a").first, let link = sLink["href"] {
+                        aNewRecord.m_sInfoLink = "http://www.proximasociale.cz" + link;
+                    }
+                    if let aDateNode = node.xpath("div/div[@class='date']").first, let sDate = aDateNode.text {
+                        let arrParts = sDate.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespaces);
+                        if arrParts.count >= 3 {
+                            dtc.day = Int(arrParts[0].trimmingCharacters(in: .punctuationCharacters));
+                            dtc.month = arrMonths.index(of: arrParts[1]);
+                            dtc.year = Int(arrParts[2]);
+                            aNewRecord.m_aDate = aCalendar.date(from: dtc);
+                        }
+                        
+                    }
+                    if let sDescription = node.xpath("div/p").first, let text = sDescription.text {
+                        aNewRecord.m_sText = text.trimmingCharacters(in: .whitespacesAndNewlines);
+                    }
+                    
+                    //dump(aNewRecord)
+                    if aNewRecord.m_aDate != nil {
+                        aNewRecord.m_sFilter = "Proxima Sociale";
+                        arrNewItems.append(aNewRecord);
+                    }
+                }
+            }
+        }
+    }}
