@@ -159,7 +159,7 @@
         <scene sceneID="pz4-4A-CSn">
             <objects>
                 <collectionViewController id="HeI-UJ-O2H" customClass="GameCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="CZf-T8-JeX">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CZf-T8-JeX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.29871134669999999" green="0.5172360627" blue="0.74571397569999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -449,7 +449,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KfC-ZB-wdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3947" y="527"/>
+            <point key="canvasLocation" x="3943" y="694"/>
         </scene>
         <!--Events-->
         <scene sceneID="v80-EI-8EF">
@@ -741,14 +741,14 @@
                         <viewControllerLayoutGuide type="bottom" id="qIn-rX-m9O"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jTD-Yt-rct">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcN-le-YCq">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="620"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="bjr-FT-wWi">
-                                        <rect key="frame" x="8" y="8" width="304" height="539.5"/>
+                                        <rect key="frame" x="8" y="8" width="304" height="575.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9d-qA-hjD">
                                                 <rect key="frame" x="0.0" y="0.0" width="304" height="20.5"/>
@@ -859,14 +859,38 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="tAn-2L-H3f">
+                                                <rect key="frame" x="0.0" y="353.5" width="304" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbc-W5-oCF">
+                                                        <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i28-rE-t8U">
+                                                        <rect key="frame" x="129.5" y="0.0" width="37" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBA-L9-zg6">
+                                                        <rect key="frame" x="244" y="0.0" width="60" height="30"/>
+                                                        <state key="normal" title="I'm here!"/>
+                                                        <connections>
+                                                            <action selector="onBtnGameCheckIn:" destination="IoX-1s-I15" eventType="touchUpInside" id="yTO-U3-fEU"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ssk-ui-SR2">
-                                                <rect key="frame" x="0.0" y="353.5" width="304" height="128"/>
+                                                <rect key="frame" x="0.0" y="389.5" width="304" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="128" id="oGa-Vz-l8h"/>
                                                 </constraints>
                                             </mapView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-75-kV2">
-                                                <rect key="frame" x="0.0" y="487.5" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="523.5" width="304" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcs-vc-UN8">
                                                         <rect key="frame" x="0.0" y="0.0" width="61" height="30"/>
@@ -885,7 +909,7 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jL-Ru-owg">
-                                                <rect key="frame" x="0.0" y="523.5" width="304" height="16"/>
+                                                <rect key="frame" x="0.0" y="559.5" width="304" height="16"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -910,8 +934,11 @@
                             <constraint firstItem="hcN-le-YCq" firstAttribute="bottom" secondItem="qIn-rX-m9O" secondAttribute="top" id="xER-SZ-1UD"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="640"/>
                     <connections>
                         <outlet property="m_btnEmail" destination="HnF-vY-94c" id="CbD-J8-pVT"/>
+                        <outlet property="m_btnGameCheckIn" destination="xBA-L9-zg6" id="SGW-Ch-hpq"/>
                         <outlet property="m_btnMap" destination="Jcs-vc-UN8" id="mAb-nx-WE6"/>
                         <outlet property="m_btnNavigate" destination="Jcs-vc-UN8" id="4Fy-Ka-NCW"/>
                         <outlet property="m_btnPhone" destination="W6Y-zE-BJw" id="Q6p-6c-Zfh"/>
@@ -922,6 +949,8 @@
                         <outlet property="m_lbAddressTitle" destination="Cxr-O7-u2X" id="0uf-0k-SgQ"/>
                         <outlet property="m_lbCategory" destination="ocB-Ig-57a" id="nWZ-Di-VpH"/>
                         <outlet property="m_lbContactNote" destination="M09-Bc-r30" id="t8e-2j-inu"/>
+                        <outlet property="m_lbGame" destination="kbc-W5-oCF" id="yrK-vB-20S"/>
+                        <outlet property="m_lbGameDist" destination="i28-rE-t8U" id="uFb-2w-jcW"/>
                         <outlet property="m_lbNote" destination="4jL-Ru-owg" id="Kv6-Lh-rN2"/>
                         <outlet property="m_lbNotificationExplanation" destination="bwY-VO-g0c" id="Bor-dT-P9i"/>
                         <outlet property="m_lbOpeningHours" destination="XlI-hd-9SU" id="8ly-g5-STA"/>
@@ -935,7 +964,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FeN-VK-gIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3943.125" y="-130.98591549295776"/>
+            <point key="canvasLocation" x="3941" y="-74"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GWU-bG-M1o">

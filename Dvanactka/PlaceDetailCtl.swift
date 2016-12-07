@@ -35,10 +35,17 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBOutlet weak var m_lbContactNote: UILabel!
     @IBOutlet weak var m_btnNavigate: UIButton!
     @IBOutlet weak var m_btnReportMistake: UIButton!
-    
+    @IBOutlet weak var m_lbGame: UILabel!
+    @IBOutlet weak var m_lbGameDist: UILabel!
+    @IBOutlet weak var m_btnGameCheckIn: UIButton!
     
     var m_aRecord: CRxEventRecord?
     var m_refreshParentDelegate: CRxDetailRefershParentDelegate?
+    
+    enum EGameStatus {
+    case disabled, tracking, visited
+    }
+    var m_eGameStatus: EGameStatus = .disabled;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +56,8 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         m_lbNotificationExplanation.text = NSLocalizedString("Notification.explanation", comment: "");
         m_btnNavigate.setTitle(NSLocalizedString("Navigate", comment: ""), for: .normal);
         m_btnReportMistake.setTitle(NSLocalizedString("Report mistake", comment: ""), for: .normal);
+        m_lbGame.text = NSLocalizedString("Game", comment: "")+":";
+        m_btnGameCheckIn.setTitle(NSLocalizedString("I'm here!", comment: ""), for: .normal);
         
         if let rec = m_aRecord {
             m_lbTitle.text = rec.m_sTitle;
@@ -191,6 +200,24 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 m_map.isHidden = true;
                 m_btnMap.isHidden = true;
             }
+            
+            if rec.m_aLocation != nil && CRxGame.isCategoryCheckInAble(rec.m_eCategory) {
+                if CRxGame.sharedInstance.playerWas(at: rec) {
+                    m_eGameStatus = .visited;
+                    m_lbGameDist.text = NSLocalizedString("You were already here", comment: "");
+                    m_btnGameCheckIn.isHidden = true;
+                }
+                else {
+                    // TODO: init tracking
+                    m_eGameStatus = .tracking;
+                    m_lbGameDist.text = "N/A";
+                }
+            }
+            else {
+                m_lbGame.isHidden = true;
+                m_lbGameDist.isHidden = true;
+                m_btnGameCheckIn.isHidden = true;
+            }
         }
     }
 
@@ -314,6 +341,13 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil);
+    }
+    
+    //--------------------------------------------------------------------------
+    @IBAction func onBtnGameCheckIn(_ sender: Any) {
+        guard let rec = m_aRecord
+            else {return;}
+        CRxGame.sharedInstance.checkIn(at: rec);
     }
     
     //--------------------------------------------------------------------------

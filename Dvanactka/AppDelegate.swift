@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dsm = CRxDataSourceManager.sharedInstance;
         dsm.defineDatasources();
         dsm.loadData();
+        CRxGame.sharedInstance.reinit();
         dsm.refreshAllDataSources();
         //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
         application.applicationIconBadgeNumber = 0;

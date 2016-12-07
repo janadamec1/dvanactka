@@ -8,17 +8,6 @@
 
 import UIKit
 
-class CRxGameCategory {
-    var m_iProgress: Int = 0;   // visited locations
-    var m_iTotal: Int = 1;      // to next level
-    var m_iStars: Int = 0;      // stars awarded
-    var m_sName: String;
-    
-    init(name: String) {
-        m_sName = name;
-    }
-}
-
 //---------------------------------------------------------------------------
 class CRxGameCell : UICollectionViewCell {
     @IBOutlet weak var m_lbName: UILabel!
@@ -76,25 +65,10 @@ class CRxGameCell : UICollectionViewCell {
 //---------------------------------------------------------------------------
 class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var m_arrCats = [CRxGameCategory]();
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = NSLocalizedString("Game", comment: "");
-        
-        var item = CRxGameCategory(name: NSLocalizedString("Forester", comment: ""));
-        item.m_iProgress = 5;
-        item.m_iTotal = 15;
-        item.m_iStars = 1;
-        m_arrCats.append(item);
-        item = CRxGameCategory(name: NSLocalizedString("Culturist", comment: ""));
-        m_arrCats.append(item);
-        item = CRxGameCategory(name: NSLocalizedString("Visitor", comment: ""));
-        m_arrCats.append(item);
-        item = CRxGameCategory(name: NSLocalizedString("Recyclist", comment: ""));
-        m_arrCats.append(item);
-        
     }
 
     //---------------------------------------------------------------------------
@@ -105,13 +79,13 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return m_arrCats.count;
+        return CRxGame.sharedInstance.m_arrCategories.count;
     }
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellGame", for: indexPath) as! CRxGameCell
-        let item = m_arrCats[indexPath.row];
+        let item = CRxGame.sharedInstance.m_arrCategories[indexPath.row];
         cell.m_item = item;
         cell.m_lbName.text = item.m_sName;
         cell.m_lbProgress.text = String(format: "%d / %d", item.m_iProgress, item.m_iTotal);

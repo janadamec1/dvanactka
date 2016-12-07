@@ -260,6 +260,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func dataSourceRefreshEnded(_ error: String?) {
         if error == nil {
             self.collectionView?.reloadData();  // update badges
+            CRxGame.sharedInstance.reinit();
         }
     }
 

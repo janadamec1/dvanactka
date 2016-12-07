@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D2C34BD1DF751C600165EAC /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2C34BC1DF751C600165EAC /* Game.swift */; };
 		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
 		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
 		4D318A681DD7650800187985 /* ds_reportfault.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D318A671DD7650800187985 /* ds_reportfault.png */; };
@@ -98,6 +99,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D2C34BC1DF751C600165EAC /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		4D30AABA1DCA87AB00A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4D30AAC01DCA891400A402C9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 				4D464C4C1DE305B2003EC137 /* FilterCtl.swift */,
+				4D2C34BC1DF751C600165EAC /* Game.swift */,
 				4DBBDFD21DF5DBDB00013D67 /* GameCtl.swift */,
 				4D6677151DCBC226004876FA /* img */,
 				4D9019401DC65E17001488D3 /* Info.plist */,
@@ -549,6 +552,7 @@
 				4D318A6E1DD7C4A400187985 /* RefineLocCtl.swift in Sources */,
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
+				4D2C34BD1DF751C600165EAC /* Game.swift in Sources */,
 				4D9019371DC65E16001488D3 /* ViewController.swift in Sources */,
 				4DBBDFD31DF5DBDB00013D67 /* GameCtl.swift in Sources */,
 				4D9019351DC65E16001488D3 /* AppDelegate.swift in Sources */,
