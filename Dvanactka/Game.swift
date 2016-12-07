@@ -45,6 +45,8 @@ class CRxGameCategory {
 
 //---------------------------------------------------------------------------
 class CRxGame: NSObject {
+    static let checkInDistance = 50.0;
+    
     var m_iPoints: Int = 0;
     var m_catForester: CRxGameCategory;
     var m_catCulturist: CRxGameCategory;
@@ -146,6 +148,7 @@ class CRxGame: NSObject {
         aDS.m_arrItems.append(recGame);
         
         // TODO: calc reward
+        CRxDataSourceManager.sharedInstance.save(dataSource: aDS);
     }
     
     //---------------------------------------------------------------------------

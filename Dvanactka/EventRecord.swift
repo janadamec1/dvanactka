@@ -391,6 +391,14 @@ class CRxEventRecord: NSObject {
     }
     
     //---------------------------------------------------------------------------
+    func gameCheckInLocation() -> CLLocation? {
+        if m_aLocCheckIn != nil {
+            return m_aLocCheckIn;
+        }
+        return m_aLocation;
+    }
+    
+    //---------------------------------------------------------------------------
     func nextEventOccurence() -> CRxEventInterval? {
         guard let events = m_arrEvents
             else { return nil; }

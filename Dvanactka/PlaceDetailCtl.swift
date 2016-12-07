@@ -14,7 +14,7 @@ import UserNotifications
 //NOTE: to get the stackview start at the top of scrollview, I had to switch OFF ViewController.adjustScrollViewInsets (even if it should be opposite)
 // see http://fuckingscrollviewautolayout.com
 
-class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKMapViewDelegate {
+class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbCategory: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
@@ -39,6 +39,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBOutlet weak var m_lbGameDist: UILabel!
     @IBOutlet weak var m_btnGameCheckIn: UIButton!
     
+    var m_locManager = CLLocationManager();
     var m_aRecord: CRxEventRecord?
     var m_refreshParentDelegate: CRxDetailRefershParentDelegate?
     
@@ -192,6 +193,10 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 m_map.addAnnotation(CRxMapItem(record: rec));
                 m_map.delegate = self;
                 
+                if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                    m_map.showsUserLocation = true;
+                }
+                
                 if rec.m_aLocCheckIn != nil {
                     m_map.addAnnotation(CRxMapItem(record: rec, forCheckIn: true));
                 }
@@ -208,9 +213,16 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                     m_btnGameCheckIn.isHidden = true;
                 }
                 else {
-                    // TODO: init tracking
+                    // init tracking
                     m_eGameStatus = .tracking;
                     m_lbGameDist.text = "N/A";
+                    m_btnGameCheckIn.isEnabled = false;
+                    
+                    m_locManager.delegate = self;
+                    m_locManager.distanceFilter = 4;
+                    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                        m_locManager.startUpdatingLocation();
+                    }
                 }
             }
             else {
@@ -348,8 +360,27 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         guard let rec = m_aRecord
             else {return;}
         CRxGame.sharedInstance.checkIn(at: rec);
+        m_eGameStatus = .visited;
+        m_lbGameDist.text = NSLocalizedString("+1 point", comment: ""); //TODO: better text
+        m_btnGameCheckIn.isHidden = true;
     }
     
+    //---------------------------------------------------------------------------
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if m_eGameStatus != .tracking { return }
+        guard let rec = m_aRecord
+            else {return;}
+
+        if let locUser = locations.last,
+            let locRec = rec.gameCheckInLocation() {
+            let aDistance = locUser.distance(from: locRec);
+            m_lbGameDist.text = "\(Int(aDistance)) m";
+            
+            m_btnGameCheckIn.isEnabled = (aDistance <= CRxGame.checkInDistance);
+        }
+    }
+
     //--------------------------------------------------------------------------
     func substituteRecordText() {
         guard let rec = m_aRecord, let text = rec.m_sText
