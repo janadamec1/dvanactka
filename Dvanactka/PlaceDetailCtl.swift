@@ -359,10 +359,19 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBAction func onBtnGameCheckIn(_ sender: Any) {
         guard let rec = m_aRecord
             else {return;}
-        CRxGame.sharedInstance.checkIn(at: rec);
+        let reward = CRxGame.sharedInstance.checkIn(at: rec);
         m_eGameStatus = .visited;
-        m_lbGameDist.text = NSLocalizedString("+1 point", comment: ""); //TODO: better text
         m_btnGameCheckIn.isHidden = true;
+        if let reward = reward {
+            var sReward = String(format: NSLocalizedString("Points: +%d", comment: ""), reward.points);
+            if reward.newStars > 0 && reward.catName != nil {
+                //sReward += ", Stars: \(reward.newStars)";
+                let sStars = String(repeating: "⭐️", count: reward.newStars);
+                sReward += ", \(reward.catName!): \(sStars)";
+                // TODO: animation, big applause
+            }
+            m_lbGameDist.text = sReward;
+        }
     }
     
     //---------------------------------------------------------------------------
@@ -375,7 +384,11 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         if let locUser = locations.last,
             let locRec = rec.gameCheckInLocation() {
             let aDistance = locUser.distance(from: locRec);
-            m_lbGameDist.text = "\(Int(aDistance)) m";
+            var sText = "\(Int(aDistance)) m";
+            if aDistance > CRxGame.checkInDistance {
+                sText += " - " + NSLocalizedString("you are too far", comment: "");
+            }
+            m_lbGameDist.text = sText;
             
             m_btnGameCheckIn.isEnabled = (aDistance <= CRxGame.checkInDistance);
         }

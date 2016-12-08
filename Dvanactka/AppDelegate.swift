@@ -18,10 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dsm = CRxDataSourceManager.sharedInstance;
         dsm.defineDatasources();
         dsm.loadData();
-        CRxGame.sharedInstance.reinit();
         dsm.refreshAllDataSources();
         //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
         application.applicationIconBadgeNumber = 0;
+        CRxGame.sharedInstance.reinit();
         return true
     }
 
@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         application.applicationIconBadgeNumber = 0;
         CRxDataSourceManager.sharedInstance.refreshAllDataSources();
+        CRxGame.sharedInstance.reinit();
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

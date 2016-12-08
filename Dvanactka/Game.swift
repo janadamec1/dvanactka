@@ -10,35 +10,55 @@ import UIKit
 
 class CRxGameCategory {
     var m_iProgress: Int = 0;   // visited locations
-    var m_iTotal: Int = 1;      // to next level
-    var m_iStars: Int = 0;      // stars awarded
+    var m_i2ndStarAt: Int;      // 2nd star awarded at this progress
+    var m_iTotal: Int = 1;      // 3rd star at (all items in this category)
     var m_sName: String;
     
-    init(name: String) {
+    init(name: String, secondStarAt star2: Int) {
         m_sName = name;
+        m_i2ndStarAt = star2;
     }
     
     func reset() {
         m_iProgress = 0;
-        m_iStars = 0;
     }
     
-    func incProgress() {
-        if m_iProgress < m_iTotal {
-            m_iProgress += 1;
-        }
-    }
-    
-    func awardStars(secondStarAt: Int) {
-        m_iStars = 0;
+    func stars() -> Int {
         if m_iProgress >= m_iTotal {
-            m_iStars = 3;
+            return 3;
         }
-        else if m_iProgress >= secondStarAt {
-            m_iStars = 2;
+        else if m_iProgress >= m_i2ndStarAt {
+            return 2;
         }
         else if m_iProgress > 0 {
-            m_iStars = 1;
+            return 1;
+        }
+        return 0;
+    }
+    
+    func incProgress() -> Int {
+        let iOldStars = stars();
+        m_iProgress += 1;
+        let iNewStars = stars();
+        
+        // returns number of stars in case the number increased
+        if iNewStars > iOldStars {
+            return iNewStars;
+        }
+        else {
+            return 0;
+        }
+    }
+    
+    func nextStarPoints() -> Int {
+        if m_iProgress >= m_i2ndStarAt {
+            return m_iTotal;
+        }
+        else if m_iProgress >= 1 {
+            return m_i2ndStarAt;
+        }
+        else {
+            return 1;
         }
     }
 }
@@ -54,16 +74,20 @@ class CRxGame: NSObject {
     var m_catRecyclist: CRxGameCategory;
     var m_arrCategories = [CRxGameCategory]();
     
+    var m_bWasteVokVisited = false;
+    var m_bWasteTextileVisited = false;
+    var m_bWasteElectroVisited = false;
+    
     static let sharedInstance = CRxGame()  // singleton
 
     private override init() {
-        m_catForester = CRxGameCategory(name: NSLocalizedString("Forester", comment: ""));
+        m_catForester = CRxGameCategory(name: NSLocalizedString("Forester", comment: ""), secondStarAt: 5);
         m_arrCategories.append(m_catForester);
-        m_catCulturist = CRxGameCategory(name: NSLocalizedString("Culturist", comment: ""));
+        m_catCulturist = CRxGameCategory(name: NSLocalizedString("Culturist", comment: ""), secondStarAt: 3);
         m_arrCategories.append(m_catCulturist);
-        m_catVisitor = CRxGameCategory(name: NSLocalizedString("Visitor", comment: ""));
+        m_catVisitor = CRxGameCategory(name: NSLocalizedString("Visitor", comment: ""), secondStarAt: 5);
         m_arrCategories.append(m_catVisitor);
-        m_catRecyclist = CRxGameCategory(name: NSLocalizedString("Recyclist", comment: ""));
+        m_catRecyclist = CRxGameCategory(name: NSLocalizedString("Recyclist", comment: ""), secondStarAt: 2);
         m_arrCategories.append(m_catRecyclist);
         super.init();
     }
@@ -86,7 +110,7 @@ class CRxGame: NSObject {
                 if let category = rec.m_eCategory {
                     if category == .pamatka { m_catCulturist.m_iTotal += 1; }
                     else if category == .pamatnyStrom || category == .vyznamnyStrom { m_catForester.m_iTotal += 1; }
-                    else if category == .zajimavost { m_catCulturist.m_iTotal += 1; }
+                    else if category == .zajimavost { m_catVisitor.m_iTotal += 1; }
                 }
             }
         }
@@ -107,48 +131,74 @@ class CRxGame: NSObject {
         m_catCulturist.reset();
         m_catVisitor.reset();
         m_catRecyclist.reset();
-        var bWasteVokVisited = false;
-        var bWasteTextileVisited = false;
-        var bWasteElectroVisited = false;
+        m_bWasteVokVisited = false;
+        m_bWasteTextileVisited = false;
+        m_bWasteElectroVisited = false;
         for rec in aDS.m_arrItems {
-            var iReward = 5;
-            if let category = rec.m_eCategory {
-                if category == .pamatka { m_catCulturist.incProgress(); }
-                else if category == .pamatnyStrom || category == .vyznamnyStrom { m_catForester.incProgress(); }
-                else if category == .zajimavost { m_catCulturist.incProgress(); }
-                else if category == .waste && !bWasteVokVisited { m_catRecyclist.incProgress(); bWasteVokVisited = true; }
-                else if category == .wasteTextile && !bWasteTextileVisited { m_catRecyclist.incProgress(); bWasteTextileVisited = true; }
-                else if category == .wasteElectro && !bWasteElectroVisited { m_catRecyclist.incProgress(); bWasteElectroVisited = true; }
-                else { iReward = 1; }   // 5 pts in game categories, 1 pt in other
-            }
-            m_iPoints += iReward;
+            let reward = addPoints(for: rec);
+            m_iPoints += reward.points;
         }
-        
-        // star awards
-        m_catForester.awardStars(secondStarAt: 5);
-        m_catCulturist.awardStars(secondStarAt: 3);
-        m_catVisitor.awardStars(secondStarAt: 5);
-        m_catRecyclist.awardStars(secondStarAt: 2);
     }
-    
+
     //---------------------------------------------------------------------------
     func reinit() {
         getTotalInCategories();
         calcPointsFromDataSources();
     }
-
+    
     //---------------------------------------------------------------------------
-    func checkIn(at record: CRxEventRecord) {
+    func addPoints(for record: CRxEventRecord) -> (points: Int, newStars: Int, catName: String?) {
+        var iReward = 5;
+        var iNewStars = 0;
+        var sCatName: String?;
+        if let category = record.m_eCategory {
+            if category == .pamatka {
+                iNewStars = m_catCulturist.incProgress();
+                sCatName = m_catCulturist.m_sName;
+            }
+            else if category == .pamatnyStrom || category == .vyznamnyStrom {
+                iNewStars = m_catForester.incProgress();
+                sCatName = m_catForester.m_sName;
+            }
+            else if category == .zajimavost {
+                iNewStars = m_catVisitor.incProgress();
+                sCatName = m_catVisitor.m_sName;
+            }
+            else if category == .waste && !m_bWasteVokVisited {
+                iNewStars = m_catRecyclist.incProgress(); m_bWasteVokVisited = true;
+                sCatName = m_catRecyclist.m_sName;
+            }
+            else if category == .wasteTextile && !m_bWasteTextileVisited {
+                iNewStars = m_catRecyclist.incProgress(); m_bWasteTextileVisited = true;
+                sCatName = m_catRecyclist.m_sName;
+            }
+            else if category == .wasteElectro && !m_bWasteElectroVisited {
+                iNewStars = m_catRecyclist.incProgress(); m_bWasteElectroVisited = true;
+                sCatName = m_catRecyclist.m_sName;
+            }
+            else { iReward = 1; }   // 5 pts in game categories, 1 pt in other
+        }
+        if iNewStars > 0 {
+            iReward *= 5;
+        }
+        return (iReward, iNewStars, sCatName);
+    }
+    
+    //---------------------------------------------------------------------------
+    func checkIn(at record: CRxEventRecord) -> (points: Int, newStars: Int, catName: String?)? {
         guard let aDS = CRxGame.dataSource()
-            else { return }
+            else { return nil; }
         
         let recGame = CRxEventRecord(title: record.m_sTitle);
         recGame.m_eCategory = record.m_eCategory;
         recGame.m_aDate = Date();
         aDS.m_arrItems.append(recGame);
-        
-        // TODO: calc reward
         CRxDataSourceManager.sharedInstance.save(dataSource: aDS);
+        
+        // return reward
+        let reward = addPoints(for: record);
+        m_iPoints += reward.points;
+        return reward;
     }
     
     //---------------------------------------------------------------------------
