@@ -65,6 +65,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsSpolky);
         m_arrSources.append(CRxDataSourceManager.dsRadEvents);
         m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
+        m_arrSources.append(CRxDataSourceManager.dsShops);
+        m_arrSources.append(CRxDataSourceManager.dsWork);
         m_arrSources.append(CRxDataSourceManager.dsWaste);
         m_arrSources.append(CRxDataSourceManager.dsReportFault);
         m_arrSources.append(CRxDataSourceManager.dsRadDeska);
@@ -179,11 +181,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let nItemsPerRow: CGFloat = 2.0;
-        let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
-        let nSpacing = 8*(nItemsPerRow-1);
-        let nMinInsets: CGFloat = 24;
-        let nCellWidth = min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
+        let nItemsPerRow: CGFloat = 3.0;
+        let nViewWidth = min(collectionView.bounds.width, collectionView.bounds.height);
+        let nSpacing = 6*(nItemsPerRow-1);
+        let nMinInsets: CGFloat = 10;
+        let nCellWidth = floor(min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow));
         return CGSize(width: nCellWidth, height: nCellWidth);
     }
     
@@ -191,18 +193,18 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         section: Int) -> UIEdgeInsets {
         
         // calculate cell size based on portait
-        let nItemsPerRow: CGFloat = 2.0;
-        let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
-        let nSpacing = 8*(nItemsPerRow-1);
-        let nMinInsets: CGFloat = 24;
-        let nCellWidth = min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
+        let nItemsPerRow: CGFloat = 3.0;
+        let nViewWidth = min(collectionView.bounds.width, collectionView.bounds.height);
+        let nSpacing = 6*(nItemsPerRow-1);
+        let nMinInsets: CGFloat = 10;
+        let nCellWidth = floor(min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow));
         //let leftInset = (nViewWidth - CGFloat(nCellWidth*nItemsPerRow + nSpacing)) / 2; // center
         
         // return insets based on current orientation
-        let nRealViewWidth = collectionView.frame.width;
+        let nRealViewWidth = collectionView.bounds.width;
         let nRealItemsPerRow = floor((nRealViewWidth-2*nMinInsets) / nCellWidth);
-        let nRealSpacing = 8*(nRealItemsPerRow-1);
-        let leftInset = (nRealViewWidth - CGFloat(nCellWidth*nRealItemsPerRow + nRealSpacing)) / 2; // center
+        let nRealSpacing = 6*(nRealItemsPerRow-1);
+        let leftInset = floor((nRealViewWidth - CGFloat(nCellWidth*nRealItemsPerRow + nRealSpacing)) / 2); // center
         
         return UIEdgeInsetsMake(nMinInsets, leftInset-1, nMinInsets, leftInset-1);
     }

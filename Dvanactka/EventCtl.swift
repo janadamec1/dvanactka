@@ -444,7 +444,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 sDistance += sSubtitle;
             }
             if sDistance.isEmpty {
-                sDistance = "  "    // must not be empty, causes strange effects
+                sDistance = "  ";    // must not be empty, causes strange effects
             }
             cellPlace.m_lbText.text = sDistance;
             
@@ -457,16 +457,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             else {
                 cellPlace.m_imgIcon.image = nil;
             }
+            cellPlace.m_imgIcon.isHidden = (cellPlace.m_imgIcon.image == nil);
             cell = cellPlace;
         }
         else {
             cell = UITableViewCell();
         }
         
-        if ds.m_eType != .places {
-            cell.setNeedsUpdateConstraints();
-            cell.updateConstraintsIfNeeded();
-        }
+        cell.setNeedsUpdateConstraints();
+        cell.updateConstraintsIfNeeded();
         return cell;
     }
     

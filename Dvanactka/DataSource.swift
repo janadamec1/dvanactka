@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import Kanna
 
 private let g_bUseTestFiles = false;
@@ -151,6 +152,8 @@ class CRxDataSourceManager : NSObject {
     static let dsCooltour = "dsCooltour";
     static let dsSosContacts = "dsSosContacts";
     static let dsWaste = "dsWaste";
+    static let dsShops = "dsShops";
+    static let dsWork = "dsWork";
     static let dsSpolky = "dsSpolky";
     static let dsSpolkyList = "dsSpolkyList";
     static let dsSpolkyProKomo = "dsSpolkyProKomo";
@@ -181,6 +184,8 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
         m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, refreshFreqHours: 1000);
+        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, refreshFreqHours: 100);
+        m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places);
         
         // hidden sources
         m_dictDataSources[CRxDataSourceManager.dsSpolkyProKomo] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyProKomo, title: "Spolek pro Komořany", icon: "ds_usergroups", type: .news);
@@ -386,6 +391,10 @@ class CRxDataSourceManager : NSObject {
             refreshRadDeskaDataSource();
             return;
         }
+        else if id == CRxDataSourceManager.dsWork {
+            refreshWorkDataSource();
+            return;
+        }
         else if id == CRxDataSourceManager.dsSpolky {
             refreshSpolkyDataSource();
         }
@@ -423,6 +432,13 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsSosContacts {
             if let path = Bundle.main.url(forResource: "/test_files/sos", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+                ds.delegate?.dataSourceRefreshEnded(nil);
+                return;
+            }
+        }
+        else if id == CRxDataSourceManager.dsShops {
+            if let path = Bundle.main.url(forResource: "/test_files/p12shops", withExtension: "json") {
                 ds.loadFromJSON(file: path);
                 ds.delegate?.dataSourceRefreshEnded(nil);
                 return;
@@ -968,4 +984,81 @@ class CRxDataSourceManager : NSObject {
                 }
             }
         }
-    }}
+    }
+    
+    //--------------------------------------------------------------------------
+    func refreshWorkDataSource(completition: ((_ error: String?) -> Void)? = nil) {
+        guard let aDS = self.m_dictDataSources[CRxDataSourceManager.dsWork]
+            else { return }
+        
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: "https://www.kdejeprace.cz/api/search?fulltext=&max-vzdalenost=3&jazyky-omez=0&jazyky=cs.2&zmeneno-po=&zmeneno-po-cas=&zs=49.99041501874329&zd=14.43557783961296&key=qNO79NkpBr&limit=200");
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: "/test_files/p12kdejeprace", withExtension: "json");
+        }
+        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+        
+        aDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+        
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else {
+                    DispatchQueue.main.async() { () -> Void in
+                        aDS.m_bIsBeingRefreshed = false;
+                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                        self.hideNetworkIndicator();
+                    }
+                    return;
+            }
+            
+            // process the data
+            var json: AnyObject
+            do {
+                json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as AnyObject
+            } catch let error as NSError {
+                print("p12kdejeprace JSON parsing failed: \(error.localizedDescription)"); return;
+            }
+            
+            var arrNewItems = [CRxEventRecord]()
+            
+            // load data
+            if let jsonItems = json["offers"] as? [[String : AnyObject]] {
+                for item in jsonItems {
+                    if let title = item["title"] as? String {
+                        // capitalize 1st letter only
+                        let sTitleCap = String(title.characters.prefix(1)).localizedUppercase + String(title.characters.dropFirst());
+                        
+                        var sText = "";
+                        let aNewRecord = CRxEventRecord(title: sTitleCap);
+                        if let link = item["detailURI"] as? String { aNewRecord.m_sInfoLink = link; }
+                        if let firm = item["firm"] as? String { sText += firm;}
+                        if let text = item["preview"] as? String { if !sText.isEmpty { sText += "\n"; }; sText += text; }
+                        if let lat = item["lat"] as? Double, let long = item["long"] as? Double {
+                            aNewRecord.m_aLocation = CLLocation(latitude: lat, longitude: long);
+                        }
+                        
+                        if !sText.isEmpty { sText += "\n\n"; }; sText += "zdroj: KdeJePrace.cz";
+                        aNewRecord.m_sText = sText;
+                        arrNewItems.append(aNewRecord);
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async() { () -> Void in
+                if arrNewItems.count > 0 {
+                    aDS.m_arrItems = arrNewItems;
+                    aDS.sortNewsByDate();
+                }
+                aDS.m_dateLastRefreshed = Date();
+                aDS.m_bIsBeingRefreshed = false;
+                self.save(dataSource: aDS);
+                self.hideNetworkIndicator();
+                aDS.delegate?.dataSourceRefreshEnded(nil);
+                self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+            }
+        }
+    }
+}
