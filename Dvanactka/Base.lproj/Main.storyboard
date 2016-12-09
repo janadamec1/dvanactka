@@ -460,7 +460,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="RfH-Fs-1ML">
-                            <rect key="frame" x="0.0" y="475" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="471" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TkX-s6-BMm">
@@ -656,34 +656,36 @@
                                     <outlet property="m_lbTitle" destination="993-jr-BcL" id="gbD-hZ-oJV"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellPlace" rowHeight="84" id="pgw-EN-LcH" customClass="PlaceCell" customModule="Dvanactka" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="327" width="320" height="84"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellPlace" rowHeight="80" id="pgw-EN-LcH" customClass="PlaceCell" customModule="Dvanactka" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="327" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgw-EN-LcH" id="ck6-Kj-omd">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="84"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="jha-pQ-tgK">
-                                            <rect key="frame" x="8" y="8" width="271" height="68"/>
+                                            <rect key="frame" x="8" y="8" width="271" height="63.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2qs-Dg-kfB">
-                                                    <rect key="frame" x="0.0" y="10" width="48" height="48"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="c_recycle.png" translatesAutoresizingMaskIntoConstraints="NO" id="2qs-Dg-kfB">
+                                                    <rect key="frame" x="0.0" y="20" width="24" height="24"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="48" id="K2g-EY-yOD"/>
-                                                        <constraint firstAttribute="height" constant="48" id="Oct-ZH-UN8"/>
+                                                        <constraint firstAttribute="width" constant="24" id="K2g-EY-yOD"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QOd-JD-FPH">
-                                                    <rect key="frame" x="54" y="3" width="217" height="61"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="QOd-JD-FPH">
+                                                    <rect key="frame" x="30" y="0.0" width="241" height="63.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title title title title title title titile end" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vgt-u1-koS">
-                                                            <rect key="frame" x="0.0" y="0.0" width="217" height="43"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="241" height="44.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgD-73-Q34">
-                                                            <rect key="frame" x="0.0" y="45" width="217" height="16"/>
+                                                            <rect key="frame" x="0.0" y="47.5" width="241" height="16"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="4ON-th-N9K"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -691,6 +693,9 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QOd-JD-FPH" firstAttribute="height" secondItem="jha-pQ-tgK" secondAttribute="height" id="x0e-E1-a2l"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>
@@ -1089,6 +1094,7 @@
     </scenes>
     <resources>
         <image name="action.png" width="25" height="25"/>
+        <image name="c_recycle.png" width="24" height="24"/>
         <image name="goldstar25dis.png" width="25" height="25"/>
         <image name="p12-logo.png" width="290" height="77"/>
         <image name="photo.png" width="50" height="50"/>
