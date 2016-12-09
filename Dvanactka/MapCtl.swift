@@ -50,6 +50,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var m_segmMapType: UISegmentedControl!
     
     var m_aDataSource: CRxDataSource?
+    var m_sParentFilter: String?                        // show only items with this filter (for ds with filterAsParentView)
     var m_coordLast = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 
     override func viewDidLoad() {
@@ -86,9 +87,20 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         m_mapView.delegate = self
         
         if let ds = m_aDataSource {
-            for item in ds.m_arrItems {
-                if let loc = item.m_aLocation {
-                    let mapItem = CRxMapItem(record: item);
+            for rec in ds.m_arrItems {
+                
+                // filter
+                if ds.m_bFilterAsParentView {
+                    if let sFilter = rec.m_sFilter,
+                        let sParentFilter = m_sParentFilter {
+                        if sFilter != sParentFilter {
+                            continue;
+                        }
+                    }
+                }
+
+                if let loc = rec.m_aLocation {
+                    let mapItem = CRxMapItem(record: rec);
                     m_mapView.addAnnotation(mapItem);
                     
                     let coord = loc.coordinate;

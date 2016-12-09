@@ -217,6 +217,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         m_sDsSelected = m_arrSources[indexPath.row];
+        let aDS = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_sDsSelected];
         
         // hide unread badge
         if let cell = collectionView.cellForItem(at: indexPath) as? CRxDSCell,
@@ -229,6 +230,9 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         else if m_sDsSelected == CRxDataSourceManager.dsGame {
             performSegue(withIdentifier: "segueGame", sender: self)
+        }
+        else if aDS != nil && aDS!.m_bFilterAsParentView {
+            performSegue(withIdentifier: "seguePlacesFilter", sender: self)
         }
         else {
             performSegue(withIdentifier: "segueEvents", sender: self)
@@ -252,9 +256,14 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     //---------------------------------------------------------------------------
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let aDS = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_sDsSelected];
         if segue.identifier == "segueEvents" {
             let destVC = segue.destination as! EventsCtl
-            destVC.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_sDsSelected];
+            destVC.m_aDataSource = aDS;
+        }
+        else if segue.identifier == "seguePlacesFilter" {
+            let destVC = segue.destination as! PlacesFilterCtl
+            destVC.m_aDataSource = aDS;
         }
     }
     

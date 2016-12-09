@@ -66,7 +66,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             substituteRecordText();
             
             if let category = rec.m_eCategory {
-                m_lbCategory.text = CRxEventRecord.categoryLocalName(category: category);
+                var sCat = CRxEventRecord.categoryLocalName(category: category);
+                if let filter = rec.m_sFilter {
+                    sCat += " - " + filter;
+                }
+                m_lbCategory.text = sCat;
+                
             }
             else {
                 m_lbCategory.isHidden = true;

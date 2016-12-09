@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import MessageUI
 import EventKit
 import EventKitUI
 
@@ -37,8 +38,14 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
 
-class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefershParentDelegate, CRxFilterChangeDelegate {
+class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefershParentDelegate, CRxFilterChangeDelegate {
+    
+    @IBOutlet weak var m_viewFooter: UIView!
+    @IBOutlet weak var m_lbFooterText: UILabel!
+    @IBOutlet weak var m_btnFooterButton: UIButton!
+    
     var m_aDataSource: CRxDataSource?
+    var m_sParentFilter: String?                        // show only items with this filter (for ds with filterAsParentView)
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
     var m_orderedCategories = [String]()                // sorted category local names
     var m_locManager = CLLocationManager();
@@ -60,7 +67,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         m_locManager.distanceFilter = 5;
 
         if let ds = m_aDataSource {
-            self.title = ds.m_sTitle;
+            if let sParentFilter = m_sParentFilter {
+                self.title = sParentFilter;
+            }
+            else {
+                self.title = ds.m_sTitle;
+            }
             
             var arrBtnItems = [UIBarButtonItem]();
             if ds.m_eType == .places {
@@ -86,6 +98,18 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension;
             self.tableView.estimatedRowHeight = 90.0;
+            
+            // footer
+            if ds.m_sId == CRxDataSourceManager.dsWork {
+                m_lbFooterText.text = NSLocalizedString("Add new job offer:", comment: "");
+                m_btnFooterButton.setTitle("KdeJePrace.cz", for: .normal);
+            }
+            else if ds.m_eType == .places && ds.m_sId != CRxDataSourceManager.dsCooltour {
+                m_lbFooterText.text = NSLocalizedString("Add new record:", comment: "");
+            }
+            else {
+                m_viewFooter.isHidden = true;
+            }
         }
         setRecordsDistance();
         sortRecords();
@@ -154,6 +178,14 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                     let sFilter = rec.m_sFilter {
                     if setFilter.contains(sFilter) {
                         continue;   // skip this record
+                    }
+                }
+            }
+            if ds.m_bFilterAsParentView {
+                if let sFilter = rec.m_sFilter,
+                    let sParentFilter = m_sParentFilter {
+                    if sFilter != sParentFilter {
+                        continue;
                     }
                 }
             }
@@ -609,6 +641,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mapCtl = storyboard.instantiateViewController(withIdentifier: "mapCtl") as! MapCtl
         mapCtl.m_aDataSource = m_aDataSource;
+        mapCtl.m_sParentFilter = m_sParentFilter;
         mapCtl.m_coordLast = m_coordLast;
         navigationController?.pushViewController(mapCtl, animated: true);
     }
@@ -677,5 +710,33 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         CRxDataSourceManager.sharedInstance.save(dataSource: ds);
         sortRecords();
         self.tableView.reloadData();
+    }
+
+    //--------------------------------------------------------------------------
+    @IBAction func onBtnFooterTouched(_ sender: Any) {
+        guard let ds = m_aDataSource else { return }
+        if ds.m_sId == CRxDataSourceManager.dsWork {
+            if let url = URL(string: "https://www.kdejeprace.cz/pridat") {
+                UIApplication.shared.openURL(url);
+            }
+        }
+        else if MFMailComposeViewController.canSendMail() {
+            let mailer = MFMailComposeViewController();
+            mailer.mailComposeDelegate = self;
+            
+            mailer.setToRecipients(["info@roomarranger.com"]);
+            mailer.setSubject("P12app - add record");
+            var sTitle = ds.m_sTitle;
+            if let sParentFilter = m_sParentFilter {
+                sTitle = sParentFilter;
+            }
+            mailer.setMessageBody("Data Source: \(sTitle)\n", isHTML: false);
+            mailer.modalPresentationStyle = .formSheet;
+            present(mailer, animated: true, completion: nil);
+        }
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil);
     }
 }

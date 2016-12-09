@@ -35,10 +35,11 @@ class CRxDataSource : NSObject {
     }
     var m_eType: DataType
     var m_bGroupByCategory = true       // UI should show sections for each category
+    var m_bFilterAsParentView = false   // UI should first show the list of possible filters
     var m_bFilterable = false           // UI can filter this datasource accoring to records' m_sFilter
-    var m_setFilter: Set<String>?       // contains string that should NOT be shown
+    var m_setFilter: Set<String>?       // contains strings that should NOT be shown
     
-    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true, filterable: Bool = false) {
+    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true, filterable: Bool = false, filterAsParentView: Bool = false) {
         m_sId = id;
         m_sTitle = title;
         m_sShortTitle = shortTitle;
@@ -47,6 +48,7 @@ class CRxDataSource : NSObject {
         m_nRefreshFreqHours = refreshFreqHours;
         m_bGroupByCategory = groupByCategory;
         m_bFilterable = filterable;
+        m_bFilterAsParentView = filterAsParentView;
         super.init()
     }
     
@@ -184,7 +186,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 100);
         m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
         m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, refreshFreqHours: 1000);
-        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, refreshFreqHours: 100);
+        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, refreshFreqHours: 100, filterAsParentView: true);
         m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places);
         
         // hidden sources
@@ -594,6 +596,9 @@ class CRxDataSourceManager : NSObject {
                                 
             for node in doc.xpath("//div[@class='dok']//ul[@class='ui']//li") {
                 if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
+                    
+                    if sTitle.hasPrefix("Klub Sluníčko") { continue; }  // skip this repetitive event
+                    
                     let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
                     
                     if var sLink = a_title["href"] {
@@ -638,11 +643,16 @@ class CRxDataSourceManager : NSObject {
                         }
                     }
                     if let aTextNode = node.xpath("div[2]").first, let sText = aTextNode.text {
-                        aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
+                        let sTrimmed = sText.trimmingCharacters(in: .whitespacesAndNewlines);
+                        if !sTrimmed.hasPrefix("Typ akce") {    // this is not real info
+                            aNewRecord.m_sText = sTrimmed;
+                        }
                     }
                     
                     //dump(aNewRecord)
-                    arrNewItems.append(aNewRecord);
+                    if aNewRecord.m_aDate != nil {
+                        arrNewItems.append(aNewRecord);
+                    }
                 }
             }
         }
@@ -1035,12 +1045,15 @@ class CRxDataSourceManager : NSObject {
                         let aNewRecord = CRxEventRecord(title: sTitleCap);
                         if let link = item["detailURI"] as? String { aNewRecord.m_sInfoLink = link; }
                         if let firm = item["firm"] as? String { sText += firm;}
-                        if let text = item["preview"] as? String { if !sText.isEmpty { sText += "\n"; }; sText += text; }
+                        if let text = item["preview"] as? String {
+                            if !sText.isEmpty { sText += "\n"; }
+                            sText += text.replacingOccurrences(of: ": Místo výkonu", with: "\nMísto výkonu");
+                        }
                         if let lat = item["lat"] as? Double, let long = item["long"] as? Double {
                             aNewRecord.m_aLocation = CLLocation(latitude: lat, longitude: long);
                         }
                         
-                        if !sText.isEmpty { sText += "\n\n"; }; sText += "zdroj: KdeJePrace.cz";
+                        if !sText.isEmpty { sText += "...\n\n"; }; sText += "zdroj: KdeJePrace.cz";
                         aNewRecord.m_sText = sText;
                         arrNewItems.append(aNewRecord);
                     }

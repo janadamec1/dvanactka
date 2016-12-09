@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D01CA1B1DFAFBA1004E0534 /* PlacesFilterCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01CA1A1DFAFBA1004E0534 /* PlacesFilterCtl.swift */; };
 		4D0469BD1DF9D3A100E7B760 /* ds_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469BB1DF9D3A100E7B760 /* ds_shop.png */; };
 		4D0469BE1DF9D3A100E7B760 /* ds_work.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469BC1DF9D3A100E7B760 /* ds_work.png */; };
 		4D0469CB1DFA0DF300E7B760 /* ds_billboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469BF1DFA0DF300E7B760 /* ds_billboard@2x.png */; };
@@ -112,6 +113,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D01CA1A1DFAFBA1004E0534 /* PlacesFilterCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesFilterCtl.swift; sourceTree = "<group>"; };
 		4D0469BB1DF9D3A100E7B760 /* ds_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_shop.png; path = img/ds_shop.png; sourceTree = "<group>"; };
 		4D0469BC1DF9D3A100E7B760 /* ds_work.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_work.png; path = img/ds_work.png; sourceTree = "<group>"; };
 		4D0469BF1DFA0DF300E7B760 /* ds_billboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_billboard@2x.png"; path = "img/ds_billboard@2x.png"; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				4D9019381DC65E16001488D3 /* Main.storyboard */,
 				4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */,
 				4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */,
+				4D01CA1A1DFAFBA1004E0534 /* PlacesFilterCtl.swift */,
 				4D318A6D1DD7C4A400187985 /* RefineLocCtl.swift */,
 				4D318A691DD7897800187985 /* ReportFaultCtl.swift */,
 				4D90194C1DC67FB6001488D3 /* test_files */,
@@ -599,6 +602,7 @@
 				4D318A6A1DD7897800187985 /* ReportFaultCtl.swift in Sources */,
 				4D9F14AD1DD103D100841AD8 /* DataSource.swift in Sources */,
 				4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */,
+				4D01CA1B1DFAFBA1004E0534 /* PlacesFilterCtl.swift in Sources */,
 				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
 				4D3FC6F51DD274A8000467D1 /* AppInfoCtl.swift in Sources */,
 				4D318A6E1DD7C4A400187985 /* RefineLocCtl.swift in Sources */,
