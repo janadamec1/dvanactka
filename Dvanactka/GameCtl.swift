@@ -67,6 +67,18 @@ class CRxGameCell : UICollectionViewCell {
 }
 
 //---------------------------------------------------------------------------
+class CRxGameHeader : UICollectionReusableView {
+    @IBOutlet weak var m_lbLevel: UILabel!
+    @IBOutlet weak var m_progress: UIProgressView!
+    @IBOutlet weak var m_lbXp: UILabel!
+}
+
+//---------------------------------------------------------------------------
+class CRxGameFooter : UICollectionReusableView {
+    @IBOutlet weak var m_lbNote: UILabel!
+}
+
+//---------------------------------------------------------------------------
 class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     override func viewDidLoad() {
@@ -76,7 +88,28 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     }
 
     //---------------------------------------------------------------------------
-    // MARK: - Table view data source
+    // MARK: - UICollectionViewDataSource
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionElementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerGame", for: indexPath) as! CRxGameHeader;
+            let aPlayerStats = CRxGame.sharedInstance.playerLevel();
+            headerView.m_lbLevel.text = NSLocalizedString("Level", comment: "") + " \(aPlayerStats.level)";
+            headerView.m_progress.progress = Float(aPlayerStats.points-aPlayerStats.pointsPrevLevel) / Float(aPlayerStats.pointsNextLevel-aPlayerStats.pointsPrevLevel);
+            headerView.m_lbXp.text = "\(aPlayerStats.points) / \(aPlayerStats.pointsNextLevel) XP";
+            return headerView;
+        }
+        if kind == UICollectionElementKindSectionFooter {
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footerGame", for: indexPath) as! CRxGameFooter;
+            footerView.m_lbNote.text = NSLocalizedString("Game progress is lost when uninstalling the app.", comment: "");
+            return footerView;
+        }
+        
+        
+        return UICollectionReusableView();
+    }
+
+    //---------------------------------------------------------------------------
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1;
     }
@@ -93,7 +126,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         cell.m_item = item;
         cell.m_lbName.text = item.m_sName;
         cell.m_lbProgress.text = String(format: "%d / %d", item.m_iProgress, item.nextStarPoints());
-        return cell
+        return cell;
     }
     
     //---------------------------------------------------------------------------
@@ -120,6 +153,22 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         let nCellWidth = floor((nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
         let leftInset = (collectionView.frame.width - CGFloat(nCellWidth*nItemsPerRow + nSpacing)) / 2; // center
         
-        return UIEdgeInsetsMake(nMinInsets, leftInset-1, nMinInsets, leftInset-1);
+        return UIEdgeInsetsMake(12, leftInset-1, 24, leftInset-1);
+    }
+    
+    //---------------------------------------------------------------------------
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = CRxGame.sharedInstance.m_arrCategories[indexPath.row];
+        showToast(message: item.m_sHintMessage);
+    }
+    
+    //---------------------------------------------------------------------------
+    func showToast(message: String) {
+        let alertController = UIAlertController(title: nil,
+                                                message: message, preferredStyle: .alert);
+        let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
+            print("OK")})
+        alertController.addAction(actionOK);
+        self.present(alertController, animated: true, completion: nil);
     }
 }

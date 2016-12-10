@@ -11,12 +11,15 @@ import UIKit
 class CRxGameCategory {
     var m_iProgress: Int = 0;   // visited locations
     var m_i2ndStarAt: Int;      // 2nd star awarded at this progress
-    var m_iTotal: Int = 1;      // 3rd star at (all items in this category)
+    var m_i3rdStarAt: Int;      // 3rd star at (all items in this category)
     var m_sName: String;
+    var m_sHintMessage: String;
     
-    init(name: String, secondStarAt star2: Int) {
+    init(name: String, secondStarAt star2: Int, thirdAt star3: Int, hint: String) {
         m_sName = name;
         m_i2ndStarAt = star2;
+        m_i3rdStarAt = star3;
+        m_sHintMessage = hint;
     }
     
     func reset() {
@@ -24,7 +27,7 @@ class CRxGameCategory {
     }
     
     func stars() -> Int {
-        if m_iProgress >= m_iTotal {
+        if m_iProgress >= m_i3rdStarAt {
             return 3;
         }
         else if m_iProgress >= m_i2ndStarAt {
@@ -52,7 +55,7 @@ class CRxGameCategory {
     
     func nextStarPoints() -> Int {
         if m_iProgress >= m_i2ndStarAt {
-            return m_iTotal;
+            return m_i3rdStarAt;
         }
         else if m_iProgress >= 1 {
             return m_i2ndStarAt;
@@ -65,7 +68,7 @@ class CRxGameCategory {
 
 //---------------------------------------------------------------------------
 class CRxGame: NSObject {
-    static let checkInDistance = 50.0;
+    static let checkInDistance = 5000.0;
     
     var m_iPoints: Int = 0;
     var m_catForester: CRxGameCategory;
@@ -81,13 +84,17 @@ class CRxGame: NSObject {
     static let sharedInstance = CRxGame()  // singleton
 
     private override init() {
-        m_catForester = CRxGameCategory(name: NSLocalizedString("Forester", comment: ""), secondStarAt: 5);
+        m_catForester = CRxGameCategory(name: NSLocalizedString("Forester", comment: ""), secondStarAt: 5, thirdAt: 15,
+                                        hint: NSLocalizedString("Visit trees.", comment: ""));
         m_arrCategories.append(m_catForester);
-        m_catCulturist = CRxGameCategory(name: NSLocalizedString("Culturist", comment: ""), secondStarAt: 3);
+        m_catCulturist = CRxGameCategory(name: NSLocalizedString("Culturist", comment: ""), secondStarAt: 3, thirdAt: 5,
+                                         hint: NSLocalizedString("Visit cultural landmarks.", comment: ""));
         m_arrCategories.append(m_catCulturist);
-        m_catVisitor = CRxGameCategory(name: NSLocalizedString("Visitor", comment: ""), secondStarAt: 5);
+        m_catVisitor = CRxGameCategory(name: NSLocalizedString("Visitor", comment: ""), secondStarAt: 5, thirdAt: 11,
+                                       hint: NSLocalizedString("Visit interesting places.", comment: ""));
         m_arrCategories.append(m_catVisitor);
-        m_catRecyclist = CRxGameCategory(name: NSLocalizedString("Recyclist", comment: ""), secondStarAt: 2);
+        m_catRecyclist = CRxGameCategory(name: NSLocalizedString("Recyclist", comment: ""), secondStarAt: 2, thirdAt: 3,
+                                         hint: NSLocalizedString("Visit different dumpster types.", comment: ""));
         m_arrCategories.append(m_catRecyclist);
         super.init();
     }
@@ -98,22 +105,6 @@ class CRxGame: NSObject {
             return cat != .wasteGeneral && cat != .associations && cat != .prvniPomoc && cat != .children;
         }
         return true;
-    }
-    
-    //---------------------------------------------------------------------------
-    func getTotalInCategories() {
-        
-        m_catRecyclist.m_iTotal = 3;    // one in each category
-        
-        if let aDS = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsCooltour] {
-            for rec in aDS.m_arrItems {
-                if let category = rec.m_eCategory {
-                    if category == .pamatka { m_catCulturist.m_iTotal += 1; }
-                    else if category == .pamatnyStrom || category == .vyznamnyStrom { m_catForester.m_iTotal += 1; }
-                    else if category == .zajimavost { m_catVisitor.m_iTotal += 1; }
-                }
-            }
-        }
     }
     
     //---------------------------------------------------------------------------
@@ -142,13 +133,12 @@ class CRxGame: NSObject {
 
     //---------------------------------------------------------------------------
     func reinit() {
-        getTotalInCategories();
         calcPointsFromDataSources();
     }
     
     //---------------------------------------------------------------------------
     func addPoints(for record: CRxEventRecord) -> (points: Int, newStars: Int, catName: String?) {
-        var iReward = 5;
+        var iReward = 40;
         var iNewStars = 0;
         var sCatName: String?;
         if let category = record.m_eCategory {
@@ -167,25 +157,28 @@ class CRxGame: NSObject {
             else if category == .waste && !m_bWasteVokVisited {
                 iNewStars = m_catRecyclist.incProgress(); m_bWasteVokVisited = true;
                 sCatName = m_catRecyclist.m_sName;
+                iReward = 150;
             }
             else if category == .wasteTextile && !m_bWasteTextileVisited {
                 iNewStars = m_catRecyclist.incProgress(); m_bWasteTextileVisited = true;
                 sCatName = m_catRecyclist.m_sName;
+                iReward = 80;
             }
             else if category == .wasteElectro && !m_bWasteElectroVisited {
                 iNewStars = m_catRecyclist.incProgress(); m_bWasteElectroVisited = true;
                 sCatName = m_catRecyclist.m_sName;
+                iReward = 80;
             }
-            else { iReward = 1; }   // 5 pts in game categories, 1 pt in other
+            else { iReward = 10; }   // 40 pts in game categories, 10 pt in other
         }
         if iNewStars > 0 {
-            iReward *= 5;
+            iReward *= 2;
         }
         return (iReward, iNewStars, sCatName);
     }
     
     //---------------------------------------------------------------------------
-    func checkIn(at record: CRxEventRecord) -> (points: Int, newStars: Int, catName: String?)? {
+    func checkIn(at record: CRxEventRecord) -> (points: Int, newLevel: Int, newStars: Int, catName: String?)? {
         guard let aDS = CRxGame.dataSource()
             else { return nil; }
         
@@ -196,9 +189,17 @@ class CRxGame: NSObject {
         CRxDataSourceManager.sharedInstance.save(dataSource: aDS);
         
         // return reward
+        let iOldLevel = playerLevel().level;
+        
         let reward = addPoints(for: record);
         m_iPoints += reward.points;
-        return reward;
+        
+        var iNewLevel = playerLevel().level;
+        if iNewLevel <= iOldLevel {
+            iNewLevel = 0;
+        }
+        
+        return (reward.points, iNewLevel, reward.newStars, reward.catName);
     }
     
     //---------------------------------------------------------------------------
@@ -212,5 +213,19 @@ class CRxGame: NSObject {
             }
         }
         return false;
+    }
+    
+    //---------------------------------------------------------------------------
+    func playerLevel() -> (level: Int, points: Int, pointsPrevLevel: Int, pointsNextLevel: Int) {
+        var iLevel = 1;
+        var iLevelSize = 60;
+        var iToNextLevel = iLevelSize;
+        
+        while iToNextLevel <= m_iPoints {
+            iLevel += 1;
+            iLevelSize += 20;
+            iToNextLevel += iLevelSize;
+        }
+        return (iLevel, m_iPoints, iToNextLevel-iLevelSize, iToNextLevel);
     }
 }

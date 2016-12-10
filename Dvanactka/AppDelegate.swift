@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             if let navCtl = application.keyWindow?.rootViewController as? UINavigationController,
                 let currentViewCtl = navCtl.visibleViewController {
-                let alertController = UIAlertController(title: NSLocalizedString("Reminder", comment:""),
+                let alertController =  UIAlertController(title: NSLocalizedString("Reminder", comment:""),
                                                         message: notification.alertBody, preferredStyle: .alert);
                 let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
                     print("OK")})

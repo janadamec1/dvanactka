@@ -368,14 +368,28 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         m_eGameStatus = .visited;
         m_btnGameCheckIn.isHidden = true;
         if let reward = reward {
-            var sReward = String(format: NSLocalizedString("Points: +%d", comment: ""), reward.points);
+            var sReward = "+\(reward.points) XP";
+            var sAlertMessage = sReward;
             if reward.newStars > 0 && reward.catName != nil {
-                //sReward += ", Stars: \(reward.newStars)";
                 let sStars = String(repeating: "⭐️", count: reward.newStars);
                 sReward += ", \(reward.catName!): \(sStars)";
-                // TODO: animation, big applause
+                sAlertMessage += "\n\(reward.catName!): \(sStars)";
+            }
+            if reward.newLevel > 0 {
+                sReward += ", " + NSLocalizedString("Level up!", comment: "");
+                sAlertMessage = "\n" + NSLocalizedString("Level up!", comment: "") + "\n"
+                    + NSLocalizedString("You are now at level", comment: "") + " \(reward.newLevel)\n"
+                    + sAlertMessage;
             }
             m_lbGameDist.text = sReward;
+
+            let alertController = UIAlertController(title: nil,
+                                                    message: sAlertMessage, preferredStyle: .alert);
+            let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
+                print("OK")})
+            alertController.addAction(actionOK);
+            self.present(alertController, animated: true, completion: nil);
+            // TODO: animation, big applause
         }
     }
     
