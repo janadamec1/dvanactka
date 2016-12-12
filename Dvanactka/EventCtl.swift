@@ -121,6 +121,21 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             ds.delegate = nil;
         }
     }
+    
+    //--------------------------------------------------------------------------
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        
+        // Google Analytics
+        if let sTitle = self.title,
+            let tracker = GAI.sharedInstance().defaultTracker {
+            tracker.set(kGAIScreenName, value: "DS_" + sTitle)
+            
+            if let builder = GAIDictionaryBuilder.createScreenView() {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+        }
+    }
 
     //--------------------------------------------------------------------------
     override func viewDidAppear(_ animated: Bool) {

@@ -7,4 +7,5 @@ target 'Dvanactka' do
 
   # Pods for Dvanactka
   pod 'Kanna', '~> 2.0.0'
+  pod 'Google/Analytics'
 end

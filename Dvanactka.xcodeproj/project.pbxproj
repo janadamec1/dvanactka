@@ -22,6 +22,7 @@
 		4D0469D41DFA0DF300E7B760 /* ds_usergroups@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469C81DFA0DF300E7B760 /* ds_usergroups@2x.png */; };
 		4D0469D51DFA0DF300E7B760 /* ds_waste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469C91DFA0DF300E7B760 /* ds_waste@2x.png */; };
 		4D0469D61DFA0DF300E7B760 /* ds_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */; };
+		4D11D02D1DFF1ACE00BA2052 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */; };
 		4D2C34BD1DF751C600165EAC /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2C34BC1DF751C600165EAC /* Game.swift */; };
 		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
 		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
@@ -128,6 +129,8 @@
 		4D0469C81DFA0DF300E7B760 /* ds_usergroups@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_usergroups@2x.png"; path = "img/ds_usergroups@2x.png"; sourceTree = "<group>"; };
 		4D0469C91DFA0DF300E7B760 /* ds_waste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_waste@2x.png"; path = "img/ds_waste@2x.png"; sourceTree = "<group>"; };
 		4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_work@2x.png"; path = "img/ds_work@2x.png"; sourceTree = "<group>"; };
+		4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4D11D02E1DFF1C9300BA2052 /* Dvanactka-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dvanactka-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D2C34BC1DF751C600165EAC /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		4D30AABA1DCA87AB00A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -349,12 +352,14 @@
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
 				4D3FC6F41DD274A8000467D1 /* AppInfoCtl.swift */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
+				4D11D02E1DFF1C9300BA2052 /* Dvanactka-Bridging-Header.h */,
 				4D9F14AC1DD103D100841AD8 /* DataSource.swift */,
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 				4D464C4C1DE305B2003EC137 /* FilterCtl.swift */,
 				4D2C34BC1DF751C600165EAC /* Game.swift */,
 				4DBBDFD21DF5DBDB00013D67 /* GameCtl.swift */,
+				4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */,
 				4D6677151DCBC226004876FA /* img */,
 				4D9019401DC65E17001488D3 /* Info.plist */,
 				4D30AABF1DCA891200A402C9 /* InfoPlist.strings */,
@@ -509,6 +514,7 @@
 				4D0469D51DFA0DF300E7B760 /* ds_waste@2x.png in Resources */,
 				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D4264221DD08D62008ED01F /* c_pharmacy@2x.png in Resources */,
+				4D11D02D1DFF1ACE00BA2052 /* GoogleService-Info.plist in Resources */,
 				4D42641B1DD08D62008ED01F /* c_firstaid.png in Resources */,
 				4D0469CE1DFA0DF300E7B760 /* ds_game@2x.png in Resources */,
 				4D42641E1DD08D62008ED01F /* c_info@2x.png in Resources */,
@@ -703,6 +709,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -746,6 +753,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};

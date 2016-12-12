@@ -239,6 +239,21 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     }
 
     //--------------------------------------------------------------------------
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        
+        // Google Analytics
+        if let sTitle = m_lbTitle.text,
+            let tracker = GAI.sharedInstance().defaultTracker {
+            tracker.set(kGAIScreenName, value: "Place_" + sTitle)
+            
+            if let builder = GAIDictionaryBuilder.createScreenView() {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+        }
+    }
+    
+    //--------------------------------------------------------------------------
     @IBAction func onChkNotificationsChanged(_ sender: Any) {
         if let rec = m_aRecord {
             rec.m_bMarkFavorite = m_chkShowNotifications.isOn;
@@ -390,6 +405,18 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             alertController.addAction(actionOK);
             self.present(alertController, animated: true, completion: nil);
             // TODO: animation, big applause
+            
+            // Google Analytics
+            if let tracker = GAI.sharedInstance().defaultTracker,
+                let builder = GAIDictionaryBuilder.createEvent(withCategory: "CheckIn", action: "Done", label: rec.m_sTitle, value: 1) {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+            if reward.newStars > 1 && reward.catName != nil {
+                if let tracker = GAI.sharedInstance().defaultTracker,
+                    let builder = GAIDictionaryBuilder.createEvent(withCategory: "Achievement", action: "Unlocked", label: reward.catName!, value: NSNumber(value: reward.newStars)) {
+                    tracker.send(builder.build() as [NSObject : AnyObject])
+                }
+            }
         }
     }
     

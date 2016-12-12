@@ -22,6 +22,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
         application.applicationIconBadgeNumber = 0;
         CRxGame.sharedInstance.reinit();
+        
+        // Configure tracker from GoogleService-Info.plist.
+        var configureError:NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        
+        //let bit = MemoryLayout<Int>.size == MemoryLayout<Int64>.size ? 64 : 32
+        
+        // Optional: configure GAI options.
+        if let gai = GAI.sharedInstance() {
+            gai.trackUncaughtExceptions = false  // report uncaught exceptions
+            gai.logger.logLevel = GAILogLevel.none  // remove before app release
+            //gai.logger.logLevel = GAILogLevel.verbose  // remove before app release
+        }
         return true
     }
 

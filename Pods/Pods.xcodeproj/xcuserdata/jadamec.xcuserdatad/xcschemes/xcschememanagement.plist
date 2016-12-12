@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Kanna.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>176F3E1ACBACC17AAB59AC4071B6D917</key>
+		<key>00103D6C821BE85971C563025527BA5D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>1D684AC6B47205706EA61F308B910FE7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>402D8AB983DECD4BA6B774F0087779F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
