@@ -68,7 +68,7 @@ class CRxGameCategory {
 
 //---------------------------------------------------------------------------
 class CRxGame: NSObject {
-    static let checkInDistance = 5000.0;
+    static let checkInDistance = 50.0;
     
     var m_iPoints: Int = 0;
     var m_catForester: CRxGameCategory;
