@@ -35,7 +35,7 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
             let mailer = MFMailComposeViewController();
             mailer.mailComposeDelegate = self;
             
-            mailer.setToRecipients(["info@roomarranger.com"]);
+            mailer.setToRecipients(["info@dvanactka.info"]);
             mailer.setSubject("P12app (iOS)");
             mailer.modalPresentationStyle = .formSheet;
             present(mailer, animated: true, completion: nil);

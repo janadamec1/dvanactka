@@ -54,12 +54,24 @@ class CRxDataSource : NSObject {
     
     //--------------------------------------------------------------------------
     func loadFromJSON(file: URL) {
+        var jsonData: Data?
+        do {
+            let jsonString = try String(contentsOf: file, encoding: .utf8);
+            jsonData = jsonString.data(using: String.Encoding.utf8);
+        } catch let error as NSError {
+            print("JSON opening failed: \(error.localizedDescription)"); return;
+        }
+        if let data = jsonData {
+            loadFromJSON(data: data);
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    func loadFromJSON(data: Data) {
         // decode JSON
         var json: AnyObject
         do {
-            let jsonString = try String(contentsOf: file, encoding: .utf8);
-            let jsonData = jsonString.data(using: String.Encoding.utf8)!;
-            json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions()) as AnyObject
+            json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as AnyObject
         } catch let error as NSError {
             print("JSON parsing failed: \(error.localizedDescription)"); return;
         }
@@ -399,30 +411,29 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsSpolky {
             refreshSpolkyDataSource();
+            return;
         }
         else if id == CRxDataSourceManager.dsSpolkyProKomo {
             refreshSpolkyKomoDataSource();
+            return;
         }
         else if id == CRxDataSourceManager.dsSpolkyProxima {
             refreshSpolkyProximaDataSource();
+            return;
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
             refreshBiografDataSource();
             return;
         }
         else if id == CRxDataSourceManager.dsSpolkyList {
-            if let path = Bundle.main.url(forResource: "/test_files/spolkyList", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-                ds.delegate?.dataSourceRefreshEnded(nil);
-                return;
-            }
+            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/spolkyList.json",
+                                     testFile: "/test_files/spolkyList");
+            return;
         }
         else if id == CRxDataSourceManager.dsCooltour {
-            if let path = Bundle.main.url(forResource: "/test_files/p12kultpamatky", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-                ds.delegate?.dataSourceRefreshEnded(nil);
-                return;
-            }
+            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/p12kultpamatky.json",
+                                     testFile: "/test_files/p12kultpamatky");
+            return;
         }
         else if id == CRxDataSourceManager.dsWaste {
             if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
@@ -433,18 +444,14 @@ class CRxDataSourceManager : NSObject {
             }
         }
         else if id == CRxDataSourceManager.dsSosContacts {
-            if let path = Bundle.main.url(forResource: "/test_files/sos", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-                ds.delegate?.dataSourceRefreshEnded(nil);
-                return;
-            }
+            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/sos.json",
+                                     testFile: "/test_files/sos");
+            return;
         }
         else if id == CRxDataSourceManager.dsShops {
-            if let path = Bundle.main.url(forResource: "/test_files/p12shops", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-                ds.delegate?.dataSourceRefreshEnded(nil);
-                return;
-            }
+            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/p12shops.json",
+                                     testFile: "/test_files/p12shops");
+            return;
         }
     }
     
@@ -456,6 +463,51 @@ class CRxDataSourceManager : NSObject {
             (data, response, error) in
             completion(data, response, error)
             }.resume()
+    }
+    
+    //--------------------------------------------------------------------------
+    func refreshStdJsonDataSource(sDsId: String, url: String, testFile: String, completition: ((_ error: String?) -> Void)? = nil) {
+        guard let aDS = self.m_dictDataSources[sDsId]
+            else { return }
+        
+        var urlDownload: URL?
+        if !g_bUseTestFiles {
+            urlDownload = URL(string: url);
+        }
+        else {
+            urlDownload = Bundle.main.url(forResource: testFile, withExtension: "json");
+        }
+        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+        
+        aDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+        
+        getDataFromUrl(url: url) { (data, response, error) in
+            guard let data = data, error == nil
+                else {
+                    if let error = error {
+                        print("URL downloading failed: \(error.localizedDescription)");
+                    }
+                    DispatchQueue.main.async() { () -> Void in
+                        aDS.m_bIsBeingRefreshed = false;
+                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                        self.hideNetworkIndicator();
+                    }
+                    return;
+            }
+            
+            // process the data
+            aDS.loadFromJSON(data: data);
+            
+            DispatchQueue.main.async() { () -> Void in
+                aDS.m_dateLastRefreshed = Date();
+                aDS.m_bIsBeingRefreshed = false;
+                self.save(dataSource: aDS);
+                self.hideNetworkIndicator();
+                aDS.delegate?.dataSourceRefreshEnded(nil);
+                self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+            }
+        }
     }
     
     //--------------------------------------------------------------------------

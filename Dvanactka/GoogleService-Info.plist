@@ -22,9 +22,9 @@
 	<false/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1048289847487:ios:813b9d59e45c2615</string>
-    <key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
-    <false/>
-    <key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
-    <true/>
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<false/>
+	<key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
+	<true/>
 </dict>
 </plist>

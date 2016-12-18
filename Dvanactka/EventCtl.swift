@@ -739,8 +739,8 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             let mailer = MFMailComposeViewController();
             mailer.mailComposeDelegate = self;
             
-            mailer.setToRecipients(["info@roomarranger.com"]);
-            mailer.setSubject("P12app - add record");
+            mailer.setToRecipients(["info@dvanactka.info"]);
+            mailer.setSubject("P12app - přidat záznam");
             var sTitle = ds.m_sTitle;
             if let sParentFilter = m_sParentFilter {
                 sTitle = sParentFilter;

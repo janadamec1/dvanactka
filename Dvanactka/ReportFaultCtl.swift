@@ -46,7 +46,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         m_edSubject.delegate = self;
         m_edDescription.delegate = self;
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Send", comment: ""), style: .plain, target: self, action: #selector(ReportFaultCtl.onBtnSend));
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "E-mail"/*NSLocalizedString("Send", comment: "")*/, style: .plain, target: self, action: #selector(ReportFaultCtl.onBtnSend));
         
         m_locManager.delegate = self;
         m_locManager.distanceFilter = 4;

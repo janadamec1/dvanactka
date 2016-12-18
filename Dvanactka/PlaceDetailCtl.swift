@@ -363,7 +363,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             let mailer = MFMailComposeViewController();
             mailer.mailComposeDelegate = self;
             
-            mailer.setToRecipients(["info@roomarranger.com"]);
+            mailer.setToRecipients(["info@dvanactka.info"]);
             mailer.setSubject(rec.m_sTitle + " - " + CRxEventRecord.categoryLocalName(category: rec.m_eCategory) + " - problem (iOS)");
             mailer.setMessageBody(NSLocalizedString("(Please describe problem here)", comment:"") , isHTML: false);
             mailer.modalPresentationStyle = .formSheet;
