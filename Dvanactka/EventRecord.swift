@@ -197,13 +197,13 @@ class CRxEventRecord: NSObject {
     
     static func loadDate(string: String) -> Date? {
         let df = DateFormatter();
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm";
         return df.date(from: string);
     }
     
     static func saveDate(date: Date) -> String {
         let df = DateFormatter();
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm";
         return df.string(from: date);
     }
     

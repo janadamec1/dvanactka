@@ -1,0 +1,91 @@
+<?php
+/* Set HTTP response header to plain text for debugging output */
+header("Content-type: text/plain");
+/* Use internal libxml errors -- turn on in production, off for debugging */
+libxml_use_internal_errors(true);
+
+$sKlubSlunicko = "Klub Slun";
+$sTypAkce = "Typ akce";
+
+$arrItems = array();
+$dom = new DomDocument;
+$dom->loadHTMLFile("http://www.praha12.cz/vismo/kalendar-akci.asp?pocet=100");
+$xpath = new DomXPath($dom);
+$nodes = $xpath->query("//div[@class='dok']//ul[@class='ui']//li");
+foreach ($nodes as $i => $node) {
+	$nodeTitle = $xpath->query("strong/a", $node)->item(0);
+	if ($nodeTitle != NULL) {
+		$title = $nodeTitle->nodeValue;
+		
+		if (substr($title, 0, strlen($sKlubSlunicko)) == $sKlubSlunicko)
+			continue;
+		
+		$link = $nodeTitle->getAttribute("href");
+		if (substr($link, 0, 4) != "http") {
+			$link = "https://www.praha12.cz" . $link;
+		}
+		$aNewRecord = array("title" => $title);
+		$aNewRecord["infoLink"] = $link;
+		
+		$nodeDate = $xpath->query("div[1]", $node)->item(0);
+		if ($nodeDate != NULL) {
+			$arrFromTo = explode("-", $nodeDate->nodeValue);
+			$iArrFromToCount = count($arrFromTo);
+			if ($iArrFromToCount > 0) {		// date & time from
+				$sDateFrom = trim($arrFromTo[0]);
+				//echo $sDateFrom, "\n";
+				$arrFrom = explode(" ", $sDateFrom);
+				$dateFrom = NULL;
+				if (count($arrFrom) > 1) {	// time from (optional)
+					$dateFrom = date_create_from_format("!j.n.Y G:i", $sDateFrom);
+				}
+				else {
+					$dateFrom = date_create_from_format("!j.n.Y", $sDateFrom);
+				}
+				$aNewRecord["date"] = date_format($dateFrom, "Y-m-d\TH:i");
+				
+				if ($iArrFromToCount > 1) {		// date & time to
+					$sDateTo = trim($arrFromTo[1]);
+					//echo $sDateTo, " -- TO\n";
+					$arrTo = explode(" ", $sDateTo);
+					$iArrToCount = count($arrTo);
+					$dateTo = NULL;
+					if ($iArrToCount > 1) {	// we have both date and time
+						$dateFrom = date_create_from_format("!j.n.Y G:i", $sDateTo);
+					}
+					else {
+						// determine if date or time is given
+						if (strstr($sDateTo, ":") === FALSE) {
+							$dateTo = date_create_from_format("!j.n.Y", $sDateTo); // only date
+						}
+						else {
+							$sFullTo = $arrFrom[0] . " " . $sDateTo;
+							//echo $sFullTo, " -- FULL\n";
+							$dateTo = date_create_from_format("!j.n.Y G:i", $sFullTo); // only time
+						}
+					}
+					$aNewRecord["dateTo"] = date_format($dateTo, "Y-m-d\TH:i");
+				}
+			}
+		}
+		
+		$nodeText = $xpath->query("div[2]", $node)->item(0);
+		if ($nodeText != NULL) {
+			$text = $nodeText->nodeValue;
+			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce)
+				$aNewRecord["text"] = $text;
+		}
+		$aNewRecord["filter"] = "praha12.cz";
+		if (array_key_exists("date", $aNewRecord))
+	    	array_push($arrItems, $aNewRecord);
+    }
+}
+
+$arr = array("items" => $arrItems);
+$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
+$filename = "dyn_radEvents.json";
+file_put_contents($filename, $encoded, LOCK_EX);
+chmod($filename, 0644);
+//echo $encoded;
+echo "done.";
+?>

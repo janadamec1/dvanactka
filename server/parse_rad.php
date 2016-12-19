@@ -22,19 +22,18 @@ foreach ($nodes as $i => $node) {
 		
 		$nodeDate = $xpath->query("span", $node)->item(0);
 		if ($nodeDate != NULL) {
-			$date = $nodeDate->nodeValue;
-			$date = substr($date, 1, strlen($str)-1);
-			$aNewRecord["date"] = $date;
+			$date = date_create_from_format("(!j.n.Y)", $nodeDate->nodeValue);
+			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
 		
 		$nodeText = $xpath->query("div[1]", $node)->item(0);
-		if ($nodeDate != NULL) {
+		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
-    	//echo "Node($i): TITLE: ", $title, "; DATE: ", $date, "; LINK: ", $link, "; TEXT: ", $text, "\n";
 		$aNewRecord["filter"] = "praha12.cz";
-    	array_push($arrItems, $aNewRecord);
+		if (array_key_exists("date", $aNewRecord))
+	    	array_push($arrItems, $aNewRecord);
     }
 }
 
@@ -52,25 +51,25 @@ foreach ($nodes as $i => $node) {
 		
 		$nodeDate = $xpath->query("span", $node)->item(0);
 		if ($nodeDate != NULL) {
-			$date = $nodeDate->nodeValue;
-			$date = substr($date, 1, strlen($str)-1);
-			$aNewRecord["date"] = $date;
+			$date = date_create_from_format("(!j.n.Y)", $nodeDate->nodeValue);
+			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
 		
 		$nodeText = $xpath->query("div[1]", $node)->item(0);
-		if ($nodeDate != NULL) {
+		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
-    	//echo "Node($i): TITLE: ", $title, "; DATE: ", $date, "; LINK: ", $link, "; TEXT: ", $text, "\n";
 		$aNewRecord["filter"] = "praha12.cz";
-    	array_push($arrItems, $aNewRecord);
+		if (array_key_exists("date", $aNewRecord))
+    		array_push($arrItems, $aNewRecord);
     }
 }
 $arr = array("items" => $arrItems);
 $encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
-$filename = "parse_rad.json";
+$filename = "dyn_radAktual.json";
 file_put_contents($filename, $encoded, LOCK_EX);
 chmod($filename, 0644);
-echo "done."
+//echo $encoded;
+echo "done.";
 ?>
