@@ -6,7 +6,10 @@ libxml_use_internal_errors(true);
 
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.spolekprokomorany.cz/aktuality/");
+//$dom->loadHTMLFile("http://www.spolekprokomorany.cz/aktuality/");
+$html = file_get_contents("http://www.spolekprokomorany.cz/aktuality/");
+$html = mb_convert_encoding($html,'HTML-ENTITIES','UTF-8');
+$dom->loadHTML($html);
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='blog-item-content']");
 foreach ($nodes as $i => $node) {
@@ -46,6 +49,6 @@ $encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
 $filename = "dyn_spolekKomo.json";
 file_put_contents($filename, $encoded, LOCK_EX);
 chmod($filename, 0644);
-echo $encoded;
+//echo $encoded;
 echo "done.";
 ?>
