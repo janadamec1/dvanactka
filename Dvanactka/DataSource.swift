@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import Kanna
 
 private let g_bUseTestFiles = false;
 
@@ -170,8 +169,6 @@ class CRxDataSourceManager : NSObject {
     static let dsWork = "dsWork";
     static let dsSpolky = "dsSpolky";
     static let dsSpolkyList = "dsSpolkyList";
-    static let dsSpolkyProKomo = "dsSpolkyProKomo";
-    static let dsSpolkyProxima = "dsSpolkyProxima";
     static let dsReportFault = "dsReportFault";
     static let dsGame = "dsGame";
     static let dsSavedNews = "dsSavedNews";
@@ -200,10 +197,6 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, refreshFreqHours: 1000);
         m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, refreshFreqHours: 100, filterAsParentView: true);
         m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places);
-        
-        // hidden sources
-        m_dictDataSources[CRxDataSourceManager.dsSpolkyProKomo] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyProKomo, title: "Spolek pro Komořany", icon: "ds_usergroups", type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsSpolkyProxima] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyProxima, title: "Proxima Sociale", icon: "ds_usergroups", type: .news);
     }
     
     //--------------------------------------------------------------------------
@@ -394,15 +387,15 @@ class CRxDataSourceManager : NSObject {
         }
         
         if id == CRxDataSourceManager.dsRadNews {
-            refreshRadniceDataSources();
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_radAktual.json", testFile: nil);
             return;
         }
         else if id == CRxDataSourceManager.dsRadEvents {
-            refreshRadEventsDataSource();
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_events.php", testFile: nil);
             return;
         }
         else if id == CRxDataSourceManager.dsRadDeska {
-            refreshRadDeskaDataSource();
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_radDeska.json", testFile: nil);
             return;
         }
         else if id == CRxDataSourceManager.dsWork {
@@ -410,19 +403,11 @@ class CRxDataSourceManager : NSObject {
             return;
         }
         else if id == CRxDataSourceManager.dsSpolky {
-            refreshSpolkyDataSource();
-            return;
-        }
-        else if id == CRxDataSourceManager.dsSpolkyProKomo {
-            refreshSpolkyKomoDataSource();
-            return;
-        }
-        else if id == CRxDataSourceManager.dsSpolkyProxima {
-            refreshSpolkyProximaDataSource();
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_spolky.php", testFile: nil);
             return;
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
-            refreshBiografDataSource();
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_biograf.json", testFile: nil);
             return;
         }
         else if id == CRxDataSourceManager.dsSpolkyList {
@@ -509,6 +494,7 @@ class CRxDataSourceManager : NSObject {
             aDS.loadFromJSON(data: data);
             
             DispatchQueue.main.async() { () -> Void in
+                aDS.sortNewsByDate();
                 aDS.m_dateLastRefreshed = Date();
                 aDS.m_bIsBeingRefreshed = false;
                 self.save(dataSource: aDS);
@@ -519,7 +505,7 @@ class CRxDataSourceManager : NSObject {
         }
     }
     
-    //--------------------------------------------------------------------------
+    /*/--------------------------------------------------------------------------
     func refreshHtmlDataSource(sDsId: String, url: String, testFile: String, completition: ((_ error: String?) -> Void)?, htmlCodeHandler: @escaping (_ doc: HTMLDocument, _ arrNewItems: inout [CRxEventRecord]) -> Void) {
         
         guard let aDS = self.m_dictDataSources[sDsId]
@@ -568,282 +554,7 @@ class CRxDataSourceManager : NSObject {
                 }
             }
         }
-    }
-    
-    //--------------------------------------------------------------------------
-    func refreshRadniceDataSources(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsRadNews,
-                              url: "https://www.praha12.cz/",
-                              testFile: "/test_files/praha12titulka",
-                              completition: completition) { (doc, arrNewItems) -> Void in
-                                
-            // XPath syntax: https://www.w3.org/TR/xpath/#path-abbrev
-            
-            for node in doc.xpath("//div[@class='titulDoc aktClanky']//li") {
-                if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                    
-                    if var sLink = a_title["href"] {
-                        if sLink.hasPrefix("http://www.praha12.cz") {
-                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                        }
-                        else if !sLink.hasPrefix("http") {
-                            sLink = "https://www.praha12.cz" + sLink;
-                        }
-                        aNewRecord.m_sInfoLink = sLink;
-                    }
-                    
-                    if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
-                        let df = DateFormatter();
-                        df.dateFormat = "(dd.MM.yyyy)";
-                        if let date = df.date(from: sDate) {
-                            aNewRecord.m_aDate = date;// as NSDate?
-                        }
-                    }
-                    
-                    if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
-                        aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
-                    }
-                    /*if let aCategoriesNode = node.xpath("div[@class='ktg']//a").first {
-                     aNewRecord.m_sEventCategory = aCategoriesNode.text?.trimmingCharacters(in: .whitespacesAndNewlines);
-                     }*/
-                    aNewRecord.m_sFilter = "praha12.cz";
-                    //dump(aNewRecord)
-                    arrNewItems.append(aNewRecord);
-                }
-            }
-            
-            for node in doc.xpath("//div[@class='titulDoc upoClanky']//li") {
-                if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                    
-                    if var sLink = a_title["href"] {
-                        if sLink.hasPrefix("http://www.praha12.cz") {
-                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                        }
-                        else if !sLink.hasPrefix("http") {
-                            sLink = "https://www.praha12.cz" + sLink;
-                        }
-                        aNewRecord.m_sInfoLink = sLink;
-                    }
-                    
-                    if let aDateNode = node.xpath("span").first, let sDate = aDateNode.text {
-                        let df = DateFormatter();
-                        df.dateFormat = "(dd.MM.yyyy)";
-                        if let date = df.date(from: sDate) {
-                            aNewRecord.m_aDate = date;// as NSDate?
-                        }
-                    }
-                    
-                    if let aTextNode = node.xpath("div[1]").first, let sText = aTextNode.text {
-                        aNewRecord.m_sText = sText.trimmingCharacters(in: .whitespacesAndNewlines);
-                    }
-                    aNewRecord.m_sFilter = "praha12.cz";
-                    //dump(aNewRecord)
-                    arrNewItems.append(aNewRecord);
-                }
-            }
-        }
-    }
-    
-    //--------------------------------------------------------------------------
-    func refreshRadEventsDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsRadEvents,
-                              url: "https://www.praha12.cz/vismo/kalendar-akci.asp?pocet=50",
-                              testFile: "/test_files/praha12events",
-                              completition: completition) { (doc, arrNewItems) -> Void in
-                                
-            for node in doc.xpath("//div[@class='dok']//ul[@class='ui']//li") {
-                if let a_title = node.xpath("strong//a").first, let sTitle = a_title.text {
-                    
-                    if sTitle.hasPrefix("Klub Sluníčko") { continue; }  // skip this repetitive event
-                    
-                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                    
-                    if var sLink = a_title["href"] {
-                        if sLink.hasPrefix("http://www.praha12.cz") {
-                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                        }
-                        else if !sLink.hasPrefix("http") {
-                            sLink = "https://www.praha12.cz" + sLink;
-                        }
-                        aNewRecord.m_sInfoLink = sLink;
-                    }
-                    
-                    if let aDateNode = node.xpath("div[1]").first, let sDate = aDateNode.text {
-                        
-                        // parse 5.11.2016 10:00 - 17:00
-                        var dtc = DateComponents()
-                        let arrParts = sDate.components(separatedBy: .whitespaces);
-                        if arrParts.count >= 1 {
-                            let arrDayParts = arrParts[0].components(separatedBy: ".");
-                            if arrDayParts.count == 3 {
-                                dtc.day = Int(arrDayParts[0]);
-                                dtc.month = Int(arrDayParts[1]);
-                                dtc.year = Int(arrDayParts[2]);
-                                aNewRecord.m_aDate = Calendar.current.date(from: dtc);  // only date now
-                            }
-                        }
-                        if arrParts.count >= 2 {
-                            let arrTimeParts = arrParts[1].components(separatedBy: ":");
-                            if arrTimeParts.count == 2 {
-                                dtc.hour = Int(arrTimeParts[0]);
-                                dtc.minute = Int(arrTimeParts[1]);
-                                aNewRecord.m_aDate = Calendar.current.date(from: dtc);  // date & time "from"
-                            }
-                        }
-                        if arrParts.count >= 4 {
-                            let arrTimeParts = arrParts[3].components(separatedBy: ":");
-                            if arrTimeParts.count == 2 {
-                                dtc.hour = Int(arrTimeParts[0]);
-                                dtc.minute = Int(arrTimeParts[1]);
-                                aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);  // date & time "to"
-                            }
-                        }
-                    }
-                    if let aTextNode = node.xpath("div[2]").first, let sText = aTextNode.text {
-                        let sTrimmed = sText.trimmingCharacters(in: .whitespacesAndNewlines);
-                        if !sTrimmed.hasPrefix("Typ akce") {    // this is not real info
-                            aNewRecord.m_sText = sTrimmed;
-                        }
-                    }
-                    
-                    //dump(aNewRecord)
-                    if aNewRecord.m_aDate != nil {
-                        arrNewItems.append(aNewRecord);
-                    }
-                }
-            }
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    func refreshRadDeskaDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsRadDeska,
-                              url: "https://www.praha12.cz/vismo/mapa_deska.asp",
-                              testFile: "/test_files/praha12deska",
-                              completition: completition) { (doc, arrNewItems) -> Void in
-                                
-            for node in doc.xpath("//div[@id='ud']/ul/li") {
-                if let a_title = node.xpath("strong/a").first, let sTitle = a_title.text {
-                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                    
-                    if var sLink = a_title["href"] {
-                        if sLink.hasPrefix("http://www.praha12.cz") {
-                            sLink = sLink.replacingOccurrences(of: "http://", with: "https://");
-                        }
-                        else if !sLink.hasPrefix("http") {
-                            sLink = "https://www.praha12.cz" + sLink;
-                        }
-                        aNewRecord.m_sInfoLink = sLink;
-                    }
-                    
-                    if let aDateNode = node.xpath("span[1]").first, let sDate = aDateNode.text {
-                        
-                        // find and parse "od: 4.3.2016 do: 5.3.2019)"
-                        var dtc = DateComponents()
-                        let arrParts = sDate.replacingOccurrences(of: ")", with: "").components(separatedBy: .whitespaces);
-                        // find "od:"
-                        if let iFromPart = arrParts.index(of: "od:") {
-                            if iFromPart+1 < arrParts.count {
-                                let arrDayParts = arrParts[iFromPart+1].components(separatedBy: ".");
-                                if arrDayParts.count == 3 {
-                                    dtc.day = Int(arrDayParts[0]);
-                                    dtc.month = Int(arrDayParts[1]);
-                                    dtc.year = Int(arrDayParts[2]);
-                                    aNewRecord.m_aDate = Calendar.current.date(from: dtc);
-                                }
-                            }
-                            if iFromPart+3 < arrParts.count {
-                                let arrDayParts = arrParts[iFromPart+3].components(separatedBy: ".");
-                                if arrDayParts.count == 3 {
-                                    dtc.day = Int(arrDayParts[0]);
-                                    dtc.month = Int(arrDayParts[1]);
-                                    dtc.year = Int(arrDayParts[2]);
-                                    aNewRecord.m_aDateTo = Calendar.current.date(from: dtc);
-                                }
-                            }
-                        }
-                    }
-                    if let aTextNode = node.xpath("div[@class='ktg']").first, let sText = aTextNode.text {
-                        let arrParts = sText.components(separatedBy: ">");
-                        aNewRecord.m_sFilter = arrParts.last?.trimmingCharacters(in: .whitespacesAndNewlines);
-                    }
-                    
-                    //dump(aNewRecord)
-                    if aNewRecord.m_aDate != nil {
-                        arrNewItems.append(aNewRecord);
-                    }
-                }
-            }
-        }
-    }
-    
-    //--------------------------------------------------------------------------
-    func refreshBiografDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsBiografProgram,
-                              url: "http://www.modranskybiograf.cz/klient-349/kino-114/",
-                              testFile: "/test_files/modrbiograf",
-                              completition: completition) { (doc, arrNewItems) -> Void in
-                                
-            let sAddress = "Modřanský biograf\nU Kina 1/44\n143 00 Praha 12 - Modřany";
-            
-            let unitFlags : Set<Calendar.Component> = [.day, .month, .year]
-            let aTodayComps = Calendar.current.dateComponents(unitFlags, from: Date())
-            
-            for node in doc.xpath("//div[@class='calendar-left-table-tr']") {
-                if let aLinkNode = node.xpath("a[@class='cal-event-item shortName']").first {
-                    
-                    if let aTitleNode = aLinkNode.xpath("h2").first, let sTitle = aTitleNode.text {
-                        if sTitle == "KINO NEHRAJE" {
-                            continue;
-                        }
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                        
-                        var dtc = DateComponents()
-                        if let aDateNode = aLinkNode.xpath("div[@class='ap_date']").first, let sDate = aDateNode.text {
-                            let sParts : [String] = sDate.components(separatedBy: ".");
-                            if sParts.count >= 2 {
-                                dtc.day = Int(sParts[0]);
-                                dtc.month = Int(sParts[1]);
-                                if dtc.day != nil && dtc.month != nil {
-                                    dtc.year = (dtc.month! < aTodayComps.month! ? aTodayComps.year!+1 : aTodayComps.year! )
-                                }
-                            }
-                        }
-                        if let aTimeNode = aLinkNode.xpath("div[@class='ap_time']").first, let sTime = aTimeNode.text {
-                            let sParts : [String] = sTime.components(separatedBy: ":");
-                            if sParts.count == 2 {
-                                dtc.hour = Int(sParts[0]);
-                                dtc.minute = Int(sParts[1]);
-                            }
-                        }
-                        aNewRecord.m_aDate = Calendar.current.date(from: dtc)
-                        
-                        if let sLink = aLinkNode["href"] {
-                            aNewRecord.m_sInfoLink = "http://www.modranskybiograf.cz" + sLink;
-                        }
-                        if let sDescription = aLinkNode["title"] {  // remove newlines
-                            let components = sDescription.components(separatedBy: NSCharacterSet.newlines)
-                            aNewRecord.m_sText = components.filter { !$0.isEmpty }.joined(separator: " | ");
-                        }
-                        if let aBuyLinkNode = aLinkNode.xpath("..//a[@class='cal-event-item-buy-span']").first {
-                            aNewRecord.m_sBuyLink = aBuyLinkNode["href"];
-                        }
-                        
-                        aNewRecord.m_sAddress = sAddress;
-                        
-                        //dump(aNewRecord)
-                        arrNewItems.append(aNewRecord);
-                    }
-                }
-            }
-        }
-    }
+    } */
     
     //--------------------------------------------------------------------------
     func findVokLocation(alias: String, ds: CRxDataSource) -> CRxEventRecord? {
@@ -966,94 +677,6 @@ class CRxDataSourceManager : NSObject {
             aVokDS.m_dateLastRefreshed = Date();
             save(dataSource: aVokDS);
             resetAllNotifications();
-        }
-    }
-    
-    //--------------------------------------------------------------------------
-    func refreshSpolkyDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-    }
-    
-    //--------------------------------------------------------------------------
-    func refreshSpolkyKomoDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsSpolkyProKomo,
-                              url: "http://www.spolekprokomorany.cz/aktuality/",
-                              testFile: "/test_files/spolekKomo",
-                              completition: completition) { (doc, arrNewItems) -> Void in
-                                
-            let df = DateFormatter();
-            df.dateFormat = "dd.MM.yyyy";
-            
-            for node in doc.xpath("//div[@class='blog-item-content']") {
-                if let aHeadNode = node.xpath("div[@class='blog-item-head']").first {
-                    
-                    if let aTitleNode = aHeadNode.xpath("h2").first, let sTitle = aTitleNode.text {
-                        let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                        
-                        if let aDateNode = aHeadNode.xpath("div[@class='blog-item-date']").first, let sDate = aDateNode.text {
-                            if let date = df.date(from: sDate.trimmingCharacters(in: .whitespacesAndNewlines)) {
-                                aNewRecord.m_aDate = date;
-                            }
-                        }
-                        if let sLink = aTitleNode.xpath("a").first, let link = sLink["href"] {
-                            aNewRecord.m_sInfoLink = "http://www.spolekprokomorany.cz" + link;
-                        }
-                        
-                        if let sDescription = node.xpath("div/div/div[@class='perex-content']").first, let text = sDescription.text {
-                            aNewRecord.m_sText = text.trimmingCharacters(in: .whitespacesAndNewlines);
-                        }
-                        
-                        //dump(aNewRecord)
-                        if aNewRecord.m_aDate != nil {
-                            aNewRecord.m_sFilter = "Spolek pro Komořany";
-                            arrNewItems.append(aNewRecord);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    //--------------------------------------------------------------------------
-    func refreshSpolkyProximaDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        refreshHtmlDataSource(sDsId: CRxDataSourceManager.dsSpolkyProxima,
-                              url: "http://www.proximasociale.cz/proxima-sociale/aktuality/",
-                              testFile: "/test_files/spolekProxima",
-                              completition: completition) { (doc, arrNewItems) -> Void in
-                              
-            var dtc = DateComponents();
-            let aCalendar = Calendar.current;
-            let arrMonths = ["0", "ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince"];
-            for node in doc.xpath("//div[@class='item clearfix']") {
-                if let aTitleNode = node.xpath("h2").first, let sTitle = aTitleNode.text {
-                    let aNewRecord = CRxEventRecord(title: sTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                    
-                    if let sLink = aTitleNode.xpath("a").first, let link = sLink["href"] {
-                        aNewRecord.m_sInfoLink = "http://www.proximasociale.cz" + link;
-                    }
-                    if let aDateNode = node.xpath("div/div[@class='date']").first, let sDate = aDateNode.text {
-                        let arrParts = sDate.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespaces);
-                        if arrParts.count >= 3 {
-                            dtc.day = Int(arrParts[0].trimmingCharacters(in: .punctuationCharacters));
-                            dtc.month = arrMonths.index(of: arrParts[1]);
-                            dtc.year = Int(arrParts[2]);
-                            aNewRecord.m_aDate = aCalendar.date(from: dtc);
-                        }
-                        
-                    }
-                    if let sDescription = node.xpath("div/p").first, let text = sDescription.text {
-                        aNewRecord.m_sText = text.trimmingCharacters(in: .whitespacesAndNewlines);
-                    }
-                    
-                    //dump(aNewRecord)
-                    if aNewRecord.m_aDate != nil {
-                        aNewRecord.m_sFilter = "Proxima Sociale";
-                        arrNewItems.append(aNewRecord);
-                    }
-                }
-            }
         }
     }
     

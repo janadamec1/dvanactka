@@ -21,11 +21,9 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/NSData+zlib (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
-  - Kanna (2.0.0)
 
 DEPENDENCIES:
   - Google/Analytics
-  - Kanna (~> 2.0.0)
 
 SPEC CHECKSUMS:
   FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
@@ -36,8 +34,7 @@ SPEC CHECKSUMS:
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
-  Kanna: 9a6637f72f5c77fe9c045b1efb2a5bb074754af8
 
-PODFILE CHECKSUM: fd59f2387fb4fa6c0ac3f0fc6bfdaf07294b9f84
+PODFILE CHECKSUM: bbd48dc7902b708537dcb1c0936dd2792cb75c20
 
 COCOAPODS: 1.1.1

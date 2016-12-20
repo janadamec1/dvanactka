@@ -6,6 +6,5 @@ target 'Dvanactka' do
   use_frameworks!
 
   # Pods for Dvanactka
-  pod 'Kanna', '~> 2.0.0'
   pod 'Google/Analytics'
 end
