@@ -209,10 +209,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 guard let date = rec.m_aDate else {
                     continue    // remove recoords without date
                 }
-                if date < today {   // do not show old events
+                if date < today && rec.m_aDateTo != nil && rec.m_aDateTo! >= today {
+                    sCatName = NSLocalizedString("Multi-day events", comment: "");
+                }
+                else if date < today {   // do not show old events
                     continue;
                 }
-                sCatName = df.string(from: date);
+                else {
+                    sCatName = df.string(from: date);
+                }
             }
             // categories
             if m_orderedItems[sCatName] == nil {
@@ -420,13 +425,35 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             
             cellEvent.m_lbTitle.text = rec.m_sTitle;
             cellEvent.m_lbText.text = rec.m_sText ?? "";
+            cellEvent.m_lbText.isHidden = (rec.m_sText == nil);
+            
             var sDateText = "";
             if let aDate = rec.m_aDate {
                 let df = DateFormatter();
                 df.dateStyle = .none;
                 df.timeStyle = .short;
+                let calendar = Calendar.current;
+                var dtc = calendar.dateComponents([.hour, .minute], from: aDate);
+                if dtc.hour! == 0 && dtc.minute == 0 {
+                    df.timeStyle = .none;
+                }
                 sDateText = df.string(from: aDate);
                 if let aDateTo = rec.m_aDateTo {
+                    dtc = calendar.dateComponents([.year, .month, .day], from: aDate);
+                    let dayFrom = calendar.date(from: dtc);
+                    dtc = calendar.dateComponents([.year, .month, .day], from: aDateTo);
+                    let dayTo = calendar.date(from: dtc);
+                    
+                    if dayFrom != dayTo {
+                        df.dateStyle = .short;
+                        sDateText = df.string(from: aDate);
+                    }
+
+                    df.timeStyle = .short;
+                    dtc = calendar.dateComponents([.hour, .minute], from: aDateTo);
+                    if dtc.hour! == 0 && dtc.minute == 0 {
+                        df.timeStyle = .none;
+                    }
                     sDateText += "\n- " + df.string(from: aDateTo);
                 }
             }
