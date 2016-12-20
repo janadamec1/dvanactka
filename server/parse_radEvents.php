@@ -80,12 +80,20 @@ foreach ($nodes as $i => $node) {
 	    	array_push($arrItems, $aNewRecord);
     }
 }
-
-$arr = array("items" => $arrItems);
-$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
-$filename = "dyn_radEvents.json";
-file_put_contents($filename, $encoded, LOCK_EX);
-chmod($filename, 0644);
-//echo $encoded;
+if (count($arrItems) > 0) {
+	/*
+	$arr = array("items" => $arrItems);
+	$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
+	*/
+	$encoded = "";
+	foreach ($arrItems as $i => $item) {
+		$encoded .= json_encode($item, JSON_UNESCAPED_UNICODE);
+		$encoded .= ",\n";
+	}
+	$filename = "items_radEvents.json";
+	file_put_contents($filename, $encoded, LOCK_EX);
+	chmod($filename, 0644);
+	//echo $encoded;
+}
 echo "done.";
 ?>

@@ -426,12 +426,12 @@ class CRxDataSourceManager : NSObject {
             return;
         }
         else if id == CRxDataSourceManager.dsSpolkyList {
-            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/spolkyList.json",
+            refreshStdJsonDataSource(sDsId: id, url: "spolkyList.json",
                                      testFile: "/test_files/spolkyList");
             return;
         }
         else if id == CRxDataSourceManager.dsCooltour {
-            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/p12kultpamatky.json",
+            refreshStdJsonDataSource(sDsId: id, url: "p12kultpamatky.json",
                                      testFile: "/test_files/p12kultpamatky");
             return;
         }
@@ -444,12 +444,12 @@ class CRxDataSourceManager : NSObject {
             }
         }
         else if id == CRxDataSourceManager.dsSosContacts {
-            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/sos.json",
+            refreshStdJsonDataSource(sDsId: id, url: "sos.json",
                                      testFile: "/test_files/sos");
             return;
         }
         else if id == CRxDataSourceManager.dsShops {
-            refreshStdJsonDataSource(sDsId: id, url: "http://dvanactka.info/own/p12/p12shops.json",
+            refreshStdJsonDataSource(sDsId: id, url: "p12shops.json",
                                      testFile: "/test_files/p12shops");
             return;
         }
@@ -466,17 +466,26 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshStdJsonDataSource(sDsId: String, url: String, testFile: String, completition: ((_ error: String?) -> Void)? = nil) {
+    func refreshStdJsonDataSource(sDsId: String, url: String, testFile: String?, completition: ((_ error: String?) -> Void)? = nil) {
         guard let aDS = self.m_dictDataSources[sDsId]
             else { return }
         
         var urlDownload: URL?
         if !g_bUseTestFiles {
-            urlDownload = URL(string: url);
+            if (url.hasPrefix("http")) {
+                urlDownload = URL(string: url);
+            }
+            else {
+                urlDownload = URL(string: "https://dvanactka.info/own/p12/" + url);
+            }
         }
-        else {
+        else if let testFile = testFile {
             urlDownload = Bundle.main.url(forResource: testFile, withExtension: "json");
         }
+        else {
+            return;
+        }
+        
         guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
         
         aDS.m_bIsBeingRefreshed = true;

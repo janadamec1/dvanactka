@@ -1,6 +1,6 @@
 <?php
 /* Set HTTP response header to plain text for debugging output */
-header("Content-type: text/plain");
+header("Content-type: text/plain; charset=utf-8");
 /* Use internal libxml errors -- turn on in production, off for debugging */
 libxml_use_internal_errors(true);
 
@@ -43,12 +43,21 @@ foreach ($nodes as $i => $node) {
 	    }
     }
 }
-
-$arr = array("items" => $arrItems);
-$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
-$filename = "dyn_spolekKomo.json";
-file_put_contents($filename, $encoded, LOCK_EX);
-chmod($filename, 0644);
-//echo $encoded;
+if (count($arrItems) > 0) {
+	/*
+	$arr = array("items" => $arrItems);
+	$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
+	*/
+	$encoded = "";
+	foreach ($arrItems as $i => $item) {
+		$encoded .= json_encode($item, JSON_UNESCAPED_UNICODE);
+		$encoded .= ",\n";
+	}
+	
+	$filename = "items_spolekKomo.json";
+	file_put_contents($filename, $encoded, LOCK_EX);
+	chmod($filename, 0644);
+	//echo $encoded;
+}
 echo "done.";
 ?>

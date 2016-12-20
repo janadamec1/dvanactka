@@ -51,12 +51,13 @@ foreach ($nodes as $i => $node) {
 	    	array_push($arrItems, $aNewRecord);
     }
 }
-
-$arr = array("items" => $arrItems);
-$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
-$filename = "dyn_radDeska.json";
-file_put_contents($filename, $encoded, LOCK_EX);
-chmod($filename, 0644);
-//echo $encoded;
+if (count($arrItems) > 0) {
+	$arr = array("items" => $arrItems);
+	$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
+	$filename = "dyn_radDeska.json";
+	file_put_contents($filename, $encoded, LOCK_EX);
+	chmod($filename, 0644);
+	//echo $encoded;
+}
 echo "done.";
 ?>
