@@ -367,9 +367,17 @@ class CRxEventRecord: NSObject {
 
     //---------------------------------------------------------------------------
     func openInfoLink() {
-        if let link = m_sInfoLink,
-            let url = URL(string: link) {
-            UIApplication.shared.openURL(url)
+        if let link = m_sInfoLink {
+            var aUrl: URL?;
+            if link.contains("?") {
+                aUrl = URL(string: link + "&utm_source=dvanactka.info");
+            }
+            else {
+                aUrl = URL(string: link + "?utm_source=dvanactka.info");
+            }
+            if let url = aUrl {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
     
@@ -425,7 +433,22 @@ class CRxEventRecord: NSObject {
         }
         return nil;
     }
-    
+
+    //---------------------------------------------------------------------------
+    func currentEvent() -> CRxEventInterval? {
+        guard let events = m_arrEvents
+            else { return nil; }
+        // find current event (intervals are pre-sorted)
+        let dayToday = Date();
+        
+        for aInt in events {
+            if aInt.m_dateStart >= dayToday && dayToday <= aInt.m_dateEnd {
+                return aInt;
+            }
+        }
+        return nil;
+    }
+
     //---------------------------------------------------------------------------
     func todayOpeningHoursString() -> String? {
         let dtc = Calendar.current.dateComponents([.weekday], from: Date());

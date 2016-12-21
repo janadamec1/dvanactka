@@ -47,6 +47,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     case disabled, tracking, visited
     }
     var m_eGameStatus: EGameStatus = .disabled;
+    var m_bGameWrongTime: Bool = false;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -219,6 +220,9 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 }
                 else {
                     // init tracking
+                    if rec.m_arrEvents != nil && rec.currentEvent() == nil {    // checkin at VOK location is also limited to time
+                        m_bGameWrongTime = true;
+                    }
                     m_eGameStatus = .tracking;
                     m_lbGameDist.text = "N/A";
                     m_btnGameCheckIn.isEnabled = false;
@@ -432,11 +436,19 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             let aDistance = locUser.distance(from: locRec);
             var sText = "\(Int(aDistance)) m";
             if aDistance > CRxGame.checkInDistance {
-                sText += " - " + NSLocalizedString("you are too far", comment: "");
+                if m_bGameWrongTime {
+                    sText += " - " + NSLocalizedString("too far & wrong time", comment: "");
+                }
+                else {
+                    sText += " - " + NSLocalizedString("you are too far", comment: "");
+                }
+            }
+            else if m_bGameWrongTime {
+                sText += " - " + NSLocalizedString("wrong time", comment: "");
             }
             m_lbGameDist.text = sText;
             
-            m_btnGameCheckIn.isEnabled = (aDistance <= CRxGame.checkInDistance);
+            m_btnGameCheckIn.isEnabled = (aDistance <= CRxGame.checkInDistance && !m_bGameWrongTime);
         }
     }
 

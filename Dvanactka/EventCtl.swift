@@ -582,8 +582,13 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.openBuyLink();
+            
+            // Google Analytics
+            if let tracker = GAI.sharedInstance().defaultTracker,
+                let builder = GAIDictionaryBuilder.createEvent(withCategory: "Buy", action: "Buy", label: title ?? "", value: 1) {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
         }
-        
     }
     
     //--------------------------------------------------------------------------
