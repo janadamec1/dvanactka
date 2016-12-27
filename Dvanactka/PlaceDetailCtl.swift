@@ -17,6 +17,7 @@ import UserNotifications
 class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbCategory: UILabel!
+    @IBOutlet weak var m_lbValidDates: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbAddressTitle: UILabel!
     @IBOutlet weak var m_lbAddress: UILabel!
@@ -76,6 +77,22 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             }
             else {
                 m_lbCategory.isHidden = true;
+            }
+            
+            if let date = rec.m_aDate {
+                if let dateTo = rec.m_aDateTo {
+                    let aInterval = CRxEventInterval(start: date, end: dateTo, type: "");
+                    m_lbValidDates.text = aInterval.toDisplayString();
+                }
+                else {
+                    let df = DateFormatter();
+                    df.dateStyle = .long;
+                    df.timeStyle = .short;
+                    m_lbValidDates.text = df.string(from: date);
+                }
+            }
+            else {
+                m_lbValidDates.isHidden = true;
             }
             
             if let address = rec.m_sAddress {

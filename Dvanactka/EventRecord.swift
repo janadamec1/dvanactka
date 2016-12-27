@@ -165,6 +165,7 @@ enum CRxCategory: String {
     case remeslnik, restaurace, obchod
     case children, sport, associations
     case waste, wasteElectro, wasteTextile, wasteGeneral
+    case nehoda, uzavirka
 }
 
 //---------------------------------------------------------------------------
@@ -326,6 +327,8 @@ class CRxEventRecord: NSObject {
         case .wasteElectro: return NSLocalizedString("Electric Waste", comment: "");
         case .wasteTextile: return NSLocalizedString("Textile Waste", comment: "");
         case .wasteGeneral: return NSLocalizedString("Waste", comment: "");
+        case .nehoda: return NSLocalizedString("Accident", comment: "");
+        case .uzavirka: return NSLocalizedString("Roadblock", comment: "");
         //default: return category.rawValue;
         }
     }
@@ -361,6 +364,8 @@ class CRxEventRecord: NSObject {
         case .wasteElectro: return "c_electrical";
         case .wasteTextile: return "c_textile";
         case .wasteGeneral: return "c_recycle";
+        case .nehoda: return "c_accident";
+        case .uzavirka: return "c_roadblock";
         //default: return "";
         }
     }

@@ -70,6 +70,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsWaste);
         m_arrSources.append(CRxDataSourceManager.dsReportFault);
         m_arrSources.append(CRxDataSourceManager.dsRadDeska);
+        m_arrSources.append(CRxDataSourceManager.dsTraffic);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
         m_arrSources.append(CRxDataSourceManager.dsGame);

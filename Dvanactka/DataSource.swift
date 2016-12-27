@@ -171,6 +171,7 @@ class CRxDataSourceManager : NSObject {
     static let dsSpolkyList = "dsSpolkyList";
     static let dsReportFault = "dsReportFault";
     static let dsGame = "dsGame";
+    static let dsTraffic = "dsTraffic";
     static let dsSavedNews = "dsSavedNews";
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
@@ -197,6 +198,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, refreshFreqHours: 1000);
         m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, refreshFreqHours: 60, filterAsParentView: true);
         m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places);
+        m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places);
     }
     
     //--------------------------------------------------------------------------
@@ -408,6 +410,10 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
             refreshStdJsonDataSource(sDsId: id, url: "dyn_biograf.json", testFile: nil);
+            return;
+        }
+        else if id == CRxDataSourceManager.dsTraffic {
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_doprava.json", testFile: nil);
             return;
         }
         else if id == CRxDataSourceManager.dsSpolkyList {
