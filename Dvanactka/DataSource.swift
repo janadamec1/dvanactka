@@ -153,7 +153,7 @@ class CRxDataSource : NSObject {
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 class CRxDataSourceManager : NSObject {
-    var m_dictDataSources = [String: CRxDataSource]()   // distionary on data sources, id -> source
+    var m_dictDataSources = [String: CRxDataSource]()   // dictionary on data sources, id -> source
     
     static let sharedInstance = CRxDataSourceManager()  // singleton
     private override init() {}     // "private" prevents others from using the default '()' initializer for this class (so being singleton)
@@ -187,7 +187,7 @@ class CRxDataSourceManager : NSObject {
         
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
-        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Offical Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
+        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("List", comment: ""), icon: "ds_usergroups", type: .places, refreshFreqHours: 60);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");

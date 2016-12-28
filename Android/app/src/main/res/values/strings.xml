@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Dvanactka</string>
+    <string name="d_days_ago" formatted="false">%d days ago</string>
+    <string name="now">now</string>
+    <string name="in_d_days" formatted="false">in %d days</string>
+    <string name="in_d_days_d_hours" formatted="false">in %d days, %d hours</string>
+    <string name="in_d_hours_d_minutes" formatted="false">in %d hours, %d minutes</string>
+    <string name="in_d_minutes" formatted="false">in %d minutes</string>
+    <string name="c_information">Information</string>
+    <string name="c_pharmacies">Pharmacies</string>
+    <string name="c_first_aid">First Aid</string>
+    <string name="c_police">Police</string>
+    <string name="c_landmarks">Landmarks</string>
+    <string name="c_memorial_trees">Memorial Trees</string>
+    <string name="c_significant_trees">Significant Trees</string>
+    <string name="c_points_of_interest">Points of Interest</string>
+    <string name="c_artisans">Artisans</string>
+    <string name="c_restaurants">Restaurants</string>
+    <string name="c_shops">Shops</string>
+    <string name="c_children">For Families</string>
+    <string name="c_sport">Sport</string>
+    <string name="c_associations">Associations</string>
+    <string name="c_waste_dumpsters">Waste Dumpsters</string>
+    <string name="c_waste_electro">Electric Waste</string>
+    <string name="c_waste_textile">Textile Waste</string>
+    <string name="c_waste">Waste</string>
+    <string name="c_accident">Accident</string>
+    <string name="c_roadblock">Roadblock</string>
+    <string name="closed_today">closed today</string>
+    <string name="news">News</string>
+    <string name="events">Events</string>
+    <string name="associations">Associations</string>
+    <string name="list">List</string>
+    <string name="trips">Trips</string>
+    <string name="waste">Waste</string>
+    <string name="help">Help</string>
+    <string name="report_fault">Report Fault</string>
+    <string name="game">Game</string>
+    <string name="shops">Shops</string>
+    <string name="work">Work</string>
+    <string name="traffix">Traffic</string>
+    <string name="official_board">Official Board</string>
+</resources>

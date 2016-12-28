@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="d_days_ago" formatted="false">před %d dny</string>
+    <string name="now">nyní</string>
+    <string name="in_d_days" formatted="false">za %d dní</string>
+    <string name="in_d_days_d_hours" formatted="false">za %d dní, %d hodin</string>
+    <string name="in_d_hours_d_minutes" formatted="false">za %d hodin, %d minut</string>
+    <string name="in_d_minutes" formatted="false">za %d minut</string>
+</resources>
