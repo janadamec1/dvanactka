@@ -2,13 +2,17 @@ package com.roomarranger.android.dvanactka;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -196,6 +201,8 @@ class CRxDataSource {
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 class CRxDataSourceManager {
+    static final boolean g_bUseTestFiles = true;
+
     HashMap<String, CRxDataSource> m_dictDataSources = new HashMap<String, CRxDataSource>(); // dictionary on data sources, id -> source
 
     static final String dsRadNews = "dsRadNews";
@@ -396,5 +403,216 @@ class CRxDataSourceManager {
 
         File urlNews = new File(m_urlDocumentsDir, "favNews.json");
         m_aSavedNews.loadFromJSON(urlNews);
+    }
+
+    //--------------------------------------------------------------------------
+    void showNetworkIndicator() {
+        if (m_nNetworkIndicatorUsageCount == 0) {
+            //UIApplication.shared.isNetworkActivityIndicatorVisible = true;
+        }
+        m_nNetworkIndicatorUsageCount += 1;
+    }
+
+    //--------------------------------------------------------------------------
+    void hideNetworkIndicator() {
+        if (m_nNetworkIndicatorUsageCount > 0) {
+            m_nNetworkIndicatorUsageCount -= 1;
+        }
+        if (m_nNetworkIndicatorUsageCount == 0) {
+            //UIApplication.shared.isNetworkActivityIndicatorVisible = false;
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    void refreshAllDataSources(boolean force) {
+
+        for (Map.Entry<String, CRxDataSource> dsIt: m_dictDataSources.entrySet()) {
+            refreshDataSource(dsIt.getKey(), force);
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    void refreshDataSource(String id, boolean force) {
+
+        CRxDataSource ds = m_dictDataSources.get(id);
+        if (ds == null) { return; }
+
+        // check the last refresh date
+        Date now = new Date();
+        if (!force && ds.m_dateLastRefreshed != null  &&
+                (now.getTime() - ds.m_dateLastRefreshed.getTime())/1000 < ds.m_nRefreshFreqHours*60*60) {
+            if (ds.delegate != null)
+                ds.delegate.dataSourceRefreshEnded(null);
+            return;
+        }
+
+        if (id.equals(CRxDataSourceManager.dsRadNews)) {
+            refreshStdJsonDataSource(id, "dyn_radAktual.json", null);
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsRadEvents)) {
+            refreshStdJsonDataSource(id, "dyn_events.php", null);
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsRadDeska)) {
+            refreshStdJsonDataSource(id, "dyn_radDeska.json", null);
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsWork)) {
+            //refreshWorkDataSource();
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsSpolky)) {
+            refreshStdJsonDataSource(id, "dyn_spolky.php", null);
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsBiografProgram)) {
+            refreshStdJsonDataSource(id, "dyn_biograf.json", null);
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsTraffic)) {
+            refreshStdJsonDataSource(id, "dyn_doprava.json", null);
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsSpolkyList)) {
+            refreshStdJsonDataSource(id, "spolkyList.json",
+                    "/test_files/spolkyList");
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsCooltour)) {
+            refreshStdJsonDataSource(id, "p12kultpamatky.json",
+                    "/test_files/p12kultpamatky");
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsWaste)) {
+            /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
+                ds.loadFromJSON(file: path);
+                refreshWasteDataSource();
+                ds.delegate?.dataSourceRefreshEnded(nil);
+                return;
+            }*/
+        }
+        else if (id.equals(CRxDataSourceManager.dsSosContacts)) {
+            refreshStdJsonDataSource(id, "sos.json",
+                    "/test_files/sos");
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsShops)) {
+            refreshStdJsonDataSource(id, "p12shops.json",
+                    "/test_files/p12shops");
+            return;
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // downloading daa from URL: http://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
+    // async
+    static abstract class DownloadCompletion {
+        abstract void run(String sData, String sError);
+    }
+    void getDataFromUrl(final URL url, final DownloadCompletion completion) {
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run(){
+                String sError = null;
+                String sData = null;
+                try {
+                    DataInputStream stream = new DataInputStream(url.openStream());
+                    BufferedInputStream bufferedReader = new BufferedInputStream(stream);
+
+                    byte[] buffer = new byte[2048];
+                    int bytesRead = 0;
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((bytesRead = bufferedReader.read(buffer))!= -1) {
+                        stringBuilder.append(new String(buffer, 0, bytesRead));
+                    }
+
+                    stream.close();
+                    sData = stringBuilder.toString();    // send to callee
+                }
+                catch (Exception e) {
+                    sError = e.getMessage();
+                }
+                if (completion != null) {
+                    try {
+                        completion.run(sData, sError);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
+
+    //--------------------------------------------------------------------------
+    void refreshStdJsonDataSource(String sDsId, String url, String testFile) {
+
+        final CRxDataSource aDS = m_dictDataSources.get(sDsId);
+        if (aDS == null) { return; }
+
+        URL urlDownload = null;
+        try {
+            if (!g_bUseTestFiles) {
+                if (url.startsWith("http")) {
+                    urlDownload = new URL(url);
+                }
+                else {
+                    urlDownload = new URL("https://dvanactka.info/own/p12/" + url);
+                }
+            }
+            else if (testFile != null) {
+                urlDownload = new URL("file:///android_asset" + testFile + "json");
+            }
+            else
+                return;
+        }
+        catch (Exception e) {
+            Log.e("JSON", "refreshStdJsonDataSource exception: " + e.getMessage());
+        }
+        if (urlDownload == null) {
+            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded("Cannot resolve URL");
+            return;
+        }
+
+        aDS.m_bIsBeingRefreshed = true;
+        showNetworkIndicator();
+
+        getDataFromUrl(urlDownload, new DownloadCompletion() {
+            @Override
+            void run(String sData, String sError) {
+                if (sData == null || sError != null)
+                {
+                    if (sError != null)
+                        Log.e("JSON", sError);
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {   // run in main thread
+                        @Override
+                        public void run() {
+                            aDS.m_bIsBeingRefreshed = false;
+                            ///completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                            hideNetworkIndicator();
+                        }
+                    });
+                    return;
+                }
+                // process the data
+                aDS.loadFromJSONString(sData);
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {   // run in main thread
+                    @Override
+                    public void run() {
+                        aDS.sortNewsByDate();
+                        aDS.m_dateLastRefreshed = new Date();
+                        aDS.m_bIsBeingRefreshed = false;
+                        save(aDS);
+                        hideNetworkIndicator();
+                        if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(null);
+                        if (delegate != null) delegate.dataSourceRefreshEnded(null);     // to refresh unread count badge
+                    }
+                });
+            }
+        });
     }
 }

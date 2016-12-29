@@ -40,4 +40,12 @@
     <string name="work">Work</string>
     <string name="traffix">Traffic</string>
     <string name="official_board">Official Board</string>
+    <string name="g_forester">Forester</string>
+    <string name="g_culturist">Culturist</string>
+    <string name="g_visitor">Visitor</string>
+    <string name="g_recyclist">Recyclist</string>
+    <string name="g_forester_hint">Visit trees.</string>
+    <string name="g_culturist_hint">Visit cultural landmarks.</string>
+    <string name="g_visitor_hint">Visit interesting places.</string>
+    <string name="g_recyclist_hint">Visit different dumpster types.</string>
 </resources>

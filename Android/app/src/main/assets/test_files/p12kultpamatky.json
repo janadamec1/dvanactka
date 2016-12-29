@@ -1,0 +1,260 @@
+{"items":[
+{
+"title":"Kostel Nanebevzetí Panny Marie",
+"locationLat":"50.003996",
+"locationLong":"14.407012",
+"text":"Kostel Nanebevzetí Panny Marie je římskokatolický kostel postavený na malém návrší v pražských Modřanech. Kostel obklopuje modřanský hřbitov a v jeho těsné blízkosti se také nachází budova fary. (zdroj: Wikipedia)",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Kostel_Nanebevzet%C3%AD_Panny_Marie_(Mod%C5%99any)",
+"category":"pamatka"
+},
+{
+"title":"Boží muka",
+"locationLat":"50.00588",
+"locationLong":"14.412685",
+"text":"Nad dolním výklenkem je pamětní deska s textem z kroniky, který uvádí, že u těchto božích muk byli pochováni padlí v boji o pontonový most při obléhání Prahy Prusy - 3.5.1757. (zdroj: Národní památkový ústav)",
+"infoLink":"http:\/\/www.pametni-desky-v-praze.cz\/products\/obeti-oblehani-prahy-prusy-v-zahrade-domu-cp-1464-v-ulici-u-pily-1-praha-4-modrany",
+"category":"pamatka"
+},
+{
+"title":"Viniční domek",
+"locationLat":"50.010885",
+"locationLong":"14.40349",
+"text":"Vinice je zmiňována již ve 12. století. Obytná budova pochází z 18. století, stodola z 1. poloviny 19. stol. (zdroj: Národní památkový ústav)",
+"infoLink":"https:\/\/www.praha12.cz\/o%2Dvinicnim%2Ddomku\/d-46847\/p1=47229",
+"category":"pamatka"
+},
+{
+"title":"Zámek Komořany",
+"locationLat":"49.9881989",
+"locationLong":"14.4040858",
+"checkinLocationLat":"49.9878558",
+"checkinLocationLong":"14.4050050",
+"text":"(Nepřístupný) zámek Komořany je architektonická památka v pražské čtvrti Komořany. Dříve na jeho místě stávala tvrz, dnes se jedná o dvoukřídlý zámeček s věží (je možné, že křídla byla původně čtyři). (zdroj: Wikipedia)",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Komo%C5%99any_(z%C3%A1mek)",
+"category":"pamatka"
+},
+{
+"title":"Hradiště nad Závistí",
+"locationLat":"49.962337",
+"locationLong":"14.408451",
+"text":"Hradiště Závist bylo největší keltské oppidum v Čechách. Nacházelo se na kopcích po obou stranách Břežanského údolí na pravém břehu Vltavy při dnešním jižním okraji Prahy. (zdroj: Wikipedia)",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Oppidum_Z%C3%A1vist",
+"category":"pamatka"
+},
+{
+"title":"Kaplička",
+"locationLat":"50.0037033",
+"locationLong":"14.4075831",
+"text":"Ke kapličce poblíž kostela vede křížová cesta a pokud půjdete ještě kousek dál do kopce, naskytnou se vám zajímavé výhledy.",
+"category":"zajimavost"
+},
+{
+"title":"Husova knihovna",
+"locationLat":"50.0029606",
+"locationLong":"14.4050842",
+"address":"Komořanská 12\nPraha 4",
+"text":"Husova knihovna v Modřanech má dlouholetou tradici, byla založena v roce 1922 na popud vzdělávácí modřanské Besedy Tyl.",
+"infoLink":"http:\/\/husova-knihovna-v-modranech.webnode.cz",
+"openingHours":"1: 1100-1800, 3: 900-1700, 4: 1300-1900",
+"category":"zajimavost"
+},
+{
+"title":"Sbor Českobratrské církve evangelické",
+"locationLat":"50.0009969",
+"locationLong":"14.4095028",
+"address":"Písková 263/6\nPraha 4",
+"text":"Nenápadný kostel (sborový dům) v zástavbě rodinných domů.",
+"infoLink":"http:\/\/modrany.evangnet.cz",
+"category":"zajimavost"
+},
+{
+"title":"Odpočinková louka u Vltavy",
+"locationLat":"49.9917169",
+"locationLong":"14.4014581",
+"text":"Klidné místo u soutoku Vltavy a Berounky",
+"category":"zajimavost"
+},
+{
+"title":"Vltava u přívozu",
+"locationLat":"50.0031931",
+"locationLong":"14.4027186",
+"text":"Oblíbený cíl procházek, krmení vodních ptáků a občas i nutrií.",
+"category":"zajimavost"
+},
+{
+"title":"Letiště Točná",
+"locationLat":"49.9867744",
+"locationLong":"14.4253350",
+"text":"Výletní místo nejenom pro piloty a letecké modeláře, ale díky velkému dětskému hřišti i pro celé rodiny. Dříve zde probíhal výcvik pilotů, motorové létání a plachtění. V hangáru je vidět letoun Lockheed Electra 10 A, který patřil Janu Antonínu Baťovi.",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Leti%C5%A1t%C4%9B_To%C4%8Dn%C3%A1", 
+"category":"zajimavost"
+},
+{
+"title":"Záchranná stanice pro volně žijící zvěř",
+"locationLat":"49.9947481",
+"locationLong":"14.4486594",
+"text":"Záchranná stanice může přijímat všechny druhy volně žijících živočichů, kromě rysa, medvěda a vlka. Nejčastějšími zvířecími pacienty v Praze bývají poštolky, rorýsi, holubi, ježci, netopýři a zajíci.",
+"infoLink":"http:\/\/www.lhmp.cz\/eko\/o-nas\/zachranna-stanice-hl-m-prahy",
+"category":"zajimavost"
+},
+{
+"title":"Třešňová alej",
+"locationLat":"49.9831389",
+"locationLong":"14.4509125",
+"text":"Alej se 44 třešňovými stromy byla vysázena 17. 11. 2015 v místě zanikajícího stromořadí a budoucí cyklostezky. Stromy mohla městská část pořídit díky finanční dotaci, již získala vítězstvím v internetovém hlasování s projektem „Výsadba třešňové aleje v Praze 12“.",
+"infoLink":"https:\/\/www.praha12.cz\/praha%2D12%2Dma%2Dnovou%2Dtresnovou%2Dalej\/d-44425\/p1=6422",
+"category":"zajimavost"
+},
+{
+"title":"Modřanská rokle",
+"locationLat":"50.0036583",
+"locationLong":"14.4325286",
+"text":"Erozní zářez Libušského potoka s několika místy s odkrytým geologickým profilem. Ochranářsky význačná svými lužními porosty v okolí potoků a výskytem teplomilných lučních společenstev na svazích, které jsou však ohrožovány nepůvodními vysázenými dřevinami, hlavně trnovníkem akátem.",
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Mod%C5%99ansk%C3%A1_rokle",
+"category":"zajimavost"
+},
+{
+"title":"Výhled nad vinicí",
+"locationLat":"50.0118500",
+"locationLong":"14.4043333",
+"text":"Nad Modřanskou vinicí se naskýtá témeř neznámý pohled na soutok Vltavy a Berounky, na Závist s největším keltským oppidem v Čechách a dále až na kraj Brdské vrchoviny.",
+"category":"zajimavost"
+},
+{
+"title":"Vila Belárie",
+"locationLat":"50.0142133",
+"locationLong":"14.4042839",
+"text":"Belárie je původně jméno vily čp. 262, postavené v roce 1917 pražským drogistou Vítkem. Později se název přenesl na celou kolonii domků ležící na severozápadním okraji Modřan u Modřanské ulice v dolní části svahu ostrohu s Tyršovou čtvrtí, nedaleko Vltavy.",
+"infoLink":"https:\/\/cs.m.wikipedia.org\/wiki\/Bel%C3%A1rie",
+"category":"zajimavost"
+},
+{
+"title":"Dům dětí a mládeže",
+"locationLat":"50.0116864",
+"locationLong":"14.4133122",
+"text":"Snad jediná veřejná budova v Modřanech se zajímavou moderní architekturou. Vyhlídkový komín je přistupný jen několikrát do roka. Stavba podle návrhu architekta Vlada Miluniće (známého jako spoluautora Tančícího domu) byla zrealizována v roce 2005.",
+"infoLink":"http:\/\/bydleni.idnes.cz\/autor-tanciciho-domu-postavil-v-praze-uzasne-detske-centrum-pro-\/architektura.aspx?c=A080923_160057_architektura_rez",
+"category":"zajimavost"
+},
+{
+"title":"Dva duby letní v Točné",
+"locationLat":"49.9719361",
+"locationLong":"14.4336608",
+"text":"Stromy jsou krajinnou dominantou při vjezdu do Točné od Dolních Břežan. Mají nadprůměrný vzrůst a věk.\n\nDruh: dub letní\nOdhadované stáří: 150 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Lípa srdčitá Na Šabatce",
+"locationLat":"49.9877208",
+"locationLong":"14.4058094",
+"text":"Strom je poslední pozůstatkem zahrady dříve náležící ke komořanskému zámku. Lípa je lokální krajinnou dominantou.\n\nDruh: lípa srdčitá\nOdhadované stáří: 190 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Dub letní u Nouzova",
+"locationLat":"49.9795125",
+"locationLong":"14.4150897",
+"text":"Strom je hraničním stromem nadprůměrného vzrůstu a věku.\n\nDruh: dub letní\nOdhadované stáří: 175 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Duby letní v Cholupické bažantnici",
+"locationLat":"49.9812350",
+"locationLong":"14.4550197",
+"text":"Stromy jsou nejmohutnějšími dřevinami tamější bažantnice a jsou hraničními stromy.\n\nDruh: dub letní\nOdhadované stáří: 240 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Dub letní v Modřanech",
+"locationLat":"50.0041856",
+"locationLong":"14.4164125",
+"text":"Strom je posledním pozůstatkem někdejší čtvrti Potočky, která byla zrušena. Ještě před několika lety byl výraznou krajinnou dominantou.\n\nDruh: dub letní\nOdhadované stáří: 170 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Dub letní letní V Hrobech",
+"locationLat":"50.0092289",
+"locationLong":"14.4431369",
+"text":"Dřevina má nadprůměrný vzrůst, věk a je hraničním stromem.\n\nDruh: dub letní\nOdhadované stáří: 185 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Dub severně od ulice Branišovská",
+"locationLat":"49.9743867",
+"locationLong":"14.4226497",
+"text":"Dřevina má nadprůměrný vzrůst, věk a je hraničním stromem.\n\nDruh: dub letní\nOdhadované stáří: 195 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Dub v lesním porostu Kamýk",
+"locationLat":"50.0142231",
+"locationLong":"14.4394242",
+"text":"Strom má nadprůměrný vzrůst a věk. Pozoruhodný je též jeho kmen, který se na několika místech rozděluje a následně spojuje.\n\nDruh: dub letní\nOdhadované stáří: 165 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Dub v polích mezi Točnou a Cholupicemi",
+"locationLat":"49.9755753",
+"locationLong":"14.4408147",
+"checkinLocationLat":"49.9760556",
+"checkinLocationLong":"14.4416319",
+"text":"Strom je solitérním jedincem s esteticky pěknou korunou. Dub si zahrál v české filmové pohádce režiséra Antonína Moskalyka Třetí princ, jež vznikla na motivy pohádky Karla Jaromíra Erbena O dvou bratřích. V roce 2013 se stal finalistou ankety Strom roku.\n\nDruh: dub letní\nOdhadované stáří: 90 let",
+"category":"pamatnyStrom"
+},
+{
+"title":"Lípa Evropy v Modřanech",
+"locationLat":"50.0046653",
+"locationLong":"14.4174461",
+"text":"Strom byl vysazen jako lípa Evropy při oslavách Evropského dne v Praze 9. května 2000.\n\nDruh: lípa srdčitá\nOdhadované stáří: 17 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Lípa republiky v Modřanech",
+"locationLat":"50.0050319",
+"locationLong":"14.4176386",
+"text":"Strom byl vysazen jako lípa republiky k 90. výroční vzniku ČSR dne 23.10.2008. Lípa je genetickým potomkem prastaré památné Mikulovické lípy rostoucí nedaleko Klášterce nad Ohří.\n\nDruh: lípa srdčitá\nOdhadované stáří: 15 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Strom milénia v Modřanech",
+"locationLat":"50.0071606",
+"locationLong":"14.4046694",
+"text":"Strom byl vysazen 19. dubna 2001 u příležitosti vstupu do 3. tisíciletí.\n\nDruh: lípa srdčitá\nOdhadované stáří: 18 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Lípa 17. listopadu v Modřanech",
+"locationLat":"50.0071464",
+"locationLong":"14.4045622",
+"text":"Strom byl vysazen při 20. výročí od sametové revoluce dne 16. 11. 2009.\n\nDruh: lípa srdčitá\nOdhadované stáří: 18 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Stromořadí studentů v Modřanech",
+"locationLat":"50.0070222",
+"locationLong":"14.4044883",
+"text":"Alej lip byla vysazena v roce 1940 občany Modřan na památku 9 studentů popravených nacisty 17. 11. 1939.\n\nDruh: lípa srdčitá, lípa velkolistá, lípa zelená\nOdhadované stáří: 75 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Masarykovy lípy Na Beránku",
+"locationLat":"50.0010747",
+"locationLong":"14.4318053",
+"text":"Stromy byly vysazeny 7. března 1936 na počest narození dvojčat v někdejší usedlosti. K výsadbě byl pozván prezident Tomáš Garrigue Masaryk.\n\nDruh: lípa srdčitá\nOdhadované stáří: 80 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Lípa sv. Anežky Na Beránku",
+"locationLat":"50.0009942",
+"locationLong":"14.4318817",
+"text":"Strom byl vysazen 4. listopadu 2011 v 10h jako pamětní lípa sv. Anežky Přemyslovny. Dřevina připomíná 800 let od narození sv. Anežky České (1211-1282).\n\nDruh: lípa srdčitá\nOdhadované stáří: 6 let",
+"category":"vyznamnyStrom"
+},
+{
+"title":"Lípy svobody v Cholupicích",
+"locationLat":"49.9886497",
+"locationLong":"14.4484606",
+"text":"Stromy byly vysazeny jako lípy svobody 30. dubna 1919 na paměť vzniku ČSR. Původně byly před hasičskou zbrojnicí vysazeny čtyři lípy.\n\nDruh: lípa srdčitá, lípa velkolistá\nOdhadované stáří: 100 let",
+"category":"vyznamnyStrom"
+}
+]}
