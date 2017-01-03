@@ -2,8 +2,12 @@ package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,10 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate
 {
     ArrayList<String> m_arrSources = new ArrayList<String>();    // data source ids in order they should appear in the collection
+
+    public static final String EXTRA_DATASOURCE = "com.roomarranger.dvanactka.DATASOURCE";
+    public static final String EXTRA_PARENT_FILTER = "com.roomarranger.dvanactka.PARENT_FILTER";
+    public static final String EXTRA_EVENT_RECORD = "com.roomarranger.dvanactka.EVENT_RECORD";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,8 +69,26 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+                String sDsSelected = m_arrSources.get(position);
+                CRxDataSource aDS = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDsSelected);
+
+                Intent intent = null;
+                if (sDsSelected.equals(CRxDataSourceManager.dsReportFault)) {
+                    //performSegue(withIdentifier: "segueReportFault", sender: self);
+                }
+                else if (sDsSelected.equals(CRxDataSourceManager.dsGame)) {
+                    intent = new Intent(MainActivity.this, GameCtl.class);
+                }
+                else if (aDS != null && aDS.m_bFilterAsParentView) {
+                    intent = new Intent(MainActivity.this, PlacesFilterCtl.class);
+                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, sDsSelected);
+                }
+                else {
+                    intent = new Intent(MainActivity.this, EventCtl.class);
+                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, sDsSelected);
+                }
+                if (intent != null)
+                    startActivity(intent);
             }
         });
     }

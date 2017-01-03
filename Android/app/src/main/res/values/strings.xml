@@ -48,4 +48,5 @@
     <string name="g_culturist_hint">Visit cultural landmarks.</string>
     <string name="g_visitor_hint">Visit interesting places.</string>
     <string name="g_recyclist_hint">Visit different dumpster types.</string>
+    <string name="multi_day_events">Multi-day events</string>
 </resources>

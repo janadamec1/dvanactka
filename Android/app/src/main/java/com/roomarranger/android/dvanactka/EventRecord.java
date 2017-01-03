@@ -204,29 +204,30 @@ class CRxCategory {
     }
 
     //---------------------------------------------------------------------------
-    static String categoryIconName(String category) {
+    static int categoryIconName(String category) {
+        if (category == null) return -1;
         switch (category) {
-            case informace: return "c_info";
-            case lekarna: return "c_pharmacy";
-            case prvniPomoc: return "c_firstaid";
-            case policie: return "c_police";
-            case pamatka: return "c_monument";
-            case pamatnyStrom: return "c_tree";
-            case vyznamnyStrom: return "c_tree";
-            case zajimavost: return "c_trekking";
-            case remeslnik: return "c_work";
-            case restaurace: return "c_restaurant";
-            case obchod: return "c_shop";
-            case children: return "c_children";
-            case sport: return "c_sport";
-            case associations: return "c_usergroups";
-            case waste: return "c_waste";
-            case wasteElectro: return "c_electrical";
-            case wasteTextile: return "c_textile";
-            case wasteGeneral: return "c_recycle";
-            case nehoda: return "c_accident";
-            case uzavirka: return "c_roadblock";
-            default: return "";
+            case informace: return R.drawable.c_info;
+            case lekarna: return R.drawable.c_pharmacy;
+            case prvniPomoc: return R.drawable.c_firstaid;
+            case policie: return R.drawable.c_police;
+            case pamatka: return R.drawable.c_monument;
+            case pamatnyStrom: return R.drawable.c_tree;
+            case vyznamnyStrom: return R.drawable.c_tree;
+            case zajimavost: return R.drawable.c_trekking;
+            case remeslnik: return R.drawable.c_work;
+            case restaurace: return R.drawable.c_restaurant;
+            case obchod: return R.drawable.c_shop;
+            case children: return R.drawable.c_children;
+            case sport: return R.drawable.c_sport;
+            case associations: return R.drawable.c_usergroups;
+            case waste: return R.drawable.c_waste;
+            case wasteElectro: return R.drawable.c_electrical;
+            case wasteTextile: return R.drawable.c_textile;
+            case wasteGeneral: return R.drawable.c_recycle;
+            case nehoda: return R.drawable.c_accident;
+            case uzavirka: return R.drawable.c_roadblock;
+            default: return -1;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.roomarranger.android.dvanactka;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
@@ -201,7 +202,7 @@ class CRxDataSource {
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 class CRxDataSourceManager {
-    static final boolean g_bUseTestFiles = true;
+    private static final boolean g_bUseTestFiles = false;
 
     HashMap<String, CRxDataSource> m_dictDataSources = new HashMap<String, CRxDataSource>(); // dictionary on data sources, id -> source
 
@@ -223,6 +224,7 @@ class CRxDataSourceManager {
 
     int m_nNetworkIndicatorUsageCount = 0;
     File m_urlDocumentsDir;
+    AssetManager m_assetMan;
     CRxDataSource m_aSavedNews = new CRxDataSource(CRxDataSourceManager.dsSavedNews, "Saved News", "ds_news", CRxDataSource.DATATYPE_news);    // (records over all news sources)
     Set<String> m_setPlacesNotified = new HashSet<String>();  // (titles)
     CRxDataSourceRefreshDelegate delegate = null; // one global delegate (main viewController)
@@ -239,6 +241,7 @@ class CRxDataSourceManager {
 
     void defineDatasources(Context ctx) {
         Resources res = ctx.getResources();
+        m_assetMan = res.getAssets();
         m_urlDocumentsDir = ctx.getDir("json", Context.MODE_PRIVATE);
 
         m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news));
@@ -517,7 +520,13 @@ class CRxDataSourceManager {
                 String sError = null;
                 String sData = null;
                 try {
-                    DataInputStream stream = new DataInputStream(url.openStream());
+                    InputStream inStream;
+                    if (url.toString().startsWith("file:///android_asset/"))
+                        inStream = m_assetMan.open(url.toString().substring(22));
+                    else
+                        inStream = url.openStream();
+
+                    DataInputStream stream = new DataInputStream(inStream);
                     BufferedInputStream bufferedReader = new BufferedInputStream(stream);
 
                     byte[] buffer = new byte[2048];
@@ -563,7 +572,7 @@ class CRxDataSourceManager {
                 }
             }
             else if (testFile != null) {
-                urlDownload = new URL("file:///android_asset" + testFile + "json");
+                urlDownload = new URL("file:///android_asset" + testFile + ".json");
             }
             else
                 return;
