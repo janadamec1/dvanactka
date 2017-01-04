@@ -104,6 +104,7 @@ class CRxDataSource {
         // load data
         try {
             JSONArray jsonItems = json.getJSONArray("items");
+            m_arrItems.clear();
             for (int i = 0; i < jsonItems.length(); i++) {
                 JSONObject item = jsonItems.getJSONObject(i);
                 CRxEventRecord aNewRecord = CRxEventRecord.fromJson(item);
@@ -197,6 +198,17 @@ class CRxDataSource {
             });
         }
     }
+
+    //--------------------------------------------------------------------------
+    CRxEventRecord recordWithHash(String sRecordHash) {
+        for (int i = 0; i < m_arrItems.size(); i++) {
+            if (m_arrItems.get(i).recordHash().equals(sRecordHash)) {
+                return m_arrItems.get(i);
+            }
+        }
+        return null;
+    }
+
 }
 
 //--------------------------------------------------------------------------

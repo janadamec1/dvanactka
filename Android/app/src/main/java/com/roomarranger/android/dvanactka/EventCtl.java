@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +35,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EventCtl extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+interface CRxDetailRefreshParentDelegate {
+    void detailRequestsRefresh();
+}
+
+public class EventCtl extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,
+        CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, SwipeRefreshLayout.OnRefreshListener {
 
     CRxDataSource m_aDataSource = null;
     String m_sParentFilter = null;          // show only items with this filter (for ds with filterAsParentView)
@@ -46,8 +51,11 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     Location m_coordLast = null;
     GoogleApiClient m_GoogleApiClient = null;
     LocationRequest m_LocationRequest;
-    //SwipeRefreshLayout m_refreshControl;
+    SwipeRefreshLayout m_refreshControl;
     Toast m_refreshMessage;
+
+    static CRxDetailRefreshParentDelegate g_CurrentRefreshDelegate = null;  // hack for passing pointer to child activity
+    CRxDetailRefreshParentDelegate m_refreshParentDelegate = null;          // delegate of this activity
 
     ExpandListAdapter m_adapter;
 
@@ -158,6 +166,24 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         cell.m_imgIcon = (ImageView)view.findViewById(R.id.icon);
                         break;
                 }
+                if (cell.m_btnWebsite != null)
+                    cell.m_btnWebsite.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null)
+                                aRecClicked.openInfoLink(m_context);
+                        }
+                    });
+                if (cell.m_btnBuy != null)
+                    cell.m_btnBuy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null)
+                                aRecClicked.openBuyLink(m_context);
+                        }
+                    });
                 view.setTag(cell);
             } else {
                 cell = (NewsListItemHolder)view.getTag();
@@ -165,6 +191,15 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
             ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
             CRxEventRecord rec = arr.get(childPosition);
+
+            if (cell.m_btnWebsite != null)
+                cell.m_btnWebsite.setTag(rec);
+            if (cell.m_btnAction != null)
+                cell.m_btnAction.setTag(rec);
+            if (cell.m_btnBuy != null)
+                cell.m_btnBuy.setTag(rec);
+            if (cell.m_btnAddToCalendar != null)
+                cell.m_btnAddToCalendar.setTag(rec);
 
             // fill cell contents
             cell.m_lbTitle.setText(rec.m_sTitle);
@@ -305,11 +340,19 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_ctl);
 
+        m_refreshParentDelegate = EventCtl.g_CurrentRefreshDelegate;
+        EventCtl.g_CurrentRefreshDelegate = null;
+
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
+
+        if (m_aDataSource.m_bIsBeingRefreshed) {
+            m_aDataSource.delegate = this;
+            m_refreshControl.setRefreshing(true);
+        }
 
         if (m_sParentFilter != null) {
             setTitle(m_sParentFilter);
@@ -330,8 +373,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
                     ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
                     CRxEventRecord rec = arr.get(childPosition);
+                    EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
                     Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
-                    intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, m_aDataSource.m_sId);
+                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
                     intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
                     startActivity(intent);
                     return false;
@@ -349,6 +393,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             m_LocationRequest.setFastestInterval(5000);
             m_LocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         }
+
+        m_refreshControl = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
+        m_refreshControl.setOnRefreshListener(this);
+        m_refreshMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
     }
 
     //--------------------------------------------------------------------------
@@ -440,7 +488,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         @Override
                         public int compare(CRxEventRecord t0, CRxEventRecord t1)
                         {
-                            return t0.m_aDate.after(t1.m_aDate) ? 1 : -1;
+                            return t0.m_aDate.after(t1.m_aDate) ? -1 : 1;
                         }
                     });
                     break;
@@ -449,7 +497,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         @Override
                         public int compare(CRxEventRecord t0, CRxEventRecord t1)
                         {
-                            return t0.m_aDate.before(t1.m_aDate) ? 1 : -1;
+                            return t0.m_aDate.before(t1.m_aDate) ? -1 : 1;
                         }
                     });
                     break;
@@ -572,6 +620,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     @Override
+    public void detailRequestsRefresh() {
+        sortRecords();
+        if (m_adapter != null)
+            m_adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onConnectionSuspended(int i) {
         Toast.makeText(this, "Google Play Services disconnected. Please re-connect.",
                 Toast.LENGTH_SHORT).show();
@@ -588,5 +643,32 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_coordLast = location;
         m_bUserLocationAcquired = true;
         updateListWhenLocationChanged();
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public void onRefresh() {       // from refreshLayout
+        m_aDataSource.delegate = this;
+        CRxDataSourceManager.sharedInstance().refreshDataSource(m_aDataSource.m_sId, true);
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public void dataSourceRefreshEnded(String error) { // protocol CRxDataSourceRefreshDelegate
+        m_aDataSource.delegate = null;
+
+        if (error != null) {
+            m_refreshControl.setRefreshing(false);
+            m_refreshMessage.setText(error);
+            m_refreshMessage.show();
+        }
+        else {
+            setRecordsDistance();
+            sortRecords();
+            if (m_adapter != null)
+                m_adapter.notifyDataSetChanged();
+            ////self.refreshControl?.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
+            m_refreshControl.setRefreshing(false);
+        }
     }
 }

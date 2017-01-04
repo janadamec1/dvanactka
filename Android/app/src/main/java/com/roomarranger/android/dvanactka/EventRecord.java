@@ -38,8 +38,8 @@ class CRxHourInterval
         int iColon = string.indexOf(':');
         int iHyphen = string.indexOf('-');
         if (iColon > 0 && iHyphen > 0) {
-            String day = string.substring(0, iColon-1);
-            String hourStart = string.substring(iColon+1, iHyphen-1);
+            String day = string.substring(0, iColon);
+            String hourStart = string.substring(iColon+1, iHyphen);
             String hourEnd = string.substring(iHyphen+1);
             try {
                 int iDay = Integer.parseInt(day);

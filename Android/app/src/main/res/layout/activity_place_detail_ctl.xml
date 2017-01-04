@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/activity_place_detail_ctl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,4 +12,172 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.roomarranger.android.dvanactka.PlaceDetailCtl">
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:id="@+id/title"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#808080"
+        android:id="@+id/category"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/date"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"/>
+    <TextView
+        android:text="Address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:id="@+id/address_title"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/address"/>
+    <TextView
+        android:text="Opening Hours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:id="@+id/hours_title"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Po: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hours"/>
+        <TextView
+            android:text="10:00 - 19:00"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/hours2"/>
+    </LinearLayout>
+
+    <CheckBox
+        android:text="Show notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkNotifications"/>
+
+    <TextView
+        android:text="notification.explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notificationNote"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="@string/website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
+            android:id="@+id/btnWebsite"
+            android:maxLines="1"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <TextView
+        android:text="contact.note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactNote"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="Email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
+            android:id="@+id/btnEmail"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <Button
+            android:text="Phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
+            android:id="@+id/btnPhone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Game"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gameTitle"/>
+        <TextView
+            android:text="123 m"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/gameDistance"/>
+        <Button
+            android:text="I'm here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
+            android:id="@+id/btnGameCheckIn"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="Navigate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
+            android:id="@+id/btnNavigate"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <Button
+            android:text="Report Mistake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
+            android:id="@+id/btnReportMistake"/>
+    </LinearLayout>
+
+    <TextView
+        android:text="Note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/note"/>
+
+</LinearLayout>

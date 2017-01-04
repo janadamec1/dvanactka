@@ -28,6 +28,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#808080"
         android:id="@+id/date"/>
 
     <TextView
@@ -46,13 +47,18 @@
             android:background="@null"
             android:textColor="@color/colorTint"
             android:id="@+id/btnWebsite"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
             android:src="@drawable/action"
             android:scaleType="centerCrop"
-            android:id="@+id/btnAction"/>
+            android:id="@+id/btnAction"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

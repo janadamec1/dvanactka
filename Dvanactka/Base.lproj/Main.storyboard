@@ -1094,7 +1094,6 @@
                     <connections>
                         <outlet property="m_btnEmail" destination="HnF-vY-94c" id="CbD-J8-pVT"/>
                         <outlet property="m_btnGameCheckIn" destination="xBA-L9-zg6" id="SGW-Ch-hpq"/>
-                        <outlet property="m_btnMap" destination="Jcs-vc-UN8" id="mAb-nx-WE6"/>
                         <outlet property="m_btnNavigate" destination="Jcs-vc-UN8" id="4Fy-Ka-NCW"/>
                         <outlet property="m_btnPhone" destination="W6Y-zE-BJw" id="Q6p-6c-Zfh"/>
                         <outlet property="m_btnReportMistake" destination="Jx3-Fi-Nyt" id="wWN-on-fj8"/>

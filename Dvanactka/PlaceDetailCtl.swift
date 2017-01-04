@@ -28,7 +28,6 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnEmail: UIButton!
     @IBOutlet weak var m_btnPhone: UIButton!
-    @IBOutlet weak var m_btnMap: UIButton!
     @IBOutlet weak var m_map: MKMapView!
     @IBOutlet weak var m_lbShowNotifications: UILabel!
     @IBOutlet weak var m_chkShowNotifications: UISwitch!
@@ -42,7 +41,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     
     var m_locManager = CLLocationManager();
     var m_aRecord: CRxEventRecord?
-    var m_refreshParentDelegate: CRxDetailRefershParentDelegate?
+    var m_refreshParentDelegate: CRxDetailRefreshParentDelegate?
     
     enum EGameStatus {
     case disabled, tracking, visited
@@ -226,7 +225,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             }
             else {
                 m_map.isHidden = true;
-                m_btnMap.isHidden = true;
+                m_btnNavigate.isHidden = true;
             }
             
             if rec.m_aLocation != nil && CRxGame.isCategoryCheckInAble(rec.m_eCategory) {

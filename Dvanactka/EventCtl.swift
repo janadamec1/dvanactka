@@ -12,7 +12,7 @@ import MessageUI
 import EventKit
 import EventKitUI
 
-protocol CRxDetailRefershParentDelegate {
+protocol CRxDetailRefreshParentDelegate {
     func detailRequestsRefresh();
 }
 
@@ -38,7 +38,7 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
 
-class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefershParentDelegate, CRxFilterChangeDelegate {
+class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
     @IBOutlet weak var m_viewFooter: UIView!
     @IBOutlet weak var m_lbFooterText: UILabel!
@@ -52,7 +52,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
     var m_bUserLocationAcquired = false;
 
-    var m_refreshParentDelegate: CRxDetailRefershParentDelegate?;
+    var m_refreshParentDelegate: CRxDetailRefreshParentDelegate?;
     
     override func viewDidLoad() {
         super.viewDidLoad()

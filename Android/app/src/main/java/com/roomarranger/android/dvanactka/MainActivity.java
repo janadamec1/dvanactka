@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         dsm.defineDatasources(this);
         dsm.loadData();
         dsm.refreshAllDataSources(false);
+        //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
         //application.applicationIconBadgeNumber = 0;
         CRxGame.sharedInstance.init(this);
         CRxGame.sharedInstance.reinit();

@@ -53,4 +53,14 @@
     <string name="buy">Buy</string>
     <string name="add_to_calendar">Add to Calendar</string>
     <string name="continue_reading_on_website">Continue reading on website</string>
+    <string name="waste_textile_longdesc">Waste.textile.longdesc</string>
+    <string name="waste_electro_longdesc">Waste.electro.longdesc</string>
+    <string name="waste_vok_longdesc">Waste.vok.longdesc</string>
+    <string name="timetable">Timetable</string>
+    <string name="you_were_already_here">You were already here</string>
+    <string name="call_prompt">Call</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="please_describe_problem">(Please describe problem here)</string>
+    <string name="send_mail">Send mail...</string>
 </resources>
