@@ -49,4 +49,8 @@
     <string name="g_visitor_hint">Visit interesting places.</string>
     <string name="g_recyclist_hint">Visit different dumpster types.</string>
     <string name="multi_day_events">Multi-day events</string>
+    <string name="website">Website</string>
+    <string name="buy">Buy</string>
+    <string name="add_to_calendar">Add to Calendar</string>
+    <string name="continue_reading_on_website">Continue reading on website</string>
 </resources>

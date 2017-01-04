@@ -6,4 +6,5 @@
     <color name="colorBlueBackground">#4c83be</color>
     <color name="colorCellBkg">#245a7f</color>
     <color name="colorActionBarBkg">#172560</color>
+    <color name="colorTint">#007AFF</color>
 </resources>

@@ -12,13 +12,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="17sp"
             android:id="@+id/title"/>
         <ImageButton
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/btnFavorite"
             android:src="@drawable/goldstar25dis"
             android:scaleType="centerCrop"
+            android:background="@null"
             android:layout_marginRight="8dp" />
 
     </LinearLayout>
@@ -38,13 +40,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:text="Continue reading on website"
+            android:text="@string/continue_reading_on_website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
+            android:textColor="@color/colorTint"
             android:id="@+id/btnWebsite"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:src="@drawable/action"
             android:scaleType="centerCrop"
             android:id="@+id/btnAction"/>

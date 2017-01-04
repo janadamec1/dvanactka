@@ -457,12 +457,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                     sDateText += "\n- " + df.string(from: aDateTo);
                 }
             }
-            else {
-                cellEvent.m_btnAddToCalendar.isHidden = true;
-            }
             cellEvent.m_lbDate.text = sDateText
             cellEvent.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
             cellEvent.m_btnBuy.isHidden = (rec.m_sBuyLink==nil);
+            cellEvent.m_btnAddToCalendar.isHidden = (rec.m_aDate==nil);
             
             let iBtnTag = btnTag(from: indexPath);
             cellEvent.m_btnWebsite.tag = iBtnTag;

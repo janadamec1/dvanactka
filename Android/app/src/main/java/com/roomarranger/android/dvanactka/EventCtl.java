@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +50,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     Toast m_refreshMessage;
 
     ExpandListAdapter m_adapter;
+
+    static String formatDate(int iDateStyle, int iTimeStyle, Date date) {
+        if (iDateStyle == -1 && iTimeStyle == -1) return "";
+        if (iDateStyle == -1) return DateFormat.getTimeInstance(iTimeStyle).format(date);
+        if (iTimeStyle == -1) return DateFormat.getDateInstance(iDateStyle).format(date);
+        return DateFormat.getDateTimeInstance(iDateStyle, iTimeStyle).format(date);
+    }
 
     static class NewsListItemHolder {
         TextView m_lbTitle;
@@ -141,7 +151,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     case CRxDataSource.DATATYPE_events:
                         cell.m_lbDate = (TextView)view.findViewById(R.id.date);
                         cell.m_btnWebsite = (Button)view.findViewById(R.id.btnWebsite);
-                        //cell.m_btnAddToCalendar = (Button)view.findViewById(R.id.btnAddToCalendar);
+                        cell.m_btnBuy = (Button)view.findViewById(R.id.btnBuy);
+                        cell.m_btnAddToCalendar = (Button)view.findViewById(R.id.btnAddToCalendar);
                         break;
                     case CRxDataSource.DATATYPE_places:
                         cell.m_imgIcon = (ImageView)view.findViewById(R.id.icon);
@@ -158,22 +169,124 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             // fill cell contents
             cell.m_lbTitle.setText(rec.m_sTitle);
             switch (m_aDataSource.m_eType) {
-                case CRxDataSource.DATATYPE_news:
+                case CRxDataSource.DATATYPE_news: {
+                    String sText = "";
+                    int iBoldTo = 0;
+                    if (rec.m_sFilter != null) {
+                        sText += rec.m_sFilter;
+                        iBoldTo = sText.length();
+                    }
+                    if (rec.m_sText != null) {
+                        if (sText.length() > 0) {
+                            sText += " - ";
+                        }
+                        sText += rec.m_sText;
+                    }
+                    final SpannableString str = new SpannableString(sText);
+                    if (iBoldTo > 0)
+                        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, iBoldTo, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    cell.m_lbText.setText(str);
+                    cell.m_lbText.setVisibility(sText.isEmpty() ? View.GONE : View.VISIBLE);
+
+                    String sDateText = "";
+                    if (rec.m_aDate != null) {
+                        if (rec.m_aDateTo != null) {
+                            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+                            sDateText += df.format(rec.m_aDate) + " - " + df.format(rec.m_aDateTo);
+                        }
+                        else {
+                            DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
+                            sDateText = df.format(rec.m_aDate);
+                        }
+                    }
+                    cell.m_lbDate.setText(sDateText);
+                    cell.m_btnWebsite.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
+                    cell.m_btnAction.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
+                    cell.m_btnFavorite.setImageDrawable(getDrawable(rec.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis));
+                    break;
+                }
+
+                case CRxDataSource.DATATYPE_events: {
+
                     if (rec.m_sText != null)
                         cell.m_lbText.setText(rec.m_sText);
-                    break;
+                    cell.m_lbText.setVisibility(rec.m_sText == null ? View.GONE : View.VISIBLE);
 
-                case CRxDataSource.DATATYPE_events:
-                    break;
+                    String sDateText = "";
+                    if (rec.m_aDate != null) {
+                        int iDateStyle = -1;
+                        int iTimeStyle = DateFormat.SHORT;
 
-                case CRxDataSource.DATATYPE_places:
-                    if (rec.m_sText != null)
-                        cell.m_lbText.setText(rec.m_sText);
+                        Calendar calFrom = Calendar.getInstance();
+
+                        if ((int)calFrom.get(Calendar.HOUR) == 0 && (int)calFrom.get(Calendar.MINUTE) == 0) {
+                            iTimeStyle = -1;
+                        }
+                        sDateText = EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDate);
+                        if (rec.m_aDateTo != null) {
+                            Calendar calTo = Calendar.getInstance();
+
+                            if ((int)calFrom.get(Calendar.DAY_OF_YEAR) != (int)calTo.get(Calendar.DAY_OF_YEAR)) {
+                                iDateStyle = DateFormat.SHORT;
+                                sDateText = EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDate);
+                            }
+
+                            iTimeStyle = DateFormat.SHORT;
+                            if ((int)calTo.get(Calendar.HOUR) == 0 && (int)calTo.get(Calendar.MINUTE) == 0) {
+                                iTimeStyle = -1;
+                            }
+                            sDateText += "\n- " + EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDateTo);
+                        }
+                    }
+                    cell.m_lbDate.setText(sDateText);
+                    cell.m_btnWebsite.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
+                    cell.m_btnBuy.setVisibility(rec.m_sBuyLink == null ? View.GONE : View.VISIBLE);
+                    cell.m_btnAddToCalendar.setVisibility(rec.m_aDate==null ? View.GONE : View.VISIBLE);
+                    break;
+                }
+
+                case CRxDataSource.DATATYPE_places: {
+
+                    String sDistance = "";
+                    if (m_bUserLocationAcquired && rec.m_aLocation != null) {
+                        if (rec.m_distFromUser > 1000) {
+                            sDistance = String.format("%.2f km ", rec.m_distFromUser/1000.0);
+                        }
+                        else {
+                            sDistance = String.format("%d m ", (int)rec.m_distFromUser);
+                        }
+                    }
+                    String sSubtitle = "";
+                    String sNextEvent = rec.nextEventOccurenceString(m_context);
+                    String sTodayHours = rec.todayOpeningHoursString(m_context);
+                    if (sNextEvent != null) {
+                        sSubtitle = sNextEvent;
+                    }
+                    else if (sTodayHours != null) {
+                        sSubtitle = sTodayHours;
+                    }
+                    else if (rec.m_sText != null) {
+                        sSubtitle = rec.m_sText;
+                    }
+                    if (!sSubtitle.isEmpty()) {
+                        if (!sDistance.isEmpty()) {
+                            sDistance += " | ";
+                        }
+                        sDistance += sSubtitle;
+                    }
+                    if (sDistance.isEmpty()) {
+                        sDistance = "  ";    // must not be empty, causes strange effects
+                    }
+                    cell.m_lbText.setText(sDistance);
+
                     int iIcon = CRxCategory.categoryIconName(rec.m_eCategory);
+                    if (rec.m_bMarkFavorite)
+                        iIcon = R.drawable.goldstar25;
                     if (iIcon != -1)
                         cell.m_imgIcon.setImageDrawable(getDrawable(iIcon));
                     cell.m_imgIcon.setVisibility(iIcon != -1 ? View.VISIBLE : View.GONE);
                     break;
+                }
             }
             return view;
         }
@@ -246,7 +359,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_orderedItems.clear();
         m_orderedCategories.clear();
 
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.FULL, 0);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
 
         Calendar c = Calendar.getInstance();
         Date today = c.getTime();
