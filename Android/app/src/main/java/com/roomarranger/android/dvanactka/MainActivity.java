@@ -27,6 +27,8 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     public static final String EXTRA_DATASOURCE = "com.roomarranger.dvanactka.DATASOURCE";
     public static final String EXTRA_PARENT_FILTER = "com.roomarranger.dvanactka.PARENT_FILTER";
     public static final String EXTRA_EVENT_RECORD = "com.roomarranger.dvanactka.EVENT_RECORD";
+    public static final String EXTRA_USER_LOCATION_LAT = "com.roomarranger.dvanactka.USER_LOCATION_LAT";
+    public static final String EXTRA_USER_LOCATION_LONG = "com.roomarranger.dvanactka.USER_LOCATION_LONG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,9 +62,9 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.sharedInstance().delegate = this;
 
-        try {
+        /*try {
             getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorActionBarBkg)));
-        } catch (Exception e) {}
+        } catch (Exception e) {}*/
 
         GridView gridview = (GridView)findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this, m_arrSources));

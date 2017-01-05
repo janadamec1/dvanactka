@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -543,12 +544,73 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (m_aDataSource == null) return super.onCreateOptionsMenu(menu);
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_event_ctl, menu);
+
+        MenuItem actFilter = menu.findItem(R.id.action_filter);
+        MenuItem actMap = menu.findItem(R.id.action_map);
+        MenuItem actList = menu.findItem(R.id.action_list);
+        MenuItem actSaved = menu.findItem(R.id.action_saved);
+        actFilter.setVisible(false);
+        actMap.setVisible(false);
+        actList.setVisible(false);
+        actSaved.setVisible(false);
+        // make those visible
+        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
+            actMap.setVisible(true);
+        }
+        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_news && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews)) {
+            actSaved.setVisible(true);
+            if (m_aDataSource.m_bFilterable)
+                actFilter.setVisible(true);
+        }
+        if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSpolky)) {
+            actList.setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 onBackPressed();        // go to the activity that brought user here, not to parent activity
                 return true;
+
+            case R.id.action_map: {
+                Intent intent = new Intent(EventCtl.this, MapCtl.class);
+                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                if (m_sParentFilter != null)
+                    intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_sParentFilter);
+                if (m_bUserLocationAcquired)
+                {
+                    intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_coordLast.getLatitude());
+                    intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_coordLast.getLongitude());
+                }
+                startActivity(intent);
+                return true;
+            }
+            case R.id.action_saved: {
+                EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
+                Intent intent = new Intent(EventCtl.this, MapCtl.class);
+                intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSavedNews);
+                startActivity(intent);
+                return true;
+            }
+
+            case R.id.action_filter:
+                return true;
+
+            case R.id.action_list: {
+                Intent intent = new Intent(EventCtl.this, MapCtl.class);
+                intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSpolkyList);
+                startActivity(intent);
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

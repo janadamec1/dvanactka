@@ -63,4 +63,7 @@
     <string name="yes">Yes</string>
     <string name="please_describe_problem">(Please describe problem here)</string>
     <string name="send_mail">Send mail...</string>
+    <string name="map">Map</string>
+    <string name="filter">Filter</string>
+    <string name="saved_news">Saved news</string>
 </resources>

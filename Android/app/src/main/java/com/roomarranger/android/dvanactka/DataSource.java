@@ -193,6 +193,7 @@ class CRxDataSource {
                 @Override
                 public int compare(CRxEventRecord t0, CRxEventRecord t1)
                 {
+                    if (t0.m_aDate.equals(t1.m_aDate)) return 0;
                     return t0.m_aDate.after(t1.m_aDate) ? 1 : -1;
                 }
             });
