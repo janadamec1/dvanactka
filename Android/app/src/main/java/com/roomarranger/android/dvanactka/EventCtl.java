@@ -119,8 +119,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             }
             TextView tvName = (TextView) view.findViewById(android.R.id.text1);
             tvName.setText(m_orderedCategories.get(groupPosition));
-            if (m_orderedCategories.size() < 2)
-                view.setVisibility(View.GONE);
+            //if (m_orderedCategories.size() < 2)
+            //    view.setVisibility(View.GONE);
             return view;
         }
 
@@ -185,6 +185,23 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                                 aRecClicked.openBuyLink(m_context);
                         }
                     });
+                if (cell.m_btnFavorite != null)
+                    cell.m_btnFavorite.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null) {
+                                aRecClicked.m_bMarkFavorite = !aRecClicked.m_bMarkFavorite;
+                                ImageButton btn = (ImageButton)view;
+                                btn.setImageResource(aRecClicked.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);
+                                CRxDataSourceManager.sharedInstance().setFavorite(aRecClicked, aRecClicked.m_bMarkFavorite);
+
+                                if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews) && m_refreshParentDelegate != null ){
+                                    m_refreshParentDelegate.detailRequestsRefresh();
+                                }
+                            }
+                        }
+                    });
                 view.setTag(cell);
             } else {
                 cell = (NewsListItemHolder)view.getTag();
@@ -201,6 +218,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 cell.m_btnBuy.setTag(rec);
             if (cell.m_btnAddToCalendar != null)
                 cell.m_btnAddToCalendar.setTag(rec);
+            if (cell.m_btnFavorite != null)
+                cell.m_btnFavorite.setTag(rec);
 
             // fill cell contents
             cell.m_lbTitle.setText(rec.m_sTitle);
@@ -238,7 +257,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     cell.m_lbDate.setText(sDateText);
                     cell.m_btnWebsite.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
                     cell.m_btnAction.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
-                    cell.m_btnFavorite.setImageDrawable(getDrawable(rec.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis));
+                    cell.m_btnFavorite.setImageResource(rec.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);
                     break;
                 }
 
@@ -346,7 +365,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
-        m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
+        if (sDataSource.equals(CRxDataSourceManager.dsSavedNews))
+            m_aDataSource = CRxDataSourceManager.sharedInstance().m_aSavedNews;
+        else
+            m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
 
@@ -596,17 +618,22 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             }
             case R.id.action_saved: {
                 EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
-                Intent intent = new Intent(EventCtl.this, MapCtl.class);
+                Intent intent = new Intent(EventCtl.this, EventCtl.class);
                 intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSavedNews);
                 startActivity(intent);
                 return true;
             }
 
-            case R.id.action_filter:
+            case R.id.action_filter: {
+                EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
+                Intent intent = new Intent(EventCtl.this, FilterCtl.class);
+                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                startActivity(intent);
                 return true;
+            }
 
             case R.id.action_list: {
-                Intent intent = new Intent(EventCtl.this, MapCtl.class);
+                Intent intent = new Intent(EventCtl.this, EventCtl.class);
                 intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSpolkyList);
                 startActivity(intent);
                 return true;

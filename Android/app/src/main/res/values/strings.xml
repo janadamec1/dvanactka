@@ -66,4 +66,10 @@
     <string name="map">Map</string>
     <string name="filter">Filter</string>
     <string name="saved_news">Saved news</string>
+    <string name="navigate">Navigate</string>
+    <string name="report_mistake">Report Mistake</string>
+    <string name="i_m_here">I\'m here</string>
+    <string name="show_notifications">Show notifications</string>
+    <string name="opening_hours">Opening Hours</string>
+    <string name="address">Address</string>
 </resources>

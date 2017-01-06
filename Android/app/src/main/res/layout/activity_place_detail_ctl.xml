@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     android:id="@+id/activity_place_detail_ctl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.roomarranger.android.dvanactka.PlaceDetailCtl">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.roomarranger.android.dvanactka.PlaceDetailCtl">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
+        android:text="Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="17sp"
+        android:textStyle="bold"
         android:id="@+id/title"/>
     <TextView
         android:layout_width="match_parent"
@@ -32,20 +38,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/text"/>
     <TextView
-        android:text="Address"
+        android:text="@string/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="17sp"
+        android:textStyle="bold"
         android:id="@+id/address_title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/address"/>
     <TextView
-        android:text="Opening Hours"
+        android:text="@string/opening_hours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="17sp"
+        android:textStyle="bold"
         android:id="@+id/hours_title"/>
 
     <LinearLayout
@@ -66,7 +74,7 @@
     </LinearLayout>
 
     <CheckBox
-        android:text="Show notifications"
+        android:text="@string/show_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chkNotifications"/>
@@ -87,8 +95,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/colorTint"
-            android:id="@+id/btnWebsite"
-            android:maxLines="1"/>
+            android:id="@+id/btnWebsite"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -129,8 +136,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Game"
+            android:text="@string/game"
             android:textSize="17sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gameTitle"/>
@@ -142,7 +150,7 @@
             android:gravity="center"
             android:id="@+id/gameDistance"/>
         <Button
-            android:text="I'm here"
+            android:text="@string/i_m_here"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -150,12 +158,18 @@
             android:id="@+id/btnGameCheckIn"/>
     </LinearLayout>
 
+    <fragment android:id="@+id/map"
+              android:name="com.google.android.gms.maps.MapFragment"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="180dp"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:text="Navigate"
+            android:text="@string/navigate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -166,7 +180,7 @@
             android:layout_height="1dp"
             android:layout_weight="1" />
         <Button
-            android:text="Report Mistake"
+            android:text="@string/report_mistake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -181,3 +195,4 @@
         android:id="@+id/note"/>
 
 </LinearLayout>
+</ScrollView>

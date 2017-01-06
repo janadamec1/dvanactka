@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -15,13 +17,22 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.places.Place;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.util.Locale;
 
-public class PlaceDetailCtl extends Activity {
+public class PlaceDetailCtl extends Activity implements OnMapReadyCallback {
     TextView m_lbTitle;
     TextView m_lbCategory;
     TextView m_lbValidDates;
@@ -35,7 +46,7 @@ public class PlaceDetailCtl extends Activity {
     Button m_btnWebsite;
     Button m_btnEmail;
     Button m_btnPhone;
-    //m_map: MKMapView!
+    GoogleMap m_map;
     CheckBox m_chkShowNotifications;
     TextView m_lbNotificationExplanation;
     TextView m_lbContactNote;
@@ -93,6 +104,7 @@ public class PlaceDetailCtl extends Activity {
         m_lbGameDist = (TextView)findViewById(R.id.gameDistance);
         m_btnGameCheckIn = (Button)findViewById(R.id.btnGameCheckIn);
 
+        setTitle("  "); // empty action bar title
         m_lbTitle.setText(rec.m_sTitle);
         m_lbText.setText(rec.m_sText);
         substituteRecordText();
@@ -239,7 +251,11 @@ public class PlaceDetailCtl extends Activity {
             m_btnPhone.setVisibility(View.GONE);
         }
 
+        MapFragment mapFragment = (MapFragment)(getFragmentManager().findFragmentById(R.id.map));
         if (rec.m_aLocation != null) {
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            mapFragment.getMapAsync(this);
+
             /*let regView = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500);
             m_map.setRegion(regView, animated:false);
             m_map.addAnnotation(CRxMapItem(record: rec));
@@ -254,7 +270,9 @@ public class PlaceDetailCtl extends Activity {
             }*/
         }
         else {
-            ///m_map.setVisibility(View.GONE);
+            try {
+                mapFragment.getView().setVisibility(View.GONE);
+            } catch (Exception e) {}
             m_btnNavigate.setVisibility(View.GONE);
         }
 
@@ -372,6 +390,19 @@ public class PlaceDetailCtl extends Activity {
                 }
             });
         }
+        if (rec.m_aLocation != null) {
+            m_btnNavigate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sLoc = String.format(Locale.US, "%.4f,%.4f", rec.m_aLocation.getLatitude(), rec.m_aLocation.getLongitude());
+                    String sTitle = rec.m_sTitle.replaceAll(" ", "+");
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + sLoc + "(" + sTitle + ")&mode=w");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
+                }
+            });
+        }
     }
 
     @Override
@@ -383,6 +414,31 @@ public class PlaceDetailCtl extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        m_map = googleMap;
+
+        LatLng coord = MapCtl.loc2LatLng(rec.m_aLocation);
+
+        MarkerOptions opt = new MarkerOptions().position(coord)
+                .title(rec.m_sTitle);
+        int iIcon = CRxCategory.categoryIconName(rec.m_eCategory);
+        if (iIcon != -1)
+            opt = opt.icon(BitmapDescriptorFactory.fromResource(iIcon));
+        m_map.addMarker(opt);
+
+        if (rec.m_aLocCheckIn != null) {
+            m_map.addMarker(new MarkerOptions().position(MapCtl.loc2LatLng(rec.m_aLocCheckIn))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        }
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coord, 15);
+        m_map.moveCamera(cameraUpdate);
+
+        UiSettings settings = m_map.getUiSettings();
+        settings.setZoomControlsEnabled(true);
     }
 
     //--------------------------------------------------------------------------

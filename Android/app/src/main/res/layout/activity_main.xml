@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.roomarranger.android.dvanactka.MainActivity"
     android:background="@color/colorBlueBackground">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:src="@drawable/p12_logo"/>
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/gridview"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="fill_parent"
+              android:paddingLeft="0dp"
+              android:paddingRight="10dp"
+              android:paddingBottom="10dp"
               android:columnWidth="96dp"
               android:numColumns="auto_fit"
               android:verticalSpacing="10dp"
               android:horizontalSpacing="10dp"
               android:stretchMode="spacingWidthUniform"
               android:gravity="center"/>
-</RelativeLayout>
+</LinearLayout>
