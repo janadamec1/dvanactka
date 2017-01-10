@@ -3,6 +3,7 @@ package com.roomarranger.android.dvanactka;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,20 @@ import android.widget.ListView;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+interface CRxFilterChangeDelegate {
+    void filterChanged(Set<String> setOut);
+}
 
 public class FilterCtl extends Activity {
 
     CRxDataSource m_aDataSource = null;
+    Set<String> m_setOut = new HashSet<String>();
     ArrayList<String> m_arrFilter = new ArrayList<String>();
-    CRxDetailRefreshParentDelegate m_refreshParentDelegate = null;          // delegate of this activity
+    CRxFilterChangeDelegate m_delegate = null;          // delegate of this activity
+    ArrayAdapter<String> m_adapter = null;
 
     public class FilterSourceAdapter extends ArrayAdapter<String> {
         FilterSourceAdapter(Context context, ArrayList<String> array) {
@@ -32,10 +41,24 @@ public class FilterCtl extends Activity {
             CheckedTextView tvName = (CheckedTextView)view.findViewById(android.R.id.text1);
             tvName.setText(sValue);
 
-            boolean bChecked = true;
-            if (m_aDataSource.m_setFilter != null)
-                bChecked = !m_aDataSource.m_setFilter.contains(sValue);
+            boolean bChecked = !m_setOut.contains(sValue);
             tvName.setChecked(bChecked);
+
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CheckedTextView chk = (CheckedTextView)view;
+                    String sChkValue = chk.getText().toString();
+                    boolean bCheck = !chk.isChecked();
+                    if (bCheck)
+                        m_setOut.remove(sChkValue);
+                    else
+                        m_setOut.add(sChkValue);
+                    chk.setChecked(bCheck);
+                    if (m_delegate != null)
+                        m_delegate.filterChanged(m_setOut);
+                }
+            });
             return view;
         }
     }
@@ -45,13 +68,16 @@ public class FilterCtl extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_ctl);
 
-        m_refreshParentDelegate = EventCtl.g_CurrentRefreshDelegate;
-        EventCtl.g_CurrentRefreshDelegate = null;
+        m_delegate = EventCtl.g_CurrentFilterChangeDelegate;
+        EventCtl.g_CurrentFilterChangeDelegate = null;
 
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
+
+        if (m_aDataSource.m_setFilter != null)
+            m_setOut.addAll(m_aDataSource.m_setFilter);
 
         for (CRxEventRecord rec: m_aDataSource.m_arrItems) {
             if (rec.m_sFilter != null && !m_arrFilter.contains(rec.m_sFilter)) {
@@ -63,10 +89,17 @@ public class FilterCtl extends Activity {
         coll.setStrength(Collator.PRIMARY);
         Collections.sort(m_arrFilter, coll);
 
+        m_adapter = new FilterSourceAdapter(this, m_arrFilter);
         ListView lvList = (ListView)findViewById(R.id.listView);
-        lvList.setAdapter(new FilterSourceAdapter(this, m_arrFilter));
-
+        lvList.setAdapter(m_adapter);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_filter_ctl, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -74,6 +107,25 @@ public class FilterCtl extends Activity {
             case android.R.id.home:
                 onBackPressed();        // go to the activity that brought user here, not to parent activity
                 return true;
+
+            case R.id.action_all: {
+                m_setOut.clear();
+                if (m_adapter != null)
+                    m_adapter.notifyDataSetChanged();
+                if (m_delegate != null)
+                    m_delegate.filterChanged(m_setOut);
+                return true;
+            }
+            case R.id.action_none: {
+                m_setOut.clear();
+                if (m_arrFilter != null)
+                    m_setOut.addAll(m_arrFilter);
+                if (m_adapter != null)
+                    m_adapter.notifyDataSetChanged();
+                if (m_delegate != null)
+                    m_delegate.filterChanged(m_setOut);
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

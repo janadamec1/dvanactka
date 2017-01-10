@@ -72,4 +72,6 @@
     <string name="show_notifications">Show notifications</string>
     <string name="opening_hours">Opening Hours</string>
     <string name="address">Address</string>
+    <string name="none">None</string>
+    <string name="all">All</string>
 </resources>

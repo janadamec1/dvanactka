@@ -35,13 +35,14 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 interface CRxDetailRefreshParentDelegate {
     void detailRequestsRefresh();
 }
 
 public class EventCtl extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,
-        CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, SwipeRefreshLayout.OnRefreshListener {
+        CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate, SwipeRefreshLayout.OnRefreshListener {
 
     CRxDataSource m_aDataSource = null;
     String m_sParentFilter = null;          // show only items with this filter (for ds with filterAsParentView)
@@ -56,6 +57,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     Toast m_refreshMessage;
 
     static CRxDetailRefreshParentDelegate g_CurrentRefreshDelegate = null;  // hack for passing pointer to child activity
+    static CRxFilterChangeDelegate g_CurrentFilterChangeDelegate = null;
     CRxDetailRefreshParentDelegate m_refreshParentDelegate = null;          // delegate of this activity
 
     ExpandListAdapter m_adapter;
@@ -625,7 +627,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             }
 
             case R.id.action_filter: {
-                EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
+                EventCtl.g_CurrentFilterChangeDelegate = EventCtl.this;
                 Intent intent = new Intent(EventCtl.this, FilterCtl.class);
                 intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
                 startActivity(intent);
@@ -699,6 +701,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         }
     }
 
+    //---------------------------------------------------------------------------
     void updateListWhenLocationChanged()
     {
         // reorder list of VOKs and show distance to current location
@@ -708,6 +711,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             m_adapter.notifyDataSetChanged();
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public void detailRequestsRefresh() {
         sortRecords();
@@ -715,18 +719,32 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             m_adapter.notifyDataSetChanged();
     }
 
+    //---------------------------------------------------------------------------
+    @Override
+    public void filterChanged(Set<String> setOut) {
+        if (m_aDataSource == null) return;
+        m_aDataSource.m_setFilter = setOut;
+        CRxDataSourceManager.sharedInstance().save(m_aDataSource);
+        sortRecords();
+        if (m_adapter != null)
+            m_adapter.notifyDataSetChanged();
+    }
+
+    //---------------------------------------------------------------------------
     @Override
     public void onConnectionSuspended(int i) {
         Toast.makeText(this, "Google Play Services disconnected. Please re-connect.",
                 Toast.LENGTH_SHORT).show();
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection to Google Play Services failed.",
                 Toast.LENGTH_SHORT).show();
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public void onLocationChanged(Location location) {
         m_coordLast = location;
