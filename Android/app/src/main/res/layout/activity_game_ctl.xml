@@ -1,14 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/activity_game_ctl"
+    android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.roomarranger.android.dvanactka.GameCtl">
+    tools:context="com.roomarranger.android.dvanactka.MainActivity"
+    android:background="@color/colorBlueBackground">
+
+    <LinearLayout
+        android:id="@+id/playerScore"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:background="#0F000000"
+        >
+
+        <TextView
+            android:text="Level XX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:id="@+id/level"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:id="@+id/progress"
+            android:max="100"
+            android:progress="50"
+            />
+
+        <TextView
+            android:text="Y / Z XP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#90FFFFFF"
+            android:gravity="center"
+            android:id="@+id/xp"/>
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playerScore"
+        android:layout_above="@+id/note"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:columnWidth="160dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="20dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+
+    <TextView
+        android:text="@string/game_progress_is_lost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="8dp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:id="@+id/note"/>
 
 </RelativeLayout>

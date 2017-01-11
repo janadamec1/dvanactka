@@ -45,6 +45,7 @@
         </activity>
         <activity
             android:name=".GameCtl"
+            android:label="@string/game"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity">
             <meta-data

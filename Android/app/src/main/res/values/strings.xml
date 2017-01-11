@@ -74,4 +74,11 @@
     <string name="address">Address</string>
     <string name="none">None</string>
     <string name="all">All</string>
+    <string name="game_toofar_wrongtime"><![CDATA[too far & wrong time]]></string>
+    <string name="game_toofar">you are too far</string>
+    <string name="game_wrongtime">wrong time</string>
+    <string name="game_level_up">Level up!</string>
+    <string name="game_you_are_at_level">You are now at level</string>
+    <string name="game_progress_is_lost">Game progress is lost when uninstalling the app.</string>
+    <string name="level">Level</string>
 </resources>

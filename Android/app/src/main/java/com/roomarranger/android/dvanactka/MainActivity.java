@@ -23,6 +23,8 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate
 {
     ArrayList<String> m_arrSources = new ArrayList<String>();    // data source ids in order they should appear in the collection
+    static boolean s_bInited = false;
+    BaseAdapter m_adapter = null;
 
     public static final String EXTRA_DATASOURCE = "com.roomarranger.dvanactka.DATASOURCE";
     public static final String EXTRA_PARENT_FILTER = "com.roomarranger.dvanactka.PARENT_FILTER";
@@ -36,15 +38,18 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // from AppDelegate.swift
-        CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
-        dsm.defineDatasources(this);
-        dsm.loadData();
-        dsm.refreshAllDataSources(false);
-        //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
-        //application.applicationIconBadgeNumber = 0;
-        CRxGame.sharedInstance.init(this);
-        CRxGame.sharedInstance.reinit();
+        if (!s_bInited) {
+            // from AppDelegate.swift
+            CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
+            dsm.defineDatasources(this);
+            dsm.loadData();
+            dsm.refreshAllDataSources(false);
+            //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
+            //application.applicationIconBadgeNumber = 0;
+            CRxGame.sharedInstance.init(this);
+            CRxGame.sharedInstance.reinit();
+            s_bInited = true;
+        }
 
         // from ViewController.swift
         m_arrSources.add(CRxDataSourceManager.dsRadNews);
@@ -54,7 +59,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsShops);
         m_arrSources.add(CRxDataSourceManager.dsWork);
         m_arrSources.add(CRxDataSourceManager.dsWaste);
-        m_arrSources.add(CRxDataSourceManager.dsReportFault);
+        //m_arrSources.add(CRxDataSourceManager.dsReportFault);
         m_arrSources.add(CRxDataSourceManager.dsRadDeska);
         m_arrSources.add(CRxDataSourceManager.dsTraffic);
         m_arrSources.add(CRxDataSourceManager.dsCooltour);
@@ -66,8 +71,9 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorActionBarBkg)));
         } catch (Exception e) {}*/
 
+        m_adapter = new ImageAdapter(this, m_arrSources);
         GridView gridview = (GridView)findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this, m_arrSources));
+        gridview.setAdapter(m_adapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -99,6 +105,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     static class CollectionViewHolder {
         ImageView imgIcon;
         TextView lbName;
+        TextView lbBadge;
     }
 
     public class ImageAdapter extends BaseAdapter {
@@ -125,6 +132,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 cell = new CollectionViewHolder();
                 cell.lbName = (TextView)convertView.findViewById(R.id.textView);
                 cell.imgIcon = (ImageView)convertView.findViewById(R.id.imageView);
+                cell.lbBadge = (TextView)convertView.findViewById(R.id.badge);
                 convertView.setTag(cell);
             } else {
                 cell = (CollectionViewHolder)convertView.getTag();
@@ -138,13 +146,27 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                     cell.lbName.setText(ds.m_sShortTitle);
                 else
                     cell.lbName.setText(ds.m_sTitle);
+
+                if (ds.m_eType != CRxDataSource.DATATYPE_news) {
+                    cell.lbBadge.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    int iUnread = ds.unreadItemsCount();
+                    cell.lbBadge.setText(String.valueOf(iUnread));
+                    cell.lbBadge.setVisibility(iUnread > 0 ? View.VISIBLE : View.INVISIBLE);
+                }
             }
             return convertView;
         }
     }
 
+    //---------------------------------------------------------------------------
     public void dataSourceRefreshEnded(String error) {
-        // TODO - refresh badge
+        if (error == null) {
+            if (m_adapter != null)
+                m_adapter.notifyDataSetChanged();  // update badges
+            CRxGame.sharedInstance.reinit();
+        }
     }
 
 }

@@ -227,7 +227,7 @@ class CRxGame {
 
     //---------------------------------------------------------------------------
     class CRxPlayerStats {
-        int level, points, pointPrevLevel, pointsNextLevel;
+        int level, points, pointsPrevLevel, pointsNextLevel;
     }
     CRxPlayerStats playerLevel() {
         int iLevel = 1;
@@ -242,7 +242,7 @@ class CRxGame {
         CRxPlayerStats ret = new CRxPlayerStats();
         ret.level = iLevel;
         ret.points = m_iPoints;
-        ret.pointPrevLevel = iToNextLevel-iLevelSize;
+        ret.pointsPrevLevel = iToNextLevel-iLevelSize;
         ret.pointsNextLevel = iToNextLevel;
         return ret;
     }

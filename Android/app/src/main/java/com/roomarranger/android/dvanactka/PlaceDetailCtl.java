@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,6 +16,11 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,7 +36,7 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.util.Locale;
 
-public class PlaceDetailCtl extends Activity implements OnMapReadyCallback {
+public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     TextView m_lbTitle;
     TextView m_lbCategory;
     TextView m_lbValidDates;
@@ -64,6 +68,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback {
     }
     EGameStatus m_eGameStatus = EGameStatus.disabled;
     boolean m_bGameWrongTime = false;
+    GoogleApiClient m_GoogleApiClient = null;
+    LocationRequest m_LocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -255,19 +261,6 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback {
         if (rec.m_aLocation != null) {
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             mapFragment.getMapAsync(this);
-
-            /*let regView = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500);
-            m_map.setRegion(regView, animated:false);
-            m_map.addAnnotation(CRxMapItem(record: rec));
-            m_map.delegate = self;
-
-            if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-                m_map.showsUserLocation = true;
-            }
-
-            if (rec.m_aLocCheckIn != null) {
-                m_map.addAnnotation(CRxMapItem(record: rec, forCheckIn: true));
-            }*/
         }
         else {
             try {
@@ -291,11 +284,23 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback {
                 m_lbGameDist.setText("N/A");
                 m_btnGameCheckIn.setEnabled(false);
 
-                /*m_locManager.delegate = self;
-                m_locManager.distanceFilter = 4;
-                if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-                    m_locManager.startUpdatingLocation();
-                }*/
+                m_GoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+
+                m_LocationRequest = new LocationRequest();
+                m_LocationRequest.setInterval(10000);
+                m_LocationRequest.setFastestInterval(5000);
+                m_LocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+                m_btnGameCheckIn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onBtnGameCheckIn();
+                    }
+                });
             }
         }
         else {
@@ -439,6 +444,150 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback {
 
         UiSettings settings = m_map.getUiSettings();
         settings.setZoomControlsEnabled(true);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if (m_GoogleApiClient != null)
+            m_GoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        stopLocationUpdates();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (m_GoogleApiClient != null && m_GoogleApiClient.isConnected())
+            startLocationUpdates();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+
+        //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+        //if (servicesConnected())
+        {
+            Location aLastLocation = LocationServices.FusedLocationApi.getLastLocation(m_GoogleApiClient);
+            if (aLastLocation != null)
+                onLocationChanged(aLastLocation);
+            startLocationUpdates();
+        }
+    }
+
+    protected void startLocationUpdates() {
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
+        }
+        catch(Exception e){
+        }
+    }
+
+    protected void stopLocationUpdates() {
+        try {
+            LocationServices.FusedLocationApi.removeLocationUpdates(m_GoogleApiClient, this);
+        }
+        catch(Exception e){
+        }
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this, "Google Play Services disconnected. Please re-connect.",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection to Google Play Services failed.",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    //--------------------------------------------------------------------------
+    void onBtnGameCheckIn() {
+        if (rec == null) return;
+        CRxGame.CRxCheckInReward reward = CRxGame.sharedInstance.checkIn(rec);
+        m_eGameStatus = EGameStatus.visited;
+        m_btnGameCheckIn.setVisibility(View.GONE);
+        if (reward != null) {
+            String sReward = String.format("+%d XP", reward.points);
+            String sAlertMessage = sReward;
+            if (reward.newStars > 0 && reward.catName != null) {
+                String sStarEmoji = new String(Character.toChars(0x2B50));
+                String sStars = "";
+                for (int i = 0; i < reward.newStars; i++)
+                    sStars += sStarEmoji;
+                sReward += ", " + reward.catName + ": " + sStars;
+                sAlertMessage += "\n" + reward.catName + ": " + sStars;
+            }
+            if (reward.newLevel > 0) {
+                sReward += ", " + getString(R.string.game_level_up);
+                sAlertMessage = "\n" + getString(R.string.game_level_up) + "\n"
+                        + getString(R.string.game_you_are_at_level) + String.format(" %d\n", reward.newLevel)
+                        + sAlertMessage;
+            }
+            m_lbGameDist.setText(sReward);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(sAlertMessage)/*.setTitle(R.string.dialog_title)*/;
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+
+            // TODO: animation, big applause
+
+            // Google Analytics
+            /*
+            if let tracker = GAI.sharedInstance().defaultTracker,
+            let builder = GAIDictionaryBuilder.createEvent(withCategory: "CheckIn", action: "Done", label: rec.m_sTitle, value: 1) {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+            if reward.newStars > 1 && reward.catName != nil {
+                if let tracker = GAI.sharedInstance().defaultTracker,
+                let builder = GAIDictionaryBuilder.createEvent(withCategory: "Achievement", action: "Unlocked", label: reward.catName!, value: NSNumber(value: reward.newStars)) {
+                    tracker.send(builder.build() as [NSObject : AnyObject])
+                }
+            }*/
+        }
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public void onLocationChanged(Location location) {
+        if (m_eGameStatus != EGameStatus.tracking) { return; }
+        if (rec == null) return;
+
+        Location locRec = rec.gameCheckInLocation();
+        if (location != null && locRec != null) {
+            double aDistance = location.distanceTo(locRec);
+            String sText = String.format("%d m", (int)aDistance);
+            if (aDistance > CRxGame.checkInDistance) {
+                if (m_bGameWrongTime) {
+                    sText += " - " + getString(R.string.game_toofar_wrongtime);
+                }
+                else {
+                    sText += " - " + getString(R.string.game_toofar);
+                }
+            }
+            else if (m_bGameWrongTime) {
+                sText += " - " + getString(R.string.game_wrongtime);
+            }
+            m_lbGameDist.setText(sText);
+
+            m_btnGameCheckIn.setEnabled(aDistance <= CRxGame.checkInDistance && !m_bGameWrongTime);
+        }
     }
 
     //--------------------------------------------------------------------------

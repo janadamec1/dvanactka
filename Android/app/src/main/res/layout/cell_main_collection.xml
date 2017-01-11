@@ -9,13 +9,30 @@
               android:paddingTop="10dp"
               android:background="@color/colorCellBkg">
 
-    <ImageView
-        android:src="@drawable/ds_news"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="6dp"
-        android:id="@+id/imageView"
-        android:scaleType="centerInside"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/ds_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:id="@+id/imageView"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:text="12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/badge"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_corner"
+            android:textAlignment="center"
+            android:maxLines="1"
+            android:layout_gravity="top|right"/>
+
+    </FrameLayout>
 
     <TextView
         android:text="TextView"

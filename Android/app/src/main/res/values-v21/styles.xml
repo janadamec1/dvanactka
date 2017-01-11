@@ -11,4 +11,8 @@
         <item name="android:background">@color/colorActionBarBkg</item>
     </style>
 
+    <style name="buttonStyle">
+        <item name="android:textColor">@color/button_disabled_text</item>
+    </style>
+
 </resources>
