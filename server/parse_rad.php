@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 /* Set HTTP response header to plain text for debugging output */
 header("Content-type: text/plain");
 /* Use internal libxml errors -- turn on in production, off for debugging */
@@ -10,7 +16,7 @@ $dom->loadHTMLFile("http://www.praha12.cz");
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='titulDoc aktClanky']//li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("strong//a", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("strong//a", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
@@ -20,18 +26,18 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 		
-		$nodeDate = $xpath->query("span", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("span", $node));
 		if ($nodeDate != NULL) {
 			$date = date_create_from_format("(!j.n.Y)", $nodeDate->nodeValue);
 			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
 		
-		$nodeText = $xpath->query("div[1]", $node)->item(0);
+		$nodeText = firstItem($xpath->query("div[1]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
-		$aNewRecord["filter"] = "praha12.cz";
+		$aNewRecord["filter"] = "Úřad MČ P12";
 		if (array_key_exists("date", $aNewRecord))
 	    	array_push($arrItems, $aNewRecord);
     }
@@ -39,7 +45,7 @@ foreach ($nodes as $i => $node) {
 
 $nodes = $xpath->query("//div[@class='titulDoc upoClanky']//li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("strong//a", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("strong//a", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
@@ -49,18 +55,18 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 		
-		$nodeDate = $xpath->query("span", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("span", $node));
 		if ($nodeDate != NULL) {
 			$date = date_create_from_format("(!j.n.Y)", $nodeDate->nodeValue);
 			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
 		
-		$nodeText = $xpath->query("div[1]", $node)->item(0);
+		$nodeText = firstItem($xpath->query("div[1]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
-		$aNewRecord["filter"] = "praha12.cz";
+		$aNewRecord["filter"] = "Úřad MČ P12";
 		if (array_key_exists("date", $aNewRecord))
     		array_push($arrItems, $aNewRecord);
     }

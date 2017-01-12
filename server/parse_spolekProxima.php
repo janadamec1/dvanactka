@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 /* Set HTTP response header to plain text for debugging output */
 header("Content-type: text/plain; charset=utf-8");
 /* Use internal libxml errors -- turn on in production, off for debugging */
@@ -15,12 +21,12 @@ $dom->loadHTML($html);
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='item clearfix']");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("h2", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("h2", $node));
 	if ($nodeTitle != NULL) {
 		$title = trim($nodeTitle->nodeValue);
 		$aNewRecord = array("title" => $title);
 		
-		$nodeDate = $xpath->query("div/div[@class='date']", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("div/div[@class='date']", $node));
 		if ($nodeDate != NULL) {
 			$arrParts = explode(" ", trim($nodeDate->nodeValue));
 			if (count($arrParts) >= 3) {
@@ -34,13 +40,13 @@ foreach ($nodes as $i => $node) {
 			}
 		}
 
-		$nodeLink = $xpath->query("a", $nodeTitle)->item(0);
+		$nodeLink = firstItem($xpath->query("a", $nodeTitle));
 		if ($nodeLink != NULL) {
 			$link = $nodeLink->getAttribute("href");
 			$aNewRecord["infoLink"] = "http://www.proximasociale.cz" . $link;
 		}
 			
-		$nodeText = $xpath->query("div/p", $node)->item(0);
+		$nodeText = firstItem($xpath->query("div/p", $node));
 		if ($nodeText != NULL) {
 			$text = trim($nodeText->nodeValue);
 			$aNewRecord["text"] = $text;

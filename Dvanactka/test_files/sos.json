@@ -6,7 +6,7 @@
 },
 {
 "title":"Web městské části",
-"text":"",
+"text":"www.praha12.cz",
 "infoLink":"https:\/\/www.praha12.cz",
 "category":"informace"
 },
@@ -20,6 +20,12 @@
 "title":"FB skupina obyvatel",
 "text":"Modřany, Praha 12",
 "infoLink":"https:\/\/www.facebook.com\/groups\/modrany",
+"category":"informace"
+},
+{
+"title":"Hlídač smluv Prahy 12",
+"text":"Informace a analýzy z registru smluv uzavřených Prahou 12.",
+"infoLink":"https:\/\/www.hlidacsmluv.cz\/Subjekt\/00231151",
 "category":"informace"
 },
 {

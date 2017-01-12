@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -145,5 +146,15 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
                 }
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();        // go to the activity that brought user here, not to parent activity
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

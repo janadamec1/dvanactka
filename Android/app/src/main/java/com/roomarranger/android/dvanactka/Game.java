@@ -103,7 +103,7 @@ class CRxGame {
             return !cat.equals(CRxCategory.wasteGeneral) && !cat.equals(CRxCategory.associations) && !cat.equals(CRxCategory.prvniPomoc)
                     && !cat.equals(CRxCategory.children) && !cat.equals(CRxCategory.nehoda) && !cat.equals(CRxCategory.uzavirka);
         }
-        return true;
+        return false;
     }
 
     //---------------------------------------------------------------------------

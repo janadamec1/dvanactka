@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 /* Set HTTP response header to plain text for debugging output */
 header("Content-type: text/plain");
 /* Use internal libxml errors -- turn on in production, off for debugging */
@@ -14,7 +20,7 @@ $dom->loadHTML($html);
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@id='ud']/ul/li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("strong/a", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
@@ -24,7 +30,7 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 		
-		$nodeDate = $xpath->query("span[1]", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("span[1]", $node));
 		if ($nodeDate != NULL) {
 			//echo $nodeDate->nodeValue, "\n";
 			$arrParts = explode(" ", rtrim($nodeDate->nodeValue, ")"));
@@ -42,7 +48,7 @@ foreach ($nodes as $i => $node) {
 			}
 		}
 		
-		$nodeText = $xpath->query("div[@class='ktg']", $node)->item(0);
+		$nodeText = firstItem($xpath->query("div[@class='ktg']", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["filter"] = trim(substr(strrchr($text, ">"), 1));

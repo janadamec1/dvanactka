@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 /* Set HTTP response header to plain text for debugging output */
 header("Content-type: text/plain; charset=utf-8");
 /* Use internal libxml errors -- turn on in production, off for debugging */
@@ -13,26 +19,26 @@ $dom->loadHTML($html);
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='blog-item-content']");
 foreach ($nodes as $i => $node) {
-	$nodeHead = $xpath->query("div[@class='blog-item-head']", $node)->item(0);
+	$nodeHead = firstItem($xpath->query("div[@class='blog-item-head']", $node));
 	if ($nodeHead != NULL) {
 		$nodeTitle = $xpath->query("h2", $nodeHead)->item(0);
 		if ($nodeTitle != NULL) {
 			$title = trim($nodeTitle->nodeValue);
 			$aNewRecord = array("title" => $title);
 		
-			$nodeDate = $xpath->query("div[@class='blog-item-date']", $nodeHead)->item(0);
+			$nodeDate = firstItem($xpath->query("div[@class='blog-item-date']", $nodeHead));
 			if ($nodeDate != NULL) {
 				$date = date_create_from_format("!j.n.Y", trim($nodeDate->nodeValue));
 				$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 			}
 	
-			$nodeLink = $xpath->query("a", $nodeTitle)->item(0);
+			$nodeLink = firstItem($xpath->query("a", $nodeTitle));
 			if ($nodeLink != NULL) {
 				$link = $nodeLink->getAttribute("href");
 				$aNewRecord["infoLink"] = "http://www.spolekprokomorany.cz" . $link;
 			}
 				
-			$nodeText = $xpath->query("div/div/div[@class='perex-content']", $node)->item(0);
+			$nodeText = firstItem($xpath->query("div/div/div[@class='perex-content']", $node));
 			if ($nodeText != NULL) {
 				$text = trim($nodeText->nodeValue);
 				$aNewRecord["text"] = $text;

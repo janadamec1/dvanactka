@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 header("Content-type: text/plain; charset=utf-8");
 /* Use internal libxml errors -- turn on in production, off for debugging */
 libxml_use_internal_errors(true);
@@ -9,30 +15,30 @@ $dom->load("http://dvanactka.info/feed/");	// XML
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//item");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("title", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("title", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
 		$aNewRecord = array("title" => $title);
 	
-		$nodeDate = $xpath->query("pubDate", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("pubDate", $node));
 		if ($nodeDate != NULL) {
 			$date = date_create_from_format(DateTime::RSS, $nodeDate->nodeValue);
 			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
 
-		$nodeLink = $xpath->query("link", $node)->item(0);
+		$nodeLink = firstItem($xpath->query("link", $node));
 		if ($nodeLink != NULL) {
 			$link = $nodeLink->nodeValue;
 			$aNewRecord["infoLink"] = $link;
 		}
 			
-		$nodeText = $xpath->query("description", $node)->item(0);
+		$nodeText = firstItem($xpath->query("description", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
 		
-		$nodeAuthor = $xpath->query("dc:creator", $node)->item(0);
+		$nodeAuthor = firstItem($xpath->query("dc:creator", $node));
 		if ($nodeAuthor != NULL) {
 			$author = $nodeAuthor->nodeValue;
 			$aNewRecord["filter"] = $author;

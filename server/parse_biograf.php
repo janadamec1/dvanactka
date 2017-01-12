@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 /* Set HTTP response header to plain text for debugging output */
 header("Content-type: text/plain");
 /* Use internal libxml errors -- turn on in production, off for debugging */
@@ -12,7 +18,7 @@ $dom->loadHTMLFile("http://www.modranskybiograf.cz/klient-349/kino-114/");
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='calendar-left-table-tr']/a[@class='cal-event-item shortName']");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("h2", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("h2", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
 		if ($title == "KINO NEHRAJE")
@@ -28,13 +34,13 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord["text"] = implode(" | ", explode("\n", $node->getAttribute("title")));
 		$aNewRecord["address"] = $sAddress;
 		
-		$nodeBuyLink = $xpath->query("..//a[@class='cal-event-item-buy-span']", $node)->item(0);
+		$nodeBuyLink = firstItem($xpath->query("..//a[@class='cal-event-item-buy-span']", $node));
 		if ($nodeBuyLink != NULL) {
 			$aNewRecord["buyLink"] = $nodeBuyLink->getAttribute("href");
 		}
 
-		$nodeDate = $xpath->query("div[@class='ap_date']", $node)->item(0);
-		$nodeTime = $xpath->query("div[@class='ap_time']", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("div[@class='ap_date']", $node));
+		$nodeTime = firstItem($xpath->query("div[@class='ap_time']", $node));
 		if ($nodeDate != NULL && $nodeTime != NULL) {
 		    $sDateTime = $nodeDate->nodeValue . date("Y") . " ". $nodeTime->nodeValue;
 			$date = date_create_from_format("!j.n.Y G:i", $sDateTime);

@@ -177,6 +177,7 @@ class CRxCategory {
 
     //---------------------------------------------------------------------------
     static String categoryLocalName(String category, Context ctx) {
+        if (category == null) return "";
         Resources res = ctx.getResources();
         switch (category) {
             case informace: return res.getString(R.string.c_information);

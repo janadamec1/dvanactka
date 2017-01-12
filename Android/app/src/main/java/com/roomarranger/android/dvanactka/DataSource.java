@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -475,7 +476,7 @@ class CRxDataSourceManager {
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsWork)) {
-            //refreshWorkDataSource();
+            refreshStdJsonDataSource(id, "dyn_kdejeprace.json", null);
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsSpolky)) {
@@ -544,14 +545,14 @@ class CRxDataSourceManager {
 
                     byte[] buffer = new byte[2048];
                     int bytesRead = 0;
-                    StringBuilder stringBuilder = new StringBuilder();
+                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
 
                     while ((bytesRead = bufferedReader.read(buffer))!= -1) {
-                        stringBuilder.append(new String(buffer, 0, bytesRead));
+                        byteArray.write(buffer, 0, bytesRead);
                     }
 
                     stream.close();
-                    sData = stringBuilder.toString();    // send to callee
+                    sData = byteArray.toString("UTF-8");    // send to callee
                 }
                 catch (Exception e) {
                     sError = e.getMessage();

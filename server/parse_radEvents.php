@@ -1,4 +1,10 @@
 <?php
+
+function firstItem($arrNodes) {
+	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
+	return $arrNodes->item(0);
+}
+
 /* Set HTTP response header to plain text for debugging output */
 header("Content-type: text/plain");
 /* Use internal libxml errors -- turn on in production, off for debugging */
@@ -13,7 +19,7 @@ $dom->loadHTMLFile("http://www.praha12.cz/vismo/kalendar-akci.asp?pocet=100");
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='dok']//ul[@class='ui']//li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = $xpath->query("strong/a", $node)->item(0);
+	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
 		
@@ -27,7 +33,7 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 		
-		$nodeDate = $xpath->query("div[1]", $node)->item(0);
+		$nodeDate = firstItem($xpath->query("div[1]", $node));
 		if ($nodeDate != NULL) {
 			$arrFromTo = explode("-", $nodeDate->nodeValue);
 			$iArrFromToCount = count($arrFromTo);
@@ -37,12 +43,16 @@ foreach ($nodes as $i => $node) {
 				$arrFrom = explode(" ", $sDateFrom);
 				$dateFrom = NULL;
 				if (count($arrFrom) > 1) {	// time from (optional)
-					$dateFrom = date_create_from_format("!j.n.Y G:i", $sDateFrom);
+					$dateFrom = date_create_from_format("!j.n.Y G:i+", $sDateFrom);
 				}
 				else {
-					$dateFrom = date_create_from_format("!j.n.Y", $sDateFrom);
+					$dateFrom = date_create_from_format("!j.n.Y+", $sDateFrom);
 				}
-				$aNewRecord["date"] = date_format($dateFrom, "Y-m-d\TH:i");
+				if ($dateFrom === NULL || $dateFrom === FALSE) {
+					echo "Error date: " . $sDateFrom;
+				}
+				else
+					$aNewRecord["date"] = date_format($dateFrom, "Y-m-d\TH:i");
 				
 				if ($iArrFromToCount > 1) {		// date & time to
 					$sDateTo = trim($arrFromTo[1]);
@@ -69,7 +79,7 @@ foreach ($nodes as $i => $node) {
 			}
 		}
 		
-		$nodeText = $xpath->query("div[2]", $node)->item(0);
+		$nodeText = firstItem($xpath->query("div[2]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce)
