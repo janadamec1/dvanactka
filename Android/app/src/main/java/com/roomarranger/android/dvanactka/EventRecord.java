@@ -106,12 +106,12 @@ class CRxEventInterval
         calFrom.setTime(m_dateStart);
         calTo.setTime(m_dateEnd);
 
-        String sFrom = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(m_dateStart);
+        String sFrom = new SimpleDateFormat("dd.MM.yyyy HH:mm").format(m_dateStart);
         String sTo;
         if (calFrom.get(Calendar.DAY_OF_YEAR) == calTo.get(Calendar.DAY_OF_YEAR))
-            sTo = DateFormat.getTimeInstance(DateFormat.SHORT).format(m_dateEnd);
+            sTo = new SimpleDateFormat("HH:mm").format(m_dateEnd);
         else
-            sTo = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(m_dateStart);
+            sTo = new SimpleDateFormat("dd.MM.yyyy HH:mm").format(m_dateStart);
 
         SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEE");
         String sWeekDay = weekDayFormat.format(m_dateStart);

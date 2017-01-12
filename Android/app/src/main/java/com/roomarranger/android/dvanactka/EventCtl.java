@@ -28,6 +28,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -64,9 +65,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
     static String formatDate(int iDateStyle, int iTimeStyle, Date date) {
         if (iDateStyle == -1 && iTimeStyle == -1) return "";
-        if (iDateStyle == -1) return DateFormat.getTimeInstance(iTimeStyle).format(date);
+        if (iDateStyle == -1) return new SimpleDateFormat("HH:mm").format(date);// DateFormat.getTimeInstance(iTimeStyle).format(date);
         if (iTimeStyle == -1) return DateFormat.getDateInstance(iDateStyle).format(date);
-        return DateFormat.getDateTimeInstance(iDateStyle, iTimeStyle).format(date);
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(date);//DateFormat.getDateTimeInstance(iDateStyle, iTimeStyle).format(date);
     }
 
     static class NewsListItemHolder {
