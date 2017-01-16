@@ -101,11 +101,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             
             // footer
             if ds.m_sId == CRxDataSourceManager.dsWork {
-                m_lbFooterText.text = NSLocalizedString("Add new job offer:", comment: "");
+                m_lbFooterText.text = NSLocalizedString("Add job offer:", comment: "");
                 m_btnFooterButton.setTitle("KdeJePrace.cz", for: .normal);
             }
             else if ds.m_eType == .places && ds.m_sId != CRxDataSourceManager.dsCooltour {
-                m_lbFooterText.text = NSLocalizedString("Add new record:", comment: "");
+                m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
             }
             else {
                 m_viewFooter.isHidden = true;

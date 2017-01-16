@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -81,6 +83,15 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                                     int position, long id) {
                 String sDsSelected = m_arrSources.get(position);
                 CRxDataSource aDS = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDsSelected);
+
+                // hide unread badge
+                try {
+                    if (v != null && v.getTag() != null){
+                        CollectionViewHolder cell = (CollectionViewHolder)v.getTag();
+                        if (cell.lbBadge != null)
+                            cell.lbBadge.setVisibility(View.INVISIBLE);
+                    }
+                } catch (Exception e) {}
 
                 Intent intent = null;
                 if (sDsSelected.equals(CRxDataSourceManager.dsReportFault)) {
@@ -170,4 +181,23 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         }
     }
 
+    //---------------------------------------------------------------------------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_ctl, menu);
+        return true;
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_info: {
+                Intent intent = new Intent(MainActivity.this, AppInfoCtl.class);
+                startActivity(intent);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

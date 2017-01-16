@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spannable;
@@ -423,6 +424,45 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_refreshControl = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
         m_refreshControl.setOnRefreshListener(this);
         m_refreshMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+
+        // footer
+        View viewFooter = findViewById(R.id.footer);
+        TextView lbFooterText = (TextView)findViewById(R.id.footerText);
+        Button btnFooterButton = (Button)findViewById(R.id.btnFooter);
+        if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsWork)) {
+            lbFooterText.setText(R.string.add_new_job_offer);
+            btnFooterButton.setText("KdeJePrace.cz");
+        }
+        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsCooltour)) {
+            //m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
+        }
+        else {
+            viewFooter.setVisibility(View.GONE);
+        }
+        btnFooterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsWork)) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.kdejeprace.cz/pridat"));
+                    startActivity(browserIntent);
+                }
+                else {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "P12app - přidat záznam");
+                    String sTitle = m_aDataSource.m_sTitle;
+                    if (m_sParentFilter != null)
+                        sTitle += m_sParentFilter;
+                    intent.putExtra(Intent.EXTRA_TEXT, sTitle);
+                    try {
+                        startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(EventCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     //--------------------------------------------------------------------------

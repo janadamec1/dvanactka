@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swipe_container"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,10 +10,49 @@
     android:paddingTop="0dp"
     tools:context="com.roomarranger.android.dvanactka.EventCtl">
 
-    <ExpandableListView
-        android:id="@+id/ExpList"
-        android:layout_height="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:groupIndicator="@null" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        >
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <ExpandableListView
+            android:id="@+id/ExpList"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:groupIndicator="@null" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:background="#E3EFFC"
+        >
+
+        <TextView
+            android:id="@+id/footerText"
+            android:text="@string/add_new_record"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            />
+        <Button
+            android:id="@+id/btnFooter"
+            android:text="info@dvanactka.info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+</RelativeLayout>

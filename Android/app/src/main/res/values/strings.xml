@@ -83,4 +83,8 @@
     <string name="level">Level</string>
     <string name="indepenedent">Independent</string>
     <string name="notification_explanation">Notification will be shown 1 day before the dumpster arrival, and another at the scheduled arrival time.</string>
+    <string name="add_new_record">Add record:</string>
+    <string name="add_new_job_offer">Add job offer:</string>
+    <string name="appinfo_longtext">This is an unofficial independent application with information from Prague 12.\n\nThat\'s why some informative texts are too short and you have to read the full text on an external website.\n\nPlease contact me with ideas for improvements.\n\nLet the application contribute to better understanding about the news and locations interesting places in Prague 12.</string>
+    <string name="about_the_app">About the App</string>
 </resources>

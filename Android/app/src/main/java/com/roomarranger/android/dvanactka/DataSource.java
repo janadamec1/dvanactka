@@ -504,6 +504,8 @@ class CRxDataSourceManager {
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsWaste)) {
+            refreshStdJsonDataSource(id, "dyn_waste.json", null);
+
             /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
                 ds.loadFromJSON(file: path);
                 refreshWasteDataSource();
