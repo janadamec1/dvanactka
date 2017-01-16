@@ -246,14 +246,16 @@ class CRxEventRecord: NSObject {
             }
         }
         if let events = jsonItem["events"] as? String {
-            m_arrEvents = [CRxEventInterval]();
+            var arrEvents = [CRxEventInterval]();
             let lstEvents = events.components(separatedBy: "|");
             for it in lstEvents {
                 if let interval = CRxEventInterval(from: it) {
-                    m_arrEvents?.append(interval)
+                    arrEvents.append(interval)
                 }
             }
-            
+            if arrEvents.count > 0 {
+                m_arrEvents = arrEvents.sorted(by: { $0.m_dateStart < $1.m_dateStart });
+            }
         }
     }
     

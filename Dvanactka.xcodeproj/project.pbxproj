@@ -23,6 +23,8 @@
 		4D0469D51DFA0DF300E7B760 /* ds_waste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469C91DFA0DF300E7B760 /* ds_waste@2x.png */; };
 		4D0469D61DFA0DF300E7B760 /* ds_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */; };
 		4D11D02D1DFF1ACE00BA2052 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */; };
+		4D1F44451E2D33640013EE52 /* ds_magazine.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F44431E2D33640013EE52 /* ds_magazine.png */; };
+		4D1F44461E2D33640013EE52 /* ds_magazine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F44441E2D33640013EE52 /* ds_magazine@2x.png */; };
 		4D2C34BD1DF751C600165EAC /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2C34BC1DF751C600165EAC /* Game.swift */; };
 		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
 		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
@@ -138,6 +140,8 @@
 		4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_work@2x.png"; path = "img/ds_work@2x.png"; sourceTree = "<group>"; };
 		4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4D11D02E1DFF1C9300BA2052 /* Dvanactka-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dvanactka-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D1F44431E2D33640013EE52 /* ds_magazine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_magazine.png; path = img/ds_magazine.png; sourceTree = "<group>"; };
+		4D1F44441E2D33640013EE52 /* ds_magazine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_magazine@2x.png"; path = "img/ds_magazine@2x.png"; sourceTree = "<group>"; };
 		4D2C34BC1DF751C600165EAC /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		4D30AABA1DCA87AB00A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4D30AABE1DCA891200A402C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -314,6 +318,8 @@
 				4D0469C31DFA0DF300E7B760 /* ds_help@2x.png */,
 				4D9F14B41DD11A3E00841AD8 /* ds_landmarks.png */,
 				4D0469C41DFA0DF300E7B760 /* ds_landmarks@2x.png */,
+				4D1F44431E2D33640013EE52 /* ds_magazine.png */,
+				4D1F44441E2D33640013EE52 /* ds_magazine@2x.png */,
 				4D9F14AE1DD1135700841AD8 /* ds_news.png */,
 				4D0469C51DFA0DF300E7B760 /* ds_news@2x.png */,
 				4D318A671DD7650800187985 /* ds_reportfault.png */,
@@ -538,6 +544,7 @@
 				4D0469D51DFA0DF300E7B760 /* ds_waste@2x.png in Resources */,
 				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D73FC8B1E12DD07006D9D15 /* ds_roadblock@2x.png in Resources */,
+				4D1F44451E2D33640013EE52 /* ds_magazine.png in Resources */,
 				4D4264221DD08D62008ED01F /* c_pharmacy@2x.png in Resources */,
 				4D11D02D1DFF1ACE00BA2052 /* GoogleService-Info.plist in Resources */,
 				4D42641B1DD08D62008ED01F /* c_firstaid.png in Resources */,
@@ -572,6 +579,7 @@
 				4D9F14B81DD11A3E00841AD8 /* ds_events.png in Resources */,
 				4DBF467D1DEC8DD600E7238D /* p12-logo@3x.png in Resources */,
 				4D52699F1DF49FE4008FA122 /* c_usergroups@2x.png in Resources */,
+				4D1F44461E2D33640013EE52 /* ds_magazine@2x.png in Resources */,
 				4D5A802B1DD0ADF0006723B5 /* c_electrical@2x.png in Resources */,
 				4D5A802D1DD0ADF0006723B5 /* c_textile@2x.png in Resources */,
 				4D90193A1DC65E16001488D3 /* Main.storyboard in Resources */,

@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -111,7 +113,7 @@ class CRxEventInterval
         if (calFrom.get(Calendar.DAY_OF_YEAR) == calTo.get(Calendar.DAY_OF_YEAR))
             sTo = new SimpleDateFormat("HH:mm").format(m_dateEnd);
         else
-            sTo = new SimpleDateFormat("dd.MM.yyyy HH:mm").format(m_dateStart);
+            sTo = new SimpleDateFormat("dd.MM.yyyy HH:mm").format(m_dateEnd);
 
         SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEE");
         String sWeekDay = weekDayFormat.format(m_dateStart);
@@ -344,6 +346,13 @@ class CRxEventRecord
                 if (interval != null)
                     pThis.m_arrEvents.add(interval);
             }
+            Collections.sort(pThis.m_arrEvents, new Comparator<CRxEventInterval>() {
+                @Override
+                public int compare(CRxEventInterval t0, CRxEventInterval t1) {
+                    if (t0.m_dateStart.equals(t1.m_dateStart)) return 0;
+                    return t0.m_dateStart.after(t1.m_dateStart) ? 1 : -1;
+                }
+            });
         }
         catch (JSONException e) {}
         return pThis;

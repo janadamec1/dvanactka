@@ -188,7 +188,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
         m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
-        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_news", type: .news, filterable: true);
+        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, filterable: true);
         m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, refreshFreqHours: 60);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 60);
@@ -427,12 +427,13 @@ class CRxDataSourceManager : NSObject {
             return;
         }
         else if id == CRxDataSourceManager.dsWaste {
-            if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_waste.json", testFile: nil);
+            /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
                 ds.loadFromJSON(file: path);
                 refreshWasteDataSource();
                 ds.delegate?.dataSourceRefreshEnded(nil);
                 return;
-            }
+            }*/
         }
         else if id == CRxDataSourceManager.dsSosContacts {
             refreshStdJsonDataSource(sDsId: id, url: "sos.json",
