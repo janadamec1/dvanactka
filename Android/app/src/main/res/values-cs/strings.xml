@@ -82,4 +82,6 @@
     <string name="report_mistake">Nahásit chybu</string>
     <string name="send_mail">Odeslat email...</string>
     <string name="show_notifications">Upozorňovat</string>
+    <string name="indepenedent">Nezávisle</string>
+    <string name="notification_explanation">Upozornění se zobrazí 1 den před příjezdem kontejneru, a další v plánovaný čas příjezdu.</string>
 </resources>

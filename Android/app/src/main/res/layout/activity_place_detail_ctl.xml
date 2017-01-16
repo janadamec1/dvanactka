@@ -80,7 +80,7 @@
         android:id="@+id/chkNotifications"/>
 
     <TextView
-        android:text="notification.explanation"
+        android:text="@string/notification_explanation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/notificationNote"/>

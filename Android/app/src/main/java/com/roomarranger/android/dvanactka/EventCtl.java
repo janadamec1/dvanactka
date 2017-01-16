@@ -577,11 +577,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
         MenuItem actFilter = menu.findItem(R.id.action_filter);
         MenuItem actMap = menu.findItem(R.id.action_map);
-        MenuItem actList = menu.findItem(R.id.action_list);
         MenuItem actSaved = menu.findItem(R.id.action_saved);
         actFilter.setVisible(false);
         actMap.setVisible(false);
-        actList.setVisible(false);
         actSaved.setVisible(false);
         // make those visible
         if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
@@ -591,9 +589,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             actSaved.setVisible(true);
             if (m_aDataSource.m_bFilterable)
                 actFilter.setVisible(true);
-        }
-        if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSpolky)) {
-            actList.setVisible(true);
         }
         return true;
     }
@@ -631,13 +626,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 EventCtl.g_CurrentFilterChangeDelegate = EventCtl.this;
                 Intent intent = new Intent(EventCtl.this, FilterCtl.class);
                 intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                startActivity(intent);
-                return true;
-            }
-
-            case R.id.action_list: {
-                Intent intent = new Intent(EventCtl.this, EventCtl.class);
-                intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSpolkyList);
                 startActivity(intent);
                 return true;
             }

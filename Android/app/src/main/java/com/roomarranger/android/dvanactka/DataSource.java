@@ -261,8 +261,8 @@ class CRxDataSourceManager {
         m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news));
         m_dictDataSources.put(CRxDataSourceManager.dsRadEvents, new CRxDataSource(CRxDataSourceManager.dsRadEvents, res.getString(R.string.events), "ds_events", CRxDataSource.DATATYPE_events));
         m_dictDataSources.put(CRxDataSourceManager.dsRadDeska, new CRxDataSource(CRxDataSourceManager.dsRadDeska, res.getString(R.string.official_board), "ds_billboard", CRxDataSource.DATATYPE_news));
-        m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_news));
-        m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.list), "ds_usergroups", CRxDataSource.DATATYPE_places));
+        m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.indepenedent), "ds_news", CRxDataSource.DATATYPE_news));
+        m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_places));
         m_dictDataSources.put(CRxDataSourceManager.dsBiografProgram, new CRxDataSource(CRxDataSourceManager.dsBiografProgram, "Modřanský biograf", "ds_biograf", CRxDataSource.DATATYPE_events));
         m_dictDataSources.put(CRxDataSourceManager.dsCooltour, new CRxDataSource(CRxDataSourceManager.dsCooltour, res.getString(R.string.trips), "ds_landmarks", CRxDataSource.DATATYPE_places));
         m_dictDataSources.put(CRxDataSourceManager.dsWaste, new CRxDataSource(CRxDataSourceManager.dsWaste, res.getString(R.string.waste), "ds_waste", CRxDataSource.DATATYPE_places));
@@ -303,6 +303,8 @@ class CRxDataSourceManager {
         ds.m_nRefreshFreqHours = 60;
         ds.m_bFilterAsParentView = true;
 
+        ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);
+        ds.m_nRefreshFreqHours = 4;
     }
 
     //--------------------------------------------------------------------------

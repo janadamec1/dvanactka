@@ -9,11 +9,6 @@
           android:icon="@drawable/filter"
           android:orderInCategory="101"
           android:showAsAction="ifRoom" />
-    <item android:id="@+id/action_list"
-          android:title="@string/list"
-          android:icon="@drawable/bulleted_list"
-          android:orderInCategory="102"
-          android:showAsAction="ifRoom" />
     <item android:id="@+id/action_saved"
           android:title="@string/saved_news"
           android:icon="@drawable/star"

@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsSpolky);
         m_arrSources.add(CRxDataSourceManager.dsRadEvents);
         m_arrSources.add(CRxDataSourceManager.dsBiografProgram);
+        m_arrSources.add(CRxDataSourceManager.dsSpolkyList);
         m_arrSources.add(CRxDataSourceManager.dsShops);
         m_arrSources.add(CRxDataSourceManager.dsWork);
         m_arrSources.add(CRxDataSourceManager.dsWaste);

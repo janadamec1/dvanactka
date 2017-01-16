@@ -81,4 +81,6 @@
     <string name="game_you_are_at_level">You are now at level</string>
     <string name="game_progress_is_lost">Game progress is lost when uninstalling the app.</string>
     <string name="level">Level</string>
+    <string name="indepenedent">Independent</string>
+    <string name="notification_explanation">Notification will be shown 1 day before the dumpster arrival, and another at the scheduled arrival time.</string>
 </resources>

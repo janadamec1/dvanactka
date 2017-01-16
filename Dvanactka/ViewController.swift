@@ -65,6 +65,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsSpolky);
         m_arrSources.append(CRxDataSourceManager.dsRadEvents);
         m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
+        m_arrSources.append(CRxDataSourceManager.dsSpolkyList);
         m_arrSources.append(CRxDataSourceManager.dsShops);
         m_arrSources.append(CRxDataSourceManager.dsWork);
         m_arrSources.append(CRxDataSourceManager.dsWaste);

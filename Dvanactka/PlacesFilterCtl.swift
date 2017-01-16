@@ -29,6 +29,15 @@ class PlacesFilterCtl: UITableViewController {
                 }
             }
             m_arrFilter = arrFilter.sorted();
+            
+            var arrBtnItems = [UIBarButtonItem]();
+            if ds.m_eType == .places {
+                // init location tracking
+                arrBtnItems.append(UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(PlacesFilterCtl.showMap)));
+            }
+            if arrBtnItems.count > 0 {
+                self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
+            }
         }
 
     }
@@ -58,5 +67,13 @@ class PlacesFilterCtl: UITableViewController {
         eventCtl.m_aDataSource = m_aDataSource;
         eventCtl.m_sParentFilter = m_arrFilter[indexPath.row];
         navigationController?.pushViewController(eventCtl, animated: true);
+    }
+    
+    //--------------------------------------------------------------------------
+    func showMap() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mapCtl = storyboard.instantiateViewController(withIdentifier: "mapCtl") as! MapCtl
+        mapCtl.m_aDataSource = m_aDataSource;
+        navigationController?.pushViewController(mapCtl, animated: true);
     }
 }

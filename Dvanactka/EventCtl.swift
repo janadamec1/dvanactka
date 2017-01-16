@@ -90,9 +90,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                     arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
                 }
             }
-            if ds.m_sId == CRxDataSourceManager.dsSpolky {
+            /*if ds.m_sId == CRxDataSourceManager.dsSpolky {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "bulleted_list"), style: .plain, target: self, action: #selector(EventsCtl.onBtnList)));
-            }
+            }*/
             if arrBtnItems.count > 0 {
                 self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
             }
