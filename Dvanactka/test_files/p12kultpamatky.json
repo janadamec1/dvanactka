@@ -49,16 +49,6 @@
 "category":"zajimavost"
 },
 {
-"title":"Husova knihovna",
-"locationLat":"50.0029606",
-"locationLong":"14.4050842",
-"address":"Komořanská 12\nPraha 4",
-"text":"Husova knihovna v Modřanech má dlouholetou tradici, byla založena v roce 1922 na popud vzdělávácí modřanské Besedy Tyl.",
-"infoLink":"http:\/\/husova-knihovna-v-modranech.webnode.cz",
-"openingHours":"1: 1100-1800, 3: 900-1700, 4: 1300-1900",
-"category":"zajimavost"
-},
-{
 "title":"Sbor Českobratrské církve evangelické",
 "locationLat":"50.0009969",
 "locationLong":"14.4095028",
@@ -82,6 +72,13 @@
 "category":"zajimavost"
 },
 {
+"title":"Vyhlídka na Šancích",
+"locationLat":"49.9696378",
+"locationLong":"14.4076658",
+"text":"Pohled na Zbraslav, ideální pro romantické pozorování západů Slunce.",
+"category":"zajimavost"
+},
+{
 "title":"Letiště Točná",
 "locationLat":"49.9867744",
 "locationLong":"14.4253350",
@@ -95,6 +92,14 @@
 "locationLong":"14.4486594",
 "text":"Záchranná stanice může přijímat všechny druhy volně žijících živočichů, kromě rysa, medvěda a vlka. Nejčastějšími zvířecími pacienty v Praze bývají poštolky, rorýsi, holubi, ježci, netopýři a zajíci.",
 "infoLink":"http:\/\/www.lhmp.cz\/eko\/o-nas\/zachranna-stanice-hl-m-prahy",
+"category":"zajimavost"
+},
+{
+"title":"Lesní minizoo",
+"locationLat":"49.9687139",
+"locationLong":"14.4047594",
+"text":"Ve volně přístupném lesním zookoutku naleznete především obyvatele českých lesů. Spatříte lišky, jezevce, sojku, straku, srnky, bažanty nebo výběh s divokými prasaty.",
+"infoLink":"http:\/\/zbraslav.info\/o-zbraslavi\/mistopis-zbraslavi\/107-zoo-koutek",
 "category":"zajimavost"
 },
 {
