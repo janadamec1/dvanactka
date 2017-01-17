@@ -3,12 +3,8 @@ package com.roomarranger.android.dvanactka;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 
@@ -27,6 +25,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 {
     ArrayList<String> m_arrSources = new ArrayList<String>();    // data source ids in order they should appear in the collection
     static boolean s_bInited = false;
+    static private Tracker s_GlobalTracker = null;
     BaseAdapter m_adapter = null;
 
     public static final String EXTRA_DATASOURCE = "com.roomarranger.dvanactka.DATASOURCE";
@@ -51,6 +50,11 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             //application.applicationIconBadgeNumber = 0;
             CRxGame.sharedInstance.init(this);
             CRxGame.sharedInstance.reinit();
+
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            s_GlobalTracker = analytics.newTracker(R.xml.global_tracker);
+
             s_bInited = true;
         }
 
@@ -202,5 +206,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //---------------------------------------------------------------------------
+    public static Tracker getDefaultTracker() {
+        return s_GlobalTracker;
     }
 }

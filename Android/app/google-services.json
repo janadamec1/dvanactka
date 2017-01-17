@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "1048289847487",
+    "project_id": "firebase-dvanactka"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048289847487:android:d776a934bf9c8011",
+        "android_client_info": {
+          "package_name": "com.roomarranger.android.dvanactka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp_jiGc8wB0cgXQMuGUwjDPqA4ugcGjpU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-156574-4"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

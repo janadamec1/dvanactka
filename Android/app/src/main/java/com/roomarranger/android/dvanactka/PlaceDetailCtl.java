@@ -16,6 +16,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -468,6 +470,13 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         super.onResume();
         if (m_GoogleApiClient != null && m_GoogleApiClient.isConnected())
             startLocationUpdates();
+
+        // Google Analytics
+        if (m_lbTitle != null) {
+            Tracker aTracker = MainActivity.getDefaultTracker();
+            aTracker.setScreenName("Place_" + m_lbTitle.getText());
+            aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
     }
 
     @Override
@@ -550,17 +559,20 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             // TODO: animation, big applause
 
             // Google Analytics
-            /*
-            if let tracker = GAI.sharedInstance().defaultTracker,
-            let builder = GAIDictionaryBuilder.createEvent(withCategory: "CheckIn", action: "Done", label: rec.m_sTitle, value: 1) {
-                tracker.send(builder.build() as [NSObject : AnyObject])
+            Tracker aTracker = MainActivity.getDefaultTracker();
+            aTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("CheckIn")
+                    .setAction("Done")
+                    .setLabel(rec.m_sTitle)
+                    .build());
+            if (reward.newStars > 1 && reward.catName != null) {
+                aTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Achievement")
+                        .setAction("Unlocked")
+                        .setLabel(reward.catName)
+                        .setValue(reward.newStars)
+                        .build());
             }
-            if reward.newStars > 1 && reward.catName != nil {
-                if let tracker = GAI.sharedInstance().defaultTracker,
-                let builder = GAIDictionaryBuilder.createEvent(withCategory: "Achievement", action: "Unlocked", label: reward.catName!, value: NSNumber(value: reward.newStars)) {
-                    tracker.send(builder.build() as [NSObject : AnyObject])
-                }
-            }*/
         }
     }
 
