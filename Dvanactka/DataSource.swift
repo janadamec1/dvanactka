@@ -20,6 +20,7 @@ class CRxDataSource : NSObject {
     var m_sTitle: String           // human readable
     var m_sShortTitle: String?
     var m_sIcon: String
+    var m_iBackgroundColor: Int;
     var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
     var m_sLastItemShown: String = ""   // hash of the last record user displayed (to count unread news, etc)
     var m_dateLastRefreshed: Date?
@@ -38,12 +39,13 @@ class CRxDataSource : NSObject {
     var m_bFilterable = false           // UI can filter this datasource accoring to records' m_sFilter
     var m_setFilter: Set<String>?       // contains strings that should NOT be shown
     
-    init(id: String, title: String, icon: String, type: DataType, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true, filterable: Bool = false, filterAsParentView: Bool = false) {
+    init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true, filterable: Bool = false, filterAsParentView: Bool = false) {
         m_sId = id;
         m_sTitle = title;
         m_sShortTitle = shortTitle;
         m_sIcon = icon;
         m_eType = type;
+        m_iBackgroundColor = backgroundColor;
         m_nRefreshFreqHours = refreshFreqHours;
         m_bGroupByCategory = groupByCategory;
         m_bFilterable = filterable;
@@ -176,7 +178,7 @@ class CRxDataSourceManager : NSObject {
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
     var m_urlDocumentsDir: URL!
-    var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news);    // (records over all news sources)
+    var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x808080);    // (records over all news sources)
     var m_setPlacesNotified: Set<String> = [];  // (titles)
     var delegate: CRxDataSourceRefreshDelegate? // one global delegate (main viewController)
 
@@ -185,20 +187,20 @@ class CRxDataSourceManager : NSObject {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
         
-        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news);
-        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events);
-        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, filterable: true);
-        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, filterable: true);
-        m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, refreshFreqHours: 60);
-        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, refreshFreqHours: 60, shortTitle: "Biograf");
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, refreshFreqHours: 60);
-        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places);
-        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, refreshFreqHours: 60);
-        m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, refreshFreqHours: 1000);
-        m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, refreshFreqHours: 1000);
-        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, refreshFreqHours: 60, filterAsParentView: true);
-        m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places);
-        m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places, refreshFreqHours: 4);
+        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x3f4d88);
+        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events, backgroundColor:0xdb552d);
+        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, backgroundColor:0x3f4d88, filterable: true);
+        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, backgroundColor:0x08739f, filterable: true);
+        m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, backgroundColor:0x08739f, refreshFreqHours: 60);
+        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, backgroundColor:0xdb552d, refreshFreqHours: 60, shortTitle: "Biograf");
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, backgroundColor:0x00a000, refreshFreqHours: 60);
+        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, backgroundColor:0x00a000);
+        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, backgroundColor:0x08739f, refreshFreqHours: 60);
+        m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, backgroundColor:0xb11a41, refreshFreqHours: 1000);
+        m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, backgroundColor:0x603cbb, refreshFreqHours: 1000);
+        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, backgroundColor:0x0ab2b2, refreshFreqHours: 60, filterAsParentView: true);
+        m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places, backgroundColor:0x0ab2b2);
+        m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places, backgroundColor:0xb11a41, refreshFreqHours: 4);
     }
     
     //--------------------------------------------------------------------------

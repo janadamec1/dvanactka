@@ -68,10 +68,10 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsSpolkyList);
         m_arrSources.append(CRxDataSourceManager.dsShops);
         m_arrSources.append(CRxDataSourceManager.dsWork);
+        m_arrSources.append(CRxDataSourceManager.dsTraffic);
         m_arrSources.append(CRxDataSourceManager.dsWaste);
         m_arrSources.append(CRxDataSourceManager.dsReportFault);
         m_arrSources.append(CRxDataSourceManager.dsRadDeska);
-        m_arrSources.append(CRxDataSourceManager.dsTraffic);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
         m_arrSources.append(CRxDataSourceManager.dsGame);
@@ -115,6 +115,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.m_imgIcon.image = UIImage(named: ds.m_sIcon);
             cell.layer.borderWidth = 1.0;
             cell.layer.borderColor = UIColor(white:0, alpha:0.15).cgColor;
+
+            let iCl = ds.m_iBackgroundColor;
+            cell.backgroundColor = UIColor(red: CGFloat(iCl&0xFF0000)/CGFloat(0xFF0000),
+                                           green: CGFloat(iCl&0xFF00)/CGFloat(0xFF00),
+                                           blue: CGFloat(iCl&0xFF)/CGFloat(0xFF), alpha: 1.0);
 
             /*cell.m_lbTitle.layer.shadowColor = UIColor.black.cgColor;
             cell.m_lbTitle.layer.shadowOffset = CGSize(width: 1, height: 1);

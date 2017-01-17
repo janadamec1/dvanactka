@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,10 +62,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsSpolkyList);
         m_arrSources.add(CRxDataSourceManager.dsShops);
         m_arrSources.add(CRxDataSourceManager.dsWork);
+        m_arrSources.add(CRxDataSourceManager.dsTraffic);
         m_arrSources.add(CRxDataSourceManager.dsWaste);
         //m_arrSources.add(CRxDataSourceManager.dsReportFault);
         m_arrSources.add(CRxDataSourceManager.dsRadDeska);
-        m_arrSources.add(CRxDataSourceManager.dsTraffic);
         m_arrSources.add(CRxDataSourceManager.dsCooltour);
         m_arrSources.add(CRxDataSourceManager.dsSosContacts);
         m_arrSources.add(CRxDataSourceManager.dsGame);
@@ -167,6 +168,8 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                     cell.lbBadge.setText(String.valueOf(iUnread));
                     cell.lbBadge.setVisibility(iUnread > 0 ? View.VISIBLE : View.INVISIBLE);
                 }
+                int iCl = ds.m_iBackgroundColor;
+                convertView.setBackgroundColor(Color.rgb((iCl&0xFF0000)>>16, (iCl&0xFF00)>>8, iCl&0xFF));
             }
             return convertView;
         }

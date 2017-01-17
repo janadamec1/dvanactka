@@ -40,7 +40,7 @@ class PlaceCell: UITableViewCell {
 
 class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
-    @IBOutlet weak var m_viewFooter: UIView!
+    @IBOutlet var m_viewFooter: UIView!
     @IBOutlet weak var m_lbFooterText: UILabel!
     @IBOutlet weak var m_btnFooterButton: UIButton!
     
@@ -109,6 +109,11 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
             else {
                 m_viewFooter.isHidden = true;
+            }
+            if !m_viewFooter.isHidden {
+                // footer will be added as the last section's footer, it will stay visible then
+                m_viewFooter.removeFromSuperview();
+                self.tableView.tableFooterView = nil;
             }
         }
         setRecordsDistance();
@@ -538,7 +543,29 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             header.textLabel?.textColor = .white;
             //header.contentView.backgroundColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);
         }
-
+    }
+    
+    //--------------------------------------------------------------------------
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section < m_orderedCategories.count-1 {
+            return nil;
+        }
+        // only under the last section
+        return "text";
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section < m_orderedCategories.count-1 || m_viewFooter.isHidden {
+            return 0;
+        }
+        return m_viewFooter.bounds.height;
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section < m_orderedCategories.count-1 || m_viewFooter.isHidden {
+            return nil;
+        }
+        return m_viewFooter;
     }
     
     //--------------------------------------------------------------------------

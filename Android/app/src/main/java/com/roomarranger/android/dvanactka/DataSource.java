@@ -46,6 +46,7 @@ class CRxDataSource {
     String m_sTitle;           // human readable
     String m_sShortTitle = null;
     String m_sIcon;
+    int m_iBackgroundColor;
     int m_nRefreshFreqHours = 18;   // refresh after 18 hours
     String m_sLastItemShown = "";   // hash of the last record user displayed (to count unread news, etc)
     Date m_dateLastRefreshed = null;
@@ -61,12 +62,13 @@ class CRxDataSource {
     boolean m_bFilterable = false;           // UI can filter this datasource accoring to records' m_sFilter
     Set<String> m_setFilter = null;       // contains strings that should NOT be shown
 
-    CRxDataSource(String id, String title, String icon, int type) {
+    CRxDataSource(String id, String title, String icon, int type, int backgroundColor) {
         super();
         m_sId = id;
         m_sTitle = title;
         m_sIcon = icon;
         m_eType = type;
+        m_iBackgroundColor = backgroundColor;
     }
 
     //--------------------------------------------------------------------------
@@ -239,7 +241,7 @@ class CRxDataSourceManager {
     int m_nNetworkIndicatorUsageCount = 0;
     File m_urlDocumentsDir;
     AssetManager m_assetMan;
-    CRxDataSource m_aSavedNews = new CRxDataSource(CRxDataSourceManager.dsSavedNews, "Saved News", "ds_news", CRxDataSource.DATATYPE_news);    // (records over all news sources)
+    CRxDataSource m_aSavedNews = new CRxDataSource(CRxDataSourceManager.dsSavedNews, "Saved News", "ds_news", CRxDataSource.DATATYPE_news, 0xffffff);    // (records over all news sources)
     Set<String> m_setPlacesNotified = new HashSet<String>();  // (titles)
     CRxDataSourceRefreshDelegate delegate = null; // one global delegate (main viewController)
 
@@ -258,20 +260,20 @@ class CRxDataSourceManager {
         m_assetMan = res.getAssets();
         m_urlDocumentsDir = ctx.getDir("json", Context.MODE_PRIVATE);
 
-        m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news));
-        m_dictDataSources.put(CRxDataSourceManager.dsRadEvents, new CRxDataSource(CRxDataSourceManager.dsRadEvents, res.getString(R.string.events), "ds_events", CRxDataSource.DATATYPE_events));
-        m_dictDataSources.put(CRxDataSourceManager.dsRadDeska, new CRxDataSource(CRxDataSourceManager.dsRadDeska, res.getString(R.string.official_board), "ds_billboard", CRxDataSource.DATATYPE_news));
-        m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.indepenedent), "ds_magazine", CRxDataSource.DATATYPE_news));
-        m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsBiografProgram, new CRxDataSource(CRxDataSourceManager.dsBiografProgram, "Modřanský biograf", "ds_biograf", CRxDataSource.DATATYPE_events));
-        m_dictDataSources.put(CRxDataSourceManager.dsCooltour, new CRxDataSource(CRxDataSourceManager.dsCooltour, res.getString(R.string.trips), "ds_landmarks", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsWaste, new CRxDataSource(CRxDataSourceManager.dsWaste, res.getString(R.string.waste), "ds_waste", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsSosContacts, new CRxDataSource(CRxDataSourceManager.dsSosContacts, res.getString(R.string.help), "ds_help", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsReportFault, new CRxDataSource(CRxDataSourceManager.dsReportFault, res.getString(R.string.report_fault), "ds_reportfault", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsGame, new CRxDataSource(CRxDataSourceManager.dsGame, res.getString(R.string.game), "ds_game", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsShops, new CRxDataSource(CRxDataSourceManager.dsShops, res.getString(R.string.shops), "ds_shop", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsWork, new CRxDataSource(CRxDataSourceManager.dsWork, res.getString(R.string.work), "ds_work", CRxDataSource.DATATYPE_places));
-        m_dictDataSources.put(CRxDataSourceManager.dsTraffic, new CRxDataSource(CRxDataSourceManager.dsTraffic, res.getString(R.string.traffix), "ds_roadblock", CRxDataSource.DATATYPE_places));
+        m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news, 0x3f4d88));
+        m_dictDataSources.put(CRxDataSourceManager.dsRadEvents, new CRxDataSource(CRxDataSourceManager.dsRadEvents, res.getString(R.string.events), "ds_events", CRxDataSource.DATATYPE_events, 0xdb552d));
+        m_dictDataSources.put(CRxDataSourceManager.dsRadDeska, new CRxDataSource(CRxDataSourceManager.dsRadDeska, res.getString(R.string.official_board), "ds_billboard", CRxDataSource.DATATYPE_news, 0x3f4d88));
+        m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.indepenedent), "ds_magazine", CRxDataSource.DATATYPE_news, 0x08739f));
+        m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_places, 0x08739f));
+        m_dictDataSources.put(CRxDataSourceManager.dsBiografProgram, new CRxDataSource(CRxDataSourceManager.dsBiografProgram, "Modřanský biograf", "ds_biograf", CRxDataSource.DATATYPE_events, 0xdb552d));
+        m_dictDataSources.put(CRxDataSourceManager.dsCooltour, new CRxDataSource(CRxDataSourceManager.dsCooltour, res.getString(R.string.trips), "ds_landmarks", CRxDataSource.DATATYPE_places, 0x00a000));
+        m_dictDataSources.put(CRxDataSourceManager.dsWaste, new CRxDataSource(CRxDataSourceManager.dsWaste, res.getString(R.string.waste), "ds_waste", CRxDataSource.DATATYPE_places, 0x00a000));
+        m_dictDataSources.put(CRxDataSourceManager.dsSosContacts, new CRxDataSource(CRxDataSourceManager.dsSosContacts, res.getString(R.string.help), "ds_help", CRxDataSource.DATATYPE_places, 0x08739f));
+        m_dictDataSources.put(CRxDataSourceManager.dsReportFault, new CRxDataSource(CRxDataSourceManager.dsReportFault, res.getString(R.string.report_fault), "ds_reportfault", CRxDataSource.DATATYPE_places, 0xb11a41));
+        m_dictDataSources.put(CRxDataSourceManager.dsGame, new CRxDataSource(CRxDataSourceManager.dsGame, res.getString(R.string.game), "ds_game", CRxDataSource.DATATYPE_places, 0x603cbb));
+        m_dictDataSources.put(CRxDataSourceManager.dsShops, new CRxDataSource(CRxDataSourceManager.dsShops, res.getString(R.string.shops), "ds_shop", CRxDataSource.DATATYPE_places, 0x0ab2b2));
+        m_dictDataSources.put(CRxDataSourceManager.dsWork, new CRxDataSource(CRxDataSourceManager.dsWork, res.getString(R.string.work), "ds_work", CRxDataSource.DATATYPE_places, 0x0ab2b2));
+        m_dictDataSources.put(CRxDataSourceManager.dsTraffic, new CRxDataSource(CRxDataSourceManager.dsTraffic, res.getString(R.string.traffix), "ds_roadblock", CRxDataSource.DATATYPE_places, 0xb11a41));
 
         // additional parameters (there are no default arguments values in Java)
         CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
