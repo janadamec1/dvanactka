@@ -64,7 +64,7 @@
     <string name="waste_electro_longdesc">Do kontejneru patří: drobná elektrozařízení, např. kalkulačky, rádia, drobné počítačové vybavení, discmany, telefony a další.\n\nNepatří: televizory, počítačové monitory, zářivky a úsporné žárovky.</string>
     <string name="closed_today">dnes zavřeno</string>
     <string name="call_prompt">Volat</string>
-    <string name="continue_reading_on_website">Pokračovat ve čtení na webu</string>
+    <string name="continue_reading_on_website">Přejít na web</string>
     <string name="website">Web</string>
     <string name="yes">Ano</string>
     <string name="waste">Odpad</string>
@@ -79,7 +79,7 @@
     <string name="no">Ne</string>
     <string name="none">Nic</string>
     <string name="opening_hours">Otevírací hodiny</string>
-    <string name="report_mistake">Nahásit chybu</string>
+    <string name="report_mistake">Nahlásit chybu</string>
     <string name="send_mail">Odeslat email...</string>
     <string name="show_notifications">Upozorňovat</string>
     <string name="indepenedent">Nezávisle</string>

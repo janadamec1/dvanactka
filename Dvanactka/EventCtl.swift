@@ -40,7 +40,7 @@ class PlaceCell: UITableViewCell {
 
 class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
-    @IBOutlet var m_viewFooter: UIView!
+    @IBOutlet weak var m_viewFooter: UIView!
     @IBOutlet weak var m_lbFooterText: UILabel!
     @IBOutlet weak var m_btnFooterButton: UIButton!
     
@@ -51,6 +51,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     var m_locManager = CLLocationManager();
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
     var m_bUserLocationAcquired = false;
+    var m_footerToShow: UIView? = nil; // it's here to save the footer pointer for later, not to release it
 
     var m_refreshParentDelegate: CRxDetailRefreshParentDelegate?;
     
@@ -100,21 +101,20 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             self.tableView.estimatedRowHeight = 90.0;
             
             // footer
+            m_footerToShow = m_viewFooter;
             if ds.m_sId == CRxDataSourceManager.dsWork {
                 m_lbFooterText.text = NSLocalizedString("Add job offer:", comment: "");
                 m_btnFooterButton.setTitle("KdeJePrace.cz", for: .normal);
             }
-            else if ds.m_eType == .places && ds.m_sId != CRxDataSourceManager.dsCooltour {
+            else if ds.m_eType == .places/* && ds.m_sId != CRxDataSourceManager.dsCooltour*/ {
                 m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
             }
             else {
-                m_viewFooter.isHidden = true;
+                m_footerToShow = nil;
             }
-            if !m_viewFooter.isHidden {
-                // footer will be added as the last section's footer, it will stay visible then
-                m_viewFooter.removeFromSuperview();
-                self.tableView.tableFooterView = nil;
-            }
+            // footer will be added as the last section's footer, it will stay visible then
+            m_viewFooter.removeFromSuperview();
+            self.tableView.tableFooterView = nil;
         }
         setRecordsDistance();
         sortRecords();
@@ -547,7 +547,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     
     //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section < m_orderedCategories.count-1 {
+        if section < m_orderedCategories.count-1 || m_footerToShow == nil {
             return nil;
         }
         // only under the last section
@@ -555,17 +555,17 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section < m_orderedCategories.count-1 || m_viewFooter.isHidden {
+        if section < m_orderedCategories.count-1 || m_footerToShow == nil {
             return 0;
         }
-        return m_viewFooter.bounds.height;
+        return m_footerToShow!.bounds.height;
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section < m_orderedCategories.count-1 || m_viewFooter.isHidden {
+        if section < m_orderedCategories.count-1 || m_footerToShow == nil {
             return nil;
         }
-        return m_viewFooter;
+        return m_footerToShow;
     }
     
     //--------------------------------------------------------------------------

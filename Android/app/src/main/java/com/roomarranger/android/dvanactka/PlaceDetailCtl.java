@@ -461,7 +461,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     protected void onPause()
     {
         super.onPause();
-        stopLocationUpdates();
+        if (m_GoogleApiClient != null)
+            stopLocationUpdates();
     }
 
     @Override
@@ -474,8 +475,10 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         // Google Analytics
         if (m_lbTitle != null) {
             Tracker aTracker = MainActivity.getDefaultTracker();
-            aTracker.setScreenName("Place_" + m_lbTitle.getText());
-            aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            if (aTracker != null) {
+                aTracker.setScreenName("Place_" + m_lbTitle.getText());
+                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
         }
     }
 
@@ -560,18 +563,20 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
             // Google Analytics
             Tracker aTracker = MainActivity.getDefaultTracker();
-            aTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("CheckIn")
-                    .setAction("Done")
-                    .setLabel(rec.m_sTitle)
-                    .build());
-            if (reward.newStars > 1 && reward.catName != null) {
+            if (aTracker != null) {
                 aTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Achievement")
-                        .setAction("Unlocked")
-                        .setLabel(reward.catName)
-                        .setValue(reward.newStars)
+                        .setCategory("CheckIn")
+                        .setAction("Done")
+                        .setLabel(rec.m_sTitle)
                         .build());
+                if (reward.newStars > 1 && reward.catName != null) {
+                    aTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Achievement")
+                            .setAction("Unlocked")
+                            .setLabel(reward.catName)
+                            .setValue(reward.newStars)
+                            .build());
+                }
             }
         }
     }

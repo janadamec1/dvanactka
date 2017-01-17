@@ -193,11 +193,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
                             // Google Analytics
                             Tracker aTracker = MainActivity.getDefaultTracker();
-                            aTracker.send(new HitBuilders.EventBuilder()
-                                    .setCategory("Buy")
-                                    .setAction("Buy")
-                                    .setLabel(getTitle().toString())
-                                    .build());
+                            if (aTracker != null) {
+                                aTracker.send(new HitBuilders.EventBuilder()
+                                        .setCategory("Buy")
+                                        .setAction("Buy")
+                                        .setLabel(getTitle().toString())
+                                        .build());
+                            }
                         }
                     });
                 if (cell.m_btnFavorite != null)
@@ -465,7 +467,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             lbFooterText.setText(R.string.add_new_job_offer);
             btnFooterButton.setText("KdeJePrace.cz");
         }
-        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsCooltour)) {
+        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places/* && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsCooltour)*/) {
             //m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
         }
         else {
@@ -717,7 +719,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     protected void onPause()
     {
         super.onPause();
-        stopLocationUpdates();
+        if (m_GoogleApiClient != null)
+            stopLocationUpdates();
     }
 
     @Override
@@ -730,8 +733,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         // Google Analytics
         if (m_aDataSource != null) {
             Tracker aTracker = MainActivity.getDefaultTracker();
-            aTracker.setScreenName("DS_" + m_aDataSource.m_sTitle);
-            aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            if (aTracker != null) {
+                aTracker.setScreenName("DS_" + m_aDataSource.m_sTitle);
+                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
         }
     }
 
@@ -747,7 +752,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 m_coordLast = aLastLocation;
                 m_bUserLocationAcquired = true;
                 updateListWhenLocationChanged();
-
             }
             startLocationUpdates();
         }
