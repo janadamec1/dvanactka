@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -203,6 +204,27 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                                 if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews) && m_refreshParentDelegate != null ){
                                     m_refreshParentDelegate.detailRequestsRefresh();
                                 }
+                            }
+                        }
+                    });
+                if (cell.m_btnAddToCalendar != null)
+                    cell.m_btnAddToCalendar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null) {
+                                Intent calIntent = new Intent(Intent.ACTION_INSERT);
+                                calIntent.setData(CalendarContract.Events.CONTENT_URI);
+                                calIntent.putExtra(CalendarContract.Events.TITLE, aRecClicked.m_sTitle);
+                                if (aRecClicked.m_sAddress != null)
+                                    calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, aRecClicked.m_sAddress);
+                                if (aRecClicked.m_sText != null)
+                                    calIntent.putExtra(CalendarContract.Events.DESCRIPTION, aRecClicked.m_sText);
+                                if (aRecClicked.m_aDate != null)
+                                    calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, aRecClicked.m_aDate.getTime());
+                                if (aRecClicked.m_aDateTo != null)
+                                    calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, aRecClicked.m_aDateTo.getTime());
+                                startActivity(calIntent);
                             }
                         }
                     });

@@ -83,6 +83,76 @@
 "filter":"Řeznictví"
 },
 {
+"title":"Instalatérské potřeby Milan Mašek",
+"locationLat":"50.0027414",
+"locationLong":"14.4054356",
+"address":"Komořanská 19\nPraha 12",
+"openingHours":"1: 700-1700, 2: 700-1700, 3: 700-1700, 4: 700-1700, 5: 700-1700",
+"phone":"241 776 176",
+"infoLink":"http:\/\/www.instalaterske-potreby.cz",
+"category":"obchod",
+"filter":"Pro domácnost"
+},
+{
+"title":"Železářství",
+"locationLat":"50.0036756",
+"locationLong":"14.4048453",
+"address":"U Kina 1\nPraha 12",
+"openingHours":"1: 700-1800, 2: 700-1800, 3: 700-1800, 4: 700-1800, 5: 700-1800, 6: 800-1200",
+"phone":"244 401 072",
+"category":"obchod",
+"filter":"Pro domácnost"
+},
+{
+"title":"Květinářství",
+"locationLat":"50.0041722",
+"locationLong":"14.4050544",
+"address":"Komořanská\nPraha 12",
+"openingHours":"1: 900-1315, 1: 1330-1800, 2: 900-1315, 2: 1330-1800, 3: 900-1315, 3: 1330-1800, 4: 900-1315, 4: 1330-1800, 5: 900-1315, 5: 1330-1800, 6: 900-1200",
+"category":"obchod",
+"filter":"Květinářství"
+},
+{
+"title":"Květiny Václav Sakař",
+"locationLat":"50.0052306",
+"locationLong":"14.4163144",
+"address":"Čs. exilu 34\nPraha 12",
+"openingHours":"1: 800-1900, 2: 800-1900, 3: 800-1900, 4: 800-1900, 5: 800-1900, 6: 800-1800, 7: 800-1800",
+"category":"obchod",
+"filter":"Květinářství"
+},
+{
+"title":"Květiny, keramika, dárky",
+"locationLat":"50.0004381",
+"locationLong":"14.4274725",
+"address":"Pertoldova 10\nPraha 12",
+"openingHours":"1: 900-1800, 2: 900-1800, 3: 900-1800, 4: 900-1800, 5: 900-1800, 6: 800-1200",
+"phone":"739 651 239",
+"category":"obchod",
+"filter":"Květinářství"
+},
+{
+"title":"Zdravá výživa Mája",
+"locationLat":"50.0044617",
+"locationLong":"14.4050008",
+"address":"U Domu služeb 2a\nPraha 12",
+"openingHours":"1: 900-1900, 2: 900-1900, 3: 900-1900, 4: 900-1900, 5: 900-1800, 6: 900-1200",
+"infoLink":"https:\/\/www.zdrava-vyziva-maja.cz",
+"phone":"775 751 122",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Zdravá výživa Levandule",
+"locationLat":"50.0055375",
+"locationLong":"14.4144531",
+"address":"Poliklinika Modřany, přízemí\nSoukalova 3\nPraha 12",
+"openingHours":"1: 800-1800, 2: 800-1800, 3: 800-1800, 4: 800-1800, 5: 800-1400",
+"phone":"777 213 937",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
 "title":"Bibliobus Těšíkova",
 "text":"Bibliobus – knihovna na kolečkách. Pojízdná knihovna čtenářům nabízí široký výběr čtení pro děti i dospělé a internet. Správnou knihu pro každou příležitost pomůže vybrat „pojízdný“ knihovník.",
 "locationLat":"50.0146389",

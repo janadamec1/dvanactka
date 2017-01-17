@@ -321,7 +321,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(PlaceDetailCtl.this);
-                    builder.setMessage(R.string.call_prompt);
+                    String sMessage = getString(R.string.call_prompt);
+                    builder.setMessage(sMessage + ": " + rec.m_sPhoneNumber);
                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int which) {

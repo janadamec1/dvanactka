@@ -59,9 +59,9 @@
     <string name="saved_news">Uložené zprávy</string>
     <string name="timetable">Harmonogram</string>
     <string name="please_describe_problem">(Zde prosím popište problém)</string>
-    <string name="waste_vok_longdesc">Objemný komunální odpad je např. starý nábytek, koberce, linolea, staré lyže, snowboardy, kola, velká zrcadla, umyvadla a WC mísy, které pocházejí z domácností fyzických osob.\\n\\nMezi objemný komunální odpad nepatří např. lednice, televizory a počítačové monitory, zářivky a výbojky, autobaterie, stavební suť, větve ani jiné bioodpady a dále ani veškeré odpady, které pocházejí z majetku firem nebo z podnikatelské činnosti.</string>
-    <string name="waste_textile_longdesc">Patří: boty, oblečení, textil (bytový textil, záclony, ložní prádlo, ap.), doplňky (kabelky, tašky hračky, ap). Textil a spárované boty vkládejte v igelitovém pytli nebo tašce.\\n\\nNepatří: koberce, matrace, znečištěný či mokrý textil, domácí odpad.</string>
-    <string name="waste_electro_longdesc">Do kontejneru patří: drobná elektrozařízení, např. kalkulačky, rádia, drobné počítačové vybavení, discmany, telefony a další.\\n\\nNepatří: televizory, počítačové monitory, zářivky a úsporné žárovky.</string>
+    <string name="waste_vok_longdesc">Objemný komunální odpad je např. starý nábytek, koberce, linolea, staré lyže, snowboardy, kola, velká zrcadla, umyvadla a WC mísy, které pocházejí z domácností fyzických osob.\n\nMezi objemný komunální odpad nepatří např. lednice, televizory a počítačové monitory, zářivky a výbojky, autobaterie, stavební suť, větve ani jiné bioodpady a dále ani veškeré odpady, které pocházejí z majetku firem nebo z podnikatelské činnosti.</string>
+    <string name="waste_textile_longdesc">Patří: boty, oblečení, textil (bytový textil, záclony, ložní prádlo, ap.), doplňky (kabelky, tašky hračky, ap). Textil a spárované boty vkládejte v igelitovém pytli nebo tašce.\n\nNepatří: koberce, matrace, znečištěný či mokrý textil, domácí odpad.</string>
+    <string name="waste_electro_longdesc">Do kontejneru patří: drobná elektrozařízení, např. kalkulačky, rádia, drobné počítačové vybavení, discmany, telefony a další.\n\nNepatří: televizory, počítačové monitory, zářivky a úsporné žárovky.</string>
     <string name="closed_today">dnes zavřeno</string>
     <string name="call_prompt">Volat</string>
     <string name="continue_reading_on_website">Pokračovat ve čtení na webu</string>
