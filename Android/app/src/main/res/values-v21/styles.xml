@@ -15,4 +15,9 @@
         <item name="android:textColor">@color/button_disabled_text</item>
     </style>
 
+    <style name="MyHeading" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

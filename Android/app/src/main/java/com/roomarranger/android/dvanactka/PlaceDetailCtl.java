@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.util.List;
 import java.util.Locale;
 
 public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -265,13 +268,14 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             mapFragment.getMapAsync(this);
         }
         else {
-            try {
-                mapFragment.getView().setVisibility(View.GONE);
-            } catch (Exception e) {e.printStackTrace();}
+            View mapView = mapFragment.getView();
+            if (mapView != null)
+                mapView.setVisibility(View.GONE);
             m_btnNavigate.setVisibility(View.GONE);
         }
 
         if (rec.m_aLocation != null && CRxGame.isCategoryCheckInAble(rec.m_eCategory)) {
+            m_lbGame.setText(getString(R.string.game) + ":");
             if (CRxGame.sharedInstance.playerWas(rec)) {
                 m_eGameStatus = EGameStatus.visited;
                 m_lbGameDist.setText(R.string.you_were_already_here);
@@ -322,6 +326,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             m_btnPhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    /*
                     AlertDialog.Builder builder = new AlertDialog.Builder(PlaceDetailCtl.this);
                     String sMessage = getString(R.string.call_prompt);
                     builder.setMessage(sMessage + ": " + rec.m_sPhoneNumber);
@@ -345,9 +350,21 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                     });
 
                     AlertDialog alert = builder.create();
-                    alert.show();
+                    alert.show();*/
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
+            // enable only if it is possible to make calls
+            PackageManager pm = getPackageManager();
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
+            List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
+            m_btnPhone.setEnabled(!infos.isEmpty());
         }
         if (rec.m_sEmail != null) {
             m_btnEmail.setOnClickListener(new View.OnClickListener() {

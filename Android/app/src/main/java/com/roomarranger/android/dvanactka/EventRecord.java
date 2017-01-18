@@ -311,7 +311,7 @@ class CRxEventRecord
             pThis.m_aLocation.setLatitude(dLocLat);
             pThis.m_aLocation.setLongitude(dLocLong);
         }
-        catch (Exception e) {e.printStackTrace();}
+        catch (Exception e) {}
 
         try {
             String locationLat = jsonItem.getString("checkinLocationLat");
@@ -322,7 +322,7 @@ class CRxEventRecord
             pThis.m_aLocCheckIn.setLatitude(dLocLat);
             pThis.m_aLocCheckIn.setLongitude(dLocLong);
         }
-        catch (Exception e) {e.printStackTrace();}
+        catch (Exception e) {}
 
         try {
             String hours = jsonItem.getString("openingHours");
@@ -334,7 +334,7 @@ class CRxEventRecord
                     pThis.m_arrOpeningHours.add(interval);
             }
         }
-        catch (JSONException e) {e.printStackTrace();}
+        catch (JSONException e) {}
 
         try {
             String hours = jsonItem.getString("events");
@@ -353,7 +353,7 @@ class CRxEventRecord
                 }
             });
         }
-        catch (JSONException e) {e.printStackTrace();}
+        catch (JSONException e) {}
         return pThis;
     }
 

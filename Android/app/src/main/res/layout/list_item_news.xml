@@ -14,8 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="17sp"
-            android:textStyle="bold"
+            style="@style/MyHeading"
             android:id="@+id/title"/>
         <ImageButton
             android:layout_width="wrap_content"
