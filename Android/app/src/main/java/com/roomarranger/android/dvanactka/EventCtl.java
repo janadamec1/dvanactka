@@ -272,7 +272,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         sText += rec.m_sFilter;
                         iBoldTo = sText.length();
                     }
-                    if (rec.m_sText != null) {
+                    if (rec.m_sText != null && !rec.m_sText.isEmpty()) {
                         if (sText.length() > 0) {
                             sText += " - ";
                         }

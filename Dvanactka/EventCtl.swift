@@ -389,7 +389,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 let aBoldAttr = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: cellNews.m_lbText.font.pointSize)];
                 sText.append(NSAttributedString(string:sRecFilter, attributes: aBoldAttr));
             }
-            if let sRecText = rec.m_sText {
+            if let sRecText = rec.m_sText, !sRecText.isEmpty {
                 if sText.length > 0 {
                     sText.append(NSAttributedString(string:" - "));
                 }
