@@ -96,7 +96,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                         if (cell.lbBadge != null)
                             cell.lbBadge.setVisibility(View.INVISIBLE);
                     }
-                } catch (Exception e) {}
+                } catch (Exception e) {e.printStackTrace();}
 
                 Intent intent = null;
                 if (sDsSelected.equals(CRxDataSourceManager.dsReportFault)) {

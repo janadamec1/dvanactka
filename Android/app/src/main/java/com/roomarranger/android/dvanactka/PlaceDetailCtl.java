@@ -226,7 +226,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 m_lbNote.setVisibility(View.VISIBLE);
             } else if (rec.m_eCategory.equals(CRxCategory.wasteElectro)) {
                 m_lbNote.setText(R.string.waste_electro_longdesc);
-                m_lbNote.setVisibility(View.VISIBLE);;
+                m_lbNote.setVisibility(View.VISIBLE);
             }
         }
 
@@ -234,7 +234,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             String link = rec.m_sInfoLink;
             try {
                 link = URLDecoder.decode(link, "UTF-8");
-            } catch(Exception e) {}
+            } catch(Exception e) {e.printStackTrace();}
             m_btnWebsite.setText(link);  // remove percent encoding
         }
         else {
@@ -267,7 +267,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         else {
             try {
                 mapFragment.getView().setVisibility(View.GONE);
-            } catch (Exception e) {}
+            } catch (Exception e) {e.printStackTrace();}
             m_btnNavigate.setVisibility(View.GONE);
         }
 
@@ -499,16 +499,14 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
         }
-        catch(Exception e){
-        }
+        catch(Exception e) {e.printStackTrace();}
     }
 
     protected void stopLocationUpdates() {
         try {
             LocationServices.FusedLocationApi.removeLocationUpdates(m_GoogleApiClient, this);
         }
-        catch(Exception e){
-        }
+        catch(Exception e) {e.printStackTrace();}
     }
 
     //---------------------------------------------------------------------------
@@ -616,7 +614,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             String sNewText = "";
             sNewText += "<b>Kde se nechat vyfotit na průkazovou fotografii?</b><br>Ve Fotolabu na Sofijském náměstí.<br><br>";
             sNewText += "<b>Obtížné parkování před poliklinikou?</b><br>Volná místa najdete na parkovišti dostupném z ulice Povodňová, od kterého pak projdete pěšky ulicí Amortova. Při parkování přímo před vchodem do polikliniky musíte navíc použít parkovací hodiny.<br><br>";
-            m_lbText.setText(Html.fromHtml(sNewText.toString()));
+            m_lbText.setText(Html.fromHtml(sNewText));
         }
     }
 }

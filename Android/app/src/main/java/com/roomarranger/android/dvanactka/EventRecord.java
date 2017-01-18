@@ -9,7 +9,6 @@ import android.net.Uri;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -271,7 +270,7 @@ class CRxEventRecord
         try {
             date = df.parse(string);
         }
-        catch (ParseException e) {}
+        catch (ParseException e) {e.printStackTrace();}
         return date;
     }
 
@@ -312,7 +311,7 @@ class CRxEventRecord
             pThis.m_aLocation.setLatitude(dLocLat);
             pThis.m_aLocation.setLongitude(dLocLong);
         }
-        catch (Exception e) {}
+        catch (Exception e) {e.printStackTrace();}
 
         try {
             String locationLat = jsonItem.getString("checkinLocationLat");
@@ -323,7 +322,7 @@ class CRxEventRecord
             pThis.m_aLocCheckIn.setLatitude(dLocLat);
             pThis.m_aLocCheckIn.setLongitude(dLocLong);
         }
-        catch (Exception e) {}
+        catch (Exception e) {e.printStackTrace();}
 
         try {
             String hours = jsonItem.getString("openingHours");
@@ -335,7 +334,7 @@ class CRxEventRecord
                     pThis.m_arrOpeningHours.add(interval);
             }
         }
-        catch (JSONException e) {}
+        catch (JSONException e) {e.printStackTrace();}
 
         try {
             String hours = jsonItem.getString("events");
@@ -354,7 +353,7 @@ class CRxEventRecord
                 }
             });
         }
-        catch (JSONException e) {}
+        catch (JSONException e) {e.printStackTrace();}
         return pThis;
     }
 
@@ -415,7 +414,7 @@ class CRxEventRecord
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                 ctx.startActivity(browserIntent);
             }
-            catch (Exception e) {}
+            catch (Exception e) {e.printStackTrace();}
         }
     }
 
@@ -426,7 +425,7 @@ class CRxEventRecord
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(m_sBuyLink));
                 ctx.startActivity(browserIntent);
             }
-            catch (Exception e) {}
+            catch (Exception e) {e.printStackTrace();}
         }
     }
 

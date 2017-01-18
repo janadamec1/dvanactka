@@ -505,6 +505,18 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 }
             }
         });
+
+        // Google Analytics
+        if (m_aDataSource != null) {
+            Tracker aTracker = MainActivity.getDefaultTracker();
+            if (aTracker != null) {
+                if (m_sParentFilter != null)
+                    aTracker.setScreenName("DS_" + m_sParentFilter);
+                else
+                    aTracker.setScreenName("DS_" + m_aDataSource.m_sId);
+                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -737,15 +749,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         super.onResume();
         if (m_GoogleApiClient != null && m_GoogleApiClient.isConnected())
             startLocationUpdates();
-
-        // Google Analytics
-        if (m_aDataSource != null) {
-            Tracker aTracker = MainActivity.getDefaultTracker();
-            if (aTracker != null) {
-                aTracker.setScreenName("DS_" + m_aDataSource.m_sId);
-                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
-            }
-        }
     }
 
     @Override
@@ -770,6 +773,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
         }
         catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -778,6 +782,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             LocationServices.FusedLocationApi.removeLocationUpdates(m_GoogleApiClient, this);
         }
         catch(Exception e){
+            e.printStackTrace();
         }
     }
 

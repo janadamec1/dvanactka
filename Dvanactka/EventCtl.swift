@@ -118,6 +118,21 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         setRecordsDistance();
         sortRecords();
+        
+        // Google Analytics
+        if let ds = m_aDataSource,
+            let tracker = GAI.sharedInstance().defaultTracker {
+            if let parentFilter = m_sParentFilter {
+                tracker.set(kGAIScreenName, value: "DS_" + parentFilter);
+            }
+            else {
+                tracker.set(kGAIScreenName, value: "DS_" + ds.m_sId);
+            }
+            
+            if let builder = GAIDictionaryBuilder.createScreenView() {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+        }
     }
     
     //--------------------------------------------------------------------------
@@ -127,21 +142,6 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
     }
     
-    //--------------------------------------------------------------------------
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
-        
-        // Google Analytics
-        if let ds = m_aDataSource,
-            let tracker = GAI.sharedInstance().defaultTracker {
-            tracker.set(kGAIScreenName, value: "DS_" + ds.m_sId)
-            
-            if let builder = GAIDictionaryBuilder.createScreenView() {
-                tracker.send(builder.build() as [NSObject : AnyObject])
-            }
-        }
-    }
-
     //--------------------------------------------------------------------------
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
