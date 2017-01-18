@@ -475,14 +475,18 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         else if ds.m_eType == .places {
             let cellPlace = tableView.dequeueReusableCell(withIdentifier: "cellPlace", for: indexPath) as! PlaceCell
-            
+
+            var sRecTitle = rec.m_sTitle;
+            if (CRxGame.sharedInstance.playerWas(at: rec)) {
+                sRecTitle += " ✓";
+            }
+
             var bObsolete = false;   // strike-out obsolete accidents
             if let dateTo = rec.m_aDateTo {
                 bObsolete = (dateTo < Date());
             }
             let aTitleAttr = (bObsolete ? [NSStrikethroughStyleAttributeName: 2] : nil);
-            let sRecTitle = NSAttributedString(string:rec.m_sTitle, attributes: aTitleAttr);
-            cellPlace.m_lbTitle.attributedText = sRecTitle;
+            cellPlace.m_lbTitle.attributedText = NSAttributedString(string: sRecTitle, attributes: aTitleAttr);
             
             var sDistance = "";
             if m_bUserLocationAcquired && rec.m_aLocation != nil {

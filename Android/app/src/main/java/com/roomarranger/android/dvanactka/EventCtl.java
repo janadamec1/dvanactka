@@ -261,9 +261,11 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 cell.m_btnFavorite.setTag(rec);
 
             // fill cell contents
-            cell.m_lbTitle.setText(rec.m_sTitle);
             switch (m_aDataSource.m_eType) {
                 case CRxDataSource.DATATYPE_news: {
+
+                    cell.m_lbTitle.setText(rec.m_sTitle);
+
                     String sText = "";
                     int iBoldTo = 0;
                     if (rec.m_sFilter != null) {
@@ -301,6 +303,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 }
 
                 case CRxDataSource.DATATYPE_events: {
+
+                    cell.m_lbTitle.setText(rec.m_sTitle);
 
                     if (rec.m_sText != null)
                         cell.m_lbText.setText(rec.m_sText);
@@ -342,6 +346,11 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 }
 
                 case CRxDataSource.DATATYPE_places: {
+
+                    String sRecTitle = rec.m_sTitle;
+                    if (CRxGame.sharedInstance.playerWas(rec))
+                        sRecTitle += " ✓";
+                    cell.m_lbTitle.setText(sRecTitle);
 
                     // strike-out obsolete accidents
                     boolean bObsolete = (rec.m_aDateTo != null && rec.m_aDateTo.before(new Date()));
