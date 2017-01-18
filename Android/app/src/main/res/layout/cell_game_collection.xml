@@ -16,6 +16,7 @@
         android:id="@+id/name"
         android:textColor="@android:color/white"
         android:textAlignment="center"
+        android:gravity="center"
         android:maxLines="1"/>
 
     <TextView
@@ -25,6 +26,7 @@
         android:id="@+id/progress"
         android:textColor="@android:color/white"
         android:textAlignment="center"
+        android:gravity="center"
         android:maxLines="1"/>
 
 </LinearLayout>

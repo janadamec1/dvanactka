@@ -70,8 +70,8 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsTraffic);
         m_arrSources.add(CRxDataSourceManager.dsWaste);
         //m_arrSources.add(CRxDataSourceManager.dsReportFault);
-        m_arrSources.add(CRxDataSourceManager.dsCooltour);
         m_arrSources.add(CRxDataSourceManager.dsSosContacts);
+        m_arrSources.add(CRxDataSourceManager.dsCooltour);
         m_arrSources.add(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.sharedInstance().delegate = this;
 

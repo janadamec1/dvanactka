@@ -5,14 +5,16 @@
         <!-- Customize your theme here. -->
         <item name="android:colorAccent">@color/colorTint</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:buttonStyle">@style/MyButtonStyle</item>
     </style>
 
     <style name="ActionBar" parent="@android:style/Widget.Material.Light.ActionBar.Solid">
         <item name="android:background">@color/colorActionBarBkg</item>
     </style>
 
-    <style name="buttonStyle">
+    <style name="MyButtonStyle" parent="@android:style/Widget.Material.Button">
         <item name="android:textColor">@color/button_disabled_text</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="MyHeading" parent="@android:style/TextAppearance.Medium">

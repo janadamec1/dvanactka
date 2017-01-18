@@ -25,8 +25,8 @@
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/date"
-            android:layout_gravity="end"
-            android:textAlignment="viewEnd"/>
+            android:layout_gravity="top|right"
+            android:gravity="top|right"/>
 
     </LinearLayout>
 
@@ -43,8 +43,6 @@
             android:text="@string/website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:textColor="@color/colorTint"
             android:id="@+id/btnWebsite"/>
         <Space
             android:layout_width="0dp"
@@ -54,8 +52,6 @@
             android:text="@string/buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:textColor="@color/colorTint"
             android:id="@+id/btnBuy"/>
         <Space
             android:layout_width="0dp"
@@ -65,8 +61,6 @@
             android:text="@string/add_to_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:textColor="@color/colorTint"
             android:id="@+id/btnAddToCalendar"/>
 
     </LinearLayout>

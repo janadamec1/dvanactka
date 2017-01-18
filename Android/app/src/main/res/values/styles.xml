@@ -4,10 +4,13 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/colorTint</item>
+        <item name="buttonStyle">@style/MyButtonStyle</item>
+        <item name="android:buttonStyle">@style/MyButtonStyle</item>
     </style>
 
-    <style name="buttonStyle">
+    <style name="MyButtonStyle" parent="@android:style/Widget.Holo.Button">
         <item name="android:textColor">@color/button_disabled_text</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="MyHeading" parent="@android:style/TextAppearance.Medium">

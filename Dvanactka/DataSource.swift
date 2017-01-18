@@ -460,7 +460,7 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshStdJsonDataSource(sDsId: String, url: String, testFile: String?, completition: ((_ error: String?) -> Void)? = nil) {
+    func refreshStdJsonDataSource(sDsId: String, url: String, testFile: String?) {
         guard let aDS = self.m_dictDataSources[sDsId]
             else { return }
         
@@ -493,7 +493,7 @@ class CRxDataSourceManager : NSObject {
                     }
                     DispatchQueue.main.async() { () -> Void in
                         aDS.m_bIsBeingRefreshed = false;
-                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                        aDS.delegate?.dataSourceRefreshEnded("Error when downloading data");
                         self.hideNetworkIndicator();
                     }
                     return;

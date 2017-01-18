@@ -621,7 +621,7 @@ class CRxDataSourceManager {
                         @Override
                         public void run() {
                             aDS.m_bIsBeingRefreshed = false;
-                            ///completition?(NSLocalizedString("Error when downloading data", comment: ""));
+                            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded("Error when downloading data");
                             hideNetworkIndicator();
                         }
                     });

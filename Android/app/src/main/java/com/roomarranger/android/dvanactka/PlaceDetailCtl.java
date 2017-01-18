@@ -566,13 +566,14 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             m_lbGameDist.setText(sReward);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(sAlertMessage)/*.setTitle(R.string.dialog_title)*/;
+            builder.setMessage(sAlertMessage).setTitle(R.string.game);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                 }
             });
             AlertDialog dialog = builder.create();
+            dialog.show();
 
             // TODO: animation, big applause
 

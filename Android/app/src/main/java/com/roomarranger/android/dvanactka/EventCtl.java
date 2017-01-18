@@ -312,6 +312,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         int iTimeStyle = DateFormat.SHORT;
 
                         Calendar calFrom = Calendar.getInstance();
+                        calFrom.setTime(rec.m_aDate);
 
                         if ((int)calFrom.get(Calendar.HOUR) == 0 && (int)calFrom.get(Calendar.MINUTE) == 0) {
                             iTimeStyle = -1;
@@ -319,6 +320,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         sDateText = EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDate);
                         if (rec.m_aDateTo != null) {
                             Calendar calTo = Calendar.getInstance();
+                            calTo.setTime(rec.m_aDateTo);
 
                             if ((int)calFrom.get(Calendar.DAY_OF_YEAR) != (int)calTo.get(Calendar.DAY_OF_YEAR)) {
                                 iDateStyle = DateFormat.SHORT;
@@ -418,10 +420,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         if (m_aDataSource == null) return;
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
 
-        if (m_aDataSource.m_bIsBeingRefreshed) {
+        if (m_aDataSource.m_bIsBeingRefreshed)
             m_aDataSource.delegate = this;
-            m_refreshControl.setRefreshing(true);
-        }
 
         if (m_sParentFilter != null) {
             setTitle(m_sParentFilter);
@@ -466,6 +466,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_refreshControl = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
         m_refreshControl.setOnRefreshListener(this);
         m_refreshMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+        if (m_aDataSource.m_bIsBeingRefreshed)
+            m_refreshControl.setRefreshing(true);
 
         // footer
         View viewFooter = findViewById(R.id.footer);
