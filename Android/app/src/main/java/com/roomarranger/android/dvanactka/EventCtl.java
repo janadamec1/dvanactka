@@ -384,7 +384,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     if (rec.m_bMarkFavorite)
                         iIcon = R.drawable.goldstar25;
                     if (iIcon != -1)
-                        cell.m_imgIcon.setImageDrawable(getDrawable(iIcon));
+                        cell.m_imgIcon.setImageResource(iIcon);
                     cell.m_imgIcon.setVisibility(iIcon != -1 ? View.VISIBLE : View.GONE);
                     break;
                 }
