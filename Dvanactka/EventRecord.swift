@@ -482,7 +482,7 @@ class CRxEventRecord: NSObject {
         if sString.isEmpty {
             return NSLocalizedString("closed today", comment: "");
         }
-        return sString;
+        return NSLocalizedString("today", comment: "") + " " + sString;
     }
 }
 

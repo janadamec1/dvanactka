@@ -12,7 +12,7 @@
     tools:context="com.roomarranger.android.dvanactka.AppInfoCtl">
 
     <TextView
-        android:text="Copyright (c) 2017, Jan Adamec"
+        android:text="Copyright © 2017, Jan Adamec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/copyright"
         android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:textColor="@color/colorTint"
         android:id="@+id/btnEmail"/>
 
     <TextView

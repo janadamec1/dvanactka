@@ -3,6 +3,7 @@ package com.roomarranger.android.dvanactka;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -339,6 +340,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 }
 
                 case CRxDataSource.DATATYPE_places: {
+
+                    // strike-out obsolete accidents
+                    boolean bObsolete = (rec.m_aDateTo != null && rec.m_aDateTo.before(new Date()));
+                    if (bObsolete)
+                        cell.m_lbTitle.setPaintFlags(cell.m_lbTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    else
+                        cell.m_lbTitle.setPaintFlags(cell.m_lbTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
                     String sDistance = "";
                     if (m_bUserLocationAcquired && rec.m_aLocation != null) {
@@ -734,7 +742,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         if (m_aDataSource != null) {
             Tracker aTracker = MainActivity.getDefaultTracker();
             if (aTracker != null) {
-                aTracker.setScreenName("DS_" + m_aDataSource.m_sTitle);
+                aTracker.setScreenName("DS_" + m_aDataSource.m_sId);
                 aTracker.send(new HitBuilders.ScreenViewBuilder().build());
             }
         }

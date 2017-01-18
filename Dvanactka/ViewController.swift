@@ -63,6 +63,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         //m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
         m_arrSources.append(CRxDataSourceManager.dsRadNews);
         m_arrSources.append(CRxDataSourceManager.dsSpolky);
+        m_arrSources.append(CRxDataSourceManager.dsRadDeska);
         m_arrSources.append(CRxDataSourceManager.dsRadEvents);
         m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
         m_arrSources.append(CRxDataSourceManager.dsSpolkyList);
@@ -71,7 +72,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsTraffic);
         m_arrSources.append(CRxDataSourceManager.dsWaste);
         m_arrSources.append(CRxDataSourceManager.dsReportFault);
-        m_arrSources.append(CRxDataSourceManager.dsRadDeska);
         m_arrSources.append(CRxDataSourceManager.dsCooltour);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
         m_arrSources.append(CRxDataSourceManager.dsGame);

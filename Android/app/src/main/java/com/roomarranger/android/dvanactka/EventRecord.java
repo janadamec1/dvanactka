@@ -515,10 +515,10 @@ class CRxEventRecord
                 }
             }
         }
+        Resources res = ctx.getResources();
         if (sString.isEmpty()) {
-            Resources res = ctx.getResources();
             return res.getString(R.string.closed_today);
         }
-        return sString;
+        return res.getString(R.string.today) + " " + sString;
     }
 }

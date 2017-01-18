@@ -61,6 +61,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         // from ViewController.swift
         m_arrSources.add(CRxDataSourceManager.dsRadNews);
         m_arrSources.add(CRxDataSourceManager.dsSpolky);
+        m_arrSources.add(CRxDataSourceManager.dsRadDeska);
         m_arrSources.add(CRxDataSourceManager.dsRadEvents);
         m_arrSources.add(CRxDataSourceManager.dsBiografProgram);
         m_arrSources.add(CRxDataSourceManager.dsSpolkyList);
@@ -69,7 +70,6 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsTraffic);
         m_arrSources.add(CRxDataSourceManager.dsWaste);
         //m_arrSources.add(CRxDataSourceManager.dsReportFault);
-        m_arrSources.add(CRxDataSourceManager.dsRadDeska);
         m_arrSources.add(CRxDataSourceManager.dsCooltour);
         m_arrSources.add(CRxDataSourceManager.dsSosContacts);
         m_arrSources.add(CRxDataSourceManager.dsGame);

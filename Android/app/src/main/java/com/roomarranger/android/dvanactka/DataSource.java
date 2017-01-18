@@ -266,8 +266,8 @@ class CRxDataSourceManager {
         m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.indepenedent), "ds_magazine", CRxDataSource.DATATYPE_news, 0x08739f));
         m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_places, 0x08739f));
         m_dictDataSources.put(CRxDataSourceManager.dsBiografProgram, new CRxDataSource(CRxDataSourceManager.dsBiografProgram, "Modřanský biograf", "ds_biograf", CRxDataSource.DATATYPE_events, 0xdb552d));
-        m_dictDataSources.put(CRxDataSourceManager.dsCooltour, new CRxDataSource(CRxDataSourceManager.dsCooltour, res.getString(R.string.trips), "ds_landmarks", CRxDataSource.DATATYPE_places, 0x00a000));
-        m_dictDataSources.put(CRxDataSourceManager.dsWaste, new CRxDataSource(CRxDataSourceManager.dsWaste, res.getString(R.string.waste), "ds_waste", CRxDataSource.DATATYPE_places, 0x00a000));
+        m_dictDataSources.put(CRxDataSourceManager.dsCooltour, new CRxDataSource(CRxDataSourceManager.dsCooltour, res.getString(R.string.trips), "ds_landmarks", CRxDataSource.DATATYPE_places, 0x008000));
+        m_dictDataSources.put(CRxDataSourceManager.dsWaste, new CRxDataSource(CRxDataSourceManager.dsWaste, res.getString(R.string.waste), "ds_waste", CRxDataSource.DATATYPE_places, 0x008000));
         m_dictDataSources.put(CRxDataSourceManager.dsSosContacts, new CRxDataSource(CRxDataSourceManager.dsSosContacts, res.getString(R.string.help), "ds_help", CRxDataSource.DATATYPE_places, 0x08739f));
         m_dictDataSources.put(CRxDataSourceManager.dsReportFault, new CRxDataSource(CRxDataSourceManager.dsReportFault, res.getString(R.string.report_fault), "ds_reportfault", CRxDataSource.DATATYPE_places, 0xb11a41));
         m_dictDataSources.put(CRxDataSourceManager.dsGame, new CRxDataSource(CRxDataSourceManager.dsGame, res.getString(R.string.game), "ds_game", CRxDataSource.DATATYPE_places, 0x603cbb));
@@ -283,17 +283,17 @@ class CRxDataSourceManager {
         ds.m_bFilterable = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolkyList);
-        ds.m_nRefreshFreqHours = 60;
+        ds.m_nRefreshFreqHours = 48;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsBiografProgram);
-        ds.m_nRefreshFreqHours = 60;
+        ds.m_nRefreshFreqHours = 48;
         ds.m_sShortTitle = "Biograf";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCooltour);
-        ds.m_nRefreshFreqHours = 60;
+        ds.m_nRefreshFreqHours = 48;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSosContacts);
-        ds.m_nRefreshFreqHours = 60;
+        ds.m_nRefreshFreqHours = 48;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsReportFault);
         ds.m_nRefreshFreqHours = 1000;
@@ -302,7 +302,7 @@ class CRxDataSourceManager {
         ds.m_nRefreshFreqHours = 1000;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsShops);
-        ds.m_nRefreshFreqHours = 60;
+        ds.m_nRefreshFreqHours = 48;
         ds.m_bFilterAsParentView = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);

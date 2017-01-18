@@ -132,9 +132,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         super.viewWillAppear(animated);
         
         // Google Analytics
-        if let sTitle = self.title,
+        if let ds = m_aDataSource,
             let tracker = GAI.sharedInstance().defaultTracker {
-            tracker.set(kGAIScreenName, value: "DS_" + sTitle)
+            tracker.set(kGAIScreenName, value: "DS_" + ds.m_sId)
             
             if let builder = GAIDictionaryBuilder.createScreenView() {
                 tracker.send(builder.build() as [NSObject : AnyObject])
@@ -475,7 +475,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         else if ds.m_eType == .places {
             let cellPlace = tableView.dequeueReusableCell(withIdentifier: "cellPlace", for: indexPath) as! PlaceCell
-            cellPlace.m_lbTitle.text = rec.m_sTitle;
+            
+            var bObsolete = false;   // strike-out obsolete accidents
+            if let dateTo = rec.m_aDateTo {
+                bObsolete = (dateTo < Date());
+            }
+            let aTitleAttr = (bObsolete ? [NSStrikethroughStyleAttributeName: 2] : nil);
+            let sRecTitle = NSAttributedString(string:rec.m_sTitle, attributes: aTitleAttr);
+            cellPlace.m_lbTitle.attributedText = sRecTitle;
+            
             var sDistance = "";
             if m_bUserLocationAcquired && rec.m_aLocation != nil {
                 let nf = NumberFormatter()
