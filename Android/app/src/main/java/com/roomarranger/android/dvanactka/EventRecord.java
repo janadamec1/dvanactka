@@ -270,7 +270,7 @@ class CRxEventRecord
         try {
             date = df.parse(string);
         }
-        catch (ParseException e) {e.printStackTrace();}
+        catch (ParseException e) {}
         return date;
     }
 
