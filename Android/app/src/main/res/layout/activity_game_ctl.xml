@@ -37,7 +37,7 @@
             android:id="@+id/progress"
             android:max="100"
             android:progress="50"
-            />
+            android:progressTint="@color/colorCellBkg"/>
 
         <TextView
             android:text="Y / Z XP"

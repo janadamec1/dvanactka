@@ -375,14 +375,15 @@ class CRxEventRecord: NSObject {
     //---------------------------------------------------------------------------
     func openInfoLink() {
         if let link = m_sInfoLink {
-            var aUrl: URL?;
+            var sParameter: String;
             if link.contains("?") {
-                aUrl = URL(string: link + "&utm_source=dvanactka.info");
+                sParameter = "&";
             }
             else {
-                aUrl = URL(string: link + "?utm_source=dvanactka.info");
+                sParameter = "?";
             }
-            if let url = aUrl {
+            sParameter += "utm_source=dvanactka.info&utm_medium=app";
+            if let url = URL(string: link + sParameter) {
                 UIApplication.shared.openURL(url)
             }
         }

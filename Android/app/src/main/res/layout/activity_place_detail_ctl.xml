@@ -40,6 +40,7 @@
         android:text="@string/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="4dp"
         style="@style/MyHeading"
         android:id="@+id/address_title"/>
     <TextView
@@ -50,6 +51,7 @@
         android:text="@string/opening_hours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="4dp"
         style="@style/MyHeading"
         android:id="@+id/hours_title"/>
 
@@ -125,7 +127,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp">
         <TextView
             android:text="@string/game"
             style="@style/MyHeading"
@@ -150,12 +153,14 @@
               android:name="com.google.android.gms.maps.MapFragment"
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="180dp"/>
+              android:layout_height="180dp"
+              android:paddingTop="4dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp">
         <Button
             android:text="@string/navigate"
             android:layout_width="wrap_content"

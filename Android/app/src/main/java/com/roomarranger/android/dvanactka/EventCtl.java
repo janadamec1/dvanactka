@@ -496,7 +496,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             @Override
             public void onClick(View view) {
                 if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsWork)) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.kdejeprace.cz/pridat"));
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app"));
                     startActivity(browserIntent);
                 }
                 else {

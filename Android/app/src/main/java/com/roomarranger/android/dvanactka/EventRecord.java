@@ -406,9 +406,10 @@ class CRxEventRecord
         if (m_sInfoLink != null) {
             String link = m_sInfoLink;
             if (m_sInfoLink.contains("?"))
-                link += "&utm_source=dvanactka.info";
+                link += "&";
             else
-                link += "?utm_source=dvanactka.info";
+                link += "?";
+            link += "utm_source=dvanactka.info&utm_medium=app";
 
             try {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));

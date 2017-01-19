@@ -789,7 +789,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     @IBAction func onBtnFooterTouched(_ sender: Any) {
         guard let ds = m_aDataSource else { return }
         if ds.m_sId == CRxDataSourceManager.dsWork {
-            if let url = URL(string: "https://www.kdejeprace.cz/pridat") {
+            if let url = URL(string: "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app") {
                 UIApplication.shared.openURL(url);
             }
         }
