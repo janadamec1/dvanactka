@@ -94,9 +94,14 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
 
             if (rec.m_aLocation != null) {
 
+                String sSubtitle = CRxCategory.categoryLocalName(rec.m_eCategory, this);
+                if (rec.m_sFilter != null)
+                    sSubtitle = rec.m_sFilter;
+
                 Location coord = rec.m_aLocation;
                 MarkerOptions opt = new MarkerOptions().position(loc2LatLng(coord))
-                        .title(rec.m_sTitle);
+                        .title(rec.m_sTitle)
+                        .snippet(sSubtitle);
                 int iIcon = CRxCategory.categoryIconName(rec.m_eCategory);
                 if (iIcon != -1)
                     opt = opt.icon(BitmapDescriptorFactory.fromResource(iIcon));

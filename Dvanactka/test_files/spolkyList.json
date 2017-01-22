@@ -6,8 +6,13 @@
 "category":"associations"
 },
 {
+"title":"Tichá čtvrť",
+"text":"Cílem spolku je udržet, popřípadě zlepšit charakter území a kvalitu bydlení ve vilové čtvrti Čechova čtvrť.",
+"category":"associations"
+},
+{
 "title":"Proxima Sociale",
-"text":"Jsme spolek, který si klade za cíl zlepšovat nabídku volnočasových aktivit nejen pro občany městských částí Praha 12 a Libuš - Písnice.  Chceme, aby se v našich městských částech lépe žilo.",
+"text":"Usilujeme o zvyšování kvality života obyvatel městských částí hl. města Prahy a obcí Středočeského kraje, v nichž působíme. Poskytujeme dětem, mládeži, dospělým a rodinám s dětmi různé formy preventivních a poradenských sociálních služeb (terénní, ambulantní i pobytové), učíme je řešit obtížné a nepříznivé životní situace a pomáhat jim je překonat.",
 "infoLink":"http:\/\/www.proximasociale.cz",
 "category":"associations"
 },
@@ -25,6 +30,7 @@
 },
 {
 "title":"Sbor dobrovolných hasičů Cholupice",
+"text":"Sbor dobrovolných hasičů založený 1903",
 "infoLink":"http:\/\/www.sdhcholupice.cz",
 "category":"associations"
 },
@@ -65,6 +71,15 @@
 "category":"sport"
 },
 {
+"title":"Jezdecký klub Cholupice",
+"text":"Jezdecký výcvik, pronájem koní, vyjížďky do terénu či ustájení",
+"locationLat":"49.9954833",
+"locationLong":"14.4450397",
+"address":"Pod remízkem\nPraha 12",
+"infoLink":"http:\/\/www.jkcholupice.wz.cz",
+"category":"sport"
+},
+{
 "title":"TJ Spartak Modřany - národní házená",
 "text":"Oddíl národní házené",
 "locationLat":"50.0049186",
@@ -81,6 +96,15 @@
 "address":"Krouzova 8\nPraha 12",
 "openingHours":"1: 900-1200, 1: 1500-1800, 2: 900-1200, 2: 1500-1800, 3: 900-1200, 3: 1500-1800, 4: 900-1200, 4: 1500-1800",
 "infoLink":"http:\/\/www.pohodamodrany.cz",
+"category":"children"
+},
+{
+"title":"Modřanská trojka - M3",
+"text":"Dětská turistická skupina. Modřanská trojka je nezisková organizace, která v Praze 12 již od roku 1973 cíleně pracuje s dětmi a mládeží v jejich volném čase.",
+"locationLat":"50.0018569",
+"locationLong":"14.4045425",
+"address":"U Spořitelny 18\nPraha 12",
+"infoLink":"http:\/\/www.mtrojka.cz",
 "category":"children"
 },
 {
@@ -104,5 +128,5 @@
 "text":"Sdružení pro alternativní školní a volnočasové aktivity. Hlavní činností jsou komunitní a vzdělávací akce, výtvarné dílny pro všechny věkové skupiny, sport a prázdninový a víkendový program pro děti, rodiny i dospělé.",
 "infoLink":"http:\/\/www.sasva.cz",
 "category":"children"
-},
+}
 ]}

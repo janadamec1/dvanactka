@@ -28,8 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         
-        //let bit = MemoryLayout<Int>.size == MemoryLayout<Int64>.size ? 64 : 32
-        
         // Optional: configure GAI options.
         if let gai = GAI.sharedInstance() {
             gai.trackUncaughtExceptions = false  // report uncaught exceptions

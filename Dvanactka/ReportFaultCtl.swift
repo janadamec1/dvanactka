@@ -153,7 +153,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         let mailer = MFMailComposeViewController();
         mailer.mailComposeDelegate = self;
         
-        mailer.setToRecipients(["jadamec@gmail.com"]);
+        mailer.setToRecipients(["info@dvanactka.info"]);
         mailer.setSubject("P12app hlášení závady: " + sSubject!);
         mailer.setMessageBody(sMessageBody, isHTML: false);
         

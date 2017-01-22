@@ -24,6 +24,9 @@ class CRxMapItem : NSObject, MKAnnotation {
     }
     
     var subtitle: String? {
+        if let filter = m_rec.m_sFilter {
+            return filter;
+        }
         return CRxEventRecord.categoryLocalName(category: m_rec.m_eCategory);
     }
     
