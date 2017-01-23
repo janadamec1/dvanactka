@@ -316,6 +316,15 @@
 "filter":"Řeznictví"
 },
 {
+"title":"Řeznictví Valenta",
+"locationLat":"50.0142892",
+"locationLong":"14.4101108",
+"address":"K Otočče 1831\nPraha 12",
+"openingHours":"1: 730-1600, 2: 730-1600, 3: 730-1600, 4: 730-1700, 5: 730-1700, 6: 730-1100",
+"category":"obchod",
+"filter":"Řeznictví"
+},
+{
 "title":"Instalatérské potřeby Milan Mašek",
 "locationLat":"50.0027414",
 "locationLong":"14.4054356",

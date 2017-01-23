@@ -20,11 +20,13 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate
 {
     ArrayList<String> m_arrSources = new ArrayList<String>();    // data source ids in order they should appear in the collection
     static boolean s_bInited = false;
+    static Date s_dateLastRefreshed = null;
     static private Tracker s_GlobalTracker = null;
     BaseAdapter m_adapter = null;
 
@@ -45,7 +47,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
             dsm.defineDatasources(this);
             dsm.loadData();
-            dsm.refreshAllDataSources(false);
+            //dsm.refreshAllDataSources(false); // is called in onResume
             //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
             //application.applicationIconBadgeNumber = 0;
             CRxGame.sharedInstance.init(this);
@@ -176,6 +178,19 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 convertView.setBackgroundColor(Color.rgb((iCl&0xFF0000)>>16, (iCl&0xFF00)>>8, iCl&0xFF));
             }
             return convertView;
+        }
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // this is called whenever the app is brought to foreground, but also when switching activities
+        Date now = new Date();
+        if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10*60*1000) {  // 10 minutes from last global refresh
+            s_dateLastRefreshed = now;
+            CRxDataSourceManager.sharedInstance().refreshAllDataSources(false);
         }
     }
 
