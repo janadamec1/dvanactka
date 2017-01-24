@@ -88,4 +88,5 @@
     <string name="appinfo_longtext">This is an unofficial independent application with information from Prague 12.\n\nThat\'s why some informative texts are too short and you have to read the full text on an external website.\n\nPlease contact me with ideas for improvements.\n\nLet the application contribute to better understanding about the news and locations interesting places in Prague 12.</string>
     <string name="about_the_app">About the App</string>
     <string name="today">today</string>
+    <string name="share_via">Share via</string>
 </resources>

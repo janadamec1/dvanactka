@@ -89,4 +89,5 @@
     <string name="about_the_app">O aplikaci</string>
     <string name="appinfo_longtext">Toto je nezávislá neoficiální aplikace s informacemi z Prahy 12.\n\nI proto jsou některé informační texty příliš krátké a k přečtení plného znění vyžadují přechod na externí webovou stránku.\n\nPokud vás napadne, co by se dalo vylepšit nebo přidat, kontaktujte mne.\n\nSnad aplikace přispěje k lepší orientaci, co se na Praze 12 děje, a kde se co nachází.</string>
     <string name="today">dnes</string>
+    <string name="share_via">Sdílet přes...</string>
 </resources>

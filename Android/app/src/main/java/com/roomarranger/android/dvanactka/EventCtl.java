@@ -1,6 +1,7 @@
 package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -241,6 +242,26 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             }
                         }
                     });
+                if (cell.m_btnAction != null)
+                    cell.m_btnAction.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null) {
+                                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                sharingIntent.setType("text/plain");
+                                String shareText = aRecClicked.m_sTitle;
+                                if (aRecClicked.m_sText != null)
+                                    shareText += "\n" + aRecClicked.m_sText;
+                                if (aRecClicked.m_sInfoLink != null)
+                                    shareText += "\n" + aRecClicked.m_sInfoLink;
+                                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareText);
+                                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, aRecClicked.m_sTitle);
+                                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+                            }
+                        }
+                    });
+
                 view.setTag(cell);
             } else {
                 cell = (NewsListItemHolder)view.getTag();
