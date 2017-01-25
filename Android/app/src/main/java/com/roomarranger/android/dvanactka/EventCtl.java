@@ -85,6 +85,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         ImageButton m_btnAction;
         Button m_btnBuy;
         Button m_btnAddToCalendar;
+        TextView m_lbAddress;
+        View m_stackContact;
+        Button m_btnEmail;
+        Button m_btnPhone;
         ImageView m_imgIcon;
     }
 
@@ -168,9 +172,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         break;
                     case CRxDataSource.DATATYPE_events:
                         cell.m_lbDate = (TextView)view.findViewById(R.id.date);
+                        cell.m_lbAddress = (TextView)view.findViewById(R.id.address);
                         cell.m_btnWebsite = (Button)view.findViewById(R.id.btnWebsite);
                         cell.m_btnBuy = (Button)view.findViewById(R.id.btnBuy);
                         cell.m_btnAddToCalendar = (Button)view.findViewById(R.id.btnAddToCalendar);
+                        cell.m_stackContact = view.findViewById(R.id.stackContact);
+                        cell.m_btnEmail = (Button)view.findViewById(R.id.btnEmail);
+                        cell.m_btnPhone = (Button)view.findViewById(R.id.btnPhone);
                         break;
                     case CRxDataSource.DATATYPE_places:
                         cell.m_imgIcon = (ImageView)view.findViewById(R.id.icon);
@@ -261,6 +269,45 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             }
                         }
                     });
+                if (cell.m_btnEmail != null)
+                    cell.m_btnEmail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null) {
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("message/rfc822");
+                                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{aRecClicked.m_sEmail});
+
+                                String sSubject = "Zájem o " + aRecClicked.m_sTitle;
+                                if (aRecClicked.m_aDate != null) {
+                                    sSubject += " @ " + EventCtl.formatDate(DateFormat.SHORT, DateFormat.SHORT, aRecClicked.m_aDate);
+                                }
+                                intent.putExtra(Intent.EXTRA_SUBJECT, sSubject);
+                                try {
+                                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                                } catch (android.content.ActivityNotFoundException ex) {
+                                    Toast.makeText(EventCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    });
+                if (cell.m_btnPhone != null)
+                    cell.m_btnPhone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
+                            if (aRecClicked != null) {
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", aRecClicked.m_sPhoneNumber.replace(" ", ""), null));
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
 
                 view.setTag(cell);
             } else {
@@ -280,6 +327,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 cell.m_btnAddToCalendar.setTag(rec);
             if (cell.m_btnFavorite != null)
                 cell.m_btnFavorite.setTag(rec);
+            if (cell.m_btnEmail != null)
+                cell.m_btnEmail.setTag(rec);
+            if (cell.m_btnPhone != null)
+                cell.m_btnPhone.setTag(rec);
 
             // fill cell contents
             switch (m_aDataSource.m_eType) {
@@ -331,6 +382,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         cell.m_lbText.setText(rec.m_sText);
                     cell.m_lbText.setVisibility(rec.m_sText == null ? View.GONE : View.VISIBLE);
 
+                    if (rec.m_sAddress != null)
+                        cell.m_lbAddress.setText(rec.m_sAddress);
+                    cell.m_lbAddress.setVisibility(rec.m_sAddress == null ? View.GONE : View.VISIBLE);
+
                     String sDateText = "";
                     if (rec.m_aDate != null) {
                         int iDateStyle = -1;
@@ -339,7 +394,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         Calendar calFrom = Calendar.getInstance();
                         calFrom.setTime(rec.m_aDate);
 
-                        if ((int)calFrom.get(Calendar.HOUR) == 0 && (int)calFrom.get(Calendar.MINUTE) == 0) {
+                        if ((int)calFrom.get(Calendar.HOUR_OF_DAY) == 0 && (int)calFrom.get(Calendar.MINUTE) == 0) {
                             iTimeStyle = -1;
                         }
                         sDateText = EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDate);
@@ -353,7 +408,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             }
 
                             iTimeStyle = DateFormat.SHORT;
-                            if ((int)calTo.get(Calendar.HOUR) == 0 && (int)calTo.get(Calendar.MINUTE) == 0) {
+                            if ((int)calTo.get(Calendar.HOUR_OF_DAY) == 0 && (int)calTo.get(Calendar.MINUTE) == 0) {
                                 iTimeStyle = -1;
                             }
                             sDateText += "\n- " + EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDateTo);
@@ -363,6 +418,15 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     cell.m_btnWebsite.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
                     cell.m_btnBuy.setVisibility(rec.m_sBuyLink == null ? View.GONE : View.VISIBLE);
                     cell.m_btnAddToCalendar.setVisibility(rec.m_aDate==null ? View.GONE : View.VISIBLE);
+
+                    cell.m_stackContact.setVisibility(rec.m_sEmail == null && rec.m_sPhoneNumber == null ? View.GONE : View.VISIBLE);
+                    if (rec.m_sEmail != null || rec.m_sPhoneNumber != null) {
+                        if (rec.m_sPhoneNumber != null) {
+                            cell.m_btnPhone.setText(rec.m_sPhoneNumber);
+                        }
+                        cell.m_btnEmail.setVisibility(rec.m_sEmail==null ? View.GONE : View.VISIBLE);
+                        cell.m_btnPhone.setVisibility(rec.m_sPhoneNumber==null ? View.GONE : View.VISIBLE);
+                    }
                     break;
                 }
 

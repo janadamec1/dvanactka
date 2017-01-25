@@ -26,11 +26,16 @@ class NewsCell: UITableViewCell {
 }
 class EventCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
+    @IBOutlet weak var m_lbAddress: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbDate: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnBuy: UIButton!
     @IBOutlet weak var m_btnAddToCalendar: UIButton!
+    @IBOutlet weak var m_stackContact: UIStackView!
+    @IBOutlet weak var m_lbContact: UILabel!
+    @IBOutlet weak var m_btnEmail: UIButton!
+    @IBOutlet weak var m_btnPhone: UIButton!
 }
 class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
@@ -427,10 +432,16 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellEvent.m_btnWebsite.setTitle(NSLocalizedString("Website", comment: ""), for: .normal);
             cellEvent.m_btnBuy.setTitle(NSLocalizedString("Buy", comment: ""), for: .normal);
             cellEvent.m_btnAddToCalendar.setTitle(NSLocalizedString("Add to Calendar", comment: ""), for: .normal);
+            cellEvent.m_lbContact.text = NSLocalizedString("Contact:", comment: "")
             
             cellEvent.m_lbTitle.text = rec.m_sTitle;
             cellEvent.m_lbText.text = rec.m_sText ?? "";
             cellEvent.m_lbText.isHidden = (rec.m_sText == nil);
+            
+            if let address = rec.m_sAddress {
+                cellEvent.m_lbAddress.text = address;
+            }
+            cellEvent.m_lbAddress.isHidden = (rec.m_sAddress == nil || ds.m_sId == CRxDataSourceManager.dsBiografProgram);
             
             var sDateText = "";
             if let aDate = rec.m_aDate {
@@ -467,10 +478,21 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellEvent.m_btnBuy.isHidden = (rec.m_sBuyLink==nil);
             cellEvent.m_btnAddToCalendar.isHidden = (rec.m_aDate==nil);
             
+            cellEvent.m_stackContact.isHidden = (rec.m_sEmail == nil && rec.m_sPhoneNumber == nil);
+            if !cellEvent.m_stackContact.isHidden {
+                if let phone = rec.m_sPhoneNumber {
+                    cellEvent.m_btnPhone.setTitle(phone, for: .normal);
+                }
+                cellEvent.m_btnEmail.isHidden = (rec.m_sEmail==nil);
+                cellEvent.m_btnPhone.isHidden = (rec.m_sPhoneNumber==nil);
+            }
+            
             let iBtnTag = btnTag(from: indexPath);
             cellEvent.m_btnWebsite.tag = iBtnTag;
             cellEvent.m_btnBuy.tag = iBtnTag;
             cellEvent.m_btnAddToCalendar.tag = iBtnTag;
+            cellEvent.m_btnEmail.tag = iBtnTag;
+            cellEvent.m_btnPhone.tag = iBtnTag;
             cell = cellEvent;
         }
         else if ds.m_eType == .places {
@@ -696,6 +718,45 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             }
         }
     }
+
+    //--------------------------------------------------------------------------
+    @IBAction func onBtnEmailTouched(_ sender: Any) {
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)),
+            let email = rec.m_sEmail {
+            
+            let mailer = MFMailComposeViewController();
+            if mailer == nil { return; }
+            mailer.mailComposeDelegate = self;
+            
+            mailer.setToRecipients(["\(email)"]);
+            var sSubject = "Zájem o " + rec.m_sTitle;
+            if let date = rec.m_aDate {
+                let df = DateFormatter();
+                df.dateStyle = .short;
+                df.timeStyle = .short;
+                sSubject += " @ " + df.string(from: date);
+            }
+            mailer.setSubject(sSubject);
+            
+            mailer.modalPresentationStyle = .formSheet;
+            present(mailer, animated: true, completion: nil);
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    @IBAction func onBtnPhoneTouched(_ sender: Any) {
+        if let btn = sender as? UIButton,
+            let rec = record(at: btnIndexPath(from: btn.tag)),
+            let phone = rec.m_sPhoneNumber {
+            
+            let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
+            
+            if let url = URL(string: "telprompt://\(cleanedNumber)") {
+                UIApplication.shared.openURL(url);
+            }
+        }
+    }
     
     //--------------------------------------------------------------------------
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -795,6 +856,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         else if MFMailComposeViewController.canSendMail() {
             let mailer = MFMailComposeViewController();
+            if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients(["info@dvanactka.info"]);

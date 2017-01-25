@@ -33,6 +33,7 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
         if (MFMailComposeViewController.canSendMail())
         {
             let mailer = MFMailComposeViewController();
+            if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients(["info@dvanactka.info"]);

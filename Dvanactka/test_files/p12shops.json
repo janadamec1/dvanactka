@@ -99,6 +99,28 @@
 "filter":"Restaurace"
 },
 {
+"title":"Dřevák",
+"locationLat":"49.9924736",
+"locationLong":"14.4098778",
+"address":"U klubu 2\nPraha 12",
+"openingHours":"1: 1100-2200, 2: 1100-2200, 3: 1100-2200, 4: 1100-2200, 5: 1100-2300, 6: 1130-2300, 7: 1130-2100",
+"infoLink":"http:\/\/drevakrestaurace.cz",
+"phone":"273 139 327",
+"category":"restaurace",
+"filter":"Restaurace"
+},
+{
+"title":"Majlo restaurant",
+"locationLat":"49.9892681",
+"locationLong":"14.4128061",
+"address":"K Nouzovu 1\nPraha 12",
+"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
+"infoLink":"http:\/\/www.majlo-restaurant.cz",
+"phone":"720 978 578",
+"category":"restaurace",
+"filter":"Restaurace"
+},
+{
 "title":"Deco",
 "text":"Chorvatská rybí restaurace",
 "locationLat":"50.0029619",
@@ -321,6 +343,17 @@
 "locationLong":"14.4101108",
 "address":"K Otočče 1831\nPraha 12",
 "openingHours":"1: 730-1600, 2: 730-1600, 3: 730-1600, 4: 730-1700, 5: 730-1700, 6: 730-1100",
+"category":"obchod",
+"filter":"Řeznictví"
+},
+{
+"title":"Lahůdky Uzeniny - Markes",
+"locationLat":"50.0351889",
+"locationLong":"14.4149803",
+"address":"Branická 75\nPraha 4",
+"openingHours":"1: 830-1800, 2: 830-1800, 3: 830-1800, 4: 830-1800, 5: 830-1800, 6: 830-1800, 7: 830-1800",
+"phone":"605 937 309",
+"infoLink":"http:\/\/uzeninove-kytice.unas.cz",
 "category":"obchod",
 "filter":"Řeznictví"
 },

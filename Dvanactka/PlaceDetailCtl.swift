@@ -345,6 +345,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             else {return;}
         
         let mailer = MFMailComposeViewController();
+        if mailer == nil { return; }
         mailer.mailComposeDelegate = self;
         
         mailer.setToRecipients(["\(email)"]);
@@ -381,6 +382,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 else {return;}
             
             let mailer = MFMailComposeViewController();
+            if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients(["info@dvanactka.info"]);

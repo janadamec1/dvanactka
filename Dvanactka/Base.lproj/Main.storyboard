@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -497,11 +497,11 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0es-Q0-01F" id="2B1-HL-HgD">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="p05-37-hjF">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -530,7 +530,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="RfH-Fs-1ML">
-                            <rect key="frame" x="0.0" y="407" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TkX-s6-BMm">
@@ -611,8 +611,8 @@
                                                     <rect key="frame" x="0.0" y="111" width="304" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq9-ln-0zD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
-                                                            <state key="normal" title="Continue reading on website"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="137" height="30"/>
+                                                            <state key="normal" title="Continue to website"/>
                                                             <connections>
                                                                 <action selector="onBtnWebsiteNewsTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="Ezz-6g-vXz"/>
                                                             </connections>
@@ -645,21 +645,21 @@
                                     <outlet property="m_lbTitle" destination="QYB-Pe-tCP" id="e5i-EA-DZ6"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellEvent" rowHeight="141" id="dJu-ze-iiP" customClass="EventCell" customModule="Dvanactka" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="186" width="320" height="141"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellEvent" rowHeight="170" id="dJu-ze-iiP" customClass="EventCell" customModule="Dvanactka" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="186" width="320" height="170"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dJu-ze-iiP" id="JlW-7r-goa">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="169"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ysL-5m-hOS">
-                                            <rect key="frame" x="8" y="8" width="304" height="124"/>
+                                            <rect key="frame" x="8" y="8" width="304" height="153.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="OQJ-Fw-neA">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="48"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title title title title title title titile end" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="993-jr-BcL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="208" height="42.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="208" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -675,14 +675,45 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text text text text text text text text text text text text text text text text " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6et-kn-i8x">
-                                                    <rect key="frame" x="0.0" y="54" width="304" height="34"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="misto konani" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="Ov0-xw-err">
+                                                    <rect key="frame" x="0.0" y="26.5" width="304" height="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="text text text text text text text text text text text text text text text text " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6et-kn-i8x">
+                                                    <rect key="frame" x="0.0" y="47.5" width="304" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="NBb-iR-2PI">
+                                                    <rect key="frame" x="0.0" y="87.5" width="304" height="30"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jpf-Lp-UoR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H3T-KB-Lg0">
+                                                            <rect key="frame" x="132" y="0.0" width="44" height="30"/>
+                                                            <state key="normal" title="e-mail"/>
+                                                            <connections>
+                                                                <action selector="onBtnEmailTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="zYF-p2-hbg"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n6c-gT-vMN">
+                                                            <rect key="frame" x="256" y="0.0" width="48" height="30"/>
+                                                            <state key="normal" title="telefon"/>
+                                                            <connections>
+                                                                <action selector="onBtnPhoneTouched:" destination="r8a-Ox-9c9" eventType="touchUpInside" id="4Pj-hK-JEY"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="GSf-V8-sKS">
-                                                    <rect key="frame" x="0.0" y="94" width="304" height="30"/>
+                                                    <rect key="frame" x="0.0" y="123.5" width="304" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm0-pv-FdJ">
                                                             <rect key="frame" x="0.0" y="0.0" width="56" height="30"/>
@@ -720,14 +751,19 @@
                                 <connections>
                                     <outlet property="m_btnAddToCalendar" destination="K2E-nI-Ubz" id="Fpv-Jq-Qia"/>
                                     <outlet property="m_btnBuy" destination="RYH-3t-ore" id="Xt8-nm-A8L"/>
+                                    <outlet property="m_btnEmail" destination="H3T-KB-Lg0" id="ba5-5o-cOg"/>
+                                    <outlet property="m_btnPhone" destination="n6c-gT-vMN" id="4xD-98-44j"/>
                                     <outlet property="m_btnWebsite" destination="Nm0-pv-FdJ" id="5jV-NB-A3S"/>
+                                    <outlet property="m_lbAddress" destination="Ov0-xw-err" id="BFi-7z-MCv"/>
+                                    <outlet property="m_lbContact" destination="Jpf-Lp-UoR" id="ge3-T7-bcY"/>
                                     <outlet property="m_lbDate" destination="unt-ET-aoo" id="FhN-SO-Hot"/>
                                     <outlet property="m_lbText" destination="6et-kn-i8x" id="Zqb-aN-wx2"/>
                                     <outlet property="m_lbTitle" destination="993-jr-BcL" id="gbD-hZ-oJV"/>
+                                    <outlet property="m_stackContact" destination="NBb-iR-2PI" id="6hG-4A-dK4"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellPlace" rowHeight="80" id="pgw-EN-LcH" customClass="PlaceCell" customModule="Dvanactka" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="327" width="320" height="80"/>
+                                <rect key="frame" x="0.0" y="356" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgw-EN-LcH" id="ck6-Kj-omd">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="80"/>
@@ -810,11 +846,11 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aSb-v8-Eol" id="5F6-gA-7Lq">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x6C-o4-o6N">
-                                            <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>

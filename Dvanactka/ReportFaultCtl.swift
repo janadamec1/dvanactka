@@ -151,6 +151,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         sMessageBody += "\n\n";
         
         let mailer = MFMailComposeViewController();
+        if mailer == nil { return; }
         mailer.mailComposeDelegate = self;
         
         mailer.setToRecipients(["info@dvanactka.info"]);

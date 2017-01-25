@@ -33,7 +33,47 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:textColor="#808080"
+        android:id="@+id/address"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#404040"
         android:id="@+id/text"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stackContact">
+        <TextView
+            android:text="@string/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:id="@+id/contact"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <Button
+            android:text="e-mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnEmail"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <Button
+            android:text="phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPhone"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
