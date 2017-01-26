@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
 import android.net.Uri;
@@ -437,8 +438,15 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         sRecTitle += " ✓";
                     cell.m_lbTitle.setText(sRecTitle);
 
+                    // gray future roadblocks
+                    Date now = new Date();
+                    boolean bInFuture = (rec.m_aDate != null && rec.m_aDate.after(now));
+                    if (bInFuture)
+                        cell.m_lbTitle.setTextColor(Color.rgb(128, 128, 128));
+                    else
+                        cell.m_lbTitle.setTextColor(Color.BLACK);
                     // strike-out obsolete accidents
-                    boolean bObsolete = (rec.m_aDateTo != null && rec.m_aDateTo.before(new Date()));
+                    boolean bObsolete = (rec.m_aDateTo != null && rec.m_aDateTo.before(now));
                     if (bObsolete)
                         cell.m_lbTitle.setPaintFlags(cell.m_lbTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     else

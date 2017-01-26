@@ -503,6 +503,12 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 sRecTitle += " ✓";
             }
 
+            var bInFuture = false;
+            if let date = rec.m_aDate {
+                bInFuture = (date > Date());
+            }
+            cellPlace.m_lbTitle.textColor = UIColor(white: bInFuture ? 0.5 : 0.0, alpha: 1.0);
+            
             var bObsolete = false;   // strike-out obsolete accidents
             if let dateTo = rec.m_aDateTo {
                 bObsolete = (dateTo < Date());

@@ -58,11 +58,13 @@
             android:text="e-mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="28dp"
             android:id="@+id/btnEmail"/>
         <Button
             android:text="phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="28dp"
             android:id="@+id/btnPhone"/>
         <Space
             android:layout_width="0dp"
@@ -79,6 +81,7 @@
             android:text="@string/website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="34dp"
             android:gravity="left|center_vertical"
             android:id="@+id/btnWebsite"/>
         <Space
@@ -89,6 +92,7 @@
             android:text="@string/buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="34dp"
             android:id="@+id/btnBuy"/>
         <Space
             android:layout_width="0dp"
@@ -98,6 +102,7 @@
             android:text="@string/add_to_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="34dp"
             android:gravity="right|center_vertical"
             android:id="@+id/btnAddToCalendar"/>
 
