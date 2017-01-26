@@ -191,6 +191,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10*60*1000) {  // 10 minutes from last global refresh
             s_dateLastRefreshed = now;
             CRxDataSourceManager.sharedInstance().refreshAllDataSources(false);
+            CRxGame.sharedInstance.reinit();
         }
     }
 

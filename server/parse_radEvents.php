@@ -35,7 +35,15 @@ foreach ($nodes as $i => $node) {
 		
 		$nodeDate = firstItem($xpath->query("div[1]", $node));
 		if ($nodeDate != NULL) {
-			$arrFromTo = explode("-", $nodeDate->nodeValue);
+			// strip address, is after comma
+			$sDateFromTo = $nodeDate->nodeValue;
+			$iCommaPos = strpos($sDateFromTo, ",");
+			if ($iCommaPos !== FALSE) {
+				$aNewRecord["address"] = trim(substr($sDateFromTo, $iCommaPos+1));
+				$sDateFromTo = substr($sDateFromTo, 0, $iCommaPos);
+			}
+			// split time from - to
+			$arrFromTo = explode("-", $sDateFromTo);
 			$iArrFromToCount = count($arrFromTo);
 			if ($iArrFromToCount > 0) {		// date & time from
 				$sDateFrom = trim($arrFromTo[0]);
@@ -74,6 +82,8 @@ foreach ($nodes as $i => $node) {
 							$dateTo = date_create_from_format("!j.n.Y G:i", $sFullTo); // only time
 						}
 					}
+					if ($dateTo == null)
+						echo $nodeDate->nodeValue ."\n";
 					$aNewRecord["dateTo"] = date_format($dateTo, "Y-m-d\TH:i");
 				}
 			}
@@ -82,8 +92,14 @@ foreach ($nodes as $i => $node) {
 		$nodeText = firstItem($xpath->query("div[2]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
-			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce)
+			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce) {
 				$aNewRecord["text"] = $text;
+				
+				if (strpos($text, "jara@kc12.cz") !== FALSE) {
+					$aNewRecord["email"] = "jara@kc12.cz";
+					$aNewRecord["phone"] = "778 482 787";
+				}
+			}
 		}
 		$aNewRecord["filter"] = "praha12.cz";
 		if (array_key_exists("date", $aNewRecord))

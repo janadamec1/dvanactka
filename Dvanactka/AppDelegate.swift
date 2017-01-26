@@ -34,6 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             gai.logger.logLevel = GAILogLevel.none  // remove before app release
             //gai.logger.logLevel = GAILogLevel.verbose  // remove before app release
         }
+        
+        Appirater.setAppId("1184613212");
+        Appirater.setDaysUntilPrompt(5);
+        Appirater.setUsesUntilPrompt(10);
+        Appirater.setSignificantEventsUntilPrompt(-1);
+        Appirater.setTimeBeforeReminding(2);
+        //Appirater.setDebug(true);
+        Appirater.appLaunched(true);
         return true
     }
 
@@ -52,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.applicationIconBadgeNumber = 0;
         CRxDataSourceManager.sharedInstance.refreshAllDataSources();
         CRxGame.sharedInstance.reinit();
+        Appirater.appEnteredForeground(true);
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
