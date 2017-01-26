@@ -54,24 +54,20 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:id="@+id/contact"/>
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
         <Button
             android:text="e-mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnEmail"/>
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
         <Button
             android:text="phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnPhone"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -83,6 +79,7 @@
             android:text="@string/website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
             android:id="@+id/btnWebsite"/>
         <Space
             android:layout_width="0dp"
@@ -101,6 +98,7 @@
             android:text="@string/add_to_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
             android:id="@+id/btnAddToCalendar"/>
 
     </LinearLayout>
