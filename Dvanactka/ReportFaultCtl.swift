@@ -155,7 +155,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         mailer.mailComposeDelegate = self;
         
         mailer.setToRecipients(["info@dvanactka.info"]);
-        mailer.setSubject("P12app hlášení závady: " + sSubject!);
+        mailer.setSubject("Aplikace Dvanáctka - hlášení závady: " + sSubject!);
         mailer.setMessageBody(sMessageBody, isHTML: false);
         
         if let image = m_btnPhoto.image(for: .normal),

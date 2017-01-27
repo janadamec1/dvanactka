@@ -91,4 +91,11 @@
     <string name="today">dnes</string>
     <string name="share_via">Sdílet přes...</string>
     <string name="contact">Kontakt:</string>
+    <string name="report_illegal_dump_fault_problem">Nahlásit černou skládku, závadu, poslat podnět</string>
+    <string name="subject">Předmět</string>
+    <string name="photo">Fotografie</string>
+    <string name="refine">Upřesnit</string>
+    <string name="location">Umístění</string>
+    <string name="detailed_description">Podrobnější popis</string>
+    <string name="long_press_to_set_the_location">Místo nastavíte dlouhým stiskem</string>
 </resources>

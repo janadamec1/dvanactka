@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_report_fault_ctl"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.roomarranger.android.dvanactka.ReportFaultCtl">
+
+    <TextView
+        android:text="@string/report_illegal_dump_fault_problem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/lbHint"
+        android:textAppearance="@style/MyHeading"/>
+
+    <TextView
+        android:text="@string/subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbSubject"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/edSubject"/>
+
+    <TextView
+        android:text="@string/photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbPhoto"/>
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/photo"
+        android:id="@+id/btnPhoto"/>
+
+    <TextView
+        android:text="@string/detailed_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbDescription"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/edDescription"
+        />
+
+    <TextView
+        android:text="@string/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbLocationTitle"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbLocation"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="@string/refine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnRefine"/>
+    </LinearLayout>
+</LinearLayout>

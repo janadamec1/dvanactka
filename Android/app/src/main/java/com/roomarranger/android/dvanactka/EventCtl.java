@@ -597,7 +597,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("message/rfc822");
                     intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "P12app - přidat záznam");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace Dvanáctka - přidat záznam");
                     String sTitle = m_aDataSource.m_sTitle;
                     if (m_sParentFilter != null)
                         sTitle += m_sParentFilter;

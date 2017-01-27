@@ -7,6 +7,7 @@
 "address":"Hubičkova 2\nPraha 12",
 "openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
 "infoLink":"http:\/\/dipietro.cz",
+"buyLink":"http:\/\/dipietro.cz\/denni-menu",
 "phone":"244 400 894",
 "category":"restaurace",
 "filter":"Restaurace"
@@ -18,6 +19,7 @@
 "address":"Pertoldova 8\nPraha 12",
 "openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2359, 6: 1100-2359, 7: 1200-2300",
 "infoLink":"http:\/\/www.montfort.cz",
+"buyLink":"http:\/\/montfort.cz\/poledni-menu",
 "phone":"244 402 404",
 "category":"restaurace",
 "filter":"Restaurace"
@@ -29,6 +31,7 @@
 "address":"Vltavanů\nPraha 12",
 "openingHours":"2: 1100-1700, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-1700",
 "infoLink":"http:\/\/www.port62.cz",
+"buyLink":"http:\/\/www.port62.cz\/menu\/menu-restaurace\/denni-menu",
 "phone":"733 762 237",
 "category":"restaurace",
 "filter":"Restaurace"
@@ -40,6 +43,7 @@
 "address":"Sofijské náměstí 2\nPraha 12",
 "openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2359, 6: 1100-2359, 7: 1100-2300",
 "infoLink":"http:\/\/www.restauracearcha.cz",
+"buyLink":"http:\/\/www.restauracearcha.cz\/denni-menu",
 "phone":"244 402 255",
 "category":"restaurace",
 "filter":"Restaurace"
@@ -73,6 +77,7 @@
 "address":"Mráčkova 5\nPraha 12",
 "openingHours":"1: 1100-2330, 2: 1100-2330, 3: 1100-2330, 4: 1100-2330, 5: 1100-2330, 6: 1100-2330, 7: 1100-2330",
 "infoLink":"http:\/\/www.modranskelabe.cz",
+"buyLink":"http:\/\/www.modranskelabe.cz\/denni-menu",
 "phone":"725 933 523",
 "category":"restaurace",
 "filter":"Restaurace"
@@ -129,6 +134,7 @@
 "openingHours":"1: 1130-2300, 2: 1130-2300, 3: 1130-2300, 4: 1130-2300, 5: 1130-2300, 6: 1130-2300, 7: 1130-2300",
 "phone":"244 464 217",
 "infoLink":"http:\/\/www.decorestaurace.cz",
+"buyLink":"http:\/\/www.decorestaurace.cz\/deco\/poledni-menu-2",
 "category":"restaurace",
 "filter":"Restaurace"
 },
@@ -140,6 +146,7 @@
 "openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2359, 6: 1130-2359, 7: 1130-2200",
 "phone":"241 773 478",
 "infoLink":"http:\/\/www.restaurantuvltavy.cz",
+"buyLink":"http:\/\/www.restaurantuvltavy.cz\/index.php?sec=today-menu&lang=cz",
 "category":"restaurace",
 "filter":"Restaurace"
 },
@@ -173,6 +180,18 @@
 "openingHours":"1: 1030-2300, 2: 1030-2300, 3: 1030-2300, 4: 1030-2300, 5: 1030-2300, 6: 1030-2300, 7: 1030-2300",
 "infoLink":"http:\/\/www.restaurace-vinarna.cz\/senkyrna-obzor",
 "phone":"725 348 902",
+"category":"restaurace",
+"filter":"Restaurace"
+},
+{
+"title":"Hostinec Na Kamýku",
+"locationLat":"50.0176644",
+"locationLong":"14.4420025",
+"address":"Krhanická 21a\nPraha 12",
+"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300",
+"infoLink":"http:\/\/www.utunelu.cz\/kamyk",
+"buyLink":"http:\/\/www.utunelu.cz\/kamyk\/denni_menu.pdf",
+"phone":"241 406 242",
 "category":"restaurace",
 "filter":"Restaurace"
 },
@@ -445,6 +464,61 @@
 "address":"Poliklinika Modřany, přízemí\nSoukalova 3\nPraha 12",
 "openingHours":"1: 800-1800, 2: 800-1800, 3: 800-1800, 4: 800-1800, 5: 800-1400",
 "phone":"777 213 937",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Zdravá výživa Salon Čtyřlístek",
+"locationLat":"50.0130731",
+"locationLong":"14.4198597",
+"address":"Krouzova 30\nPraha 12",
+"openingHours":"1: 1330-1930, 2: 1330-1930, 3: 1330-1930, 4: 1330-1930, 5: 1330-1600",
+"infoLink":"http:\/\/www.salonctyrlistek.eu",
+"phone":"778 086 968",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Med p. Ouřada ml.",
+"text":"dle cedule na plotě",
+"locationLat":"50.0014669",
+"locationLong":"14.4124756",
+"address":"Písková 24\nPraha 12",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Med Jan Ouřada",
+"text":"dle cedule na plotě",
+"locationLat":"50.0008567",
+"locationLong":"14.4078675",
+"address":"Staromodřanská 7\nPraha 12",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Med Jan Jirouš",
+"text":"dle cedule na plotě",
+"locationLat":"49.9995153",
+"locationLong":"14.4194869",
+"address":"Platónova 1\nPraha 12",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Med z Roubenky",
+"infoLink":"http:\/\/medzroubenky.cz",
+"email":"bunc@seznam.cz",
+"address":"místo předání dle dohody v okolí Novodvorské",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
+"title":"Med z Cholupic",
+"text":"dle cedule na plotě",
+"locationLat":"49.9848292",
+"locationLong":"14.4464572",
+"address":"Ke Křížku 98\nPraha 12",
 "category":"obchod",
 "filter":"Potraviny"
 },

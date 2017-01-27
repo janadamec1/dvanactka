@@ -90,4 +90,11 @@
     <string name="today">today</string>
     <string name="share_via">Share via</string>
     <string name="contact">Contact:</string>
+    <string name="refine">Refine</string>
+    <string name="location">Location</string>
+    <string name="detailed_description">Detailed description</string>
+    <string name="photo">Photo</string>
+    <string name="subject">Subject</string>
+    <string name="report_illegal_dump_fault_problem">Report illegal dump, fault, problem</string>
+    <string name="long_press_to_set_the_location">Long press to set the location</string>
 </resources>

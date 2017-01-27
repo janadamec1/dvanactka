@@ -21,7 +21,7 @@ public class AppInfoCtl extends Activity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("message/rfc822");
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, "P12app (Android)");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace Dvanáctka (Android)");
                 try {
                     startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
                 } catch (android.content.ActivityNotFoundException ex) {

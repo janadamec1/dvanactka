@@ -71,9 +71,9 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsWork);
         m_arrSources.add(CRxDataSourceManager.dsTraffic);
         m_arrSources.add(CRxDataSourceManager.dsWaste);
-        //m_arrSources.add(CRxDataSourceManager.dsReportFault);
-        m_arrSources.add(CRxDataSourceManager.dsSosContacts);
+        m_arrSources.add(CRxDataSourceManager.dsReportFault);
         m_arrSources.add(CRxDataSourceManager.dsCooltour);
+        m_arrSources.add(CRxDataSourceManager.dsSosContacts);
         m_arrSources.add(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.sharedInstance().delegate = this;
 
@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 
                 Intent intent = null;
                 if (sDsSelected.equals(CRxDataSourceManager.dsReportFault)) {
-                    //performSegue(withIdentifier: "segueReportFault", sender: self);
+                    intent = new Intent(MainActivity.this, ReportFaultCtl.class);
                 }
                 else if (sDsSelected.equals(CRxDataSourceManager.dsGame)) {
                     intent = new Intent(MainActivity.this, GameCtl.class);

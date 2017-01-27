@@ -882,7 +882,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients(["info@dvanactka.info"]);
-            mailer.setSubject("P12app - přidat záznam");
+            mailer.setSubject("Aplikace Dvanáctka - přidat záznam");
             var sTitle = ds.m_sTitle;
             if let sParentFilter = m_sParentFilter {
                 sTitle = sParentFilter;
