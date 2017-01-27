@@ -92,9 +92,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             } else if ds.m_eType == .news && ds.m_sId != CRxDataSourceManager.dsSavedNews {
                 // link to saved news
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "star"), style: .plain, target: self, action: #selector(EventsCtl.onSavedNews)));
-                if ds.m_bFilterable {
-                    arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
-                }
+            }
+            if ds.m_bFilterable {
+                arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
             }
             /*if ds.m_sId == CRxDataSourceManager.dsSpolky {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "bulleted_list"), style: .plain, target: self, action: #selector(EventsCtl.onBtnList)));
@@ -176,6 +176,8 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         df.timeStyle = .none;
         let today = Date();
         
+        var arrDateCategories = [Date]();
+        
         // first add objects to groups
         for rec in ds.m_arrItems {
             // favorities
@@ -206,6 +208,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             
             // categories
             var sCatName = "";
+            var dateCat: Date?;
             switch ds.m_eType {
             case .news: break;    // one category for news
                 
@@ -217,26 +220,39 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 
             case .events:   // use date as category
                 guard let date = rec.m_aDate else {
-                    continue    // remove recoords without date
+                    continue    // remove records without date
                 }
-                if date < today && rec.m_aDateTo != nil && rec.m_aDateTo! >= today {
+                if date < today && rec.m_aDateTo != nil && rec.m_aDateTo! >= today &&
+                    (rec.m_aDateTo!.timeIntervalSince(date) > 24*60*60) {       // more then 1 day
                     sCatName = NSLocalizedString("Multi-day events", comment: "");
+                    dateCat = date;
                 }
                 else if date < today {   // do not show old events
                     continue;
                 }
                 else {
                     sCatName = df.string(from: date);
+                    dateCat = date;
                 }
             }
             // categories
             if m_orderedItems[sCatName] == nil {
                 m_orderedItems[sCatName] = [rec];   // new category
                 m_orderedCategories.append(sCatName);
+                
+                if dateCat != nil {
+                    arrDateCategories.append(dateCat!);
+                }
             }
             else {
                 m_orderedItems[sCatName]?.append(rec);  // into existing
             }
+        }
+        
+        // sort date categories and then
+        if ds.m_eType == .events {
+            let combined = zip(arrDateCategories, m_orderedCategories).sorted {$0.0 < $1.0}
+            m_orderedCategories = combined.map {$0.1};
         }
         
         // now sort each group by distance (places) or date (events, news)
@@ -439,7 +455,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             cellEvent.m_lbText.isHidden = (rec.m_sText == nil);
             
             if let address = rec.m_sAddress {
-                cellEvent.m_lbAddress.text = address;
+                cellEvent.m_lbAddress.text = address.replacingOccurrences(of: "\n", with: ", ");
             }
             cellEvent.m_lbAddress.isHidden = (rec.m_sAddress == nil || ds.m_sId == CRxDataSourceManager.dsBiografProgram);
             

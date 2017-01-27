@@ -39,8 +39,16 @@ foreach ($nodes as $i => $node) {
 			$sDateFromTo = $nodeDate->nodeValue;
 			$iCommaPos = strpos($sDateFromTo, ",");
 			if ($iCommaPos !== FALSE) {
-				$aNewRecord["address"] = trim(substr($sDateFromTo, $iCommaPos+1));
+				$address = trim(substr($sDateFromTo, $iCommaPos+1));
 				$sDateFromTo = substr($sDateFromTo, 0, $iCommaPos);
+				
+				if (strpos($address, "Pertoldova") !== FALSE)
+					$address = "KC \"12\" @ Pertoldova 10, Praha 12";
+				else if (strpos($address, "Jordana Jovkova") !== FALSE)
+					$address = "KC \"12\" @ Jordana Jovkova 20, Praha 12";
+				else if (strpos($address, "KC Novodv") !== FALSE)
+					$address = "KC Novodvorská @ Novodvorská 151, Praha 4";
+				$aNewRecord["address"] = $address;
 			}
 			// split time from - to
 			$arrFromTo = explode("-", $sDateFromTo);

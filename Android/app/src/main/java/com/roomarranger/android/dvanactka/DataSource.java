@@ -259,6 +259,7 @@ class CRxDataSourceManager {
         Resources res = ctx.getResources();
         m_assetMan = res.getAssets();
         m_urlDocumentsDir = ctx.getDir("json", Context.MODE_PRIVATE);
+        m_aSavedNews.m_sTitle = res.getString(R.string.saved_news);
 
         m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news, 0x3f4d88));
         m_dictDataSources.put(CRxDataSourceManager.dsRadEvents, new CRxDataSource(CRxDataSourceManager.dsRadEvents, res.getString(R.string.events), "ds_events", CRxDataSource.DATATYPE_events, 0xdb552d));
@@ -277,6 +278,9 @@ class CRxDataSourceManager {
 
         // additional parameters (there are no default arguments values in Java)
         CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
+        ds.m_bFilterable = true;
+
+        ds = m_dictDataSources.get(CRxDataSourceManager.dsRadEvents);
         ds.m_bFilterable = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolky);

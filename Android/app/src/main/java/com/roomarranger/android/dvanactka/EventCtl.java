@@ -37,6 +37,7 @@ import com.google.android.gms.location.LocationServices;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -384,8 +385,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     cell.m_lbText.setVisibility(rec.m_sText == null ? View.GONE : View.VISIBLE);
 
                     if (rec.m_sAddress != null)
-                        cell.m_lbAddress.setText(rec.m_sAddress);
-                    cell.m_lbAddress.setVisibility(rec.m_sAddress == null ? View.GONE : View.VISIBLE);
+                        cell.m_lbAddress.setText(rec.m_sAddress.replaceAll("\n", ", "));
+                    cell.m_lbAddress.setVisibility(rec.m_sAddress == null || m_aDataSource.m_sId.equals(CRxDataSourceManager.dsBiografProgram) ? View.GONE : View.VISIBLE);
 
                     String sDateText = "";
                     if (rec.m_aDate != null) {
@@ -624,6 +625,12 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     //--------------------------------------------------------------------------
+    class DateCategoryZip {
+        String m_sName;
+        Date m_date;
+        DateCategoryZip(String name, Date date) { m_sName = name; m_date = date;}
+    }
+
     void sortRecords() {
         CRxDataSource ds = m_aDataSource;
         if (ds == null) return;
@@ -635,6 +642,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
         Calendar c = Calendar.getInstance();
         Date today = c.getTime();
+
+        ArrayList<Date> arrDateCategories = new ArrayList<Date>();
 
         // first add objects to groups
         for (CRxEventRecord rec: ds.m_arrItems) {
@@ -666,6 +675,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
             // categories
             String sCatName = "";
+            Date dateCat = null;
             switch (ds.m_eType) {
             case CRxDataSource.DATATYPE_news: break;    // one category for news
 
@@ -679,14 +689,17 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 if (rec.m_aDate == null) {
                     continue;    // remove records without date
                 }
-                if (rec.m_aDate.before(today) && rec.m_aDateTo != null && rec.m_aDateTo.after(today)) {
+                if (rec.m_aDate.before(today) && rec.m_aDateTo != null && rec.m_aDateTo.after(today)
+                        && (rec.m_aDateTo.getTime()-rec.m_aDate.getTime() > 24*60*60*1000)) {     // more then 1 day
                     sCatName = getString(R.string.multi_day_events);
+                    dateCat = rec.m_aDate;
                 }
                 else if (rec.m_aDate.before(today)) {   // do not show old events
                     continue;
                 }
                 else {
                     sCatName = df.format(rec.m_aDate);
+                    dateCat = rec.m_aDate;
                 }
                 break;
             }
@@ -696,11 +709,28 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 arr.add(rec);
                 m_orderedItems.put(sCatName, arr);   // new category
                 m_orderedCategories.add(sCatName);
+
+                if (dateCat != null)
+                    arrDateCategories.add(dateCat);
             }
             else {
                 ArrayList<CRxEventRecord> arr = m_orderedItems.get(sCatName);
                 arr.add(rec);  // into existing
             }
+        }
+
+        // sort date categories and then
+        if (ds.m_eType == CRxDataSource.DATATYPE_events) {
+            DateCategoryZip[] zip = new DateCategoryZip[Math.min(arrDateCategories.size(), m_orderedCategories.size())];
+            for (int i = 0; i < zip.length; i++) zip[i] = new DateCategoryZip(m_orderedCategories.get(i), arrDateCategories.get(i));
+            Arrays.sort(zip, new Comparator<DateCategoryZip>() {
+                @Override
+                public int compare(DateCategoryZip t0, DateCategoryZip t1) {
+                    return t0.m_date.before(t1.m_date) ? -1 : 1;
+                }
+            });
+            m_orderedCategories.clear();
+            for (int i = 0; i < zip.length; i++) m_orderedCategories.add(zip[i].m_sName);
         }
 
         // now sort each group by distance (places) or date (events, news)
@@ -776,18 +806,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         MenuItem actFilter = menu.findItem(R.id.action_filter);
         MenuItem actMap = menu.findItem(R.id.action_map);
         MenuItem actSaved = menu.findItem(R.id.action_saved);
-        actFilter.setVisible(false);
-        actMap.setVisible(false);
-        actSaved.setVisible(false);
-        // make those visible
-        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
-            actMap.setVisible(true);
-        }
-        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_news && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews)) {
-            actSaved.setVisible(true);
-            if (m_aDataSource.m_bFilterable)
-                actFilter.setVisible(true);
-        }
+        actFilter.setVisible(m_aDataSource.m_bFilterable);
+        actMap.setVisible(m_aDataSource.m_eType == CRxDataSource.DATATYPE_places);
+        actSaved.setVisible(m_aDataSource.m_eType == CRxDataSource.DATATYPE_news && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews));
         return true;
     }
 
