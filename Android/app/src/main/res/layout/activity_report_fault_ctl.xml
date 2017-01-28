@@ -18,66 +18,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:id="@+id/lbHint"
         android:textAppearance="@style/MyHeading"/>
 
     <TextView
         android:text="@string/subject"
+        android:textColor="@android:color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lbSubject"/>
+        android:layout_height="wrap_content"/>
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_height="100dp"
+        android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/edSubject"/>
+        android:id="@+id/edDescription"/>
 
     <TextView
         android:text="@string/photo"
+        android:textColor="@android:color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lbPhoto"/>
+        android:layout_height="wrap_content"/>
 
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="160dp"
         android:src="@drawable/photo"
         android:id="@+id/btnPhoto"/>
 
     <TextView
-        android:text="@string/detailed_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lbDescription"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/edDescription"
-        />
-
-    <TextView
         android:text="@string/location"
+        android:textColor="@android:color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lbLocationTitle"/>
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:text="Address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/lbLocation"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_gravity="left"/>
 
         <Button
             android:text="@string/refine"

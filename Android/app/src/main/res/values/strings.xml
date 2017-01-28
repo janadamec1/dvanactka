@@ -94,7 +94,14 @@
     <string name="location">Location</string>
     <string name="detailed_description">Detailed description</string>
     <string name="photo">Photo</string>
-    <string name="subject">Subject</string>
+    <string name="subject">Description</string>
     <string name="report_illegal_dump_fault_problem">Report illegal dump, fault, problem</string>
     <string name="long_press_to_set_the_location">Long press to set the location</string>
+    <string name="send_e_mail">Send e-mail</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="from_gallery">From gallery</string>
+    <string name="select_photo">Select Photo</string>
+    <string name="fill_description">Please fill the description.</string>
+    <string name="fill_photo">Please select the photo.</string>
+    <string name="fill_location">Please specify the location.</string>
 </resources>
