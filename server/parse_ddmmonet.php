@@ -45,7 +45,7 @@ function downloadEventDetail(&$rec) {
 						$iArrToCount = count($arrTo);
 						$dateTo = NULL;
 						if ($iArrToCount > 1) {	// we have both date and time
-							$dateFrom = date_create_from_format("!j.n.Y G:i", $sDateTo);
+							$dateTo = date_create_from_format("!j.n.Y G:i", $sDateTo);
 						}
 						else {
 							// determine if date or time is given
@@ -59,7 +59,7 @@ function downloadEventDetail(&$rec) {
 							}
 						}
 						if ($dateTo == null)
-							echo $nodeDate->nodeValue ."\n";
+							echo "DateTo is null at " . $rec["title"] . $nodeDate->nodeValue . "\n";
 						$rec["dateTo"] = date_format($dateTo, "Y-m-d\TH:i");
 					}
 				}

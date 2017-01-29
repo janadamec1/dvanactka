@@ -23,10 +23,10 @@
               android:paddingLeft="0dp"
               android:paddingRight="10dp"
               android:paddingBottom="10dp"
-              android:columnWidth="96dp"
+              android:columnWidth="98dp"
               android:numColumns="auto_fit"
-              android:verticalSpacing="10dp"
-              android:horizontalSpacing="10dp"
+              android:verticalSpacing="8dp"
+              android:horizontalSpacing="8dp"
               android:stretchMode="spacingWidthUniform"
               android:gravity="center"/>
 </LinearLayout>

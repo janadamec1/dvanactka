@@ -77,7 +77,7 @@ foreach ($nodes as $i => $node) {
 					$iArrToCount = count($arrTo);
 					$dateTo = NULL;
 					if ($iArrToCount > 1) {	// we have both date and time
-						$dateFrom = date_create_from_format("!j.n.Y G:i", $sDateTo);
+						$dateTo = date_create_from_format("!j.n.Y G:i", $sDateTo);
 					}
 					else {
 						// determine if date or time is given

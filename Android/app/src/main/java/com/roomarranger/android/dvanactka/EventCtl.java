@@ -71,7 +71,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         if (iDateStyle == -1 && iTimeStyle == -1) return "";
         if (iDateStyle == -1) return new SimpleDateFormat("HH:mm").format(date);// DateFormat.getTimeInstance(iTimeStyle).format(date);
         if (iTimeStyle == -1) return DateFormat.getDateInstance(iDateStyle).format(date);
-        return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(date);//DateFormat.getDateTimeInstance(iDateStyle, iTimeStyle).format(date);
+        return new SimpleDateFormat("dd.MM.yy HH:mm").format(date);//DateFormat.getDateTimeInstance(iDateStyle, iTimeStyle).format(date);
     }
 
     static class NewsListItemHolder {

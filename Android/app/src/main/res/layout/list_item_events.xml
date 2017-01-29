@@ -19,8 +19,9 @@
             android:id="@+id/title"/>
         <TextView
             android:text="20:00"
+            android:maxLines="2"
             android:textColor="#808080"
-            android:layout_width="100sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"

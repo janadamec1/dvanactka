@@ -6,12 +6,13 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,10 +41,34 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         if (m_aDataSource == null) return;
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        MapFragment mapFragment = (MapFragment)(getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
+
+        Button btnMapStandard = (Button)findViewById(R.id.btnMapStandard);
+        Button btnMapSatellite = (Button)findViewById(R.id.btnMapSatellite);
+        Button btnMapHybrid = (Button)findViewById(R.id.btnMapHybrid);
+
+        btnMapStandard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (m_map != null)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            }
+        });
+        btnMapSatellite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (m_map != null)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            }
+        });
+        btnMapHybrid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (m_map != null)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
     }
 
     public static LatLng loc2LatLng(Location loc)
@@ -51,15 +76,6 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         return new LatLng(loc.getLatitude(), loc.getLongitude());
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         m_map = googleMap;
