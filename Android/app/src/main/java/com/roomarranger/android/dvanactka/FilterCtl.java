@@ -17,16 +17,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-interface CRxFilterChangeDelegate {
-    void filterChanged(Set<String> setOut);
-}
-
 public class FilterCtl extends Activity {
 
     CRxDataSource m_aDataSource = null;
     Set<String> m_setOut = new HashSet<String>();
     ArrayList<String> m_arrFilter = new ArrayList<String>();
-    CRxFilterChangeDelegate m_delegate = null;          // delegate of this activity
     ArrayAdapter<String> m_adapter = null;
 
     public class FilterSourceAdapter extends ArrayAdapter<String> {
@@ -55,8 +50,7 @@ public class FilterCtl extends Activity {
                     else
                         m_setOut.add(sChkValue);
                     chk.setChecked(bCheck);
-                    if (m_delegate != null)
-                        m_delegate.filterChanged(m_setOut);
+                    notifyFilterChanged();
                 }
             });
             return view;
@@ -67,9 +61,6 @@ public class FilterCtl extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_ctl);
-
-        m_delegate = EventCtl.g_CurrentFilterChangeDelegate;
-        EventCtl.g_CurrentFilterChangeDelegate = null;
 
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
@@ -100,6 +91,14 @@ public class FilterCtl extends Activity {
         return true;
     }
 
+    void notifyFilterChanged() {
+        if (m_aDataSource != null) {
+            m_aDataSource.m_setFilter = m_setOut;
+            CRxDataSourceManager.sharedInstance().save(m_aDataSource);
+        }
+        setResult(RESULT_OK);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -112,8 +111,7 @@ public class FilterCtl extends Activity {
                 m_setOut.clear();
                 if (m_adapter != null)
                     m_adapter.notifyDataSetChanged();
-                if (m_delegate != null)
-                    m_delegate.filterChanged(m_setOut);
+                notifyFilterChanged();
                 return true;
             }
             case R.id.action_none: {
@@ -122,8 +120,7 @@ public class FilterCtl extends Activity {
                     m_setOut.addAll(m_arrFilter);
                 if (m_adapter != null)
                     m_adapter.notifyDataSetChanged();
-                if (m_delegate != null)
-                    m_delegate.filterChanged(m_setOut);
+                notifyFilterChanged();
                 return true;
             }
         }

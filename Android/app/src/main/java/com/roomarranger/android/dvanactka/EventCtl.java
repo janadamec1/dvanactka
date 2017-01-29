@@ -46,15 +46,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-interface CRxDetailRefreshParentDelegate {
-    void detailRequestsRefresh();
-}
-
 public class EventCtl extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,
-        CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate, SwipeRefreshLayout.OnRefreshListener {
+        CRxDataSourceRefreshDelegate, SwipeRefreshLayout.OnRefreshListener {
 
     CRxDataSource m_aDataSource = null;
     String m_sParentFilter = null;          // show only items with this filter (for ds with filterAsParentView)
+
+    static final int CODE_DETAIL_PLACE_REFRESH = 3;         // from place detail
+    static final int CODE_DETAIL_REFRESH_PARENT = 4;        // from saved news
+    static final int CODE_FILTER_CTL = 5;                   // from filter control
 
     HashMap<String, ArrayList<CRxEventRecord>> m_orderedItems = new HashMap<String, ArrayList<CRxEventRecord>>();
     ArrayList<String> m_orderedCategories = new ArrayList<String>();    // sorted category local names
@@ -64,10 +64,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     LocationRequest m_LocationRequest;
     SwipeRefreshLayout m_refreshControl;
     Toast m_refreshMessage;
-
-    static CRxDetailRefreshParentDelegate g_CurrentRefreshDelegate = null;  // hack for passing pointer to child activity
-    static CRxFilterChangeDelegate g_CurrentFilterChangeDelegate = null;
-    CRxDetailRefreshParentDelegate m_refreshParentDelegate = null;          // delegate of this activity
 
     ExpandListAdapter m_adapter;
 
@@ -225,8 +221,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                                 btn.setImageResource(aRecClicked.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);
                                 CRxDataSourceManager.sharedInstance().setFavorite(aRecClicked, aRecClicked.m_bMarkFavorite);
 
-                                if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews) && m_refreshParentDelegate != null ){
-                                    m_refreshParentDelegate.detailRequestsRefresh();
+                                if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews)){
+                                    setResult(EventCtl.CODE_DETAIL_REFRESH_PARENT);
                                 }
                             }
                         }
@@ -511,9 +507,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_ctl);
 
-        m_refreshParentDelegate = EventCtl.g_CurrentRefreshDelegate;
-        EventCtl.g_CurrentRefreshDelegate = null;
-
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         if (sDataSource.equals(CRxDataSourceManager.dsSavedNews))
@@ -545,11 +538,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
                     ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
                     CRxEventRecord rec = arr.get(childPosition);
-                    EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
                     Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
                     intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
                     intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
-                    startActivity(intent);
+                    startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
                     return false;
                 }
             });
@@ -834,18 +826,16 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 return true;
             }
             case R.id.action_saved: {
-                EventCtl.g_CurrentRefreshDelegate = EventCtl.this;
                 Intent intent = new Intent(EventCtl.this, EventCtl.class);
                 intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSavedNews);
-                startActivity(intent);
+                startActivityForResult(intent, EventCtl.CODE_DETAIL_REFRESH_PARENT);
                 return true;
             }
 
             case R.id.action_filter: {
-                EventCtl.g_CurrentFilterChangeDelegate = EventCtl.this;
                 Intent intent = new Intent(EventCtl.this, FilterCtl.class);
                 intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                startActivity(intent);
+                startActivityForResult(intent, EventCtl.CODE_FILTER_CTL);
                 return true;
             }
         }
@@ -923,21 +913,19 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
     //---------------------------------------------------------------------------
     @Override
-    public void detailRequestsRefresh() {
-        sortRecords();
-        if (m_adapter != null)
-            m_adapter.notifyDataSetChanged();
-    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    //---------------------------------------------------------------------------
-    @Override
-    public void filterChanged(Set<String> setOut) {
-        if (m_aDataSource == null) return;
-        m_aDataSource.m_setFilter = setOut;
-        CRxDataSourceManager.sharedInstance().save(m_aDataSource);
-        sortRecords();
-        if (m_adapter != null)
-            m_adapter.notifyDataSetChanged();
+        if (requestCode == EventCtl.CODE_DETAIL_REFRESH_PARENT || requestCode == EventCtl.CODE_DETAIL_PLACE_REFRESH) {   // saved news and favorite waste location
+            sortRecords();
+            if (m_adapter != null)
+                m_adapter.notifyDataSetChanged();
+        }
+        else if (requestCode == EventCtl.CODE_FILTER_CTL) {  // filter changed
+            sortRecords();
+            if (m_adapter != null)
+                m_adapter.notifyDataSetChanged();
+        }
     }
 
     //---------------------------------------------------------------------------

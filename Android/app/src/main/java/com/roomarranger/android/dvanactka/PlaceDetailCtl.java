@@ -66,7 +66,6 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     Button m_btnGameCheckIn;
 
     CRxEventRecord rec = null;
-    CRxDetailRefreshParentDelegate m_refreshParentDelegate = null;
 
     enum EGameStatus {
          disabled, tracking, visited
@@ -80,9 +79,6 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_detail_ctl);
-
-        m_refreshParentDelegate = EventCtl.g_CurrentRefreshDelegate;
-        EventCtl.g_CurrentRefreshDelegate = null;
 
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         String sRecordHash = getIntent().getStringExtra(MainActivity.EXTRA_EVENT_RECORD);
@@ -410,8 +406,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
                     rec.m_bMarkFavorite = bChecked;
                     CRxDataSourceManager.sharedInstance().setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
-                    if (m_refreshParentDelegate != null)
-                        m_refreshParentDelegate.detailRequestsRefresh(); // change star icon, resort
+                    setResult(RESULT_OK);       // change star icon, resort, to refresh EventCtl using CODE_DETAIL_PLACE_REFRESH
                 }
             });
         }
