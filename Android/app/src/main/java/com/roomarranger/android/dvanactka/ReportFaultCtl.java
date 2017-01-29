@@ -126,7 +126,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                     intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_location.getLatitude());
                     intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_location.getLongitude());
                 }
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
     }
@@ -286,7 +286,8 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"informace@praha12.cz"});
+        intent.putExtra(Intent.EXTRA_CC, new String[] {"info@dvanactka.info"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Hlášení závady");
         intent.putExtra(Intent.EXTRA_TEXT, sMessageBody);
 
@@ -388,6 +389,23 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                     m_btnPhoto.setImageURI(selectedImage);
                     m_fileFromCamera = null;
                     m_bImageSelected = true;
+                }
+                break;
+
+            case 2: // refine location
+                if (resultCode == RESULT_OK) {
+                    Bundle extras = imageReturnedIntent.getExtras();
+                    double dLat = extras.getDouble(MainActivity.EXTRA_USER_LOCATION_LAT, 0.0);
+                    double dLong = extras.getDouble(MainActivity.EXTRA_USER_LOCATION_LONG, 0.0);
+                    if (dLat != 0.0 && dLong != 0.0) {
+                        Location loc = new Location("refined");
+                        loc.setLatitude(dLat);
+                        loc.setLongitude(dLong);
+
+                        m_bLocationRefined = true;
+                        displayLocation(loc, null);
+                        decodeAddressFrom(loc);
+                    }
                 }
                 break;
         }

@@ -307,7 +307,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="teJ-NW-AeZ">
-                                        <rect key="frame" x="8" y="8" width="304" height="466.5"/>
+                                        <rect key="frame" x="8" y="8" width="304" height="444.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report illegal dump, fault, problem" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ke-aU-gSP">
                                                 <rect key="frame" x="0.0" y="0.0" width="304" height="20.5"/>
@@ -315,27 +315,35 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sl1-0S-GIE">
-                                                <rect key="frame" x="0.0" y="28.5" width="304" height="18"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This form will help you compose the e-mail for the municipality." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vze-aG-0mG">
+                                                <rect key="frame" x="0.0" y="28.5" width="304" height="34"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detailed description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy1-79-TpV">
+                                                <rect key="frame" x="0.0" y="70.5" width="304" height="18"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C0a-93-1f8">
-                                                <rect key="frame" x="0.0" y="54.5" width="304" height="30"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R2p-Ih-wtW">
+                                                <rect key="frame" x="0.0" y="96.5" width="304" height="100"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                <nil key="textColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="fga-ED-4HN"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                            </textField>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                            </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rr5-E8-ydv">
-                                                <rect key="frame" x="0.0" y="92.5" width="304" height="18"/>
+                                                <rect key="frame" x="0.0" y="204.5" width="304" height="18"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqs-zl-vzN">
-                                                <rect key="frame" x="0.0" y="118.5" width="304" height="150"/>
+                                                <rect key="frame" x="0.0" y="230.5" width="304" height="150"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="eAH-YT-nTe"/>
@@ -345,29 +353,14 @@
                                                     <action selector="onBtnPhotoTouched:" destination="obd-XV-rW2" eventType="touchUpInside" id="JJa-Cg-nQY"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detailed description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy1-79-TpV">
-                                                <rect key="frame" x="0.0" y="276.5" width="304" height="18"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R2p-Ih-wtW">
-                                                <rect key="frame" x="0.0" y="302.5" width="304" height="100"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="100" id="fga-ED-4HN"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                                            </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEb-wW-yr9">
-                                                <rect key="frame" x="0.0" y="410.5" width="304" height="18"/>
+                                                <rect key="frame" x="0.0" y="388.5" width="304" height="18"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-3a-j29">
-                                                <rect key="frame" x="0.0" y="436.5" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="414.5" width="304" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajm-go-G95">
                                                         <rect key="frame" x="0.0" y="0.0" width="260" height="19.5"/>
@@ -409,14 +402,13 @@
                         <outlet property="m_btnPhoto" destination="aqs-zl-vzN" id="M4l-Fk-lY2"/>
                         <outlet property="m_btnRefineLocation" destination="jIu-Up-j0D" id="2u5-BV-QNx"/>
                         <outlet property="m_edDescription" destination="R2p-Ih-wtW" id="ufS-Jq-oGW"/>
-                        <outlet property="m_edSubject" destination="C0a-93-1f8" id="jUm-My-hS5"/>
                         <outlet property="m_keyboardHeightLayoutConstraint" destination="MSX-zr-FB3" id="DlC-KR-ymB"/>
+                        <outlet property="m_lbAbout" destination="vze-aG-0mG" id="X0M-JZ-lHS"/>
                         <outlet property="m_lbDescription" destination="Cy1-79-TpV" id="hYU-2H-6VH"/>
                         <outlet property="m_lbHint" destination="9Ke-aU-gSP" id="NVC-NV-Iej"/>
                         <outlet property="m_lbLocation" destination="ajm-go-G95" id="fcO-Ja-Tfl"/>
                         <outlet property="m_lbLocationTitle" destination="XEb-wW-yr9" id="X2k-I7-pB1"/>
                         <outlet property="m_lbPhoto" destination="rr5-E8-ydv" id="ccN-Nn-YBa"/>
-                        <outlet property="m_lbSubject" destination="Sl1-0S-GIE" id="mLP-Wj-htd"/>
                         <outlet property="m_scrollView" destination="aWJ-5m-ISq" id="9EX-W2-Jce"/>
                     </connections>
                 </viewController>

@@ -21,6 +21,13 @@
         android:textAppearance="@style/MyHeading"/>
 
     <TextView
+        android:text="@string/this_form_will_help_you_compose_the_email_for_the_municipality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"/>
+
+    <TextView
         android:text="@string/subject"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"
@@ -41,7 +48,7 @@
 
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="140dp"
         android:src="@drawable/photo"
         android:id="@+id/btnPhoto"/>
 

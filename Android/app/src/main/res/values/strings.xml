@@ -104,4 +104,8 @@
     <string name="fill_description">Please fill the description.</string>
     <string name="fill_photo">Please select the photo.</string>
     <string name="fill_location">Please specify the location.</string>
+    <string name="this_form_will_help_you_compose_the_email_for_the_municipality">This form will help you compose the e-mail for the municipality.</string>
+    <string name="standard">Standard</string>
+    <string name="satellite">Satellite</string>
+    <string name="hybrid">Hybrid</string>
 </resources>

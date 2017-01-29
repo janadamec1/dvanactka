@@ -12,10 +12,9 @@ import MessageUI
 import Contacts     // for formatting address
 //import AddressBookUI  // for formatting address < iOS 9
 
-class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate, CRxRefineLocDelegate {
+class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate, CRxRefineLocDelegate {
     @IBOutlet weak var m_lbHint: UILabel!
-    @IBOutlet weak var m_lbSubject: UILabel!
-    @IBOutlet weak var m_edSubject: UITextField!
+    @IBOutlet weak var m_lbAbout: UILabel!
     @IBOutlet weak var m_lbPhoto: UILabel!
     @IBOutlet weak var m_btnPhoto: UIButton!
     @IBOutlet weak var m_lbDescription: UILabel!
@@ -37,13 +36,12 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         // Localization
         //self.title = NSLocalizedString("Report Fault", comment: "");
         m_lbHint.text = NSLocalizedString("Report illegal dump, fault, problem", comment: "");
-        m_lbSubject.text = NSLocalizedString("Subject", comment: "") + "*";
-        m_lbPhoto.text = NSLocalizedString("Photo", comment: "") + "*";
-        m_lbDescription.text = NSLocalizedString("Detailed description", comment: "");
-        m_lbLocationTitle.text = NSLocalizedString("Location", comment: "") + "*";
+        m_lbAbout.text = NSLocalizedString("This form will help you compose the e-mail for the municipality.", comment: "");
+        m_lbPhoto.text = NSLocalizedString("Photo", comment: "");
+        m_lbDescription.text = NSLocalizedString("Description", comment: "");
+        m_lbLocationTitle.text = NSLocalizedString("Location", comment: "");
         m_btnRefineLocation.setTitle(NSLocalizedString("Refine", comment: ""), for: .normal);
         
-        m_edSubject.delegate = self;
         m_edDescription.delegate = self;
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "E-mail"/*NSLocalizedString("Send", comment: "")*/, style: .plain, target: self, action: #selector(ReportFaultCtl.onBtnSend));
@@ -63,7 +61,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     //---------------------------------------------------------------------------
-    func showError(message: String, setFocusTo: UITextField? = nil) {
+    func showError(message: String, setFocusTo: UITextView? = nil) {
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert);
         let actionOK = UIAlertAction(title: "OK", style: .default) { result in
             if let edit = setFocusTo {
@@ -92,10 +90,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
             // scroll
             if !bHiding {
                 var aSelField: UIView?
-                if m_edSubject.isFirstResponder {
-                    aSelField = m_edSubject;
-                }
-                else if m_edDescription.isFirstResponder {
+                if m_edDescription.isFirstResponder {
                     aSelField = m_edDescription;
                 }
                 // test if active text input is under keyboard
@@ -123,9 +118,9 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     
     //---------------------------------------------------------------------------
     func onBtnSend() {
-        let sSubject = m_edSubject.text;
-        if sSubject == nil || sSubject!.isEmpty {
-            showError(message: NSLocalizedString("Please fill the subject field.", comment:""), setFocusTo: m_edSubject);
+        let sDesc = m_edDescription.text;
+        if sDesc == nil || sDesc!.isEmpty {
+            showError(message: NSLocalizedString("Please fill the description.", comment:""), setFocusTo: m_edDescription);
             return;
         }
         if !m_bImageSelected {
@@ -136,10 +131,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
             showError(message: NSLocalizedString("Please specify the location.", comment:""));
             return;
         }
-        var sMessageBody = "Předmět:\n\(sSubject!)";
-        if let sDesc = m_edDescription.text {
-            sMessageBody += "\n\nPopis:\n" + sDesc;
-        }
+        var sMessageBody = sDesc!;
         if let sAddress = m_lbLocation.text {
             sMessageBody += "\n\n" + sAddress;
         }
@@ -154,8 +146,9 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         if mailer == nil { return; }
         mailer.mailComposeDelegate = self;
         
-        mailer.setToRecipients(["info@dvanactka.info"]);
-        mailer.setSubject("Hlášení závady: " + sSubject!);
+        mailer.setToRecipients(["informace@praha12.cz"]);
+        mailer.setCcRecipients(["info@dvanactka.info"])
+        mailer.setSubject("Hlášení závady");
         mailer.setMessageBody(sMessageBody, isHTML: false);
         
         if let image = m_btnPhoto.image(for: .normal),
@@ -274,13 +267,6 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
 
-    //---------------------------------------------------------------------------
-    // MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true);
-        return false;
-    }
-    
     //---------------------------------------------------------------------------
     // MARK: - UITextViewDelegate
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

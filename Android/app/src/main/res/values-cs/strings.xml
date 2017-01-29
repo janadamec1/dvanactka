@@ -105,4 +105,8 @@
     <string name="fill_location">Určete prosím umístění.</string>
     <string name="fill_photo">Vyberte prosím fotografii.</string>
     <string name="fill_description">Vyplňte prosím popis.</string>
+    <string name="this_form_will_help_you_compose_the_email_for_the_municipality">Tento formulář vám pomůže sestavit e-mail pro městský úřad.</string>
+    <string name="hybrid">Hybridní</string>
+    <string name="satellite">Satelitní</string>
+    <string name="standard">Standardní</string>
 </resources>
