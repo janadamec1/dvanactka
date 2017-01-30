@@ -245,7 +245,9 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         Notification.Builder builder = new Notification.Builder(ctx);
         builder.setContentTitle(ctx.getString(R.string.app_name))
                 .setContentText(content)
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setWhen(date.getTime())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setDefaults(Notification.DEFAULT_ALL);
         Notification notification = builder.build();
 
         Intent notificationIntent = new Intent(ctx, NotificationPublisher.class);
@@ -254,7 +256,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, date.getTime(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
     }
 
     //---------------------------------------------------------------------------
@@ -290,7 +292,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             if (!manager.m_setPlacesNotified.contains(rec.m_sTitle)) {
                 continue;
             }
-            //Log.e("DVANACTKA", "Scheduling!");
+            Log.v("DVANACTKA", "Scheduling!");
 
             if (rec.m_arrEvents == null) {
                 continue;

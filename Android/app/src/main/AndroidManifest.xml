@@ -109,6 +109,7 @@
             android:name=".FetchAddressIntentService"
             android:exported="false"/>
 
+        <receiver android:name=".NotificationPublisher" />
         <receiver
             android:name=".NotificationAtBootReceiver"
             android:enabled="true"

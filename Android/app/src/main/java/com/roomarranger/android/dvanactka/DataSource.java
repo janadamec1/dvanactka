@@ -509,7 +509,7 @@ class CRxDataSourceManager {
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsWaste)) {
-            refreshStdJsonDataSource(id, "dyn_waste.json", null);
+            refreshStdJsonDataSource(id, "dyn_waste.json", "/test_files/dyn_waste");
             return;
 
             /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
@@ -643,6 +643,9 @@ class CRxDataSourceManager {
                         hideNetworkIndicator();
                         if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(null);
                         if (delegate != null) delegate.dataSourceRefreshEnded(null);     // to refresh unread count badge
+
+                        if (aDS.m_sId.equals(CRxDataSourceManager.dsWaste))
+                            MainActivity.resetAllNotifications();
                     }
                 });
             }

@@ -510,6 +510,9 @@ class CRxDataSourceManager : NSObject {
                 self.hideNetworkIndicator();
                 aDS.delegate?.dataSourceRefreshEnded(nil);
                 self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+                if (aDS.m_sId == CRxDataSourceManager.dsWaste) {
+                    resetAllNotifications();
+                }
             }
         }
     }
