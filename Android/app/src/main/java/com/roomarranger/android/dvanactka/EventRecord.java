@@ -348,8 +348,7 @@ class CRxEventRecord
             Collections.sort(pThis.m_arrEvents, new Comparator<CRxEventInterval>() {
                 @Override
                 public int compare(CRxEventInterval t0, CRxEventInterval t1) {
-                    if (t0.m_dateStart.equals(t1.m_dateStart)) return 0;
-                    return t0.m_dateStart.after(t1.m_dateStart) ? 1 : -1;
+                    return t0.m_dateStart.compareTo(t1.m_dateStart);
                 }
             });
         }

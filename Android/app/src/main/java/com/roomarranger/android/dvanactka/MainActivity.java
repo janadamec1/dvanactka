@@ -1,10 +1,15 @@
 package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +25,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate
@@ -28,6 +34,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     static boolean s_bInited = false;
     static Date s_dateLastRefreshed = null;
     static private Tracker s_GlobalTracker = null;
+    static private Context s_appContext = null;
     BaseAdapter m_adapter = null;
 
     public static final String EXTRA_DATASOURCE = "com.roomarranger.dvanactka.DATASOURCE";
@@ -36,29 +43,32 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     public static final String EXTRA_USER_LOCATION_LAT = "com.roomarranger.dvanactka.USER_LOCATION_LAT";
     public static final String EXTRA_USER_LOCATION_LONG = "com.roomarranger.dvanactka.USER_LOCATION_LONG";
 
+    static void initAllData(Context ctx) {
+        // from AppDelegate.swift
+        CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
+        dsm.defineDatasources(ctx);
+        dsm.loadData();
+        //dsm.refreshAllDataSources(false); // is called in onResume
+        //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
+        //application.applicationIconBadgeNumber = 0;
+        CRxGame.sharedInstance.init(ctx);
+        CRxGame.sharedInstance.reinit();
+        s_bInited = true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        s_appContext = getApplicationContext();
         if (!s_bInited) {
-            // from AppDelegate.swift
-            CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
-            dsm.defineDatasources(this);
-            dsm.loadData();
-            //dsm.refreshAllDataSources(false); // is called in onResume
-            //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
-            //application.applicationIconBadgeNumber = 0;
-            CRxGame.sharedInstance.init(this);
-            CRxGame.sharedInstance.reinit();
-
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            s_GlobalTracker = analytics.newTracker(R.xml.global_tracker);
-
-            s_bInited = true;
+            initAllData(this);
         }
+
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+        s_GlobalTracker = analytics.newTracker(R.xml.global_tracker);
 
         // from ViewController.swift
         m_arrSources.add(CRxDataSourceManager.dsRadNews);
@@ -227,5 +237,83 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     //---------------------------------------------------------------------------
     public static Tracker getDefaultTracker() {
         return s_GlobalTracker;
+    }
+
+    //---------------------------------------------------------------------------
+    static private void scheduleNotification(Context ctx, String content, Date date, int iId) {
+        // https://gist.github.com/BrandonSmith/6679223
+        Notification.Builder builder = new Notification.Builder(ctx);
+        builder.setContentTitle(ctx.getString(R.string.app_name))
+                .setContentText(content)
+                .setSmallIcon(R.mipmap.ic_launcher);
+        Notification notification = builder.build();
+
+        Intent notificationIntent = new Intent(ctx, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, iId);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, date.getTime(), pendingIntent);
+    }
+
+    //---------------------------------------------------------------------------
+    static void resetAllNotifications() {
+        resetAllNotifications(s_appContext);
+    }
+    static void resetAllNotifications(Context ctx) {
+
+        // TODO: rewrite this later to use AlarmManager.OnAlarmListener (API level 24)
+
+        // cancel all previous notifications  ??? does it work
+        SharedPreferences prefs = ctx.getSharedPreferences("com.roomarranger.android.dvanactka", Context.MODE_PRIVATE);
+        int iLastNotificationCount = prefs.getInt("iLastNotificationCount", 0);
+
+        if (iLastNotificationCount > 0) {
+            AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
+            Intent notificationIntent = new Intent(ctx, NotificationPublisher.class);
+            for (int iId = 0; iId < iLastNotificationCount; iId++) {
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.cancel(pendingIntent);
+            }
+        }
+
+        // go through all favorite locations and set notifications to future intervals
+        Date dateNow = Calendar.getInstance().getTime();
+
+        CRxDataSourceManager manager = CRxDataSourceManager.sharedInstance();
+        CRxDataSource ds = manager.m_dictDataSources.get(CRxDataSourceManager.dsWaste);
+        if (ds == null) return;
+
+        int iNotificationId = 0;
+        for (CRxEventRecord rec : ds.m_arrItems) {
+            if (!manager.m_setPlacesNotified.contains(rec.m_sTitle)) {
+                continue;
+            }
+            //Log.e("DVANACTKA", "Scheduling!");
+
+            if (rec.m_arrEvents == null) {
+                continue;
+            }
+            for (CRxEventInterval aEvent : rec.m_arrEvents) {
+                if (aEvent.m_dateStart.after(dateNow)) {
+                    scheduleNotification(ctx, String.format(ctx.getString(R.string.dumpster_at_s_arrived_s), rec.m_sTitle, aEvent.m_sType),
+                            aEvent.m_dateStart, iNotificationId);
+                    iNotificationId++;
+
+                    // also add a notification one day earlier
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(aEvent.m_dateStart);
+                    cal.add(Calendar.DAY_OF_MONTH, -1);
+                    Date dayBefore = cal.getTime();
+                    if (dayBefore.after(dateNow)) {
+                        scheduleNotification(ctx, String.format(ctx.getString(R.string.dumpster_at_s_tomorrow_s), rec.m_sTitle, aEvent.m_sType),
+                                dayBefore, iNotificationId);
+                        iNotificationId++;
+                    }
+                }
+            }
+        }
+        prefs.edit().putInt("iLastNotificationCount", iLastNotificationCount).apply();  // save number of notification in order to be able to cancel them next time
     }
 }

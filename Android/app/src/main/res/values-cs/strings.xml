@@ -6,6 +6,8 @@
     <string name="in_d_days_d_hours" formatted="false">za %d dní, %d hodin</string>
     <string name="in_d_hours_d_minutes" formatted="false">za %d hodin, %d minut</string>
     <string name="in_d_minutes" formatted="false">za %d minut</string>
+    <string name="dumpster_at_s_arrived_s" formatted="false">Právě přijel kontejner k %s (%s)</string>
+    <string name="dumpster_at_s_tomorrow_s" formatted="false">Zítra bude kontejner u %s (%s)</string>
     <string name="news">Aktuality</string>
     <string name="events">Akce</string>
     <string name="multi_day_events">Vícedenní akce</string>

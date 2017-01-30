@@ -6,6 +6,8 @@
     <string name="in_d_days_d_hours" formatted="false">in %d days, %d hours</string>
     <string name="in_d_hours_d_minutes" formatted="false">in %d hours, %d minutes</string>
     <string name="in_d_minutes" formatted="false">in %d minutes</string>
+    <string name="dumpster_at_s_arrived_s" formatted="false">Dumpster at %s just arrived (%s)</string>
+    <string name="dumpster_at_s_tomorrow_s" formatted="false">Dumpster at %s tomorrow (%s)</string>
     <string name="c_information">Information</string>
     <string name="c_pharmacies">Pharmacies</string>
     <string name="c_first_aid">First Aid</string>

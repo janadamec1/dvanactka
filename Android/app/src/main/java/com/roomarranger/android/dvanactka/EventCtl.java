@@ -718,7 +718,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             Arrays.sort(zip, new Comparator<DateCategoryZip>() {
                 @Override
                 public int compare(DateCategoryZip t0, DateCategoryZip t1) {
-                    return t0.m_date.before(t1.m_date) ? -1 : 1;
+                    return t0.m_date.compareTo(t1.m_date);
                 }
             });
             m_orderedCategories.clear();
@@ -734,7 +734,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         @Override
                         public int compare(CRxEventRecord t0, CRxEventRecord t1)
                         {
-                            return t0.m_aDate.after(t1.m_aDate) ? -1 : 1;
+                            return -t0.m_aDate.compareTo(t1.m_aDate);
                         }
                     });
                     break;
@@ -743,7 +743,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         @Override
                         public int compare(CRxEventRecord t0, CRxEventRecord t1)
                         {
-                            return t0.m_aDate.before(t1.m_aDate) ? -1 : 1;
+                            return t0.m_aDate.compareTo(t1.m_aDate);
                         }
                     });
                     break;
@@ -754,7 +754,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         {
                             if (t0.m_bMarkFavorite != t1.m_bMarkFavorite)        // show favorite first
                                 return t0.m_bMarkFavorite ? -1 : 1;
-                            return t0.m_distFromUser < t1.m_distFromUser ? -1 : 1;
+                            return Double.compare(t0.m_distFromUser, t1.m_distFromUser);
                         }
                     });
                     break;

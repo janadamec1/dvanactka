@@ -196,8 +196,7 @@ class CRxDataSource {
                 @Override
                 public int compare(CRxEventRecord t0, CRxEventRecord t1)
                 {
-                    if (t0.m_aDate.equals(t1.m_aDate)) return 0;
-                    return t0.m_aDate.after(t1.m_aDate) ? 1 : -1;
+                    return -t0.m_aDate.compareTo(t1.m_aDate);
                 }
             });
         }
@@ -338,12 +337,12 @@ class CRxDataSourceManager {
         if (set && !bFound) {
             m_setPlacesNotified.add(place);
             saveFavorities();
-            ///resetAllNotifications();
+            MainActivity.resetAllNotifications();
         }
         else if (!set && bFound) {
             m_setPlacesNotified.remove(place);
             saveFavorities();
-            ///resetAllNotifications();
+            MainActivity.resetAllNotifications();
         }
     }
 
