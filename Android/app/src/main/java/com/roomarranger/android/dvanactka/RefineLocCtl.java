@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.RadioGroup;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,10 +13,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.nairteashop.SegmentedControl;
 
 public class RefineLocCtl extends Activity implements OnMapReadyCallback {
 
@@ -36,29 +36,24 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
         MapFragment mapFragment = (MapFragment)(getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
-        Button btnMapStandard = (Button)findViewById(R.id.btnMapStandard);
-        Button btnMapSatellite = (Button)findViewById(R.id.btnMapSatellite);
-        Button btnMapHybrid = (Button)findViewById(R.id.btnMapHybrid);
-
-        btnMapStandard.setOnClickListener(new View.OnClickListener() {
+        SegmentedControl segmMapSwitch = (SegmentedControl) findViewById(R.id.segmMapSwitch);
+        segmMapSwitch.check(R.id.opt_0);
+        segmMapSwitch.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                if (m_map != null)
-                    m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            }
-        });
-        btnMapSatellite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (m_map != null)
-                    m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            }
-        });
-        btnMapHybrid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (m_map != null)
-                    m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (m_map != null) {
+                    switch (checkedId) {
+                        case R.id.opt_0:
+                            m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                            break;
+                        case R.id.opt_1:
+                            m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                            break;
+                        case R.id.opt_2:
+                            m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                            break;
+                    }
+                }
             }
         });
     }

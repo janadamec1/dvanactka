@@ -1,0 +1,9 @@
+<resources>
+    <color name="text_normal">#007aff</color>
+    <color name="text_hilite">#ffffff</color>
+
+    <color name="control_border">#007aff</color>
+
+    <color name="button_pressed">#0099cc</color>
+    <color name="button_checked">#007aff</color>
+</resources>

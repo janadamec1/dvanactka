@@ -21,29 +21,16 @@
         android:gravity="center"
         android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <org.nairteashop.SegmentedControl
+        android:id="@+id/segmMapSwitch"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:text="@string/standard"
-            android:id="@+id/btnMapStandard"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-        <Button
-            android:text="@string/satellite"
-            android:id="@+id/btnMapSatellite"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-        <Button
-            android:text="@string/hybrid"
-            android:id="@+id/btnMapHybrid"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        >
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_0" android:text="@string/standard" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_1" android:text="@string/satellite" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_2" android:text="@string/hybrid" />
+    </org.nairteashop.SegmentedControl>
 
 </LinearLayout>
