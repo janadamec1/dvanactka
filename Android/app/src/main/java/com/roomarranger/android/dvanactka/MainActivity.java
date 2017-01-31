@@ -275,8 +275,9 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
             Intent notificationIntent = new Intent(ctx, NotificationPublisher.class);
             for (int iId = 0; iId < iLastNotificationCount; iId++) {
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager.cancel(pendingIntent);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_NO_CREATE);
+                if (pendingIntent != null)
+                    alarmManager.cancel(pendingIntent);
             }
         }
 
@@ -316,6 +317,6 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 }
             }
         }
-        prefs.edit().putInt("iLastNotificationCount", iLastNotificationCount).apply();  // save number of notification in order to be able to cancel them next time
+        prefs.edit().putInt("iLastNotificationCount", iNotificationId).apply();  // save number of notification in order to be able to cancel them next time
     }
 }
