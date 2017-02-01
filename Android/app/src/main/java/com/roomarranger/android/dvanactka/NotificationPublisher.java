@@ -2,9 +2,9 @@ package com.roomarranger.android.dvanactka;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 /**
@@ -13,7 +13,7 @@ import android.util.Log;
  * This class receives the scheduled intents from AlertManager, and shows the notification
  */
 
-public class NotificationPublisher extends BroadcastReceiver {
+public class NotificationPublisher extends WakefulBroadcastReceiver {
     public static String NOTIFICATION_ID = "notification-id";
     public static String NOTIFICATION = "notification";
 
@@ -26,5 +26,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
         notificationManager.notify(id, notification);
+
+        completeWakefulIntent(intent);
     }
 }

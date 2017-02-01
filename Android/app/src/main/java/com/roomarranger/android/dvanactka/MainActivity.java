@@ -246,7 +246,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         builder.setContentTitle(ctx.getString(R.string.app_name))
                 .setContentText(content)
                 .setWhen(date.getTime())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_notification)
                 .setDefaults(Notification.DEFAULT_ALL);
         Notification notification = builder.build();
 
