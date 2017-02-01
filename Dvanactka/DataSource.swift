@@ -511,7 +511,7 @@ class CRxDataSourceManager : NSObject {
                 aDS.delegate?.dataSourceRefreshEnded(nil);
                 self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
                 if (aDS.m_sId == CRxDataSourceManager.dsWaste) {
-                    resetAllNotifications();
+                    self.resetAllNotifications();
                 }
             }
         }
