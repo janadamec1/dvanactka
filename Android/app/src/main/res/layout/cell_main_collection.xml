@@ -30,6 +30,8 @@
             android:background="@drawable/rounded_corner"
             android:textAlignment="center"
             android:maxLines="1"
+            android:paddingLeft="7sp"
+            android:paddingRight="7sp"
             android:layout_gravity="top|right"/>
 
     </FrameLayout>

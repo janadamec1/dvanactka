@@ -852,7 +852,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let filterCtl = storyboard.instantiateViewController(withIdentifier: "filterCtl") as! FilterCtl
         filterCtl.m_delegate = self;
-        filterCtl.m_arrFilter = arrFilter.sorted();
+        filterCtl.m_arrFilter = arrFilter.sorted { $0.localizedCompare($1) == .orderedAscending };
         if let setOut = ds.m_setFilter {
             filterCtl.m_setOut = setOut;
         }

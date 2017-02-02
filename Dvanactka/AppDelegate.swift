@@ -61,6 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CRxDataSourceManager.sharedInstance.refreshAllDataSources();
         CRxGame.sharedInstance.reinit();
         Appirater.appEnteredForeground(true);
+
+        // Google Analytics
+        if let tracker = GAI.sharedInstance().defaultTracker {
+            tracker.set(kGAIScreenName, value: "Home");
+            if let builder = GAIDictionaryBuilder.createScreenView() {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

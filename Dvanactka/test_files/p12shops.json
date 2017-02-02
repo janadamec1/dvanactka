@@ -447,6 +447,16 @@
 "filter":"Květinářství"
 },
 {
+"title":"Květiny Erika",
+"locationLat":"50.0130061",
+"locationLong":"14.4191058",
+"address":"Krouzova 24\nPraha 12",
+"openingHours":"1: 900-1800, 2: 900-1800, 3: 900-1800, 4: 900-1800, 5: 900-1800, 6: 800-1100",
+"infoLink":"https:\/\/www.kvetinarstvi-erika.wz.cz",
+"category":"obchod",
+"filter":"Květinářství"
+},
+{
 "title":"Zdravá výživa Mája",
 "locationLat":"50.0044617",
 "locationLong":"14.4050008",
@@ -544,6 +554,18 @@
 "phone":"241 714 358",
 "category":"obchod",
 "filter":"Veterina"
+},
+{
+"title":"Horus EYE",
+"text":"Fotoateliér, fotografické kurzy, tvorba webových stránek.\n\nvchod je z druhé strany domu",
+"locationLat":"50.0130289",
+"locationLong":"14.4196189",
+"address":"Krouzova 28\nPraha 12",
+"infoLink":"http:\/\/www.horoviny.cz",
+"phone":"776 209 970",
+"email":"hora@horuseye.cz",
+"category":"obchod",
+"filter":"Fotoateliér"
 },
 {
 "title":"Bibliobus Těšíkova",

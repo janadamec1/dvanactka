@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
@@ -202,6 +203,13 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             s_dateLastRefreshed = now;
             CRxDataSourceManager.sharedInstance().refreshAllDataSources(false);
             CRxGame.sharedInstance.reinit();
+
+            // Google Analytics
+            Tracker aTracker = MainActivity.getDefaultTracker();
+            if (aTracker != null) {
+                aTracker.setScreenName("Home");
+                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
         }
     }
 

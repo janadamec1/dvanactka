@@ -485,13 +485,13 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             startLocationUpdates();
 
         // Google Analytics
-        if (m_lbTitle != null) {
+        /*if (m_lbTitle != null) {
             Tracker aTracker = MainActivity.getDefaultTracker();
             if (aTracker != null) {
                 aTracker.setScreenName("Place_" + m_lbTitle.getText());
                 aTracker.send(new HitBuilders.ScreenViewBuilder().build());
             }
-        }
+        }*/
     }
 
     @Override
@@ -542,7 +542,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         m_eGameStatus = EGameStatus.visited;
         m_btnGameCheckIn.setVisibility(View.GONE);
         if (reward != null) {
-            String sReward = String.format("+%d XP", reward.points);
+            String sReward = String.format(Locale.US, "+%d XP", reward.points);
             String sAlertMessage = sReward;
             if (reward.newStars > 0 && reward.catName != null) {
                 String sStarEmoji = new String(Character.toChars(0x2B50));
@@ -555,7 +555,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             if (reward.newLevel > 0) {
                 sReward += ", " + getString(R.string.game_level_up);
                 sAlertMessage = "\n" + getString(R.string.game_level_up) + "\n"
-                        + getString(R.string.game_you_are_at_level) + String.format(" %d\n", reward.newLevel)
+                        + getString(R.string.game_you_are_at_level) + String.format(Locale.US, " %d\n", reward.newLevel)
                         + sAlertMessage;
             }
             m_lbGameDist.setText(sReward);
@@ -580,12 +580,11 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                         .setAction("Done")
                         .setLabel(rec.m_sTitle)
                         .build());
-                if (reward.newStars > 1 && reward.catName != null) {
+                if (reward.newStars > 0 && reward.catName != null) {
                     aTracker.send(new HitBuilders.EventBuilder()
-                            .setCategory("Achievement")
+                            .setCategory(String.format(Locale.US, "Achievement %d", reward.newStars))
                             .setAction("Unlocked")
                             .setLabel(reward.catName)
-                            .setValue(reward.newStars)
                             .build());
                 }
             }
@@ -601,7 +600,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         Location locRec = rec.gameCheckInLocation();
         if (location != null && locRec != null) {
             double aDistance = location.distanceTo(locRec);
-            String sText = String.format("%d m", (int)aDistance);
+            String sText = String.format(Locale.US, "%d m", (int)aDistance);
             if (aDistance > CRxGame.checkInDistance) {
                 if (m_bGameWrongTime) {
                     sText += " - " + getString(R.string.game_toofar_wrongtime);

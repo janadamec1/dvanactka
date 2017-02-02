@@ -263,14 +263,14 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         super.viewWillAppear(animated);
         
         // Google Analytics
-        if let sTitle = m_lbTitle.text,
+        /*if let sTitle = m_lbTitle.text,
             let tracker = GAI.sharedInstance().defaultTracker {
             tracker.set(kGAIScreenName, value: "Place_" + sTitle)
             
             if let builder = GAIDictionaryBuilder.createScreenView() {
                 tracker.send(builder.build() as [NSObject : AnyObject])
             }
-        }
+        }*/
     }
     
     //--------------------------------------------------------------------------
@@ -430,12 +430,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             
             // Google Analytics
             if let tracker = GAI.sharedInstance().defaultTracker,
-                let builder = GAIDictionaryBuilder.createEvent(withCategory: "CheckIn", action: "Done", label: rec.m_sTitle, value: 1) {
+                let builder = GAIDictionaryBuilder.createEvent(withCategory: "CheckIn", action: "Done", label: rec.m_sTitle, value: nil) {
                 tracker.send(builder.build() as [NSObject : AnyObject])
             }
-            if reward.newStars > 1 && reward.catName != nil {
+            if reward.newStars > 0 && reward.catName != nil {
                 if let tracker = GAI.sharedInstance().defaultTracker,
-                    let builder = GAIDictionaryBuilder.createEvent(withCategory: "Achievement", action: "Unlocked", label: reward.catName!, value: NSNumber(value: reward.newStars)) {
+                    let builder = GAIDictionaryBuilder.createEvent(withCategory: "Achievement \(reward.newStars)", action: "Unlocked", label: reward.catName!, value: nil) {
                     tracker.send(builder.build() as [NSObject : AnyObject])
                 }
             }

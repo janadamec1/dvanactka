@@ -81,6 +81,14 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationController?.navigationBar.barTintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: 180.0/255.0, green: 200.0/255.0, blue: 1.0, alpha: 1.0)]
         navigationController?.navigationBar.tintColor = .white; // for barButtonItems*/
+        
+        // Google Analytics
+        if let tracker = GAI.sharedInstance().defaultTracker {
+            tracker.set(kGAIScreenName, value: "Home");
+            if let builder = GAIDictionaryBuilder.createScreenView() {
+                tracker.send(builder.build() as [NSObject : AnyObject])
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
