@@ -7,7 +7,7 @@ android {
         applicationId "com.roomarranger.android.dvanactka"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 11
+        versionCode 12
         versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

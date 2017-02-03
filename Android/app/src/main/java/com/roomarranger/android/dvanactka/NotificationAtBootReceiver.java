@@ -19,7 +19,7 @@ public class NotificationAtBootReceiver extends BroadcastReceiver {
             //Log.e("DVANACTKA", "We got reboot!");
 
             // Load waste data source
-            MainActivity.initAllData(context);
+            MainActivity.verifyDataInited(context);
             // reset all notifications
             MainActivity.resetAllNotifications(context);
         }

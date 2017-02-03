@@ -80,6 +80,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_detail_ctl);
 
+        MainActivity.verifyDataInited(this);
+
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         String sRecordHash = getIntent().getStringExtra(MainActivity.EXTRA_EVENT_RECORD);
         if (sDataSource == null || sRecordHash == null) return;

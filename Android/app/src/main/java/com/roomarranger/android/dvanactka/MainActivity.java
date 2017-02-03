@@ -44,8 +44,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     public static final String EXTRA_USER_LOCATION_LAT = "com.roomarranger.dvanactka.USER_LOCATION_LAT";
     public static final String EXTRA_USER_LOCATION_LONG = "com.roomarranger.dvanactka.USER_LOCATION_LONG";
 
-    static void initAllData(Context ctx) {
+    static void verifyDataInited(Context ctx) {
         // from AppDelegate.swift
+        if (s_bInited) return;
+        s_appContext = ctx.getApplicationContext();
         CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
         dsm.defineDatasources(ctx);
         dsm.loadData();
@@ -63,10 +65,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        s_appContext = getApplicationContext();
-        if (!s_bInited) {
-            initAllData(this);
-        }
+        MainActivity.verifyDataInited(this);
 
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         s_GlobalTracker = analytics.newTracker(R.xml.global_tracker);
@@ -211,6 +210,13 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 aTracker.send(new HitBuilders.ScreenViewBuilder().build());
             }
         }
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    protected void onDestroy() {
+        CRxDataSourceManager.sharedInstance().delegate = null;
+        super.onDestroy();
     }
 
     //---------------------------------------------------------------------------

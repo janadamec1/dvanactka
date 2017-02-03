@@ -15,12 +15,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class GameCtl extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_ctl);
+
+        MainActivity.verifyDataInited(this);
 
         TextView lbLevel = (TextView)findViewById(R.id.level);
         ProgressBar progress = (ProgressBar)findViewById(R.id.progress);
@@ -29,7 +33,7 @@ public class GameCtl extends Activity {
         lbLevel.setText(getString(R.string.level) + " " + String.valueOf(aPlayerStats.level));
         progress.setMax(aPlayerStats.pointsNextLevel-aPlayerStats.pointsPrevLevel);
         progress.setProgress(aPlayerStats.points-aPlayerStats.pointsPrevLevel);
-        lbXp.setText(String.format("%d / %d XP", aPlayerStats.points, aPlayerStats.pointsNextLevel));
+        lbXp.setText(String.format(Locale.US, "%d / %d XP", aPlayerStats.points, aPlayerStats.pointsNextLevel));
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             progress.getProgressDrawable().setColorFilter(
@@ -86,7 +90,7 @@ public class GameCtl extends Activity {
             CRxGameCategory item = CRxGame.sharedInstance.m_arrCategories.get(position);
             cell.m_item.setGameCategory(position);
             cell.m_lbName.setText(item.m_sName);
-            cell.m_lbProgress.setText(String.format("%d / %d", item.m_iProgress, item.nextStarPoints()));
+            cell.m_lbProgress.setText(String.format(Locale.US, "%d / %d", item.m_iProgress, item.nextStarPoints()));
             return convertView;
         }
     }

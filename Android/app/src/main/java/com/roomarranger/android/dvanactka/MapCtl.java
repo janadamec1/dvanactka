@@ -37,6 +37,8 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_ctl);
 
+        MainActivity.verifyDataInited(this);
+
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);

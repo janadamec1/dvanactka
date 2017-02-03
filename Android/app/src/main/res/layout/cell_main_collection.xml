@@ -7,7 +7,8 @@
               android:paddingLeft="4dp"
               android:paddingRight="4dp"
               android:paddingTop="10dp"
-              android:background="@color/colorCellBkg">
+              android:background="@color/colorCellBkg"
+              android:elevation="4dp">
 
     <FrameLayout
         android:layout_width="match_parent"

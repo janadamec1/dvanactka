@@ -29,6 +29,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -129,6 +131,13 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                 startActivityForResult(intent, 2);
             }
         });
+
+        // Google Analytics
+        Tracker aTracker = MainActivity.getDefaultTracker();
+        if (aTracker != null) {
+            aTracker.setScreenName("DS_ReportFault");
+            aTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
     }
 
     //---------------------------------------------------------------------------

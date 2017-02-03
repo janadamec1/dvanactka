@@ -507,6 +507,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_ctl);
 
+        MainActivity.verifyDataInited(this);
+
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         if (sDataSource.equals(CRxDataSourceManager.dsSavedNews))

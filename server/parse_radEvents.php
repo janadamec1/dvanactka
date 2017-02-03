@@ -48,6 +48,10 @@ foreach ($nodes as $i => $node) {
 					$address = "KC \"12\" @ Jordana Jovkova 20, Praha 12";
 				else if (strpos($address, "KC Novodv") !== FALSE)
 					$address = "KC Novodvorská @ Novodvorská 151, Praha 4";
+				else if (strpos($address, "Husova knihovna") !== FALSE)
+					$address = "Husova knihovna @ Komořanská 12, Praha 12";
+				else if (strpos($address, "biograf") !== FALSE)
+					$address = "Modřanský biograf @ U Kina 1, Praha 12";
 				$aNewRecord["address"] = $address;
 			}
 			// split time from - to

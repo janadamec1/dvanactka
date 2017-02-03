@@ -62,6 +62,8 @@ public class FilterCtl extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_ctl);
 
+        MainActivity.verifyDataInited(this);
+
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
