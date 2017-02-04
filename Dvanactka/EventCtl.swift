@@ -636,17 +636,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
 
     //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        if let rec = record(at: indexPath) {
-            rec.openInfoLink();
-        }
-    }
-    
-    //--------------------------------------------------------------------------
     @IBAction func onBtnWebsiteTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
-            rec.openInfoLink();
+            rec.openInfoLink(fromCtl: self);
         }
     }
 
@@ -654,7 +647,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     @IBAction func onBtnWebsiteNewsTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
-            rec.openInfoLink();
+            rec.openInfoLink(fromCtl: self);
         }
     }
     
@@ -662,7 +655,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     @IBAction func onBtnBuyTouched(_ sender: Any) {
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
-            rec.openBuyLink();
+            rec.openBuyLink(fromCtl: self);
             
             // Google Analytics
             if let tracker = GAI.sharedInstance().defaultTracker,

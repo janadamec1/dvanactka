@@ -289,7 +289,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     //--------------------------------------------------------------------------
     @IBAction func onBtnWebsiteTouched(_ sender: Any) {
         if let rec = m_aRecord {
-            rec.openInfoLink();
+            rec.openInfoLink(fromCtl: self);
         }
     }
     

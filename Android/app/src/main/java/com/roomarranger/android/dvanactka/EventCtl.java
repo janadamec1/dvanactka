@@ -188,7 +188,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         public void onClick(View view) {
                             CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
                             if (aRecClicked != null)
-                                aRecClicked.openInfoLink(m_context);
+                                aRecClicked.openInfoLink(EventCtl.this);
                         }
                     });
                 if (cell.m_btnBuy != null)
@@ -197,7 +197,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         public void onClick(View view) {
                             CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
                             if (aRecClicked != null)
-                                aRecClicked.openBuyLink(m_context);
+                                aRecClicked.openBuyLink(EventCtl.this);
 
                             // Google Analytics
                             Tracker aTracker = MainActivity.getDefaultTracker();

@@ -104,6 +104,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                         m_fileFromCamera = new File(Environment.getExternalStorageDirectory(), "foto.jpg");
                         takePicture.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(m_fileFromCamera));
                         startActivityForResult(takePicture, 0);
+                        // it crashes then targetSdkVersion set to 24 http://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
                     }
                 });
                 builder.setNeutralButton(R.string.from_gallery, new DialogInterface.OnClickListener() {

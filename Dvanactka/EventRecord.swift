@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SafariServices
 
 // this class is for opening hours
 class CRxHourInterval: NSObject {
@@ -373,7 +374,7 @@ class CRxEventRecord: NSObject {
     }
 
     //---------------------------------------------------------------------------
-    func openInfoLink() {
+    func infoLinkUrl() -> URL? {
         if let link = m_sInfoLink {
             var sParameter: String;
             if link.contains("?") {
@@ -383,20 +384,37 @@ class CRxEventRecord: NSObject {
                 sParameter = "?";
             }
             sParameter += "utm_source=dvanactka.info&utm_medium=app";
-            if let url = URL(string: link + sParameter) {
-                UIApplication.shared.openURL(url)
-            }
+            return URL(string: link + sParameter);
+        }
+        return nil;
+    }
+    
+    //---------------------------------------------------------------------------
+    func openInfoLink(fromCtl sender: UIViewController?) {
+        if let url = infoLinkUrl() {
+            CRxEventRecord.openWebUrl(url, fromCtl: sender);
         }
     }
     
     //---------------------------------------------------------------------------
-    func openBuyLink() {
+    func openBuyLink(fromCtl sender: UIViewController?) {
         if let link = m_sBuyLink,
             let url = URL(string: link) {
-            UIApplication.shared.openURL(url)
+            CRxEventRecord.openWebUrl(url, fromCtl: sender);
         }
     }
 
+    //---------------------------------------------------------------------------
+    static func openWebUrl(_ url: URL, fromCtl: UIViewController?) {
+        if let senderViewCtl = fromCtl {
+            let safariCtl = SFSafariViewController(url: url);
+            senderViewCtl.present(safariCtl, animated: true, completion: nil);
+        }
+        else {
+            UIApplication.shared.openURL(url);
+        }
+    }
+    
     //---------------------------------------------------------------------------
     func recordHash() -> String {
         var sHash = m_sTitle;

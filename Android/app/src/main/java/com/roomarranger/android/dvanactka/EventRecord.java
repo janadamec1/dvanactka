@@ -1,10 +1,12 @@
 package com.roomarranger.android.dvanactka;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -401,7 +403,7 @@ class CRxEventRecord
     }
 
     //---------------------------------------------------------------------------
-    void openInfoLink(Context ctx) {
+    String infoLinkUrl() {
         if (m_sInfoLink != null) {
             String link = m_sInfoLink;
             if (m_sInfoLink.contains("?"))
@@ -409,23 +411,47 @@ class CRxEventRecord
             else
                 link += "?";
             link += "utm_source=dvanactka.info&utm_medium=app";
-
-            try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                ctx.startActivity(browserIntent);
-            }
-            catch (Exception e) {e.printStackTrace();}
+            return link;
         }
+        return null;
     }
 
     //---------------------------------------------------------------------------
-    void openBuyLink(Context ctx) {
-        if (m_sBuyLink != null) {
+    void openInfoLink(Activity sender) {
+        String sUrl = infoLinkUrl();
+        if (sUrl != null)
+            CRxEventRecord.openWebUrl(sUrl, sender);
+    }
+
+    //---------------------------------------------------------------------------
+    void openBuyLink(Activity sender) {
+        if (m_sBuyLink != null)
+            CRxEventRecord.openWebUrl(m_sBuyLink, sender);
+    }
+
+    //---------------------------------------------------------------------------
+    static void openWebUrl(String sUrl, Activity sender) {
+        boolean bOK = false;
+        try {
+            // try using Custom Chrome Tabs first https://developer.chrome.com/multidevice/android/customtabs
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            builder.setToolbarColor(sender.getResources().getColor(R.color.colorActionBarBkg))
+                    .setShowTitle(true)
+                    .addDefaultShareMenuItem();
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.intent.setPackage("com.android.chrome");
+            customTabsIntent.launchUrl(sender, Uri.parse(sUrl));
+            bOK = true;
+        }
+        catch (Exception e) { bOK = false; }
+
+        if (!bOK) { // fallback - open in default browser
             try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(m_sBuyLink));
-                ctx.startActivity(browserIntent);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sUrl));
+                sender.startActivity(browserIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            catch (Exception e) {e.printStackTrace();}
         }
     }
 
