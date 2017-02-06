@@ -1,11 +1,13 @@
 package com.roomarranger.android.dvanactka;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.RadioGroup;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -139,14 +141,31 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         if (nCount > 0)
         {
             CameraUpdate cameraUpdate;
-            if (nCount == 1)
+            if (nCount == 1) {
                 cameraUpdate = CameraUpdateFactory.newLatLngZoom(loc2LatLng(coordMin), 15);
+                m_map.moveCamera(cameraUpdate);
+            }
             else
             {
-                View view = getWindow().getDecorView();
-                cameraUpdate = CameraUpdateFactory.newLatLngBounds(new LatLngBounds(loc2LatLng(coordMin), loc2LatLng(coordMax)), view.getWidth(), view.getHeight(), 100);
+                // http://stackoverflow.com/questions/13692579/movecamera-with-cameraupdatefactory-newlatlngbounds-crashes
+                final View mapView = getFragmentManager().findFragmentById(R.id.map).getView();
+                try {
+                    if (mapView.getViewTreeObserver().isAlive()) {
+                        final Location _coordMin = coordMin;
+                        final Location _coordMax = coordMax;
+                        mapView.getViewTreeObserver().addOnGlobalLayoutListener(
+                                new ViewTreeObserver.OnGlobalLayoutListener() {
+                                    @Override
+                                    public void onGlobalLayout() {
+                                        mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(new LatLngBounds(loc2LatLng(_coordMin), loc2LatLng(_coordMax)), mapView.getWidth(), mapView.getHeight(), 100);
+                                        m_map.moveCamera(cameraUpdate);
+                                    }
+                                });
+                    }
+                }
+                catch (Exception e) { e.printStackTrace(); }
             }
-            m_map.moveCamera(cameraUpdate);
         }
         m_map.setMyLocationEnabled(true);
         UiSettings settings = m_map.getUiSettings();

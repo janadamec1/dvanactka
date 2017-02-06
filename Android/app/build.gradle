@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.roomarranger.android.dvanactka"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 21
         versionCode 12
         versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

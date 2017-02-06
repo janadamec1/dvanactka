@@ -111,4 +111,5 @@
     <string name="hybrid">Hybridní</string>
     <string name="satellite">Satelitní</string>
     <string name="standard">Standardní</string>
+    <string name="search">Hledat</string>
 </resources>

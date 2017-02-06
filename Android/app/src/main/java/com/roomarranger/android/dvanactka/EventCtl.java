@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     CRxDataSource m_aDataSource = null;
     boolean m_bAskForFilter = false;        // do not show items, present filter possibilites to pass next as ParentFilter
     String m_sParentFilter = null;          // show only items with this filter (for ds with filterAsParentView)
+    String m_sSearchString = null;          // if not nil, use it as search string
 
     static final int CODE_DETAIL_PLACE_REFRESH = 3;         // from place detail
     static final int CODE_DETAIL_REFRESH_PARENT = 4;        // from saved news
@@ -78,6 +80,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     static class NewsListItemHolder {
+        int m_idLayout;
         TextView m_lbTitle;
         TextView m_lbText;
         TextView m_lbDate;
@@ -114,7 +117,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         }
 
         public int getChildrenCount(int groupPosition) {
-            if (m_bAskForFilter)
+            if (isAskForFilterActive())
                 return m_arrFilterSelection.size();
             ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
             if (arr != null)
@@ -151,30 +154,38 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view,
                                  ViewGroup parent) {
 
+            int resId = R.layout.list_item_places;
+            if (isAskForFilterActive())
+                resId = android.R.layout.simple_list_item_1;
+            else {
+                switch (m_aDataSource.m_eType) {
+                    case CRxDataSource.DATATYPE_news:
+                        resId = R.layout.list_item_news;
+                        break;
+                    case CRxDataSource.DATATYPE_events:
+                        resId = R.layout.list_item_events;
+                        break;
+                    case CRxDataSource.DATATYPE_places:
+                        resId = R.layout.list_item_places;
+                        break;
+                }
+            }
             NewsListItemHolder cell;
+            if (view != null) { // check if row compatible
+                cell = (NewsListItemHolder)view.getTag();
+
+                if (cell.m_idLayout != resId)
+                    view = null;
+            }
+
             if (view == null) {
                 LayoutInflater inInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                int resId = R.layout.list_item_places;
-                if (m_bAskForFilter)
-                    resId = android.R.layout.simple_list_item_1;
-                else {
-                    switch (m_aDataSource.m_eType) {
-                        case CRxDataSource.DATATYPE_news:
-                            resId = R.layout.list_item_news;
-                            break;
-                        case CRxDataSource.DATATYPE_events:
-                            resId = R.layout.list_item_events;
-                            break;
-                        case CRxDataSource.DATATYPE_places:
-                            resId = R.layout.list_item_places;
-                            break;
-                    }
-                }
-                view = inInflater.inflate(resId, null);//android.R.layout.simple_list_item_2, null);//R.layout.list_item_places, null);
+                view = inInflater.inflate(resId, null);
 
                 cell = new NewsListItemHolder();
+                cell.m_idLayout = resId;
 
-                if (m_bAskForFilter) {
+                if (isAskForFilterActive()) {
                     cell.m_lbTitle = (TextView) view.findViewById(android.R.id.text1);
                 }
                 else {
@@ -332,12 +343,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     });
 
                 view.setTag(cell);
-            } else {
+            }
+            else {
                 cell = (NewsListItemHolder)view.getTag();
             }
 
             // fill cell contents
-            if (m_bAskForFilter) {
+            if (isAskForFilterActive()) {
                 cell.m_lbTitle.setText(m_arrFilterSelection.get(childPosition));
                 return view;
             }
@@ -674,7 +686,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_orderedItems.clear();
         m_orderedCategories.clear();
 
-        if (m_bAskForFilter) {
+        if (isAskForFilterActive()) {
             m_arrFilterSelection.clear();
             // get the list of filter items
             for (CRxEventRecord rec: m_aDataSource.m_arrItems) {
@@ -723,6 +735,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     if (!rec.m_sFilter.equals(m_sParentFilter)) {
                         continue;
                     }
+                }
+            }
+
+            // search
+            if (m_sSearchString != null) {
+                if (!rec.containsSearch(m_sSearchString, this)) {
+                    continue;
                 }
             }
 
@@ -859,9 +878,38 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         MenuItem actFilter = menu.findItem(R.id.action_filter);
         MenuItem actMap = menu.findItem(R.id.action_map);
         MenuItem actSaved = menu.findItem(R.id.action_saved);
+        MenuItem actSearch = menu.findItem(R.id.action_search);
         actFilter.setVisible(m_aDataSource.m_bFilterable);
         actMap.setVisible(m_aDataSource.m_eType == CRxDataSource.DATATYPE_places);
         actSaved.setVisible(m_aDataSource.m_eType == CRxDataSource.DATATYPE_news && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews));
+
+        SearchView viewSearch = (SearchView)actSearch.getActionView();
+        viewSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String searchText) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String searchText) {
+                // do search
+                boolean bSearchActive = (searchText.length() > 1);
+                boolean bWasActive = isSearchActive();
+                if (!bSearchActive && !bWasActive) {
+                    return false;
+                }
+                else if (!bSearchActive && bWasActive) {
+                    m_sSearchString = null;
+                }
+                else {
+                    m_sSearchString = searchText;
+                }
+                sortRecords();
+                if (m_adapter != null)
+                    m_adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
         return true;
     }
 
@@ -1036,5 +1084,15 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             ////self.refreshControl?.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
             m_refreshControl.setRefreshing(false);
         }
+    }
+
+    //--------------------------------------------------------------------------
+    boolean isSearchActive() {
+        return m_sSearchString != null;
+    }
+
+    //--------------------------------------------------------------------------
+    boolean isAskForFilterActive() {
+        return m_bAskForFilter && !isSearchActive();
     }
 }

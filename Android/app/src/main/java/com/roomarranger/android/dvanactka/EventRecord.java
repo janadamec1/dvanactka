@@ -11,6 +11,7 @@ import android.support.customtabs.CustomTabsIntent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * Created by jadamec on 28.12.16.
@@ -546,4 +548,36 @@ class CRxEventRecord
         }
         return res.getString(R.string.today) + " " + sString;
     }
+
+    //---------------------------------------------------------------------------
+    private static final Pattern ACCENTS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+
+    boolean containsSearch(String sExpr, Context ctx) {
+        //Collator insensitiveComparator = Collator.getInstance();
+        //insensitiveComparator.setStrength(Collator.PRIMARY);      // this is unfortunately only for comparing not "contains"
+
+        Locale loc = Locale.getDefault();
+        String sExprNorm = ACCENTS_PATTERN.matcher(Normalizer.normalize(sExpr, Normalizer.Form.NFD)).replaceAll("").toLowerCase(loc);
+
+        String sTitleNorm = ACCENTS_PATTERN.matcher(Normalizer.normalize(m_sTitle, Normalizer.Form.NFD)).replaceAll("").toLowerCase(loc);
+        if (sTitleNorm.contains(sExprNorm))
+            return true;
+        if (m_eCategory != null) {
+            String sCategoryNorm = ACCENTS_PATTERN.matcher(Normalizer.normalize(CRxCategory.categoryLocalName(m_eCategory, ctx), Normalizer.Form.NFD)).replaceAll("").toLowerCase(loc);
+            if (sCategoryNorm.contains(sExprNorm))
+                return true;
+        }
+        if (m_sFilter != null) {
+            String sFilterNorm = ACCENTS_PATTERN.matcher(Normalizer.normalize(m_sFilter, Normalizer.Form.NFD)).replaceAll("").toLowerCase(loc);
+            if (sFilterNorm.contains(sExprNorm))
+                return true;
+        }
+        if (m_sText != null) {
+            String sTextNorm = ACCENTS_PATTERN.matcher(Normalizer.normalize(m_sText, Normalizer.Form.NFD)).replaceAll("").toLowerCase(loc);
+            if (sTextNorm.contains(sExprNorm))
+                return true;
+        }
+        return false;
+    }
+
 }
