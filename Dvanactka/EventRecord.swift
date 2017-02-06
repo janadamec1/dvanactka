@@ -503,6 +503,29 @@ class CRxEventRecord: NSObject {
         }
         return NSLocalizedString("today", comment: "") + " " + sString;
     }
+    
+    //---------------------------------------------------------------------------
+    func containsSearch(expression sExpr: String) -> Bool {
+        if m_sTitle.range(of: sExpr, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: Locale.current) != nil {
+            return true;
+        }
+        if let cat = m_eCategory {
+            if CRxEventRecord.categoryLocalName(category: cat).range(of: sExpr, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: Locale.current) != nil {
+                return true;
+            }
+        }
+        if let filter = m_sFilter {
+            if filter.range(of: sExpr, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: Locale.current) != nil {
+                return true;
+            }
+        }
+        if let text = m_sText {
+            if text.range(of: sExpr, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: Locale.current) != nil {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 //--------------------------------------------------------------------------

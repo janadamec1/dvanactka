@@ -43,16 +43,21 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
 
-class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
+class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
+    @IBOutlet weak var m_searchBar: UISearchBar!
+    @IBOutlet weak var m_tableView: UITableView!
     @IBOutlet weak var m_viewFooter: UIView!
     @IBOutlet weak var m_lbFooterText: UILabel!
     @IBOutlet weak var m_btnFooterButton: UIButton!
+    
+    var m_refreshCtl: UIRefreshControl!
     
     // input:
     var m_aDataSource: CRxDataSource?
     var m_bAskForFilter: Bool = false      // do not show items, present filter possibilites to pass next as ParentFilter
     var m_sParentFilter: String?           // show only items with this filter (for ds with filterAsParentView)
+    var m_sSearchString: String?           // if not nil, use it as search string
     
     // member variables:
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
@@ -61,19 +66,24 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     var m_locManager = CLLocationManager();
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
     var m_bUserLocationAcquired = false;
-    var m_footerToShow: UIView? = nil; // it's here to save the footer pointer for later, not to release it
 
     var m_refreshParentDelegate: CRxDetailRefreshParentDelegate?;
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let refreshCtl = UIRefreshControl();
-        refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
-        refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
-        refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
-        self.refreshControl = refreshCtl;
-
+        m_refreshCtl = UIRefreshControl();
+        m_refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
+        m_refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
+        m_refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
+        if #available(iOS 10.0, *) {
+            m_tableView.refreshControl = m_refreshCtl;
+        } else {
+            m_tableView.backgroundView = m_refreshCtl;
+        }
+        
+        m_searchBar.isHidden = true;
+        
         m_locManager.delegate = self;
         m_locManager.distanceFilter = 5;
 
@@ -90,7 +100,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 // init location tracking
                 arrBtnItems.append(UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap)));
 
-                self.tableView.allowsSelection = true;
+                m_tableView.allowsSelection = true;
                 if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                     m_locManager.startUpdatingLocation();
                 }
@@ -101,17 +111,17 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             if ds.m_bFilterable {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
             }
+            arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(EventsCtl.showSearch)));
             /*if ds.m_sId == CRxDataSourceManager.dsSpolky {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "bulleted_list"), style: .plain, target: self, action: #selector(EventsCtl.onBtnList)));
             }*/
             if arrBtnItems.count > 0 {
                 self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
             }
-            self.tableView.rowHeight = UITableViewAutomaticDimension;
-            self.tableView.estimatedRowHeight = 90.0;
+            m_tableView.rowHeight = UITableViewAutomaticDimension;
+            m_tableView.estimatedRowHeight = 90.0;
             
             // footer
-            m_footerToShow = m_viewFooter;
             if ds.m_sId == CRxDataSourceManager.dsWork {
                 m_lbFooterText.text = NSLocalizedString("Add job offer:", comment: "");
                 m_btnFooterButton.setTitle("KdeJePrace.cz", for: .normal);
@@ -120,11 +130,8 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                 m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
             }
             else {
-                m_footerToShow = nil;
+                m_viewFooter.isHidden = true;
             }
-            // footer will be added as the last section's footer, it will stay visible then
-            m_viewFooter.removeFromSuperview();
-            self.tableView.tableFooterView = nil;
         }
         setRecordsDistance();
         sortRecords();
@@ -156,15 +163,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
 
-        guard let ds = m_aDataSource, let refreshCtl = self.refreshControl else { return }
+        guard let ds = m_aDataSource else { return }
         if ds.m_bIsBeingRefreshed {
             ds.delegate = self;
             
             // show refresh ctl, has to be when UI is visible (thus viewDidAppear)
-            refreshCtl.beginRefreshing();
-            //self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);
+            m_refreshCtl.beginRefreshing();
+            //m_tableView.contentOffset = CGPoint(x:0, y:m_tableView.contentOffset.y-refreshCtl.frame.size.height);
             UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
-                self.tableView.contentOffset = CGPoint(x:0, y:self.tableView.contentOffset.y-refreshCtl.frame.size.height);}
+                self.m_tableView.contentOffset = CGPoint(x:0, y:self.m_tableView.contentOffset.y-self.m_refreshCtl.frame.size.height);}
             );
         }
     }
@@ -176,7 +183,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         m_orderedItems.removeAll();
         m_orderedCategories.removeAll();
         
-        if m_bAskForFilter {
+        if isAskForFilterActive() {
             var arrFilter = [String]();
             for rec in ds.m_arrItems {
                 if let sFilter = rec.m_sFilter {
@@ -222,6 +229,13 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
                     if sFilter != sParentFilter {
                         continue;
                     }
+                }
+            }
+            
+            // search
+            if let sExpr = m_sSearchString {
+                if !rec.containsSearch(expression: sExpr) {
+                    continue;
                 }
             }
             
@@ -342,17 +356,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         }
         
         if let sErrorText = error {
-            if let refreshCtl = self.refreshControl {
-                refreshCtl.attributedTitle = NSAttributedString(string: sErrorText);
-                Timer.scheduledTimer(timeInterval: 2, target: refreshCtl, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
-            }
+            m_refreshCtl.attributedTitle = NSAttributedString(string: sErrorText);
+            Timer.scheduledTimer(timeInterval: 2, target: m_refreshCtl, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
         }
         else {
             setRecordsDistance();
             sortRecords();
-            self.tableView.reloadData();
-            self.refreshControl?.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
-            self.refreshControl?.endRefreshing();
+            m_tableView.reloadData();
+            m_refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
+            m_refreshCtl.endRefreshing();
         }
     }
     
@@ -360,18 +372,18 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     func detailRequestsRefresh()
     {
         sortRecords();
-        self.tableView.reloadData();
+        m_tableView.reloadData();
     }
 
     //--------------------------------------------------------------------------
     // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return m_orderedCategories.count;
     }
 
     //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if m_bAskForFilter {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isAskForFilterActive() {
             return m_arrFilterSelection.count;
         }
         else if let items = m_orderedItems[m_orderedCategories[section]] {
@@ -383,7 +395,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (m_orderedCategories.count < 2) {
             return nil
         }
@@ -412,10 +424,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
 
     //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell!;
-        if m_bAskForFilter {
+        if isAskForFilterActive() {
             cell = tableView.dequeueReusableCell(withIdentifier: "cellFilter", for: indexPath);
             cell.textLabel?.text = m_arrFilterSelection[indexPath.row];
             return cell;
@@ -619,7 +631,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         view.tintColor = UIColor(red: 74.0/255.0, green: 125.0/255.0, blue: 185.0/255.0, alpha: 1.0);    // background
         if let header = view as? UITableViewHeaderFooterView {          // text
@@ -629,32 +641,9 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     }
     
     //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section < m_orderedCategories.count-1 || m_footerToShow == nil {
-            return nil;
-        }
-        // only under the last section
-        return "text";
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section < m_orderedCategories.count-1 || m_footerToShow == nil {
-            return 0;
-        }
-        return m_footerToShow!.bounds.height;
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section < m_orderedCategories.count-1 || m_footerToShow == nil {
-            return nil;
-        }
-        return m_footerToShow;
-    }
-    
-    //--------------------------------------------------------------------------
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        if m_bAskForFilter {
+        if isAskForFilterActive() {
             let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
             eventCtl.m_aDataSource = m_aDataSource;
             eventCtl.m_sParentFilter = m_arrFilterSelection[indexPath.row];
@@ -814,7 +803,7 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
             
             setRecordsDistance();
             sortRecords();
-            self.tableView.reloadData();
+            m_tableView.reloadData();
         }
     }
 
@@ -891,9 +880,58 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         ds.m_setFilter = setOut;
         CRxDataSourceManager.sharedInstance.save(dataSource: ds);
         sortRecords();
-        self.tableView.reloadData();
+        m_tableView.reloadData();
+    }
+    
+    //--------------------------------------------------------------------------
+    func showSearch() {
+
+        if m_searchBar.isHidden {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
+                self.m_searchBar.isHidden = false;
+            });
+            m_searchBar.text = "";
+            m_searchBar.becomeFirstResponder();
+        }
+        else {
+            m_searchBar.resignFirstResponder();
+            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
+                self.m_searchBar.isHidden = true;
+            });
+            m_searchBar.text = "";
+            m_sSearchString = nil;
+            sortRecords();
+            m_tableView.reloadData();
+        }
     }
 
+    //--------------------------------------------------------------------------
+    func isSearchActive() -> Bool {
+        return m_sSearchString != nil;
+    }
+    
+    //--------------------------------------------------------------------------
+    func isAskForFilterActive() -> Bool {
+        return m_bAskForFilter && !isSearchActive();
+    }
+    
+    //--------------------------------------------------------------------------
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let bSearchActive = (searchText.characters.count > 1);
+        let bWasActive = isSearchActive();
+        if !bSearchActive && !bWasActive {
+            return;
+        }
+        else if !bSearchActive && bWasActive {
+            m_sSearchString = nil;
+        }
+        else {
+            m_sSearchString = searchText;
+        }
+        sortRecords();
+        m_tableView.reloadData();
+    }
+    
     //--------------------------------------------------------------------------
     @IBAction func onBtnFooterTouched(_ sender: Any) {
         guard let ds = m_aDataSource else { return }
