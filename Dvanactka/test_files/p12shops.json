@@ -274,6 +274,18 @@
 "filter":"Fitness"
 },
 {
+"title":"Cvič.it",
+"text":"Kolektivní cvičení dle rozvrhu",
+"locationLat":"50.0051858",
+"locationLong":"14.4053872",
+"address":"Obchodní náměstí 4\nPraha 12",
+"infoLink":"http:\/\/www.cvic.it",
+"phone":"734 640 264",
+"email":"info@cvic.it",
+"category":"obchod",
+"filter":"Fitness"
+},
+{
 "title":"Hodinář v pasáži",
 "locationLat":"50.0056569",
 "locationLong":"14.4182111",

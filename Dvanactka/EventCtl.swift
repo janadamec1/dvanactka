@@ -49,10 +49,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     @IBOutlet weak var m_lbFooterText: UILabel!
     @IBOutlet weak var m_btnFooterButton: UIButton!
     
+    // input:
     var m_aDataSource: CRxDataSource?
-    var m_sParentFilter: String?                        // show only items with this filter (for ds with filterAsParentView)
+    var m_bAskForFilter: Bool = false      // do not show items, present filter possibilites to pass next as ParentFilter
+    var m_sParentFilter: String?           // show only items with this filter (for ds with filterAsParentView)
+    
+    // member variables:
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
     var m_orderedCategories = [String]()                // sorted category local names
+    var m_arrFilterSelection = [String]();              // array when asing for filter (m_bAskForFilter). Used instead of orderedItems
     var m_locManager = CLLocationManager();
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
     var m_bUserLocationAcquired = false;
@@ -170,6 +175,20 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
         
         m_orderedItems.removeAll();
         m_orderedCategories.removeAll();
+        
+        if m_bAskForFilter {
+            var arrFilter = [String]();
+            for rec in ds.m_arrItems {
+                if let sFilter = rec.m_sFilter {
+                    if !arrFilter.contains(sFilter) {
+                        arrFilter.append(sFilter);
+                    }
+                }
+            }
+            m_arrFilterSelection = arrFilter.sorted();
+            m_orderedCategories.append("");
+            return;
+        }
         
         let df = DateFormatter();
         df.dateStyle = .full;
@@ -352,7 +371,10 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
 
     //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let items = m_orderedItems[m_orderedCategories[section]] {
+        if m_bAskForFilter {
+            return m_arrFilterSelection.count;
+        }
+        else if let items = m_orderedItems[m_orderedCategories[section]] {
             return items.count;
         }
         else {
@@ -392,12 +414,17 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        var cell: UITableViewCell!;
+        if m_bAskForFilter {
+            cell = tableView.dequeueReusableCell(withIdentifier: "cellFilter", for: indexPath);
+            cell.textLabel?.text = m_arrFilterSelection[indexPath.row];
+            return cell;
+        }
+
         guard let rec = record(at: indexPath),
             let ds = m_aDataSource
             else {return UITableViewCell();}
 
-        var cell: UITableViewCell!;
-        
         if ds.m_eType == .news {
             let cellNews = tableView.dequeueReusableCell(withIdentifier: "cellNews", for: indexPath) as! NewsCell
             // Localization
@@ -626,9 +653,15 @@ class EventsCtl: UITableViewController, CLLocationManagerDelegate, EKEventEditVi
     
     //--------------------------------------------------------------------------
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let rec = record(at: indexPath) {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        if m_bAskForFilter {
+            let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
+            eventCtl.m_aDataSource = m_aDataSource;
+            eventCtl.m_sParentFilter = m_arrFilterSelection[indexPath.row];
+            navigationController?.pushViewController(eventCtl, animated: true);
+        }
+        else if let rec = record(at: indexPath) {
+            let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl;
             placeCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
             placeCtl.m_refreshParentDelegate = self;
             navigationController?.pushViewController(placeCtl, animated: true);

@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.text.Collator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         CRxDataSourceRefreshDelegate, SwipeRefreshLayout.OnRefreshListener {
 
     CRxDataSource m_aDataSource = null;
+    boolean m_bAskForFilter = false;        // do not show items, present filter possibilites to pass next as ParentFilter
     String m_sParentFilter = null;          // show only items with this filter (for ds with filterAsParentView)
 
     static final int CODE_DETAIL_PLACE_REFRESH = 3;         // from place detail
@@ -58,6 +60,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
     HashMap<String, ArrayList<CRxEventRecord>> m_orderedItems = new HashMap<String, ArrayList<CRxEventRecord>>();
     ArrayList<String> m_orderedCategories = new ArrayList<String>();    // sorted category local names
+    ArrayList<String> m_arrFilterSelection = new ArrayList<String>();   // array when asing for filter (m_bAskForFilter). Used instead of orderedItems
     boolean m_bUserLocationAcquired = false;
     Location m_coordLast = null;
     GoogleApiClient m_GoogleApiClient = null;
@@ -111,6 +114,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         }
 
         public int getChildrenCount(int groupPosition) {
+            if (m_bAskForFilter)
+                return m_arrFilterSelection.size();
             ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
             if (arr != null)
                 return arr.size();
@@ -150,37 +155,56 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             if (view == null) {
                 LayoutInflater inInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 int resId = R.layout.list_item_places;
-                switch (m_aDataSource.m_eType) {
-                    case CRxDataSource.DATATYPE_news: resId = R.layout.list_item_news; break;
-                    case CRxDataSource.DATATYPE_events: resId = R.layout.list_item_events; break;
-                    case CRxDataSource.DATATYPE_places: resId = R.layout.list_item_places; break;
+                if (m_bAskForFilter)
+                    resId = android.R.layout.simple_list_item_1;
+                else {
+                    switch (m_aDataSource.m_eType) {
+                        case CRxDataSource.DATATYPE_news:
+                            resId = R.layout.list_item_news;
+                            break;
+                        case CRxDataSource.DATATYPE_events:
+                            resId = R.layout.list_item_events;
+                            break;
+                        case CRxDataSource.DATATYPE_places:
+                            resId = R.layout.list_item_places;
+                            break;
+                    }
                 }
                 view = inInflater.inflate(resId, null);//android.R.layout.simple_list_item_2, null);//R.layout.list_item_places, null);
 
                 cell = new NewsListItemHolder();
-                cell.m_lbTitle = (TextView)view.findViewById(R.id.title);
-                cell.m_lbText = (TextView)view.findViewById(R.id.text);
 
-                switch (m_aDataSource.m_eType) {
-                    case CRxDataSource.DATATYPE_news:
-                        cell.m_btnFavorite = (ImageButton)view.findViewById(R.id.btnFavorite);
-                        cell.m_lbDate = (TextView)view.findViewById(R.id.date);
-                        cell.m_btnWebsite = (Button)view.findViewById(R.id.btnWebsite);
-                        cell.m_btnAction = (ImageButton)view.findViewById(R.id.btnAction);
-                        break;
-                    case CRxDataSource.DATATYPE_events:
-                        cell.m_lbDate = (TextView)view.findViewById(R.id.date);
-                        cell.m_lbAddress = (TextView)view.findViewById(R.id.address);
-                        cell.m_btnWebsite = (Button)view.findViewById(R.id.btnWebsite);
-                        cell.m_btnBuy = (Button)view.findViewById(R.id.btnBuy);
-                        cell.m_btnAddToCalendar = (Button)view.findViewById(R.id.btnAddToCalendar);
-                        cell.m_stackContact = view.findViewById(R.id.stackContact);
-                        cell.m_btnEmail = (Button)view.findViewById(R.id.btnEmail);
-                        cell.m_btnPhone = (Button)view.findViewById(R.id.btnPhone);
-                        break;
-                    case CRxDataSource.DATATYPE_places:
-                        cell.m_imgIcon = (ImageView)view.findViewById(R.id.icon);
-                        break;
+                if (m_bAskForFilter) {
+                    cell.m_lbTitle = (TextView) view.findViewById(android.R.id.text1);
+                }
+                else {
+                    switch (m_aDataSource.m_eType) {
+                        case CRxDataSource.DATATYPE_news:
+                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
+                            cell.m_lbText = (TextView) view.findViewById(R.id.text);
+                            cell.m_btnFavorite = (ImageButton) view.findViewById(R.id.btnFavorite);
+                            cell.m_lbDate = (TextView) view.findViewById(R.id.date);
+                            cell.m_btnWebsite = (Button) view.findViewById(R.id.btnWebsite);
+                            cell.m_btnAction = (ImageButton) view.findViewById(R.id.btnAction);
+                            break;
+                        case CRxDataSource.DATATYPE_events:
+                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
+                            cell.m_lbText = (TextView) view.findViewById(R.id.text);
+                            cell.m_lbDate = (TextView) view.findViewById(R.id.date);
+                            cell.m_lbAddress = (TextView) view.findViewById(R.id.address);
+                            cell.m_btnWebsite = (Button) view.findViewById(R.id.btnWebsite);
+                            cell.m_btnBuy = (Button) view.findViewById(R.id.btnBuy);
+                            cell.m_btnAddToCalendar = (Button) view.findViewById(R.id.btnAddToCalendar);
+                            cell.m_stackContact = view.findViewById(R.id.stackContact);
+                            cell.m_btnEmail = (Button) view.findViewById(R.id.btnEmail);
+                            cell.m_btnPhone = (Button) view.findViewById(R.id.btnPhone);
+                            break;
+                        case CRxDataSource.DATATYPE_places:
+                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
+                            cell.m_lbText = (TextView) view.findViewById(R.id.text);
+                            cell.m_imgIcon = (ImageView) view.findViewById(R.id.icon);
+                            break;
+                    }
                 }
                 if (cell.m_btnWebsite != null)
                     cell.m_btnWebsite.setOnClickListener(new View.OnClickListener() {
@@ -312,6 +336,12 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 cell = (NewsListItemHolder)view.getTag();
             }
 
+            // fill cell contents
+            if (m_bAskForFilter) {
+                cell.m_lbTitle.setText(m_arrFilterSelection.get(childPosition));
+                return view;
+            }
+
             ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
             CRxEventRecord rec = arr.get(childPosition);
 
@@ -330,7 +360,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             if (cell.m_btnPhone != null)
                 cell.m_btnPhone.setTag(rec);
 
-            // fill cell contents
             switch (m_aDataSource.m_eType) {
                 case CRxDataSource.DATATYPE_news: {
 
@@ -516,6 +545,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         else
             m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
+        m_bAskForFilter = getIntent().getBooleanExtra(MainActivity.EXTRA_ASK_FOR_FILTER, false);
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
 
         if (m_aDataSource.m_bIsBeingRefreshed)
@@ -534,7 +564,19 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         ExpandableListView ExpandList = (ExpandableListView)findViewById(R.id.ExpList);
         m_adapter = new ExpandListAdapter(this);
         ExpandList.setAdapter(m_adapter);
-        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
+        if (m_bAskForFilter) {
+            ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
+                    Intent intent = new Intent(EventCtl.this, EventCtl.class);
+                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                    intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_arrFilterSelection.get(childPosition));
+                    startActivity(intent);
+                    return false;
+                }
+            });
+        }
+        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
             ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
                 @Override
                 public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
@@ -631,6 +673,23 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
         m_orderedItems.clear();
         m_orderedCategories.clear();
+
+        if (m_bAskForFilter) {
+            m_arrFilterSelection.clear();
+            // get the list of filter items
+            for (CRxEventRecord rec: m_aDataSource.m_arrItems) {
+                if (rec.m_sFilter != null) {
+                    if (!m_arrFilterSelection.contains(rec.m_sFilter)) {
+                        m_arrFilterSelection.add(rec.m_sFilter);
+                    }
+                }
+            }
+            Collator coll = Collator.getInstance(); // for sorting with locale
+            coll.setStrength(Collator.PRIMARY);
+            Collections.sort(m_arrFilterSelection, coll);
+            m_orderedCategories.add(" ");
+            return;
+        }
 
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
 

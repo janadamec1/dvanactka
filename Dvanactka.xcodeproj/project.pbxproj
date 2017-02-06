@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D01CA1B1DFAFBA1004E0534 /* PlacesFilterCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01CA1A1DFAFBA1004E0534 /* PlacesFilterCtl.swift */; };
 		4D0469BD1DF9D3A100E7B760 /* ds_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469BB1DF9D3A100E7B760 /* ds_shop.png */; };
 		4D0469BE1DF9D3A100E7B760 /* ds_work.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469BC1DF9D3A100E7B760 /* ds_work.png */; };
 		4D0469CB1DFA0DF300E7B760 /* ds_billboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469BF1DFA0DF300E7B760 /* ds_billboard@2x.png */; };
@@ -79,6 +78,8 @@
 		4D5A802B1DD0ADF0006723B5 /* c_electrical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80271DD0ADF0006723B5 /* c_electrical@2x.png */; };
 		4D5A802C1DD0ADF0006723B5 /* c_textile.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80281DD0ADF0006723B5 /* c_textile.png */; };
 		4D5A802D1DD0ADF0006723B5 /* c_textile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80291DD0ADF0006723B5 /* c_textile@2x.png */; };
+		4D5AC6491E467135009F94E8 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5AC6471E467135009F94E8 /* search.png */; };
+		4D5AC64A1E467135009F94E8 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5AC6481E467135009F94E8 /* search@2x.png */; };
 		4D663B6C1DF5C07A00145AED /* ds_game.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D663B6B1DF5C07A00145AED /* ds_game.png */; };
 		4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6677091DCB340F004876FA /* MapKit.framework */; };
 		4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */; };
@@ -124,7 +125,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D01CA1A1DFAFBA1004E0534 /* PlacesFilterCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesFilterCtl.swift; sourceTree = "<group>"; };
 		4D0469BB1DF9D3A100E7B760 /* ds_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_shop.png; path = img/ds_shop.png; sourceTree = "<group>"; };
 		4D0469BC1DF9D3A100E7B760 /* ds_work.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_work.png; path = img/ds_work.png; sourceTree = "<group>"; };
 		4D0469BF1DFA0DF300E7B760 /* ds_billboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_billboard@2x.png"; path = "img/ds_billboard@2x.png"; sourceTree = "<group>"; };
@@ -199,6 +199,8 @@
 		4D5A80271DD0ADF0006723B5 /* c_electrical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_electrical@2x.png"; path = "img/c_electrical@2x.png"; sourceTree = "<group>"; };
 		4D5A80281DD0ADF0006723B5 /* c_textile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_textile.png; path = img/c_textile.png; sourceTree = "<group>"; };
 		4D5A80291DD0ADF0006723B5 /* c_textile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_textile@2x.png"; path = "img/c_textile@2x.png"; sourceTree = "<group>"; };
+		4D5AC6471E467135009F94E8 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = search.png; path = img/search.png; sourceTree = "<group>"; };
+		4D5AC6481E467135009F94E8 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "search@2x.png"; path = "img/search@2x.png"; sourceTree = "<group>"; };
 		4D663B6B1DF5C07A00145AED /* ds_game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_game.png; path = img/ds_game.png; sourceTree = "<group>"; };
 		4D6677091DCB340F004876FA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailCtl.swift; sourceTree = "<group>"; };
@@ -352,6 +354,8 @@
 				4DBF467B1DEC8DD600E7238D /* p12-logo@3x.png */,
 				4D5997AA1DE0935100C4BE86 /* photo.png */,
 				4D5997AB1DE0935100C4BE86 /* photo@2x.png */,
+				4D5AC6471E467135009F94E8 /* search.png */,
+				4D5AC6481E467135009F94E8 /* search@2x.png */,
 				4D464C441DE2F525003EC137 /* star.png */,
 				4D464C451DE2F525003EC137 /* star@2x.png */,
 				4D464C461DE2F525003EC137 /* star@3x.png */,
@@ -403,7 +407,6 @@
 				4D9019381DC65E16001488D3 /* Main.storyboard */,
 				4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */,
 				4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */,
-				4D01CA1A1DFAFBA1004E0534 /* PlacesFilterCtl.swift */,
 				4D318A6D1DD7C4A400187985 /* RefineLocCtl.swift */,
 				4D318A691DD7897800187985 /* ReportFaultCtl.swift */,
 				4D90194C1DC67FB6001488D3 /* test_files */,
@@ -516,6 +519,7 @@
 				4D0469BE1DF9D3A100E7B760 /* ds_work.png in Resources */,
 				4D0469CB1DFA0DF300E7B760 /* ds_billboard@2x.png in Resources */,
 				4D52699E1DF49FE4008FA122 /* c_usergroups.png in Resources */,
+				4D5AC6491E467135009F94E8 /* search.png in Resources */,
 				4D4264281DD08D62008ED01F /* c_shop@2x.png in Resources */,
 				4D663B6C1DF5C07A00145AED /* ds_game.png in Resources */,
 				4D0469D41DFA0DF300E7B760 /* ds_usergroups@2x.png in Resources */,
@@ -588,6 +592,7 @@
 				4D9F14B81DD11A3E00841AD8 /* ds_events.png in Resources */,
 				4DBF467D1DEC8DD600E7238D /* p12-logo@3x.png in Resources */,
 				4D52699F1DF49FE4008FA122 /* c_usergroups@2x.png in Resources */,
+				4D5AC64A1E467135009F94E8 /* search@2x.png in Resources */,
 				4D1F44461E2D33640013EE52 /* ds_magazine@2x.png in Resources */,
 				4D5A802B1DD0ADF0006723B5 /* c_electrical@2x.png in Resources */,
 				4D5A802D1DD0ADF0006723B5 /* c_textile@2x.png in Resources */,
@@ -653,7 +658,6 @@
 				4D318A6A1DD7897800187985 /* ReportFaultCtl.swift in Sources */,
 				4D9F14AD1DD103D100841AD8 /* DataSource.swift in Sources */,
 				4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */,
-				4D01CA1B1DFAFBA1004E0534 /* PlacesFilterCtl.swift in Sources */,
 				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
 				4D3FC6F51DD274A8000467D1 /* AppInfoCtl.swift in Sources */,
 				4D668DD71E39F2AD00AD67C5 /* Appirater.m in Sources */,

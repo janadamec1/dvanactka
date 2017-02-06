@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     BaseAdapter m_adapter = null;
 
     public static final String EXTRA_DATASOURCE = "com.roomarranger.dvanactka.DATASOURCE";
+    public static final String EXTRA_ASK_FOR_FILTER = "com.roomarranger.dvanactka.ASK_FOR_FILTER";
     public static final String EXTRA_PARENT_FILTER = "com.roomarranger.dvanactka.PARENT_FILTER";
     public static final String EXTRA_EVENT_RECORD = "com.roomarranger.dvanactka.EVENT_RECORD";
     public static final String EXTRA_USER_LOCATION_LAT = "com.roomarranger.dvanactka.USER_LOCATION_LAT";
@@ -117,13 +118,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 else if (sDsSelected.equals(CRxDataSourceManager.dsGame)) {
                     intent = new Intent(MainActivity.this, GameCtl.class);
                 }
-                else if (aDS != null && aDS.m_bFilterAsParentView) {
-                    intent = new Intent(MainActivity.this, PlacesFilterCtl.class);
-                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, sDsSelected);
-                }
                 else {
                     intent = new Intent(MainActivity.this, EventCtl.class);
                     intent.putExtra(MainActivity.EXTRA_DATASOURCE, sDsSelected);
+                    intent.putExtra(MainActivity.EXTRA_ASK_FOR_FILTER, aDS != null && aDS.m_bFilterAsParentView);
                 }
                 if (intent != null)
                     startActivity(intent);
