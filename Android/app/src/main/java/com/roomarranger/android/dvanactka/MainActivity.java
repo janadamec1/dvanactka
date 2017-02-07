@@ -179,7 +179,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 else
                     cell.lbName.setText(ds.m_sTitle);
 
-                if (MainActivity.dsHasBadge(ds)) {
+                if (MainActivity.dsHasBadge(ds) && !ds.m_bIsBeingRefreshed) {
                     int iUnread = ds.unreadItemsCount();
                     cell.lbBadge.setText(String.valueOf(iUnread));
                     cell.lbBadge.setVisibility(iUnread > 0 ? View.VISIBLE : View.INVISIBLE);

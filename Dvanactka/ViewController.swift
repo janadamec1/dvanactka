@@ -146,7 +146,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.m_imgIcon.layer.shadowRadius = 4;
             cell.m_imgIcon.clipsToBounds = false;*/
             
-            if !ViewController.dsHasBadge(ds) {
+            if !ViewController.dsHasBadge(ds) || ds.m_bIsBeingRefreshed {
                 if let lbBadge = cell.m_lbBadge {
                     lbBadge.isHidden = true;
                 }
