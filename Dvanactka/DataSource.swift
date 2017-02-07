@@ -21,8 +21,9 @@ class CRxDataSource : NSObject {
     var m_sShortTitle: String?
     var m_sIcon: String
     var m_iBackgroundColor: Int;
-    var m_nRefreshFreqHours: Int = 18   // refresh after 18 hours
-    var m_sLastItemShown: String = ""   // hash of the last record user displayed (to count unread news, etc)
+    var m_nRefreshFreqHours: Int = 18;  // refresh after 18 hours
+    var m_sTestJsonFile: String?;       // offline data file
+    var m_sLastItemShown: String = "";  // hash of the last record user displayed (to count unread news, etc)
     var m_dateLastRefreshed: Date?
     var m_bIsBeingRefreshed: Bool = false
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
@@ -39,17 +40,12 @@ class CRxDataSource : NSObject {
     var m_bFilterable = false           // UI can filter this datasource accoring to records' m_sFilter
     var m_setFilter: Set<String>?       // contains strings that should NOT be shown
     
-    init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int, refreshFreqHours: Int = 18, shortTitle: String? = nil, groupByCategory: Bool = true, filterable: Bool = false, filterAsParentView: Bool = false) {
+    init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int) {
         m_sId = id;
         m_sTitle = title;
-        m_sShortTitle = shortTitle;
         m_sIcon = icon;
         m_eType = type;
         m_iBackgroundColor = backgroundColor;
-        m_nRefreshFreqHours = refreshFreqHours;
-        m_bGroupByCategory = groupByCategory;
-        m_bFilterable = filterable;
-        m_bFilterAsParentView = filterAsParentView;
         super.init()
     }
     
@@ -188,19 +184,63 @@ class CRxDataSourceManager : NSObject {
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
         
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x3f4d88);
-        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events, backgroundColor:0xdb552d, filterable: true);
-        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, backgroundColor:0x3f4d88, filterable: true);
-        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, backgroundColor:0x08739f, filterable: true);
-        m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, backgroundColor:0x08739f, refreshFreqHours: 48);
-        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, backgroundColor:0xdb552d, refreshFreqHours: 48, shortTitle: "Biograf");
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, backgroundColor:0x008000, refreshFreqHours: 48);
+        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events, backgroundColor:0xdb552d);
+        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, backgroundColor:0x3f4d88);
+        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, backgroundColor:0x08739f);
+        m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, backgroundColor:0x08739f);
+        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, backgroundColor:0xdb552d);
+        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, backgroundColor:0x008000);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, backgroundColor:0x008000);
-        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, backgroundColor:0x08739f, refreshFreqHours: 48);
-        m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, backgroundColor:0xb11a41, refreshFreqHours: 1000);
-        m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, backgroundColor:0x603cbb, refreshFreqHours: 1000);
-        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, backgroundColor:0x0ab2b2, refreshFreqHours: 48, filterAsParentView: true);
+        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, backgroundColor:0x08739f);
+        m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, backgroundColor:0xb11a41);
+        m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, backgroundColor:0x603cbb);
+        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, backgroundColor:0x0ab2b2);
         m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places, backgroundColor:0x0ab2b2);
-        m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places, backgroundColor:0xb11a41, refreshFreqHours: 4);
+        m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places, backgroundColor:0xb11a41);
+        
+        // additional parameters
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsRadDeska] {
+            ds.m_bFilterable = true;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsRadEvents] {
+            ds.m_bFilterable = true;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolky] {
+            ds.m_bFilterable = true;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolkyList] {
+            ds.m_nRefreshFreqHours = 48;
+            ds.m_sTestJsonFile = "/test_files/spolkyList";
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsBiografProgram] {
+            ds.m_nRefreshFreqHours = 48;
+            ds.m_sShortTitle = "Biograf";
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsCooltour] {
+            ds.m_nRefreshFreqHours = 48;
+            ds.m_sTestJsonFile = "/test_files/p12kultpamatky";
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsSosContacts] {
+            ds.m_nRefreshFreqHours = 48;
+            ds.m_sTestJsonFile = "/test_files/sos";
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsWaste] {
+            ds.m_sTestJsonFile = "/test_files/dyn_waste";
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsReportFault] {
+            ds.m_nRefreshFreqHours = 1000;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsGame] {
+            ds.m_nRefreshFreqHours = 1000;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsShops] {
+            ds.m_nRefreshFreqHours = 48;
+            ds.m_sTestJsonFile = "/test_files/p12shops";
+            ds.m_bFilterAsParentView = true;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsTraffic] {
+            ds.m_nRefreshFreqHours = 4;
+        }
     }
     
     //--------------------------------------------------------------------------
@@ -211,7 +251,16 @@ class CRxDataSourceManager : NSObject {
     //--------------------------------------------------------------------------
     func loadData() {
         for itemIt in m_dictDataSources {
-            itemIt.value.loadFromJSON(file: fileForDataSource(id: itemIt.value.m_sId));
+            let ds = itemIt.value;
+            ds.loadFromJSON(file: fileForDataSource(id: ds.m_sId));
+
+            // load test data in case we don't have any previously saved
+            if ds.m_arrItems.isEmpty {
+                if let testFile = ds.m_sTestJsonFile,
+                    let url = Bundle.main.url(forResource: testFile, withExtension: "json") {
+                    ds.loadFromJSON(file: url);
+                }
+            }
         }
         loadFavorities();
     }
@@ -391,45 +440,43 @@ class CRxDataSourceManager : NSObject {
         }
         
         if id == CRxDataSourceManager.dsRadNews {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_radAktual.json", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_radAktual.json");
             return;
         }
         else if id == CRxDataSourceManager.dsRadEvents {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_events.php", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_events.php");
             return;
         }
         else if id == CRxDataSourceManager.dsRadDeska {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_radDeska.json", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_radDeska.json");
             return;
         }
         else if id == CRxDataSourceManager.dsWork {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_kdejeprace.json", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_kdejeprace.json");
             return;
         }
         else if id == CRxDataSourceManager.dsSpolky {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_spolky.php", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_spolky.php");
             return;
         }
         else if id == CRxDataSourceManager.dsBiografProgram {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_biograf.json", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_biograf.json");
             return;
         }
         else if id == CRxDataSourceManager.dsTraffic {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_doprava.json", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_doprava.json");
             return;
         }
         else if id == CRxDataSourceManager.dsSpolkyList {
-            refreshStdJsonDataSource(sDsId: id, url: "spolkyList.json",
-                                     testFile: "/test_files/spolkyList");
+            refreshStdJsonDataSource(sDsId: id, url: "spolkyList.json");
             return;
         }
         else if id == CRxDataSourceManager.dsCooltour {
-            refreshStdJsonDataSource(sDsId: id, url: "p12kultpamatky.json",
-                                     testFile: "/test_files/p12kultpamatky");
+            refreshStdJsonDataSource(sDsId: id, url: "p12kultpamatky.json");
             return;
         }
         else if id == CRxDataSourceManager.dsWaste {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_waste.json", testFile: nil);
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_waste.json");
             /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
                 ds.loadFromJSON(file: path);
                 refreshWasteDataSource();
@@ -438,13 +485,11 @@ class CRxDataSourceManager : NSObject {
             }*/
         }
         else if id == CRxDataSourceManager.dsSosContacts {
-            refreshStdJsonDataSource(sDsId: id, url: "sos.json",
-                                     testFile: "/test_files/sos");
+            refreshStdJsonDataSource(sDsId: id, url: "sos.json");
             return;
         }
         else if id == CRxDataSourceManager.dsShops {
-            refreshStdJsonDataSource(sDsId: id, url: "p12shops.json",
-                                     testFile: "/test_files/p12shops");
+            refreshStdJsonDataSource(sDsId: id, url: "p12shops.json");
             return;
         }
     }
@@ -460,7 +505,7 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshStdJsonDataSource(sDsId: String, url: String, testFile: String?) {
+    func refreshStdJsonDataSource(sDsId: String, url: String) {
         guard let aDS = self.m_dictDataSources[sDsId]
             else { return }
         
@@ -473,7 +518,7 @@ class CRxDataSourceManager : NSObject {
                 urlDownload = URL(string: "https://dvanactka.info/own/p12/" + url);
             }
         }
-        else if let testFile = testFile {
+        else if let testFile = aDS.m_sTestJsonFile {
             urlDownload = Bundle.main.url(forResource: testFile, withExtension: "json");
         }
         else {

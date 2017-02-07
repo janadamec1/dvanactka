@@ -48,6 +48,7 @@ class CRxDataSource {
     String m_sIcon;
     int m_iBackgroundColor;
     int m_nRefreshFreqHours = 18;   // refresh after 18 hours
+    String m_sTestJsonFile = null;  // offline data file
     String m_sLastItemShown = "";   // hash of the last record user displayed (to count unread news, etc)
     Date m_dateLastRefreshed = null;
     boolean m_bIsBeingRefreshed = false;
@@ -73,9 +74,18 @@ class CRxDataSource {
 
     //--------------------------------------------------------------------------
     void loadFromJSON(File file) {
+        try {
+            loadFromJSONStream(new FileInputStream(file));
+        }
+        catch(Exception e) {
+            Log.e("loadFromJSON", "JSON opening failed: " + e.getMessage());
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    void loadFromJSONStream(InputStream inputStream) {
         String jsonData = "";
         try {
-            InputStream inputStream = new FileInputStream(file);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String receiveString = "";
@@ -89,7 +99,7 @@ class CRxDataSource {
             jsonData = stringBuilder.toString();
         }
         catch(Exception e) {
-            Log.e("loadFromJSON", "JSON opening failed: " + e.getMessage()); return;
+            Log.e("loadFromJSONStream", "JSON opening failed: " + e.getMessage()); return;
         }
         loadFromJSONString(jsonData);
     }
@@ -275,7 +285,7 @@ class CRxDataSourceManager {
         m_dictDataSources.put(CRxDataSourceManager.dsWork, new CRxDataSource(CRxDataSourceManager.dsWork, res.getString(R.string.work), "ds_work", CRxDataSource.DATATYPE_places, 0x0ab2b2));
         m_dictDataSources.put(CRxDataSourceManager.dsTraffic, new CRxDataSource(CRxDataSourceManager.dsTraffic, res.getString(R.string.traffix), "ds_roadblock", CRxDataSource.DATATYPE_places, 0xb11a41));
 
-        // additional parameters (there are no default arguments values in Java)
+        // additional parameters
         CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
         ds.m_bFilterable = true;
 
@@ -287,6 +297,7 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolkyList);
         ds.m_nRefreshFreqHours = 48;
+        ds.m_sTestJsonFile = "/test_files/spolkyList";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsBiografProgram);
         ds.m_nRefreshFreqHours = 48;
@@ -294,9 +305,14 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCooltour);
         ds.m_nRefreshFreqHours = 48;
+        ds.m_sTestJsonFile = "/test_files/p12kultpamatky";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSosContacts);
         ds.m_nRefreshFreqHours = 48;
+        ds.m_sTestJsonFile = "/test_files/sos";
+
+        ds = m_dictDataSources.get(CRxDataSourceManager.dsWaste);
+        ds.m_sTestJsonFile = "/test_files/dyn_waste";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsReportFault);
         ds.m_nRefreshFreqHours = 1000;
@@ -306,6 +322,7 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsShops);
         ds.m_nRefreshFreqHours = 48;
+        ds.m_sTestJsonFile = "/test_files/p12shops";
         ds.m_bFilterAsParentView = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);
@@ -320,7 +337,16 @@ class CRxDataSourceManager {
     //--------------------------------------------------------------------------
     void loadData() {
         for (Map.Entry<String, CRxDataSource> itemIt: m_dictDataSources.entrySet()) {
-            itemIt.getValue().loadFromJSON(fileForDataSource(itemIt.getValue().m_sId));
+            CRxDataSource ds = itemIt.getValue();
+            ds.loadFromJSON(fileForDataSource(ds.m_sId));
+
+            // load test data in case we don't have any previously saved
+            if (ds.m_arrItems.isEmpty() && ds.m_sTestJsonFile != null) {
+                try {
+                    ds.loadFromJSONStream(m_assetMan.open(ds.m_sTestJsonFile.substring(1) + ".json"));
+                }
+                catch (Exception e) { e.printStackTrace(); }
+            }
         }
         loadFavorities();
     }
@@ -471,45 +497,43 @@ class CRxDataSourceManager {
         }
 
         if (id.equals(CRxDataSourceManager.dsRadNews)) {
-            refreshStdJsonDataSource(id, "dyn_radAktual.json", null);
+            refreshStdJsonDataSource(id, "dyn_radAktual.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsRadEvents)) {
-            refreshStdJsonDataSource(id, "dyn_events.php", null);
+            refreshStdJsonDataSource(id, "dyn_events.php");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsRadDeska)) {
-            refreshStdJsonDataSource(id, "dyn_radDeska.json", null);
+            refreshStdJsonDataSource(id, "dyn_radDeska.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsWork)) {
-            refreshStdJsonDataSource(id, "dyn_kdejeprace.json", null);
+            refreshStdJsonDataSource(id, "dyn_kdejeprace.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsSpolky)) {
-            refreshStdJsonDataSource(id, "dyn_spolky.php", null);
+            refreshStdJsonDataSource(id, "dyn_spolky.php");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsBiografProgram)) {
-            refreshStdJsonDataSource(id, "dyn_biograf.json", null);
+            refreshStdJsonDataSource(id, "dyn_biograf.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsTraffic)) {
-            refreshStdJsonDataSource(id, "dyn_doprava.json", null);
+            refreshStdJsonDataSource(id, "dyn_doprava.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsSpolkyList)) {
-            refreshStdJsonDataSource(id, "spolkyList.json",
-                    "/test_files/spolkyList");
+            refreshStdJsonDataSource(id, "spolkyList.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsCooltour)) {
-            refreshStdJsonDataSource(id, "p12kultpamatky.json",
-                    "/test_files/p12kultpamatky");
+            refreshStdJsonDataSource(id, "p12kultpamatky.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsWaste)) {
-            refreshStdJsonDataSource(id, "dyn_waste.json", "/test_files/dyn_waste");
+            refreshStdJsonDataSource(id, "dyn_waste.json");
             return;
 
             /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
@@ -520,13 +544,11 @@ class CRxDataSourceManager {
             }*/
         }
         else if (id.equals(CRxDataSourceManager.dsSosContacts)) {
-            refreshStdJsonDataSource(id, "sos.json",
-                    "/test_files/sos");
+            refreshStdJsonDataSource(id, "sos.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsShops)) {
-            refreshStdJsonDataSource(id, "p12shops.json",
-                    "/test_files/p12shops");
+            refreshStdJsonDataSource(id, "p12shops.json");
             return;
         }
     }
@@ -580,7 +602,7 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void refreshStdJsonDataSource(String sDsId, String url, String testFile) {
+    void refreshStdJsonDataSource(String sDsId, String url) {
 
         final CRxDataSource aDS = m_dictDataSources.get(sDsId);
         if (aDS == null) { return; }
@@ -595,8 +617,8 @@ class CRxDataSourceManager {
                     urlDownload = new URL("https://dvanactka.info/own/p12/" + url);
                 }
             }
-            else if (testFile != null) {
-                urlDownload = new URL("file:///android_asset" + testFile + ".json");
+            else if (aDS.m_sTestJsonFile != null) {
+                urlDownload = new URL("file:///android_asset" + aDS.m_sTestJsonFile + ".json");
             }
             else
                 return;
