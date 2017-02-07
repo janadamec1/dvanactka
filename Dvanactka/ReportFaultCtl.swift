@@ -186,6 +186,8 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         alertController.addAction(actionPhoto);
         alertController.addAction(actionGallery);
         alertController.addAction(actionCancel);
+        alertController.popoverPresentationController?.sourceView = m_btnPhoto;
+        alertController.popoverPresentationController?.sourceRect = m_btnPhoto.bounds;
         present(alertController, animated: true, completion: nil);
     }
 

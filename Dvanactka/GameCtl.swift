@@ -141,8 +141,8 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let nItemsPerRow: CGFloat = 2.0;
-        let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
+        let nViewWidth = min(collectionView.bounds.width, collectionView.bounds.height);
+        let nItemsPerRow: CGFloat = floor(max(2.0, nViewWidth / 250.0));       // at least 2 cols, max size of cell is 250 (for iPad)
         let nSpacing = 8*(nItemsPerRow-1);
         let nMinInsets: CGFloat = 24;
         let nCellWidth = floor((nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
@@ -153,8 +153,8 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         section: Int) -> UIEdgeInsets {
         
         // calculate cell size based on portait
-        let nItemsPerRow: CGFloat = 2.0;
-        let nViewWidth = min(collectionView.frame.width, collectionView.frame.height);
+        let nViewWidth = min(collectionView.bounds.width, collectionView.bounds.height);
+        let nItemsPerRow: CGFloat = floor(max(2.0, nViewWidth / 250.0));       // at least 2 cols, max size of cell is 250 (for iPad)
         let nSpacing = 8*(nItemsPerRow-1);
         let nMinInsets: CGFloat = 24;
         let nCellWidth = floor((nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);

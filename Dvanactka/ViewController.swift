@@ -60,7 +60,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btnInfo);
         
-        //m_arrSources = CRxDataSourceManager.sharedInstance.m_dictDataSources.keys.sorted();
         m_arrSources.append(CRxDataSourceManager.dsRadNews);
         m_arrSources.append(CRxDataSourceManager.dsSpolky);
         m_arrSources.append(CRxDataSourceManager.dsRadDeska);
@@ -77,11 +76,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.sharedInstance.delegate = self;
         
-        /*// colors: (now done in storyboard
-        navigationController?.navigationBar.barTintColor = UIColor(red: 36.0/255.0, green: 40.0/255.0, blue: 121.0/255.0, alpha: 1.0);
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: 180.0/255.0, green: 200.0/255.0, blue: 1.0, alpha: 1.0)]
-        navigationController?.navigationBar.tintColor = .white; // for barButtonItems*/
-        
         // Google Analytics
         if let tracker = GAI.sharedInstance().defaultTracker {
             tracker.set(kGAIScreenName, value: "Home");
@@ -91,30 +85,35 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
 
+    //---------------------------------------------------------------------------
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    //---------------------------------------------------------------------------
     static func dsHasBadge(_ ds: CRxDataSource?) -> Bool {
         return ds != nil && ds!.m_eType == .news;
     }
 
+    //---------------------------------------------------------------------------
     // MARK: UICollectionViewDataSource
-    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerCol", for: indexPath);
         return headerView;
     }
     
+    //---------------------------------------------------------------------------
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1;
     }
     
+    //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return m_arrSources.count;
     }
     
+    //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellDS", for: indexPath) as! CRxDSCell
         
@@ -196,12 +195,13 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return cell
     }
     
+    //---------------------------------------------------------------------------
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let nItemsPerRow: CGFloat = 3.0;
         let nViewWidth = min(collectionView.bounds.width, collectionView.bounds.height);
+        let nItemsPerRow: CGFloat = floor(max(3.0, nViewWidth / 150.0));       // at least 3 cols, max size of cell is 150 (for iPad)
         let nSpacing = 6*(nItemsPerRow-1);
         let nMinInsets: CGFloat = 10;
         let nCellWidth = floor(min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow));
@@ -212,8 +212,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         section: Int) -> UIEdgeInsets {
         
         // calculate cell size based on portait
-        let nItemsPerRow: CGFloat = 3.0;
         let nViewWidth = min(collectionView.bounds.width, collectionView.bounds.height);
+        let nItemsPerRow: CGFloat = floor(max(3.0, nViewWidth / 150.0));       // at least 3 cols, max size of cell is 150 (for iPad)
         let nSpacing = 6*(nItemsPerRow-1);
         let nMinInsets: CGFloat = 10;
         let nCellWidth = floor(min(180, (nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow));
