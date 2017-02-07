@@ -12,7 +12,7 @@ import MapKit
 private let g_bUseTestFiles = false;
 
 protocol CRxDataSourceRefreshDelegate {
-    func dataSourceRefreshEnded(_ error: String?);
+    func dataSourceRefreshEnded(dsId: String, error: String?);
 }
 
 class CRxDataSource : NSObject {
@@ -386,7 +386,7 @@ class CRxDataSourceManager : NSObject {
         // check the last refresh date
         if !force && ds.m_dateLastRefreshed != nil  &&
             Date().timeIntervalSince(ds.m_dateLastRefreshed!) < Double(ds.m_nRefreshFreqHours*60*60) {
-            ds.delegate?.dataSourceRefreshEnded(nil);
+            ds.delegate?.dataSourceRefreshEnded(dsId: id, error: nil);
             return;
         }
         
@@ -480,7 +480,7 @@ class CRxDataSourceManager : NSObject {
             return;
         }
         
-        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
+        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: "Cannot resolve URL"); return; }
         
         aDS.m_bIsBeingRefreshed = true;
         showNetworkIndicator();
@@ -493,7 +493,7 @@ class CRxDataSourceManager : NSObject {
                     }
                     DispatchQueue.main.async() { () -> Void in
                         aDS.m_bIsBeingRefreshed = false;
-                        aDS.delegate?.dataSourceRefreshEnded("Error when downloading data");
+                        aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: "Error when downloading data");
                         self.hideNetworkIndicator();
                     }
                     return;
@@ -508,8 +508,8 @@ class CRxDataSourceManager : NSObject {
                 aDS.m_bIsBeingRefreshed = false;
                 self.save(dataSource: aDS);
                 self.hideNetworkIndicator();
-                aDS.delegate?.dataSourceRefreshEnded(nil);
-                self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
+                aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: nil);
+                self.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: nil);     // to refresh unread count badge
                 if (aDS.m_sId == CRxDataSourceManager.dsWaste) {
                     self.resetAllNotifications();
                 }

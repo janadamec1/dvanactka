@@ -95,6 +95,10 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    static func dsHasBadge(_ ds: CRxDataSource?) -> Bool {
+        return ds != nil && ds!.m_eType == .news;
+    }
 
     // MARK: UICollectionViewDataSource
     
@@ -142,7 +146,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.m_imgIcon.layer.shadowRadius = 4;
             cell.m_imgIcon.clipsToBounds = false;*/
             
-            if ds.m_eType != .news {
+            if !ViewController.dsHasBadge(ds) {
                 if let lbBadge = cell.m_lbBadge {
                     lbBadge.isHidden = true;
                 }
@@ -276,9 +280,12 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     //---------------------------------------------------------------------------
-    func dataSourceRefreshEnded(_ error: String?) {
+    func dataSourceRefreshEnded(dsId: String, error: String?) {
         if error == nil {
-            self.collectionView?.reloadData();  // update badges
+            let aDS = CRxDataSourceManager.sharedInstance.m_dictDataSources[dsId];
+            if ViewController.dsHasBadge(aDS) {
+                self.collectionView?.reloadData();  // update badges
+            }
             CRxGame.sharedInstance.reinit();
         }
     }

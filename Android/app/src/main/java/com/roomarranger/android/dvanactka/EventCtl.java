@@ -1068,7 +1068,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
     //---------------------------------------------------------------------------
     @Override
-    public void dataSourceRefreshEnded(String error) { // protocol CRxDataSourceRefreshDelegate
+    public void dataSourceRefreshEnded(String sDsId, String error) { // protocol CRxDataSourceRefreshDelegate
         m_aDataSource.delegate = null;
 
         if (error != null) {

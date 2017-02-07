@@ -38,7 +38,7 @@ import java.util.Set;
  */
 
 interface CRxDataSourceRefreshDelegate {
-    void dataSourceRefreshEnded(String error);
+    void dataSourceRefreshEnded(String sDsId, String error);
 }
 
 class CRxDataSource {
@@ -466,7 +466,7 @@ class CRxDataSourceManager {
         if (!force && ds.m_dateLastRefreshed != null  &&
                 (now.getTime() - ds.m_dateLastRefreshed.getTime())/1000 < ds.m_nRefreshFreqHours*60*60) {
             if (ds.delegate != null)
-                ds.delegate.dataSourceRefreshEnded(null);
+                ds.delegate.dataSourceRefreshEnded(id, null);
             return;
         }
 
@@ -605,7 +605,7 @@ class CRxDataSourceManager {
             Log.e("JSON", "refreshStdJsonDataSource exception: " + e.getMessage());
         }
         if (urlDownload == null) {
-            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded("Cannot resolve URL");
+            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, "Cannot resolve URL");
             return;
         }
 
@@ -624,7 +624,7 @@ class CRxDataSourceManager {
                         @Override
                         public void run() {
                             aDS.m_bIsBeingRefreshed = false;
-                            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded("Error when downloading data");
+                            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, "Error when downloading data");
                             hideNetworkIndicator();
                         }
                     });
@@ -641,8 +641,8 @@ class CRxDataSourceManager {
                         aDS.m_bIsBeingRefreshed = false;
                         save(aDS);
                         hideNetworkIndicator();
-                        if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(null);
-                        if (delegate != null) delegate.dataSourceRefreshEnded(null);     // to refresh unread count badge
+                        if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, null);
+                        if (delegate != null) delegate.dataSourceRefreshEnded(aDS.m_sId, null);     // to refresh unread count badge
 
                         if (aDS.m_sId.equals(CRxDataSourceManager.dsWaste))
                             MainActivity.resetAllNotifications();

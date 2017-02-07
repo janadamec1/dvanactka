@@ -129,6 +129,11 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         });
     }
 
+    //---------------------------------------------------------------------------
+    static boolean dsHasBadge(CRxDataSource ds) {
+        return ds != null && ds.m_eType == CRxDataSource.DATATYPE_news;
+    }
+
     static class CollectionViewHolder {
         ImageView imgIcon;
         TextView lbName;
@@ -174,13 +179,13 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 else
                     cell.lbName.setText(ds.m_sTitle);
 
-                if (ds.m_eType != CRxDataSource.DATATYPE_news) {
-                    cell.lbBadge.setVisibility(View.INVISIBLE);
-                }
-                else {
+                if (MainActivity.dsHasBadge(ds)) {
                     int iUnread = ds.unreadItemsCount();
                     cell.lbBadge.setText(String.valueOf(iUnread));
                     cell.lbBadge.setVisibility(iUnread > 0 ? View.VISIBLE : View.INVISIBLE);
+                }
+                else {
+                    cell.lbBadge.setVisibility(View.INVISIBLE);
                 }
                 int iCl = ds.m_iBackgroundColor;
                 convertView.setBackgroundColor(Color.rgb((iCl&0xFF0000)>>16, (iCl&0xFF00)>>8, iCl&0xFF));
@@ -218,9 +223,12 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     }
 
     //---------------------------------------------------------------------------
-    public void dataSourceRefreshEnded(String error) {
+    @Override
+    public void dataSourceRefreshEnded(String sDsId, String error) {
         if (error == null) {
-            if (m_adapter != null)
+            // TODO: refresh only one cell
+            CRxDataSource ds = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDsId);
+            if (MainActivity.dsHasBadge(ds) && m_adapter != null)
                 m_adapter.notifyDataSetChanged();  // update badges
             CRxGame.sharedInstance.reinit();
         }

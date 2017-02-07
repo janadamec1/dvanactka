@@ -100,7 +100,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 // init location tracking
                 arrBtnItems.append(UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap)));
 
-                m_tableView.allowsSelection = true;
                 if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                     m_locManager.startUpdatingLocation();
                 }
@@ -182,6 +181,8 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         
         m_orderedItems.removeAll();
         m_orderedCategories.removeAll();
+        
+        m_tableView.allowsSelection = (ds.m_eType == .places || isAskForFilterActive());
         
         if isAskForFilterActive() {
             var arrFilter = [String]();
@@ -350,7 +351,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
     
     //---------------------------------------------------------------------------
-    func dataSourceRefreshEnded(_ error: String?) { // protocol CRxDataSourceRefreshDelegate
+    func dataSourceRefreshEnded(dsId: String, error: String?) { // protocol CRxDataSourceRefreshDelegate
         if let ds = m_aDataSource {
             ds.delegate = nil;
         }
@@ -930,6 +931,11 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         }
         sortRecords();
         m_tableView.reloadData();
+    }
+    
+    //--------------------------------------------------------------------------
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        m_searchBar.resignFirstResponder(); // hide keyboard after Search button pressed
     }
     
     //--------------------------------------------------------------------------

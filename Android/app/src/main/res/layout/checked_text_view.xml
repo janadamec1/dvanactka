@@ -5,7 +5,7 @@
                  android:layout_height="fill_parent"
                  android:gravity="center_vertical"
                  android:textSize="18sp"
-                 android:paddingTop="8sp"
-                 android:paddingBottom="8sp"
+                 android:paddingTop="10sp"
+                 android:paddingBottom="10sp"
                  android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     />
