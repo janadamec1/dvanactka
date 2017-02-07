@@ -228,7 +228,9 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 m_btnNavigate.isHidden = true;
             }
             
-            if rec.m_aLocation != nil && CRxGame.isCategoryCheckInAble(rec.m_eCategory) {
+            if rec.m_aLocation != nil && CRxGame.isCategoryCheckInAble(rec.m_eCategory)
+                && CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                
                 if CRxGame.sharedInstance.playerWas(at: rec) {
                     m_eGameStatus = .visited;
                     m_lbGameDist.text = NSLocalizedString("You were already here", comment: "");
@@ -245,9 +247,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                     
                     m_locManager.delegate = self;
                     m_locManager.distanceFilter = 4;
-                    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-                        m_locManager.startUpdatingLocation();
-                    }
+                    m_locManager.startUpdatingLocation();
                 }
             }
             else {

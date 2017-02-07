@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 //---------------------------------------------------------------------------
 class CRxGameCell : UICollectionViewCell {
@@ -101,7 +102,13 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         }
         if kind == UICollectionElementKindSectionFooter {
             let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footerGame", for: indexPath) as! CRxGameFooter;
-            footerView.m_lbNote.text = NSLocalizedString("Game progress is lost when uninstalling the app.", comment: "");
+            
+            if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+                footerView.m_lbNote.text = NSLocalizedString("In order to play the game, please go to Settings and give the app the permission to access your location.", comment: "");
+            }
+            else {
+                footerView.m_lbNote.text = NSLocalizedString("Game progress is lost when uninstalling the app.", comment: "");
+            }
             return footerView;
         }
         
