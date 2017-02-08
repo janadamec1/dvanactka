@@ -5,18 +5,22 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Geocoder;
 import android.location.Location;
+import android.Manifest;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 import android.view.Menu;
@@ -41,9 +45,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Locale;
 
 public class ReportFaultCtl extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
+    static final int ACT_RESULT_TAKE_PHOTO = 0;
+    static final int ACT_RESULT_PICK_PHOTO = 1;
+    static final int ACT_RESULT_REFINE_LOCATION = 2;
 
     ImageButton m_btnPhoto;
     EditText m_edDescription;
@@ -100,11 +109,20 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                 builder.setPositiveButton(R.string.take_a_photo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        m_fileFromCamera = new File(Environment.getExternalStorageDirectory(), "foto.jpg");
-                        takePicture.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(m_fileFromCamera));
-                        startActivityForResult(takePicture, 0);
-                        // it crashes then targetSdkVersion set to 24 http://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
+                        Intent intentTakePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        m_fileFromCamera = new File(getCacheDir(), "foto.jpg");
+                        Uri uriToStore = FileProvider.getUriForFile(ReportFaultCtl.this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);
+
+                        // need to set the permission to all possible camera apps
+                        List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(intentTakePicture, PackageManager.MATCH_DEFAULT_ONLY);
+                        for (ResolveInfo resolveInfo : resInfoList) {
+                            String sPackageName = resolveInfo.activityInfo.packageName;
+                            grantUriPermission(sPackageName, uriToStore, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        }
+
+                        intentTakePicture.putExtra(MediaStore.EXTRA_OUTPUT, uriToStore);
+                        intentTakePicture.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        startActivityForResult(intentTakePicture, ACT_RESULT_TAKE_PHOTO);
                     }
                 });
                 builder.setNeutralButton(R.string.from_gallery, new DialogInterface.OnClickListener() {
@@ -112,7 +130,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(pickPhoto, 1);
+                        startActivityForResult(pickPhoto, ACT_RESULT_PICK_PHOTO);
                     }
                 });
                 builder.create().show();
@@ -129,7 +147,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                     intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_location.getLatitude());
                     intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_location.getLongitude());
                 }
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, ACT_RESULT_REFINE_LOCATION);
             }
         });
 
@@ -194,7 +212,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
         //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         //if (servicesConnected())
-        {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location aLastLocation = LocationServices.FusedLocationApi.getLastLocation(m_GoogleApiClient);
             if (aLastLocation != null)
                 onLocationChanged(aLastLocation);
@@ -203,10 +221,13 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
     }
 
     protected void startLocationUpdates() {
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        catch(Exception e) {e.printStackTrace();}
     }
 
     protected void stopLocationUpdates() {
@@ -302,23 +323,29 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         intent.putExtra(Intent.EXTRA_TEXT, sMessageBody);
 
         // add image
-        File pic = m_fileFromCamera;
-        if (pic == null) {
+        Uri uriAttach = null;
+        if (m_fileFromCamera != null) {
+            //uriAttach = Uri.fromFile(m_fileFromCamera);
+            uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);   // this way we don't need permission to write_external_storage
+        }
+        else {
             try {
-                File root = Environment.getExternalStorageDirectory();
-                if (root.canWrite()) {
-                    pic = new File(root, "foto.jpg");
-                    FileOutputStream out = new FileOutputStream(pic);
-                    ((BitmapDrawable) m_btnPhoto.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 85, out);
-                    out.flush();
-                    out.close();
-                }
+                File pic = new File(getCacheDir(), "foto.jpg");
+                FileOutputStream out = new FileOutputStream(pic);
+                ((BitmapDrawable) m_btnPhoto.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 85, out);
+                out.flush();
+                out.close();
+
+                uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", pic);
             } catch (IOException e) {
                 Log.e("BROKEN", "Could not write file " + e.getMessage());
             }
         }
-        intent.setType("application/image");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pic));
+        if (uriAttach != null) {
+            intent.setType("application/image");
+            intent.putExtra(Intent.EXTRA_STREAM, uriAttach);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
 
         try {
             startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
@@ -366,16 +393,25 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
     //---------------------------------------------------------------------------
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        Bundle extras = null;
+        if (imageReturnedIntent != null)
+            extras = imageReturnedIntent.getExtras();
+
         switch(requestCode) {
-            case 0:     // ACTION_IMAGE_CAPTURE
+            case ACT_RESULT_TAKE_PHOTO: {
+                if (m_fileFromCamera != null) {
+                    Uri uriToStore = FileProvider.getUriForFile(ReportFaultCtl.this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);
+                    revokeUriPermission(uriToStore, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
                 if (resultCode == RESULT_OK) {
-                    Bundle extras = imageReturnedIntent.getExtras();
                     if (extras != null && extras.get("data") != null) {
                         Bitmap aBitmap = (Bitmap) extras.get("data");   // this gets only a thumbnail!
                         //Uri selectedImage = imageReturnedIntent.getData();
                         m_btnPhoto.setAdjustViewBounds(true);
                         m_btnPhoto.setImageBitmap(aBitmap);
                         m_bImageSelected = true;
+                        m_fileFromCamera = null;
                     }
                     else if (m_fileFromCamera != null) {
                         m_btnPhoto.setAdjustViewBounds(true);
@@ -383,17 +419,18 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                         try {
                             m_btnPhoto.setImageBitmap(handleSamplingAndRotationBitmap(this, uriFile));
                             m_fileFromCamera = null;
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             // fallback, do without rotation
                             m_btnPhoto.setImageURI(uriFile);
                         }
                         m_bImageSelected = true;
                     }
                 }
-                break;
+            }
+            break;
 
-            case 1:     // ACTION_PICK
-                if (resultCode == RESULT_OK) {
+            case ACT_RESULT_PICK_PHOTO:
+                if (resultCode == RESULT_OK && imageReturnedIntent != null) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     m_btnPhoto.setAdjustViewBounds(true);
                     m_btnPhoto.setImageURI(selectedImage);
@@ -402,9 +439,8 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                 }
                 break;
 
-            case 2: // refine location
-                if (resultCode == RESULT_OK) {
-                    Bundle extras = imageReturnedIntent.getExtras();
+            case ACT_RESULT_REFINE_LOCATION:
+                if (resultCode == RESULT_OK && extras != null) {
                     double dLat = extras.getDouble(MainActivity.EXTRA_USER_LOCATION_LAT, 0.0);
                     double dLong = extras.getDouble(MainActivity.EXTRA_USER_LOCATION_LONG, 0.0);
                     if (dLat != 0.0 && dLong != 0.0) {

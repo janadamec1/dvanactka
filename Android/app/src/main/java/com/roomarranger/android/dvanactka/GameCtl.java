@@ -2,9 +2,12 @@ package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,11 @@ public class GameCtl extends Activity {
         progress.setMax(aPlayerStats.pointsNextLevel-aPlayerStats.pointsPrevLevel);
         progress.setProgress(aPlayerStats.points-aPlayerStats.pointsPrevLevel);
         lbXp.setText(String.format(Locale.US, "%d / %d XP", aPlayerStats.points, aPlayerStats.pointsNextLevel));
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            TextView lbNote = (TextView)findViewById(R.id.note);
+            lbNote.setText(R.string.game_permission);
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             progress.getProgressDrawable().setColorFilter(

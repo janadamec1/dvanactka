@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.location.Location;
+import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -272,7 +274,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             m_btnNavigate.setVisibility(View.GONE);
         }
 
-        if (rec.m_aLocation != null && CRxGame.isCategoryCheckInAble(rec.m_eCategory)) {
+        if (rec.m_aLocation != null && CRxGame.isCategoryCheckInAble(rec.m_eCategory)
+                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             m_lbGame.setText(getString(R.string.game) + ":");
             if (CRxGame.sharedInstance.playerWas(rec)) {
                 m_eGameStatus = EGameStatus.visited;
@@ -427,6 +430,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         }
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -438,6 +442,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         return super.onOptionsItemSelected(item);
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public void onMapReady(GoogleMap googleMap) {
         m_map = googleMap;
@@ -459,10 +464,14 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coord, 15);
         m_map.moveCamera(cameraUpdate);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            m_map.setMyLocationEnabled(true);
+
         UiSettings settings = m_map.getUiSettings();
         settings.setZoomControlsEnabled(true);
     }
 
+    //---------------------------------------------------------------------------
     @Override
     protected void onStart()
     {
@@ -501,7 +510,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
         //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         //if (servicesConnected())
-        {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location aLastLocation = LocationServices.FusedLocationApi.getLastLocation(m_GoogleApiClient);
             if (aLastLocation != null)
                 onLocationChanged(aLastLocation);
@@ -510,10 +519,13 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     }
 
     protected void startLocationUpdates() {
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        catch(Exception e) {e.printStackTrace();}
     }
 
     protected void stopLocationUpdates() {

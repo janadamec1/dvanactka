@@ -2,8 +2,11 @@ package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.Manifest;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 
@@ -58,6 +61,7 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
         });
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -69,6 +73,7 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
         return super.onOptionsItemSelected(item);
     }
 
+    //---------------------------------------------------------------------------
     @Override
     public void onMapReady(GoogleMap googleMap) {
         m_map = googleMap;
@@ -92,7 +97,8 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
             m_map.moveCamera(cameraUpdate);
         }
 
-        m_map.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            m_map.setMyLocationEnabled(true);
         UiSettings settings = m_map.getUiSettings();
         settings.setZoomControlsEnabled(true);
 

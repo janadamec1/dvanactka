@@ -112,4 +112,6 @@
     <string name="satellite">Satelitní</string>
     <string name="standard">Standardní</string>
     <string name="search">Hledat</string>
+    <string name="game_permission">Abyste mohli hrát hru, přejděte prosím do Nastavení a dejte aplikaci přístup k vaší poloze.</string>
+    <string name="permission_explain_location">Aplikace potřebuje povolení k přístupu k vaší poloze, aby mohla třídit objekty podle vzdálenosti od vás a zobrazit vás na mapě.</string>
 </resources>

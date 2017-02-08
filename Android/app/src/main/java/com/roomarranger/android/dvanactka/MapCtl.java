@@ -1,10 +1,13 @@
 package com.roomarranger.android.dvanactka;
 
+import android.*;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -167,7 +170,9 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
                 catch (Exception e) { e.printStackTrace(); }
             }
         }
-        m_map.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            m_map.setMyLocationEnabled(true);
+
         UiSettings settings = m_map.getUiSettings();
         settings.setZoomControlsEnabled(true);
 

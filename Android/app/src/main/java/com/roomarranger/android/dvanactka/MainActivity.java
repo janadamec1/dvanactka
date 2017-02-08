@@ -2,13 +2,19 @@ package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.Manifest;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate
+public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate, ActivityCompat.OnRequestPermissionsResultCallback
 {
     ArrayList<String> m_arrSources = new ArrayList<String>();    // data source ids in order they should appear in the collection
     static boolean s_bInited = false;
@@ -45,10 +51,13 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     public static final String EXTRA_USER_LOCATION_LAT = "com.roomarranger.dvanactka.USER_LOCATION_LAT";
     public static final String EXTRA_USER_LOCATION_LONG = "com.roomarranger.dvanactka.USER_LOCATION_LONG";
 
+    static final int MY_PERMISSION_REQUEST_LOCATION = 139;
+    boolean m_bAskPermissionLocation = true;
+
     static void verifyDataInited(Context ctx) {
         // from AppDelegate.swift
-        if (s_bInited) return;
         s_appContext = ctx.getApplicationContext();
+        if (s_bInited) return;
         CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
         dsm.defineDatasources(ctx);
         dsm.loadData();
@@ -134,6 +143,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         return ds != null && ds.m_eType == CRxDataSource.DATATYPE_news;
     }
 
+    //---------------------------------------------------------------------------
     static class CollectionViewHolder {
         ImageView imgIcon;
         TextView lbName;
@@ -201,7 +211,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 
         // this is called whenever the app is brought to foreground, but also when switching activities
         Date now = new Date();
-        if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10*60*1000) {  // 10 minutes from last global refresh
+        if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10 * 60 * 1000) {  // 10 minutes from last global refresh
             s_dateLastRefreshed = now;
             CRxDataSourceManager.sharedInstance().refreshAllDataSources(false);
             CRxGame.sharedInstance.reinit();
@@ -212,6 +222,39 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 aTracker.setScreenName("Home");
                 aTracker.send(new HitBuilders.ScreenViewBuilder().build());
             }
+
+            // Location permission
+            if (m_bAskPermissionLocation && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.permission_explain_location);
+                    builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialogInterface) {
+                            m_bAskPermissionLocation = false;
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    MY_PERMISSION_REQUEST_LOCATION);
+                        }
+                    });
+                    builder.create().show();
+                }
+                else {
+                    // No explanation needed, we can request the permission.
+                    m_bAskPermissionLocation = false;
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                            MY_PERMISSION_REQUEST_LOCATION);
+                }
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------
+    // ActivityCompat.OnRequestPermissionsResultCallback
+    @Override
+    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == MY_PERMISSION_REQUEST_LOCATION) {
+            m_bAskPermissionLocation = (permissions.length == 0);   // dialog cancelled, ask again later
         }
     }
 

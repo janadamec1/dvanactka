@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -980,7 +983,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
         //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         //if (servicesConnected())
-        {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location aLastLocation = LocationServices.FusedLocationApi.getLastLocation(m_GoogleApiClient);
             if (aLastLocation != null)
             {
@@ -993,11 +996,12 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     protected void startLocationUpdates() {
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
-        }
-        catch(Exception e){
-            e.printStackTrace();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                LocationServices.FusedLocationApi.requestLocationUpdates(m_GoogleApiClient, m_LocationRequest, this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
