@@ -292,9 +292,12 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     //---------------------------------------------------------------------------
     func onBtnInfo() {
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let appInfoCrl = storyboard.instantiateViewController(withIdentifier: "appInfoCtlNav")
         present(appInfoCrl, animated: true, completion: nil);
+        */
+        performSegue(withIdentifier: "segueAbout", sender: self);
     }
 }
 

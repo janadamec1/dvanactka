@@ -23,6 +23,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name"
             android:launchMode="singleTop">
@@ -35,6 +37,8 @@
         <activity
             android:name=".EventCtl"
             android:launchMode="standard"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -44,6 +48,7 @@
             android:name=".GameCtl"
             android:label="@string/game"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -53,6 +58,7 @@
             android:name=".MapCtl"
             android:label="@string/map"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
             android:parentActivityName=".EventCtl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -61,6 +67,8 @@
         <activity
             android:name=".PlaceDetailCtl"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".EventCtl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -70,6 +78,7 @@
             android:name=".FilterCtl"
             android:label="@string/filter"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
             android:parentActivityName=".EventCtl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -79,20 +88,27 @@
             android:name=".AppInfoCtl"
             android:label="@string/about_the_app"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.roomarranger.android.dvanactka.MainActivity"/>
         </activity>
-        <activity android:name=".ReportFaultCtl"
+        <activity
+            android:name=".ReportFaultCtl"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.roomarranger.android.dvanactka.MainActivity"/>
         </activity>
-        <activity android:name=".RefineLocCtl"
+        <activity
+            android:name=".RefineLocCtl"
             android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".ReportFaultCtl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
