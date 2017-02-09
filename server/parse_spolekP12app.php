@@ -86,12 +86,20 @@ foreach ($nodes as $i => $node) {
 
 		$nodeDate = firstItem($xpath->query("dtstart", $node));
 		if ($nodeDate != NULL) {
-			$date = date_create_from_format("Ymd\THis", $nodeDate->nodeValue);
+			$sDateText = $nodeDate->nodeValue;
+			if (strpos($sDateText, "T") !== FALSE)
+				$date = date_create_from_format("Ymd\THis", $sDateText);
+			else
+				$date = date_create_from_format("!Ymd", $sDateText);
 			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
 		$nodeDateTo = firstItem($xpath->query("dtend", $node));
 		if ($nodeDateTo != NULL) {
-			$date = date_create_from_format("Ymd\THis", $nodeDateTo->nodeValue);
+			$sDateText = $nodeDateTo->nodeValue;
+			if (strpos($sDateText, "T") !== FALSE)
+				$date = date_create_from_format("Ymd\THis", $sDateText);
+			else
+				$date = date_create_from_format("!Ymd", $sDateText);
 			$aNewRecord["dateTo"] = date_format($date, "Y-m-d\TH:i");
 		}
 		

@@ -23,7 +23,7 @@
               android:paddingLeft="0dp"
               android:paddingRight="10dp"
               android:paddingBottom="10dp"
-              android:columnWidth="98sp"
+              android:columnWidth="@dimen/main_columnWidth"
               android:numColumns="auto_fit"
               android:verticalSpacing="8dp"
               android:horizontalSpacing="8dp"
