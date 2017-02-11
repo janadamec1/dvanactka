@@ -1,14 +1,5 @@
 <?php
-
-function firstItem($arrNodes) {
-	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
-	return $arrNodes->item(0);
-}
-
-/* Set HTTP response header to plain text for debugging output */
-header("Content-type: text/plain; charset=utf-8");
-/* Use internal libxml errors -- turn on in production, off for debugging */
-libxml_use_internal_errors(true);
+include_once "parse_common.php";
 
 $query = "https://www.kdejeprace.cz/api/search?fulltext=&max-vzdalenost=3&jazyky-omez=0&jazyky=cs.2&zmeneno-po=&zmeneno-po-cas=&zs=49.99041501874329&zd=14.43557783961296&key=qNO79NkpBr&limit=50";
 

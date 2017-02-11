@@ -1,14 +1,5 @@
 <?php
-
-function firstItem($arrNodes) {
-	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
-	return $arrNodes->item(0);
-}
-
-/* Set HTTP response header to plain text for debugging output */
-header("Content-type: text/plain");
-/* Use internal libxml errors -- turn on in production, off for debugging */
-libxml_use_internal_errors(true);
+include_once "parse_common.php";
 
 $sKlubSlunicko = "Klub Slun";
 $sTypAkce = "Typ akce";
@@ -33,26 +24,35 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 		
+		$sFilter = "praha12.cz";
 		$nodeDate = firstItem($xpath->query("div[1]", $node));
 		if ($nodeDate != NULL) {
 			// strip address, is after comma
 			$sDateFromTo = $nodeDate->nodeValue;
 			$iCommaPos = strpos($sDateFromTo, ",");
 			if ($iCommaPos !== FALSE) {
-				$address = trim(substr($sDateFromTo, $iCommaPos+1));
+				$sAddress = trim(substr($sDateFromTo, $iCommaPos+1));
 				$sDateFromTo = substr($sDateFromTo, 0, $iCommaPos);
 				
-				if (strpos($address, "Pertoldova") !== FALSE)
-					$address = "KC \"12\" @ Pertoldova 10, Praha 12";
-				else if (strpos($address, "Jordana Jovkova") !== FALSE)
-					$address = "KC \"12\" @ Jordana Jovkova 20, Praha 12";
-				else if (strpos($address, "KC Novodv") !== FALSE)
-					$address = "KC Novodvorská @ Novodvorská 151, Praha 4";
-				else if (strpos($address, "Husova knihovna") !== FALSE)
-					$address = "Husova knihovna @ Komořanská 12, Praha 12";
-				else if (strpos($address, "biograf") !== FALSE)
-					$address = "Modřanský biograf @ U Kina 1, Praha 12";
-				$aNewRecord["address"] = $address;
+				if (strpos($sAddress, "Pertoldova") !== FALSE) {
+					$sAddress = "KC \"12\" @ Pertoldova 10, Praha 12";
+					$sFilter = "KC \"12\" pobočka Pertoldova";
+				}
+				else if (strpos($sAddress, "Jordana Jovkova") !== FALSE) {
+					$sAddress = "KC \"12\" @ Jordana Jovkova 20, Praha 12";
+					$sFilter = "KC \"12\" pobočka Jordana Jovkova";
+				}
+				else if (strpos($sAddress, "KC Novodv") !== FALSE) {
+					$sAddress = "KC Novodvorská @ Novodvorská 151, Praha 4";
+					$sFilter = "KC Novodvorská";
+				}
+				else if (strpos($sAddress, "Husova knihovna") !== FALSE) {
+					$sAddress = "Husova knihovna @ Komořanská 12, Praha 12";
+					$sFilter = "Husova knihovna";
+				}
+				else if (strpos($sAddress, "biograf") !== FALSE)
+					$sAddress = "Modřanský biograf @ U Kina 1, Praha 12";
+				$aNewRecord["address"] = $sAddress;
 			}
 			// split time from - to
 			$arrFromTo = explode("-", $sDateFromTo);
@@ -113,7 +113,7 @@ foreach ($nodes as $i => $node) {
 				}
 			}
 		}
-		$aNewRecord["filter"] = "praha12.cz";
+		$aNewRecord["filter"] = $sFilter;
 		if (array_key_exists("date", $aNewRecord))
 	    	array_push($arrItems, $aNewRecord);
     }
@@ -133,5 +133,5 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "done.";
+echo "radEvents done, " . count($arrItems) . " items\n";
 ?>

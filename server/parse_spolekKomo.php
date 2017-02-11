@@ -1,14 +1,5 @@
 <?php
-
-function firstItem($arrNodes) {
-	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
-	return $arrNodes->item(0);
-}
-
-/* Set HTTP response header to plain text for debugging output */
-header("Content-type: text/plain; charset=utf-8");
-/* Use internal libxml errors -- turn on in production, off for debugging */
-libxml_use_internal_errors(true);
+include_once "parse_common.php";
 
 $arrItems = array();
 $dom = new DomDocument;
@@ -65,5 +56,5 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "done.";
+echo "Komo done, " . count($arrItems) . " items\n";
 ?>

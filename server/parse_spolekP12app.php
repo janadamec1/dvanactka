@@ -1,13 +1,5 @@
 <?php
-
-function firstItem($arrNodes) {
-	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
-	return $arrNodes->item(0);
-}
-
-header("Content-type: text/plain; charset=utf-8");
-/* Use internal libxml errors -- turn on in production, off for debugging */
-libxml_use_internal_errors(true);
+include_once "parse_common.php";
 
 $arrItems = array();
 $dom = new DomDocument;
@@ -65,7 +57,7 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "done RSS.";
+echo "RSS done, " . count($arrItems) . " items\n";
 
 //-------------------------------------------
 
@@ -116,6 +108,7 @@ foreach ($nodes as $i => $node) {
 			}
 		}
 		
+		$sFilter = "Dvanáctka.info";
 		$nodeContact = firstItem($xpath->query("contact", $node));
 		if ($nodeContact != NULL) {
 			$arrContact = explode(";", $nodeContact->nodeValue);
@@ -127,9 +120,11 @@ foreach ($nodes as $i => $node) {
 					$aNewRecord["infoLink"] = $contact;
 				else if (is_numeric(str_replace(" ", "", $contact)))
 					$aNewRecord["phone"] = $contact;
+				else if ($j === 0)
+					$sFilter = $contact;
 			}
 		}
-		$aNewRecord["filter"] = "Dvanáctka.info";
+		$aNewRecord["filter"] = $sFilter;
 
 		if (array_key_exists("date", $aNewRecord))
 			array_push($arrItems, $aNewRecord);
@@ -148,6 +143,5 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "done events.";
-
+echo "Events done, " . count($arrItems) . " items\n";
 ?>
