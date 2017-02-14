@@ -164,6 +164,12 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     }
     
     //---------------------------------------------------------------------------
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator);
+        self.collectionView?.collectionViewLayout.invalidateLayout();
+    }
+    
+    //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = CRxGame.sharedInstance.m_arrCategories[indexPath.row];
         showToast(message: item.m_sHintMessage);

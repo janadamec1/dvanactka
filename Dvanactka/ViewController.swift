@@ -229,8 +229,9 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     //---------------------------------------------------------------------------
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-        self.collectionView?.collectionViewLayout.invalidateLayout()
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator);
+        self.collectionView?.collectionViewLayout.invalidateLayout();
     }
     
     //---------------------------------------------------------------------------

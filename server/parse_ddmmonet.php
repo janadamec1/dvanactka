@@ -95,7 +95,10 @@ foreach ($nodes as $i => $node) {
 			
 			$nodeText = firstItem($xpath->query("..", $nodeDate));
 			if ($nodeText != NULL) {
-				$aNewRecord["text"] = trim(str_replace($nodeDate->nodeValue, "", $nodeText->nodeValue));	// remove date
+				$sText = trim(str_replace($nodeDate->nodeValue, "", $nodeText->nodeValue));	// remove date
+				if (strpos($sText, "Akce pro uzavřenou") !== FALSE)
+					continue;
+				$aNewRecord["text"] = $sText;
 			}
 		}
 
