@@ -408,6 +408,10 @@ class CRxEventRecord: NSObject {
     static func openWebUrl(_ url: URL, fromCtl: UIViewController?) {
         if let senderViewCtl = fromCtl {
             let safariCtl = SFSafariViewController(url: url);
+            if #available(iOS 10.0, *) {
+                safariCtl.preferredBarTintColor = UIColor(red: 23.0/255.0, green: 37.0/255.0, blue: 96.0/255.0, alpha: 1.0);
+                safariCtl.preferredControlTintColor = UIColor(white: 1.0, alpha: 1.0);
+            }
             senderViewCtl.present(safariCtl, animated: true, completion: nil);
         }
         else {
