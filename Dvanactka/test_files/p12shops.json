@@ -327,6 +327,18 @@
 "filter":"Krejčovství"
 },
 {
+"title":"Krejčovství Heleny Vé",
+"text":"Opravy a úpravy oděvů z běžných materiálů, úpletů, kůže a džínoviny.",
+"locationLat":"50.0094319",
+"locationLong":"14.4531869",
+"address":"Pavlíkova 10\nPraha 12",
+"openingHours":"2: 1100-1500, 3: 1100-1900, 4: 1100-1900",
+"phone":"774 127 822",
+"infoLink":"http:\/\/www.helenyve.cz",
+"category":"remeslnik",
+"filter":"Krejčovství"
+},
+{
 "title":"Fair Laundry",
 "text":"Prádelna a čistírna oděvů",
 "locationLat":"50.0130978",
@@ -465,6 +477,15 @@
 "address":"Krouzova 24\nPraha 12",
 "openingHours":"1: 900-1800, 2: 900-1800, 3: 900-1800, 4: 900-1800, 5: 900-1800, 6: 800-1100",
 "infoLink":"https:\/\/www.kvetinarstvi-erika.wz.cz",
+"category":"obchod",
+"filter":"Květinářství"
+},
+{
+"title":"Květiny Šťastný",
+"locationLat":"50.0094319",
+"locationLong":"14.4534500",
+"address":"Pavlíkova 12\nPraha 12",
+"openingHours":"1: 900-1800, 2: 900-1800, 3: 900-1800, 4: 900-1800, 5: 900-1800, 6: 800-1ě00",
 "category":"obchod",
 "filter":"Květinářství"
 },

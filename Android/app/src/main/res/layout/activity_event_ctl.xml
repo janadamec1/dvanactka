@@ -25,12 +25,11 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="6dp"
         android:paddingLeft="8dp"
@@ -38,21 +37,29 @@
         android:background="#E3EFFC"
         >
 
-        <TextView
-            android:id="@+id/footerText"
-            android:text="@string/add_new_record"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            />
-        <Button
-            android:id="@+id/btnFooter"
-            android:text="info@dvanactka.info"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            >
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/footerText"
+                android:text="@string/add_new_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:paddingRight="8sp"
+                android:layout_gravity="center_vertical"
+                />
+            <Button
+                android:id="@+id/btnFooter"
+                android:text="info@dvanactka.info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

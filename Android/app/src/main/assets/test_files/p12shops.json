@@ -327,6 +327,18 @@
 "filter":"Krejčovství"
 },
 {
+"title":"Krejčovství Heleny Vé",
+"text":"Opravy a úpravy oděvů z běžných materiálů, úpletů, kůže a džínoviny.",
+"locationLat":"50.0094319",
+"locationLong":"14.4531869",
+"address":"Pavlíkova 10\nPraha 12",
+"openingHours":"2: 1100-1500, 3: 1100-1900, 4: 1100-1900",
+"phone":"774 127 822",
+"infoLink":"http:\/\/www.helenyve.cz",
+"category":"remeslnik",
+"filter":"Krejčovství"
+},
+{
 "title":"Fair Laundry",
 "text":"Prádelna a čistírna oděvů",
 "locationLat":"50.0130978",
@@ -469,6 +481,15 @@
 "filter":"Květinářství"
 },
 {
+"title":"Květiny Šťastný",
+"locationLat":"50.0094319",
+"locationLong":"14.4534500",
+"address":"Pavlíkova 12\nPraha 12",
+"openingHours":"1: 900-1800, 2: 900-1800, 3: 900-1800, 4: 900-1800, 5: 900-1800, 6: 800-1ě00",
+"category":"obchod",
+"filter":"Květinářství"
+},
+{
 "title":"Masáže Jitka Pelikánová",
 "text":"Bachovy esence a masáže. V Klubu Pohoda každé úterý odpoledne, pátek a víkendy dle objednání.",
 "locationLat":"50.0100181",
@@ -477,6 +498,30 @@
 "infoLink":"https:\/\/www.bachovky-masaze.cz",
 "email":"jitkapelikanova@email.cz",
 "phone":"777 958 639",
+"category":"obchod",
+"filter":"Wellness"
+},
+{
+"title":"Sauna klub Modřany",
+"text":"Sauna, masáže. Objednávky do sauny minimálně 2 hodiny předem.",
+"locationLat":"50.0013244",
+"locationLong":"14.4081692",
+"address":"Pekárkova 24\nPraha 12",
+"infoLink":"https:\/\/www.saunaklub.cz",
+"email":"info@saunaklub.cz",
+"phone":"602 645 888",
+"category":"obchod",
+"filter":"Wellness"
+},
+{
+"title":"Wellness studio Pink",
+"text":"Cvičení, hubnutí, kosmetika, depilace, masáže, solárium a více.",
+"locationLat":"50.0090400",
+"locationLong":"14.4250083",
+"address":"Rakovského 2\nPraha 12",
+"openingHours":"1: 700-2030, 2: 700-2030, 3: 700-2030, 4: 700-2030, 5: 800-1800, 6: 1000-1800, 7: 1000-1800",
+"infoLink":"https:\/\/wellnesspink.cz",
+"phone":"605 50 99 55",
 "category":"obchod",
 "filter":"Wellness"
 },
@@ -514,7 +559,7 @@
 },
 {
 "title":"Med p. Ouřada ml.",
-"text":"dle cedule na plotě",
+"text":"dle cedule na plotě\nvčelař",
 "locationLat":"50.0014669",
 "locationLong":"14.4124756",
 "address":"Písková 24\nPraha 12",
@@ -523,7 +568,7 @@
 },
 {
 "title":"Med Jan Ouřada",
-"text":"dle cedule na plotě",
+"text":"dle cedule na plotě\nvčelař",
 "locationLat":"50.0008567",
 "locationLong":"14.4078675",
 "address":"Staromodřanská 7\nPraha 12",
@@ -532,7 +577,7 @@
 },
 {
 "title":"Med Jan Jirouš",
-"text":"dle cedule na plotě",
+"text":"dle cedule na plotě\nvčelař",
 "locationLat":"49.9995153",
 "locationLong":"14.4194869",
 "address":"Platónova 1\nPraha 12",
@@ -541,6 +586,7 @@
 },
 {
 "title":"Med z Roubenky",
+"text":"včelař",
 "infoLink":"http:\/\/medzroubenky.cz",
 "email":"bunc@seznam.cz",
 "address":"místo předání dle dohody v okolí Novodvorské",
@@ -549,7 +595,7 @@
 },
 {
 "title":"Med z Cholupic",
-"text":"dle cedule na plotě",
+"text":"dle cedule na plotě\nvčelař",
 "locationLat":"49.9848292",
 "locationLong":"14.4464572",
 "address":"Ke Křížku 98\nPraha 12",
