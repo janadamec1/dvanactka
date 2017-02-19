@@ -492,11 +492,11 @@ line 3</string>
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0es-Q0-01F" id="2B1-HL-HgD">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="p05-37-hjF">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -546,11 +546,11 @@ line 3</string>
                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iud-GR-dhQ" id="Drg-VU-qQH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ask for parent filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HU0-51-oDO">
-                                                            <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
+                                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -1063,10 +1063,17 @@ line 3</string>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6Y-zE-BJw">
-                                                        <rect key="frame" x="260" y="0.0" width="44" height="30"/>
+                                                        <rect key="frame" x="133.5" y="0.0" width="44" height="30"/>
                                                         <state key="normal" title="Phone"/>
                                                         <connections>
                                                             <action selector="onBtnPhoneTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="xKs-gu-M1q"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VF8-es-BES">
+                                                        <rect key="frame" x="274" y="0.0" width="30" height="30"/>
+                                                        <state key="normal" title="Buy"/>
+                                                        <connections>
+                                                            <action selector="onBtnBuyTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="wjp-bv-0fM"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1155,6 +1162,7 @@ line 3</string>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="640"/>
                     <connections>
+                        <outlet property="m_btnBuy" destination="VF8-es-BES" id="ZzH-LU-UH3"/>
                         <outlet property="m_btnEmail" destination="HnF-vY-94c" id="CbD-J8-pVT"/>
                         <outlet property="m_btnGameCheckIn" destination="xBA-L9-zg6" id="SGW-Ch-hpq"/>
                         <outlet property="m_btnNavigate" destination="Jcs-vc-UN8" id="4Fy-Ka-NCW"/>

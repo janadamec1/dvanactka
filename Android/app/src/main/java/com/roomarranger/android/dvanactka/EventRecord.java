@@ -512,7 +512,7 @@ class CRxEventRecord
         Date dayToday = c.getTime();
 
         for (CRxEventInterval aInt : m_arrEvents) {
-            if (aInt.m_dateStart.after(dayToday) && dayToday.before(aInt.m_dateEnd)) {
+            if (aInt.m_dateStart.before(dayToday) && dayToday.before(aInt.m_dateEnd)) {
                 return aInt;
             }
         }

@@ -116,12 +116,23 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:id="@+id/spaceEmail"/>
         <Button
             android:text="Phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnPhone"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:id="@+id/spaceBuy"/>
+        <Button
+            android:text="Buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBuy"/>
     </LinearLayout>
 
     <LinearLayout

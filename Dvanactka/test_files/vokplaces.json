@@ -268,7 +268,7 @@
 "title":"Hornocholupická x K Ladům",
 "locationLong":"14.436952923690642",
 "locationLat":"49.99345304330027",
-"text":"Křižovatky ulic K Ladům a Hornocholupická",
+"text":"Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická",
 "category":"waste"
 },
 {
@@ -317,7 +317,7 @@
 "title":"Lysinská x Šumavského",
 "locationLong":"14.41097000764704",
 "locationLat":"50.00965600481447",
-"text":"Křižovatka ulic Lysinská a Šumavského",
+"text":"Křižovatka ulic Lysinská a Šumavského",
 "category":"waste"
 },
 {
@@ -345,7 +345,7 @@
 "title":"Nad Rážákem x Bojovská",
 "locationLong":"14.41307600696844",
 "locationLat":"50.000877005460616",
-"text":"Křižovatka ulic Nad Ražákem a Bojovská",
+"text":"Křižovatka ulic Nad Rážákem a Bojovská",
 "category":"waste"
 },
 {
@@ -373,7 +373,7 @@
 "title":"Palmetová x Pod Lesem",
 "locationLong":"14.40963200731891",
 "locationLat":"49.98726000468932",
-"text":"Křižovatka ulic Palmetová a Pod Lesem\nKřižovatka ulic Palmetova a Pod lesem",
+"text":"Křižovatka ulic Palmetová a Pod Lesem\nKřižovatka ulic Palmetová a Pod lesem",
 "category":"waste"
 },
 {
@@ -423,6 +423,13 @@
 "locationLong":"14.429003007096028",
 "locationLat":"49.96941100485677",
 "text":"Křižovatka ulic Starý lis a Hájíčkova\nKřižovatka ulic Starý lis a Hájíčkova",
+"category":"waste"
+},
+{
+"title":"Starý lis x Zahrádkářská",
+"locationLong":"14.4252831",
+"locationLat":"49.9669981",
+"text":"Křižovatka ulic Starý lis a Zahrádkářská",
 "category":"waste"
 },
 {

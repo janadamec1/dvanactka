@@ -113,4 +113,5 @@
     <string name="search">Search</string>
     <string name="game_permission">In order to play the game, please go to Settings and give the app the permission to access your location.</string>
     <string name="permission_explain_location">The app needs the permission to access your location to sort the objects by distance from you and locate you on map.</string>
+    <string name="lunch_menu">Lunch menu</string>
 </resources>

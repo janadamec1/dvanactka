@@ -1,93 +1,267 @@
-Datum;Od;Do;Lokalita;Zajišťuje;Typ;Poznámka
-3.9.2016;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-17.9.2016;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-1.10.2016;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-16.10.2016;13:00;16:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-19.11.2016;13:00;16:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-26.11.2016;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-3.9.2016;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-17.9.2016;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-1.10.2016;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-19.11.2016;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-20.11.2016;13:00;16:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-10.9.2016;9:00;12:00;Křižovatky ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-24.9.2016;9:00;12:00;Křižovatky ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-1.10.2016;9:00;12:00;Křižovatky ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-12.11.2016;9:00;12:00;Křižovatky ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-20.11.2016;9:00;12:00;Křižovatky ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-3.10.2016;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky;MČ;bioodpad;
-17.10.2016;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky;MČ;větve;
-3.10.2016;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-17.10.2016;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-4.10.2016;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-18.10.2016;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-4.10.2016;16:30;18:00;U modřanské školy;MČ;bioodpad;
-18.10.2016;16:30;18:00;U modřanské školy;MČ;větve;
-5.10.2016;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-19.10.2016;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-5.10.2016;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-19.10.2016;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-6.10.2016;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-20.10.2016;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-6.10.2016;16:30;18:00;Křižovatka ulic Nad Ražákem a Bojovská;MČ;bioodpad;
-20.10.2016;16:30;18:00;Křižovatka ulic Nad Ražákem a Bojovská;MČ;větve;
-10.10.2016;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-24.10.2016;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-10.10.2016;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
-24.10.2016;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
-11.10.2016;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-25.10.2016;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
-11.10.2016;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-25.10.2016;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
-12.10.2016;16:30;18:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-26.10.2016;16:30;18:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-12.10.2016;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-26.10.2016;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
-13.10.2016;16:00;17:30;Křižovatka ulic Palmetova a Pod lesem;MČ;bioodpad;
-27.10.2016;16:00;17:30;Křižovatka ulic Palmetova a Pod lesem;MČ;větve;
-13.10.2016;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-27.10.2016;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-14.10.2016;16:00;17:30;Parkoviště u prodejny Jasná blíže k  ulici Krhanická;MČ;bioodpad;
-4.11.2016;16:00;17:30;Parkoviště u prodejny Jasná blíže k  ulici Krhanická;MČ;větve;
-30.9.2016;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-14.10.2016;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-30.9.2016;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-14.10.2016;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-31.10.2016;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky;MČ;bioodpad;
-14.11.2016;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky;MČ;větve;
-31.10.2016;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-14.11.2016;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-1.11.2016;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-15.11.2016;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-1.11.2016;16:30;18:00;U modřanské školy;MČ;bioodpad;
-15.11.2016;16:30;18:00;U modřanské školy;MČ;větve;
-2.11.2016;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-16.11.2016;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-2.11.2016;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-16.11.2016;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-3.11.2016;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-21.11.2016;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-3.11.2016;16:30;18:00;Křižovatka ulic Nad Ražákem a Bojovská;MČ;bioodpad;
-21.11.2016;16:30;18:00;Křižovatka ulic Nad Ražákem a Bojovská;MČ;větve;
-7.11.2016;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-22.11.2016;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-7.11.2016;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
-22.11.2016;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
-8.11.2016;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-23.11.2016;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
-8.11.2016;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-23.11.2016;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
-9.11.2016;16:30;18:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-24.11.2016;16:30;18:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-9.11.2016;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-24.11.2016;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
-10.11.2016;16:00;17:30;Křižovatka ulic Palmetova a Pod lesem;MČ;bioodpad;
-28.11.2016;16:00;17:30;Křižovatka ulic Palmetova a Pod lesem;MČ;větve;
-10.11.2016;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-28.11.2016;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-11.11.2016;16:00;17:30;Parkoviště u prodejny Jasná blíže k  ulici Krhanická;MČ;bioodpad;
-29.11.2016;16:00;17:30;Parkoviště u prodejny Jasná blíže k  ulici Krhanická;MČ;větve;
-28.10.2016;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-11.11.2016;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-28.10.2016;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-11.11.2016;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+Datum;Od;Do;Lokalita;Zajistuje;Poznamka;
+01.04.2017;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
+16.04.2017;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
+06.05.2017;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
+28.05.2017;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
+03.06.2017;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
+17.06.2017;9:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
+16.04.2017;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
+13.05.2017;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
+03.06.2017;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
+24.06.2017;9:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
+29.04.2017;9:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
+28.05.2017;9:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
+10.06.2017;9:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
+24.06.2017;9:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
+03.04.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+03.05.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+01.06.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+29.06.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+04.09.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+03.10.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+31.10.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
+18.04.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+18.05.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+15.06.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+18.07.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+18.09.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+17.10.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+14.11.2017;16:00;17:30;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
+03.04.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+03.05.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+01.06.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+29.06.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+04.09.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+03.10.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+31.10.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
+18.04.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+18.05.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+15.06.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+18.07.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+18.09.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+17.10.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+14.11.2017;16:30;18:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
+04.04.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+04.05.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+05.06.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+03.07.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+05.09.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+04.10.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+01.11.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
+19.04.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+22.05.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+19.06.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+19.07.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+19.09.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+18.10.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+15.11.2017;16:00;17:30;Křižovatka ulic Darwinova a Voborského;MČ;větve;
+04.04.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+04.05.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+05.06.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+03.07.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+05.09.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+04.10.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+01.11.2017;16:30;18:00;U modřanské školy;MČ;bioodpad;
+19.04.2017;16:30;18:00;U modřanské školy;MČ;větve;
+22.05.2017;16:30;18:00;U modřanské školy;MČ;větve;
+19.06.2017;16:30;18:00;U modřanské školy;MČ;větve;
+19.07.2017;16:30;18:00;U modřanské školy;MČ;větve;
+19.09.2017;16:30;18:00;U modřanské školy;MČ;větve;
+18.10.2017;16:30;18:00;U modřanské školy;MČ;větve;
+15.11.2017;16:30;18:00;U modřanské školy;MČ;větve;
+05.04.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+09.05.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+06.06.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+04.07.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+06.09.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+05.10.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+02.11.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
+20.04.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+23.05.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+20.06.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+20.07.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+20.09.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+19.10.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+16.11.2017;16:00;17:30;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
+05.04.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+09.05.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+06.06.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+04.07.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+06.09.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+05.10.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+02.11.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
+20.04.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+23.05.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+20.06.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+20.07.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+20.09.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+19.10.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+16.11.2017;16:30;18:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
+06.04.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+10.05.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+07.06.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+10.07.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+07.09.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+09.10.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+06.11.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
+24.04.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+24.05.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+21.06.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+24.07.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+21.09.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+23.10.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+20.11.2017;16:00;17:30;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
+06.04.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+10.05.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+07.06.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+10.07.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+07.09.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+09.10.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+06.11.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
+24.04.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+24.05.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+21.06.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+24.07.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+21.09.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+23.10.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+20.11.2017;16:30;18:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
+10.04.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+11.05.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+08.06.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+11.07.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+11.09.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+10.10.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+07.11.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
+25.04.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+25.05.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+22.06.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+25.07.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+25.09.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+24.10.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+21.11.2017;16:00;17:30;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
+10.04.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+11.05.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+08.06.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+11.07.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+11.09.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+10.10.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+07.11.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;bioodpad;
+25.04.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+25.05.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+22.06.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+25.07.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+25.09.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+24.10.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+21.11.2017;16:30;18:00;Násirovo náměstí Baba III;MČ;větve;
+11.04.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+15.05.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+12.06.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+12.07.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+12.09.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+11.10.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+08.11.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;bioodpad;
+26.04.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+29.05.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+26.06.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+26.07.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+26.09.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+25.10.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+22.11.2017;16:00;17:30;Komořany proti restauraci U Bukačů;MČ;větve;
+11.04.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+15.05.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+12.06.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+12.07.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+12.09.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+11.10.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+08.11.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;bioodpad;
+26.04.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+29.05.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+26.06.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+26.07.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+26.09.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+25.10.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+22.11.2017;16:30;18:00;Hornocholupická – u transformátoru;MČ;větve;
+12.04.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+16.05.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+13.06.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+13.07.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+13.09.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+12.10.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+09.11.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
+27.04.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+30.05.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+27.06.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+27.07.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+27.09.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+26.10.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+23.11.2017;16:30;17:30;Ploštilova – pod hřištěm multikára;MČ;větve;
+12.04.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+16.05.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+13.06.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+13.07.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+13.09.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+12.10.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+09.11.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
+27.04.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+30.05.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+27.06.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+27.07.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+27.09.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+26.10.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+23.11.2017;16:00;17:30;Cholupický vrch, Malá lada u lesa;MČ;větve;
+13.04.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+17.05.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+14.06.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+17.07.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+14.09.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+16.10.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+13.11.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
+02.05.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+31.05.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+28.06.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+31.07.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+02.10.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+30.10.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+27.11.2017;16:00;17:30;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
+13.04.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+17.05.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+14.06.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+17.07.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+14.09.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+16.10.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+13.11.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
+02.05.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+31.05.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+28.06.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+31.07.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+02.10.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+30.10.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+27.11.2017;16:30;18:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
+31.03.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+12.05.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+09.06.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+07.07.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+01.09.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+06.10.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+03.11.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+21.04.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+26.05.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+23.06.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+21.07.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+15.09.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+27.10.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+24.11.2017;0:00;0:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+31.03.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+09.06.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+01.09.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+03.11.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+12.05.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+07.07.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+06.10.2017;0:00;0:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+21.04.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+23.06.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+15.09.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+24.11.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+26.05.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+21.07.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+27.10.2017;0:00;0:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno

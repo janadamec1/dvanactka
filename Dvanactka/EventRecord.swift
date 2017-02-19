@@ -472,7 +472,7 @@ class CRxEventRecord: NSObject {
         let dayToday = Date();
         
         for aInt in events {
-            if aInt.m_dateStart >= dayToday && dayToday <= aInt.m_dateEnd {
+            if aInt.m_dateStart <= dayToday && dayToday <= aInt.m_dateEnd {
                 return aInt;
             }
         }

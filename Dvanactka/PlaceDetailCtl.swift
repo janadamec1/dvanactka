@@ -28,6 +28,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnEmail: UIButton!
     @IBOutlet weak var m_btnPhone: UIButton!
+    @IBOutlet weak var m_btnBuy: UIButton!
     @IBOutlet weak var m_map: MKMapView!
     @IBOutlet weak var m_lbShowNotifications: UILabel!
     @IBOutlet weak var m_chkShowNotifications: UISwitch!
@@ -208,6 +209,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             else {
                 m_btnPhone.isHidden = true;
             }
+            if rec.m_sBuyLink != nil && rec.m_sFilter != nil && rec.m_sFilter! == "Restaurace" {
+                m_btnBuy.setTitle(NSLocalizedString("Lunch menu", comment:""), for: .normal);
+            }
+            else {
+                m_btnBuy.isHidden = true;
+            }
             
             if let location = rec.m_aLocation {
                 let regView = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500);
@@ -374,6 +381,13 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         }
     }
     
+    //--------------------------------------------------------------------------
+    @IBAction func onBtnBuyTouched(_ sender: Any) {
+        guard let rec = m_aRecord
+            else {return;}
+        rec.openBuyLink(fromCtl: self);
+    }
+
     //--------------------------------------------------------------------------
     @IBAction func onBtnReportIssueTouched(_ sender: Any) {
         if (MFMailComposeViewController.canSendMail())

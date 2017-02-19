@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,9 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     Button m_btnWebsite;
     Button m_btnEmail;
     Button m_btnPhone;
+    Button m_btnBuy;
+    Space m_spaceEmail;
+    Space m_spaceBuy;
     GoogleMap m_map;
     CheckBox m_chkShowNotifications;
     TextView m_lbNotificationExplanation;
@@ -105,6 +109,10 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         m_btnWebsite = (Button)findViewById(R.id.btnWebsite);
         m_btnEmail = (Button)findViewById(R.id.btnEmail);
         m_btnPhone = (Button)findViewById(R.id.btnPhone);
+        m_btnBuy = (Button)findViewById(R.id.btnBuy);
+        m_spaceEmail = (Space)findViewById(R.id.spaceEmail);
+        m_spaceBuy = (Space)findViewById(R.id.spaceBuy);
+
         //m_map: MKMapView!
         m_chkShowNotifications = (CheckBox)findViewById(R.id.chkNotifications);
         m_lbNotificationExplanation = (TextView)findViewById(R.id.notificationNote);
@@ -254,12 +262,20 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         }
         else {
             m_btnEmail.setVisibility(View.GONE);
+            m_spaceEmail.setVisibility(View.GONE);
         }
         if (rec.m_sPhoneNumber != null) {
             m_btnPhone.setText(rec.m_sPhoneNumber);
         }
         else {
             m_btnPhone.setVisibility(View.GONE);
+        }
+        if (rec.m_sBuyLink != null && rec.m_sFilter != null && rec.m_sFilter.equals("Restaurace")) {
+            m_btnBuy.setText(R.string.lunch_menu);
+        }
+        else {
+            m_btnBuy.setVisibility(View.GONE);
+            m_spaceBuy.setVisibility(View.GONE);
         }
 
         MapFragment mapFragment = (MapFragment)(getFragmentManager().findFragmentById(R.id.map));
@@ -386,6 +402,14 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                     } catch (android.content.ActivityNotFoundException ex) {
                         Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
+        }
+        if (rec.m_sBuyLink != null) {
+            m_btnBuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rec.openBuyLink(PlaceDetailCtl.this);
                 }
             });
         }
