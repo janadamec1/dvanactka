@@ -433,6 +433,81 @@
 "filter":"Pro domácnost"
 },
 {
+"title":"Papírnictví Papírový obchod",
+"locationLat":"50.0130069",
+"locationLong":"14.4219178",
+"address":"Kutilova\nPraha 12",
+"openingHours":"1: 730-1800, 2: 730-1800, 3: 730-1800, 4: 730-1800, 5: 730-1800, 6: 1000-1400",
+"infoLink":"http:\/\/www.papirovyobchod.cz",
+"category":"obchod",
+"filter":"Pro domácnost"
+},
+{
+"title":"Papírnictví Papírový obchod",
+"locationLat":"50.0152267",
+"locationLong":"14.4369367",
+"address":"Obchodní centrum Kamýk\nVosátkova 1\nPraha 12",
+"openingHours":"1: 800-1800, 2: 800-1800, 3: 800-1800, 4: 800-1800, 5: 800-1800",
+"infoLink":"http:\/\/www.papirovyobchod.cz",
+"phone":"702 271 374",
+"category":"obchod",
+"filter":"Pro domácnost"
+},
+{
+"title":"Papírnictví Bemo",
+"locationLat":"50.0058911",
+"locationLong":"14.4179572",
+"address":"Sofijské náměstí 6\nPraha 12",
+"openingHours":"1: 800-1800, 2: 800-1800, 3: 800-1800, 4: 800-1800, 5: 800-1800, 6: 900-1200",
+"category":"obchod",
+"filter":"Pro domácnost"
+},
+{
+"title":"Cykloservis Cyklosport Tarant",
+"locationLat":"50.0098550",
+"locationLong":"14.4277247",
+"address":"Rakovského 10\nPraha 12",
+"openingHours":"1: 1300-2000, 2: 1000-1200, 2: 1300-2000, 3: 1000-1200, 3: 1300-2000, 4: 1000-1200, 4: 1300-2000, 5: 1300-1900, 6: 900-1200",
+"infoLink":"http:\/\/www.cyklotarant.cz",
+"phone":"605 717 052",
+"category":"obchod",
+"filter":"Servis"
+},
+{
+"title":"Cykloservis Bike Emergency",
+"locationLat":"50.0028942",
+"locationLong":"14.4060633",
+"address":"K Dolům 10\nPraha 12",
+"openingHours":"1: 1000-1200, 1: 1300-2000, 2: 1000-1200, 2: 1300-2000, 3: 1000-1200, 3: 1300-2000, 4: 1000-1200, 4: 1300-2000, 5: 1000-1200, 5: 1300-2000, 6: 1100-1600, 7: 1100-1600",
+"infoLink":"http:\/\/www.bike-er.cz",
+"phone":"608 931 100",
+"email":"info@bike-er.cz",
+"category":"obchod",
+"filter":"Servis"
+},
+{
+"title":"Cykloservis Miroslav Pokorný",
+"locationLat":"50.0033442",
+"locationLong":"14.4050567",
+"address":"Komořanská 10\nPraha 12",
+"openingHours":"1: 1300-1800, 2: 1300-1800, 3: 1300-1800, 4: 1300-1800, 5: 1300-1800",
+"phone":"724 514 718",
+"category":"obchod",
+"filter":"Servis"
+},
+{
+"title":"Cykloservis Cyklo Emap",
+"locationLat":"49.9931475",
+"locationLong":"14.4673322",
+"address":"K Vrtilce 317\nPraha 4 Písnice",
+"openingHours":"1: 1000-1800, 2: 1000-1800, 3: 1000-1800, 4: 1200-2000, 5: 1000-1800, 6: 900-1400",
+"infoLink":"http:\/\/www.emap-praha.cz",
+"phone":"261 911 452",
+"email":"obchod@emap-praha.cz",
+"category":"obchod",
+"filter":"Servis"
+},
+{
 "title":"Květinářství",
 "locationLat":"50.0041722",
 "locationLong":"14.4050544",

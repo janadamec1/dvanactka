@@ -39,7 +39,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cJ0-vZ-hRZ">
                                                     <rect key="frame" x="0.0" y="72.5" width="104" height="19.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -117,6 +117,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30A-AN-Tt3">
                                         <rect key="frame" x="0.0" y="422.5" width="288" height="30"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <state key="normal" title="info@dvanactka.info"/>
                                         <connections>
                                             <action selector="onBtnContactTouched:" destination="RiZ-wt-9Oa" eventType="touchUpInside" id="hgE-Sg-ixM"/>
@@ -182,7 +183,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Pwf-rZ-Q41"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -191,7 +192,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="D3H-cz-SJd"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -373,6 +374,7 @@ line 3</string>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIu-Up-j0D">
                                                         <rect key="frame" x="260" y="0.0" width="44" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Refine"/>
                                                         <connections>
                                                             <segue destination="G8j-go-KQD" kind="show" identifier="segueRefineLoc" id="ros-j3-yZq"/>
@@ -498,7 +500,7 @@ line 3</string>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="p05-37-hjF">
                                             <rect key="frame" x="15" y="0.0" width="290" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -552,7 +554,7 @@ line 3</string>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ask for parent filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HU0-51-oDO">
                                                             <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                             <autoresizingMask key="autoresizingMask"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -610,6 +612,7 @@ line 3</string>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq9-ln-0zD">
                                                                             <rect key="frame" x="0.0" y="0.0" width="137" height="30"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <state key="normal" title="Continue to website"/>
                                                                             <connections>
                                                                                 <action selector="onBtnWebsiteNewsTouched:" destination="sRh-ek-Fms" eventType="touchUpInside" id="ldx-t2-QGh"/>
@@ -698,6 +701,7 @@ line 3</string>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H3T-KB-Lg0">
                                                                             <rect key="frame" x="66" y="0.0" width="44" height="30"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <state key="normal" title="e-mail"/>
                                                                             <connections>
                                                                                 <action selector="onBtnEmailTouched:" destination="sRh-ek-Fms" eventType="touchUpInside" id="6aR-M7-sUO"/>
@@ -723,6 +727,7 @@ line 3</string>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm0-pv-FdJ">
                                                                             <rect key="frame" x="0.0" y="0.0" width="56" height="30"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <state key="normal" title="Website"/>
                                                                             <connections>
                                                                                 <action selector="onBtnWebsiteTouched:" destination="sRh-ek-Fms" eventType="touchUpInside" id="bg1-oD-ACo"/>
@@ -730,6 +735,7 @@ line 3</string>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYH-3t-ore">
                                                                             <rect key="frame" x="109.5" y="0.0" width="30" height="30"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <state key="normal" title="Buy"/>
                                                                             <connections>
                                                                                 <action selector="onBtnBuyTouched:" destination="sRh-ek-Fms" eventType="touchUpInside" id="kid-bK-Ofy"/>
@@ -737,6 +743,7 @@ line 3</string>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2E-nI-Ubz">
                                                                             <rect key="frame" x="193" y="0.0" width="111" height="30"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <state key="normal" title="Add to Calendar"/>
                                                                             <connections>
                                                                                 <action selector="onBtnCalendarTouched:" destination="sRh-ek-Fms" eventType="touchUpInside" id="Rpp-zO-PH3"/>
@@ -841,12 +848,13 @@ line 3</string>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add new record:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="gFM-17-Wge">
                                                         <rect key="frame" x="0.0" y="0.0" width="112.5" height="34"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IM6-jT-B8s">
                                                         <rect key="frame" x="120.5" y="0.0" width="140" height="34"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="info@dvanactka.info"/>
                                                         <connections>
                                                             <action selector="onBtnFooterTouched:" destination="sRh-ek-Fms" eventType="touchUpInside" id="Ohq-Xr-J2t"/>
@@ -1027,7 +1035,7 @@ line 3</string>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0a-yw-kBP">
                                                         <rect key="frame" x="60" y="0.0" width="244" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -1041,6 +1049,7 @@ line 3</string>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xM-OJA">
                                                 <rect key="frame" x="0.0" y="286.5" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <state key="normal" title="Website"/>
                                                 <connections>
                                                     <action selector="onBtnWebsiteTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="WMR-gM-uog"/>
@@ -1057,6 +1066,7 @@ line 3</string>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HnF-vY-94c">
                                                         <rect key="frame" x="0.0" y="0.0" width="37" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Email"/>
                                                         <connections>
                                                             <action selector="onBtnEmailTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="Ibw-lK-Vxf"/>
@@ -1064,6 +1074,7 @@ line 3</string>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6Y-zE-BJw">
                                                         <rect key="frame" x="133.5" y="0.0" width="44" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Phone"/>
                                                         <connections>
                                                             <action selector="onBtnPhoneTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="xKs-gu-M1q"/>
@@ -1071,6 +1082,7 @@ line 3</string>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VF8-es-BES">
                                                         <rect key="frame" x="274" y="0.0" width="30" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Buy"/>
                                                         <connections>
                                                             <action selector="onBtnBuyTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="wjp-bv-0fM"/>
@@ -1095,6 +1107,7 @@ line 3</string>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBA-L9-zg6">
                                                         <rect key="frame" x="244" y="0.0" width="60" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="I'm here!"/>
                                                         <connections>
                                                             <action selector="onBtnGameCheckIn:" destination="IoX-1s-I15" eventType="touchUpInside" id="yTO-U3-fEU"/>
@@ -1115,6 +1128,7 @@ line 3</string>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcs-vc-UN8">
                                                         <rect key="frame" x="0.0" y="0.0" width="61" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Navigate"/>
                                                         <connections>
                                                             <action selector="onBtnMapTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="bBC-DT-GOY"/>
@@ -1122,6 +1136,7 @@ line 3</string>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jx3-Fi-Nyt">
                                                         <rect key="frame" x="200" y="0.0" width="104" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Report mistake"/>
                                                         <connections>
                                                             <action selector="onBtnReportIssueTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="GdC-OJ-PLR"/>
