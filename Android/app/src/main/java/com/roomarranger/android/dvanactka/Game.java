@@ -3,8 +3,15 @@ package com.roomarranger.android.dvanactka;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Created by jadamec on 29.12.16.
@@ -245,5 +252,57 @@ class CRxGame {
         ret.pointsPrevLevel = iToNextLevel-iLevelSize;
         ret.pointsNextLevel = iToNextLevel;
         return ret;
+    }
+
+    //---------------------------------------------------------------------------
+    void sendScoreToServer() {
+        CRxDataSource aDS = CRxGame.dataSource();
+        if (aDS == null) { return; }
+
+        if (aDS.m_sUuid == null) {
+            // generate new unique ID for this device
+            aDS.m_sUuid = UUID.randomUUID().toString();
+        }
+        if (aDS.m_sUuid != null) {
+            String sScore = String.format(Locale.US, "%d", m_iPoints);
+            // calc checksum
+            int iChecksum = 0;
+            for (int i = 0; i < aDS.m_sUuid.length(); i++) iChecksum += aDS.m_sUuid.codePointAt(i);
+            for (int i = 0; i < sScore.length(); i++) iChecksum += sScore.codePointAt(i);
+
+            String sParams = String.format(Locale.US, "?id=%s&s=%s&c=%d", aDS.m_sUuid, sScore, iChecksum);
+            try {
+                final URL url = new URL("https://dvanactka.info/own/p12/game_putscore.php" + sParams);
+                Thread thread = new Thread(new Runnable(){
+                    @Override
+                    public void run(){
+                        try {
+                            InputStream inStream = url.openStream();
+
+                            DataInputStream stream = new DataInputStream(inStream);
+                            BufferedInputStream bufferedReader = new BufferedInputStream(stream);
+
+                            byte[] buffer = new byte[2048];
+                            int bytesRead = 0;
+                            ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+
+                            while ((bytesRead = bufferedReader.read(buffer))!= -1) {
+                                byteArray.write(buffer, 0, bytesRead);  // TODO: is it really needed to read the output??
+                            }
+
+                            stream.close();
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

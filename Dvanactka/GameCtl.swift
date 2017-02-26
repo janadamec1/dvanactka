@@ -86,6 +86,14 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         super.viewDidLoad()
 
         self.title = NSLocalizedString("Game", comment: "");
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Leaderboard", comment: ""), style: .plain, target: self, action: #selector(GameCtl.onBtnLeaderboard));
+        
+        if let aDS = CRxGame.dataSource() {
+            if aDS.m_sUuid == nil && CRxGame.sharedInstance.m_iPoints > 0 {
+                CRxGame.sharedInstance.sendScoreToServer();
+            }
+        }
     }
 
     //---------------------------------------------------------------------------
@@ -183,5 +191,16 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             print("OK")})
         alertController.addAction(actionOK);
         self.present(alertController, animated: true, completion: nil);
+    }
+    
+    //---------------------------------------------------------------------------
+    func onBtnLeaderboard() {
+        guard let aDS = CRxGame.dataSource()
+            else { return }
+        if aDS.m_sUuid == nil {
+            showToast(message: NSLocalizedString("GameStart.note", comment:""));
+            return;
+        }
+        performSegue(withIdentifier: "segueLeaderboard", sender: self);
     }
 }

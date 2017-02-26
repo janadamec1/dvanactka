@@ -50,6 +50,7 @@ class CRxDataSource {
     int m_nRefreshFreqHours = 18;   // refresh after 18 hours
     String m_sTestJsonFile = null;  // offline data file
     String m_sLastItemShown = "";   // hash of the last record user displayed (to count unread news, etc)
+    String m_sUuid = null;          // id used in game data source
     Date m_dateLastRefreshed = null;
     boolean m_bIsBeingRefreshed = false;
     ArrayList<CRxEventRecord> m_arrItems = new ArrayList<CRxEventRecord>();   // the data
@@ -132,6 +133,7 @@ class CRxDataSource {
             JSONObject config = json.getJSONObject("config");
             m_dateLastRefreshed = CRxEventRecord.loadDate(config.optString("dateLastRefreshed", null));
             m_sLastItemShown = config.optString("lastItemShown", "");
+            m_sUuid = config.optString("uuid", null);
             try {
                 String filter = config.getString("filter");
                 m_setFilter = new HashSet<String>(Arrays.asList(filter.split("|")));
@@ -166,6 +168,7 @@ class CRxDataSource {
             }
             try { config.put("filter", sb.toString()); } catch (JSONException e) {}
         }
+        if (m_sUuid != null) { try { config.put("uuid", m_sUuid); } catch (JSONException e) {} }
 
         if (config.length() > 0) {
             try { json.put("config", config); } catch (JSONException e) {}

@@ -24,6 +24,7 @@ class CRxDataSource : NSObject {
     var m_nRefreshFreqHours: Int = 18;  // refresh after 18 hours
     var m_sTestJsonFile: String?;       // offline data file
     var m_sLastItemShown: String = "";  // hash of the last record user displayed (to count unread news, etc)
+    var m_sUuid: String?;               // id used in game data source
     var m_dateLastRefreshed: Date?
     var m_bIsBeingRefreshed: Bool = false
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
@@ -89,6 +90,7 @@ class CRxDataSource : NSObject {
             if let date = config["dateLastRefreshed"] as? String { m_dateLastRefreshed = CRxEventRecord.loadDate(string: date); }
             if let lastItemShown = config["lastItemShown"] as? String { m_sLastItemShown = lastItemShown; }
             if let filter = config["filter"] as? String { m_setFilter = Set<String>(filter.components(separatedBy: "|")); }
+            if let uuid = config["uuid"] as? String { m_sUuid = uuid; }
         }
     }
     
@@ -107,6 +109,7 @@ class CRxDataSource : NSObject {
         if let date = m_dateLastRefreshed { config["dateLastRefreshed"] = CRxEventRecord.saveDate(date: date) as AnyObject }
         config["lastItemShown"] = m_sLastItemShown as AnyObject;
         if let filter = m_setFilter { config["filter"] = filter.joined(separator: "|") as AnyObject; }
+        if let uuid = m_sUuid { config["uuid"] = uuid as AnyObject; }
         
         if config.count > 0 {
             json["config"] = config as AnyObject;
@@ -497,7 +500,7 @@ class CRxDataSourceManager : NSObject {
     //--------------------------------------------------------------------------
     // downloading daa from URL: http://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
     // async
-    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
+    static func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
         URLSession.shared.dataTask(with: url) {
             (data, response, error) in
             completion(data, response, error)
@@ -530,7 +533,7 @@ class CRxDataSourceManager : NSObject {
         aDS.m_bIsBeingRefreshed = true;
         showNetworkIndicator();
         
-        getDataFromUrl(url: url) { (data, response, error) in
+        CRxDataSourceManager.getDataFromUrl(url: url) { (data, response, error) in
             guard let data = data, error == nil
                 else {
                     if let error = error {

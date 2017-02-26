@@ -199,6 +199,8 @@ class CRxGame: NSObject {
             iNewLevel = 0;
         }
         
+        sendScoreToServer();
+
         return (reward.points, iNewLevel, reward.newStars, reward.catName);
     }
     
@@ -227,5 +229,32 @@ class CRxGame: NSObject {
             iToNextLevel += iLevelSize;
         }
         return (iLevel, m_iPoints, iToNextLevel-iLevelSize, iToNextLevel);
+    }
+    
+    //---------------------------------------------------------------------------
+    func sendScoreToServer() {
+        guard let aDS = CRxGame.dataSource()
+            else { return; }
+        
+        if aDS.m_sUuid == nil {
+            // generate new unique ID for this device
+            aDS.m_sUuid = UUID().uuidString;
+            CRxDataSourceManager.sharedInstance.save(dataSource: aDS);
+        }
+        if let uuid = aDS.m_sUuid {
+            let sScore = String(format: "%d", m_iPoints);
+            // calc checksum
+            var iChecksum: Int = 0;
+            let bufUuid: [UInt8] = Array(uuid.utf8);
+            let bufScore: [UInt8] = Array(sScore.utf8);
+            for el in bufUuid { iChecksum = iChecksum + Int(el); }
+            for el in bufScore { iChecksum = iChecksum + Int(el); }
+            
+            let sParams = String(format: "?id=%@&s=%@&c=%d", uuid, sScore, iChecksum);
+            if let url = URL(string: "https://dvanactka.info/own/p12/game_putscore.php" + sParams) {
+                // send it
+                URLSession.shared.dataTask(with: url).resume();
+            }
+        }
     }
 }

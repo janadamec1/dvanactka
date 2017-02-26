@@ -678,6 +678,17 @@
 "filter":"Potraviny"
 },
 {
+"title":"Nakládané sýry",
+"locationLat":"50.0115600",
+"locationLong":"14.4086181",
+"address":"Nad Vinicí 4\nPraha 12",
+"openingHours":"1: 630-1500, 2: 630-1500, 3: 630-1500, 4: 630-1500, 5: 630-1500",
+"infoLink":"http:\/\/nakladanesyry.cz",
+"phone":"602 855 080",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
 "title":"Vethope",
 "locationLat":"50.0000989",
 "locationLong":"14.4135844",
