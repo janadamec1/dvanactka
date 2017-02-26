@@ -40,7 +40,7 @@ class GameLeaderCtl: UITableViewController {
         let url = URL(string: "https://dvanactka.info/own/p12/game_leaders.txt");
         if let url = url {
             CRxDataSourceManager.getDataFromUrl(url: url) { (data, response, error) in
-                guard let data = data, error != nil
+                guard let data = data, error == nil
                     else {
                         if let error = error {
                             print("URL downloading failed: \(error.localizedDescription)");

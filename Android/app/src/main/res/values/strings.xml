@@ -114,4 +114,9 @@
     <string name="game_permission">In order to play the game, please go to Settings and give the app the permission to access your location.</string>
     <string name="permission_explain_location">The app needs the permission to access your location to sort the objects by distance from you and locate you on map.</string>
     <string name="lunch_menu">Lunch menu</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="gamestart_note">To start playing the game, walk to the nearest place in Landmarks, Waste or Shops and tap I\'m here!</string>
+    <string name="downloading_data">Downloading data...</string>
+    <string name="game_you">YOU</string>
+    <string name="error_downloading_data">Error when downloading data</string>
 </resources>

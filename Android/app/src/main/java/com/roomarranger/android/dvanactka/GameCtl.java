@@ -1,7 +1,9 @@
 package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.Manifest;
@@ -9,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -58,6 +62,10 @@ public class GameCtl extends Activity {
                 Toast.makeText(GameCtl.this, item.m_sHintMessage, Toast.LENGTH_SHORT).show();
             }
         });
+
+        CRxDataSource aDS = CRxGame.dataSource();
+        if (aDS != null && aDS.m_sUuid == null && CRxGame.sharedInstance.m_iPoints > 0)
+            CRxGame.sharedInstance.sendScoreToServer();
     }
 
     //---------------------------------------------------------------------------
@@ -101,5 +109,38 @@ public class GameCtl extends Activity {
             cell.m_lbProgress.setText(String.format(Locale.US, "%d / %d", item.m_iProgress, item.nextStarPoints()));
             return convertView;
         }
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_game_ctl, menu);
+        return true;
+    }
+
+    //---------------------------------------------------------------------------
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();        // go to the activity that brought user here, not to parent activity
+                return true;
+
+            case R.id.action_leaderboard: {
+                CRxDataSource aDS = CRxGame.dataSource();
+                if (aDS != null && aDS.m_sUuid == null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.gamestart_note);
+                    builder.create().show();
+                }
+                else {
+                    Intent intent = new Intent(GameCtl.this, GameLeaderCtl.class);
+                    startActivity(intent);
+                }
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

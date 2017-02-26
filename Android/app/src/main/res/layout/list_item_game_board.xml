@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="6dp"
+              android:paddingBottom="6dp">
+
+    <TextView
+        android:text="1. - 2. -- YOU"
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:text="1000 XP"
+        android:id="@+id/playerScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

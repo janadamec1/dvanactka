@@ -252,7 +252,7 @@ class CRxDataSourceManager {
 
     int m_nNetworkIndicatorUsageCount = 0;
     File m_urlDocumentsDir;
-    AssetManager m_assetMan;
+    private static AssetManager m_assetMan = null;
     CRxDataSource m_aSavedNews = new CRxDataSource(CRxDataSourceManager.dsSavedNews, "Saved News", "ds_news", CRxDataSource.DATATYPE_news, 0xffffff);    // (records over all news sources)
     Set<String> m_setPlacesNotified = new HashSet<String>();  // (titles)
     CRxDataSourceRefreshDelegate delegate = null; // one global delegate (main viewController)
@@ -562,7 +562,7 @@ class CRxDataSourceManager {
     static abstract class DownloadCompletion {
         abstract void run(String sData, String sError);
     }
-    void getDataFromUrl(final URL url, final DownloadCompletion completion) {
+    static void getDataFromUrl(final URL url, final DownloadCompletion completion) {
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run(){
@@ -570,7 +570,7 @@ class CRxDataSourceManager {
                 String sData = null;
                 try {
                     InputStream inStream;
-                    if (url.toString().startsWith("file:///android_asset/"))
+                    if (url.toString().startsWith("file:///android_asset/") && m_assetMan != null)
                         inStream = m_assetMan.open(url.toString().substring(22));
                     else
                         inStream = url.openStream();
@@ -637,7 +637,7 @@ class CRxDataSourceManager {
         aDS.m_bIsBeingRefreshed = true;
         showNetworkIndicator();
 
-        getDataFromUrl(urlDownload, new DownloadCompletion() {
+        CRxDataSourceManager.getDataFromUrl(urlDownload, new DownloadCompletion() {
             @Override
             void run(String sData, String sError) {
                 if (sData == null || sError != null)

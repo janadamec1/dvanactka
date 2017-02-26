@@ -215,6 +215,8 @@ class CRxGame {
             iNewLevel = 0;
         }
 
+        sendScoreToServer();
+
         reward.newLevel = iNewLevel;
         return reward;
     }
@@ -262,6 +264,7 @@ class CRxGame {
         if (aDS.m_sUuid == null) {
             // generate new unique ID for this device
             aDS.m_sUuid = UUID.randomUUID().toString();
+            CRxDataSourceManager.sharedInstance().save(aDS);
         }
         if (aDS.m_sUuid != null) {
             String sScore = String.format(Locale.US, "%d", m_iPoints);

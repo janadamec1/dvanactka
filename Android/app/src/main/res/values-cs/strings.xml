@@ -115,4 +115,9 @@
     <string name="game_permission">Abyste mohli hrát hru, přejděte prosím do Nastavení a dejte aplikaci přístup k vaší poloze.</string>
     <string name="permission_explain_location">Aplikace potřebuje povolení k přístupu k vaší poloze, aby mohla třídit objekty podle vzdálenosti od vás a zobrazit vás na mapě.</string>
     <string name="lunch_menu">Polední menu</string>
+    <string name="game_you">VY</string>
+    <string name="leaderboard">Žebříček</string>
+    <string name="gamestart_note">Hru začnete hrát tak, že dojdete k nejbližšímu místu ve Výletech, Odpadu nebo Firmách, a ťuknete na Jsem tu!</string>
+    <string name="downloading_data">Data se stahují...</string>
+    <string name="error_downloading_data">Chyba při stahování dat</string>
 </resources>
