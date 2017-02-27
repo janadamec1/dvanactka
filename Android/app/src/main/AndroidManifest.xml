@@ -59,6 +59,8 @@
             android:label="@string/leaderboard"
             android:launchMode="singleTop"
             android:parentActivityName=".GameCtl"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:excludeFromRecents="true"
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

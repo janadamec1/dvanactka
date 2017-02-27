@@ -170,7 +170,7 @@ class GameLeaderCtl: UITableViewController {
             }
             // show only a few records above and below the player (iPlayerIdx)
             for i in 0...arrFilteredItems.count-1 {
-                if (iPlayerIdx <= 6 && i < 10)           // at the top, show first 10 items)
+                if (iPlayerIdx <= 5 && i < 10)           // at the top, show first 10 items)
                         || (iPlayerIdx > 4 && (i==0 || abs(i-iPlayerIdx) <= 4)) {   // below, show first and then 9 around player
                     m_arrItems.append(arrFilteredItems[i]);
                 }

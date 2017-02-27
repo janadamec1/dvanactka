@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.net.URL;
@@ -42,6 +43,7 @@ public class GameLeaderCtl extends Activity {
 
     static class BoardItemViewHolder {
         TextView lbName, lbScore;
+        ProgressBar spinner;
     }
 
     @Override
@@ -87,6 +89,7 @@ public class GameLeaderCtl extends Activity {
                     cell = new BoardItemViewHolder();
                     cell.lbName = (TextView) convertView.findViewById(R.id.name);
                     cell.lbScore = (TextView) convertView.findViewById(R.id.playerScore);
+                    cell.spinner = (ProgressBar) convertView.findViewById(R.id.spinner);
                     convertView.setTag(cell);
                 }
                 else
@@ -95,6 +98,7 @@ public class GameLeaderCtl extends Activity {
                 if (m_bLoading) {
                     cell.lbName.setText(R.string.downloading_data);
                     cell.lbScore.setText("");
+                    cell.spinner.setVisibility(View.VISIBLE);
                     return convertView;
                 }
                 CRxBoardItem item = m_arrItems.get(position);
@@ -116,6 +120,7 @@ public class GameLeaderCtl extends Activity {
                 int cl = bIsPlayer ? Color.WHITE : Color.parseColor("#d9d9d9");
                 cell.lbName.setTextColor(cl);
                 cell.lbScore.setTextColor(cl);
+                cell.spinner.setVisibility(View.GONE);
                 return convertView;
             }
         };
@@ -225,7 +230,7 @@ public class GameLeaderCtl extends Activity {
             }
             // show only a few records above and below the player (iPlayerIdx)
             for (int i = 0; i < arrFilteredItems.size(); i++) {
-                if ((iPlayerIdx <= 6 && i < 10)           // at the top, show first 10 items)
+                if ((iPlayerIdx <= 5 && i < 10)           // at the top, show first 10 items)
                         || (iPlayerIdx > 4 && (i==0 || Math.abs(i-iPlayerIdx) <= 4))) {   // below, show first and then 9 around player
                     m_arrItems.add(arrFilteredItems.get(i));
                 }

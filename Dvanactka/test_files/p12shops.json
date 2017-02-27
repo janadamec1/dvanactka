@@ -463,6 +463,16 @@
 "filter":"Pro domácnost"
 },
 {
+"title":"Úklid - Stel Profi",
+"text":"Úklidový servis pro firmy i domácnosti",
+"address":"Daškova 14\nPraha 12",
+"infoLink":"http:\/\/www.profi-uklid.cz",
+"phone":"603 456 708",
+"email":"stel@profi-uklid.cz",
+"category":"remeslnik",
+"filter":"Pro domácnost"
+},
+{
 "title":"Cykloservis Cyklosport Tarant",
 "locationLat":"50.0098550",
 "locationLong":"14.4277247",
