@@ -100,8 +100,9 @@ class CRxGame: NSObject {
     }
     
     //---------------------------------------------------------------------------
-    static func isCategoryCheckInAble(_ category: CRxCategory?) -> Bool {
-        if let cat = category {
+    static func isCategoryCheckInAble(_ category: String?) -> Bool {
+        if let category = category,
+            let cat = CRxCategory(rawValue: category) {
             return cat != .wasteGeneral && cat != .associations && cat != .prvniPomoc && cat != .children && cat != .nehoda && cat != .uzavirka;
         }
         return false;
@@ -141,7 +142,8 @@ class CRxGame: NSObject {
         var iReward = 40;
         var iNewStars = 0;
         var sCatName: String?;
-        if let category = record.m_eCategory {
+        if let catStr = record.m_eCategory,
+            let category = CRxCategory(rawValue: catStr) {
             if category == .pamatka {
                 iNewStars = m_catCulturist.incProgress();
                 sCatName = m_catCulturist.m_sName;

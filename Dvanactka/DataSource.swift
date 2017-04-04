@@ -162,6 +162,7 @@ class CRxDataSourceManager : NSObject {
     static let dsRadNews = "dsRadNews";
     static let dsRadEvents = "dsRadEvents";
     static let dsRadDeska = "dsRadDeska";
+    static let dsCityOffice = "dsCityOffice";
     static let dsBiografProgram = "dsBiografProgram";
     static let dsCooltour = "dsCooltour";
     static let dsSosContacts = "dsSosContacts";
@@ -191,6 +192,7 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, backgroundColor:0x3f4d88);
         m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, backgroundColor:0x08739f);
         m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, backgroundColor:0x08739f);
+        m_dictDataSources[CRxDataSourceManager.dsCityOffice] = CRxDataSource(id: CRxDataSourceManager.dsCityOffice, title: NSLocalizedString("City Office", comment: ""), icon: "ds_parliament", type: .places, backgroundColor:0x3f4d88);
         m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, backgroundColor:0xdb552d);
         m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, backgroundColor:0x008000);
         m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, backgroundColor:0x008000);
@@ -243,6 +245,10 @@ class CRxDataSourceManager : NSObject {
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsTraffic] {
             ds.m_nRefreshFreqHours = 4;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsCityOffice] {
+            ds.m_nRefreshFreqHours = 48;
+            ds.m_bFilterAsParentView = true;
         }
     }
     
@@ -452,6 +458,10 @@ class CRxDataSourceManager : NSObject {
         }
         else if id == CRxDataSourceManager.dsRadDeska {
             refreshStdJsonDataSource(sDsId: id, url: "dyn_radDeska.json");
+            return;
+        }
+        else if id == CRxDataSourceManager.dsCityOffice {
+            refreshStdJsonDataSource(sDsId: id, url: "dyn_cityOffice.json");
             return;
         }
         else if id == CRxDataSourceManager.dsWork {
@@ -728,7 +738,7 @@ class CRxDataSourceManager : NSObject {
                     rec.m_arrEvents = events.sorted(by: { $0.m_dateStart < $1.m_dateStart });
                 }
                 if let category = rec.m_eCategory {
-                    if category == .waste {
+                    if category == CRxCategory.waste.rawValue {
                         rec.m_sInfoLink = "https://www.praha12.cz/odpady/ds-1138/";
                     }
                 }

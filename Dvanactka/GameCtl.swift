@@ -35,16 +35,16 @@ class CRxGameCell : UICollectionViewCell {
 
         // progress
         let fRadius = fCellSize/3;
-        let fPi_2 = CGFloat(M_PI_2);
+        let fPi_2 = CGFloat.pi/2;
         
-        let pathTrack = UIBezierPath(arcCenter: CGPoint(x: fCellSize/2, y: fCellSize/2), radius: fRadius, startAngle: -fPi_2, endAngle: CGFloat(M_PI+M_PI_2), clockwise: true);
+        let pathTrack = UIBezierPath(arcCenter: CGPoint(x: fCellSize/2, y: fCellSize/2), radius: fRadius, startAngle: -fPi_2, endAngle: CGFloat.pi + fPi_2, clockwise: true);
         pathTrack.lineWidth = 8;
         UIColor(white: 0.4, alpha: 0.3).setStroke();
         pathTrack.stroke();
 
         var fGameProgressRatio = CGFloat(m_item.m_iProgress) / CGFloat(m_item.nextStarPoints());
         if fGameProgressRatio > 1.0 { fGameProgressRatio = 1.0; }
-        let pathProgress = UIBezierPath(arcCenter: CGPoint(x: fCellSize/2, y: fCellSize/2), radius: fRadius, startAngle: -fPi_2, endAngle: -fPi_2 + 2*CGFloat(M_PI)*fGameProgressRatio, clockwise: true);
+        let pathProgress = UIBezierPath(arcCenter: CGPoint(x: fCellSize/2, y: fCellSize/2), radius: fRadius, startAngle: -fPi_2, endAngle: -fPi_2 + 2*CGFloat.pi*fGameProgressRatio, clockwise: true);
         pathProgress.lineWidth = 8;
         pathProgress.lineCapStyle = .round;
         UIColor(red: 36.0/255.0, green: 90.0/255.0, blue: 0.5, alpha: 1.0).setStroke();

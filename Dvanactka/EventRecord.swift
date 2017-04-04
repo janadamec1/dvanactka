@@ -174,7 +174,7 @@ class CRxEventRecord: NSObject {
     var m_sTitle: String = ""
     var m_sInfoLink: String?
     var m_sBuyLink: String?
-    var m_eCategory: CRxCategory?
+    var m_eCategory: String?
     var m_sFilter: String?  // filter records accoring to this member
     var m_sText: String?
     var m_aDate: Date?      // date and time of an event start or publish date of an article
@@ -217,7 +217,7 @@ class CRxEventRecord: NSObject {
         
         if let infoLink = jsonItem["infoLink"] as? String { m_sInfoLink = infoLink }
         if let buyLink = jsonItem["buyLink"] as? String { m_sBuyLink = buyLink }
-        if let category = jsonItem["category"] as? String { m_eCategory = CRxCategory(rawValue: category); }
+        if let category = jsonItem["category"] as? String { m_eCategory = category; }
         if let filter = jsonItem["filter"] as? String { m_sFilter = filter }
         if let text = jsonItem["text"] as? String { m_sText = text }
         if let phone = jsonItem["phone"] as? String { m_sPhoneNumber = phone }
@@ -265,7 +265,7 @@ class CRxEventRecord: NSObject {
         var item: [String: AnyObject] = ["title": m_sTitle as AnyObject]
         if let infoLink = m_sInfoLink { item["infoLink"] = infoLink as AnyObject }
         if let buyLink = m_sBuyLink { item["buyLink"] = buyLink as AnyObject }
-        if let category = m_eCategory { item["category"] = category.rawValue as AnyObject }
+        if let category = m_eCategory { item["category"] = category as AnyObject }
         if let filter = m_sFilter { item["filter"] = filter as AnyObject }
         if let text = m_sText { item["text"] = text as AnyObject }
         if let phone = m_sPhoneNumber { item["phone"] = phone as AnyObject }
@@ -310,66 +310,67 @@ class CRxEventRecord: NSObject {
     }
     
     //---------------------------------------------------------------------------
-    static func categoryLocalName(category: CRxCategory) -> String {
-        switch category {
-        case .informace: return NSLocalizedString("Information", comment: "");
-        case .lekarna: return NSLocalizedString("Pharmacies", comment: "");
-        case .prvniPomoc: return NSLocalizedString("First Aid", comment: "");
-        case .policie: return NSLocalizedString("Police", comment: "");
-        case .pamatka: return NSLocalizedString("Landmarks", comment: "");
-        case .pamatnyStrom: return NSLocalizedString("Memorial Trees", comment: "");
-        case .vyznamnyStrom: return NSLocalizedString("Significant Trees", comment: "");
-        case .zajimavost: return NSLocalizedString("Points of Interest", comment: "");
-        case .remeslnik: return NSLocalizedString("Artisans", comment: "");
-        case .restaurace: return NSLocalizedString("Restaurants", comment: "");
-        case .obchod: return NSLocalizedString("Shops", comment: "");
-        case .children: return NSLocalizedString("For Families", comment: "");
-        case .sport: return NSLocalizedString("Sport", comment: "");
-        case .associations: return NSLocalizedString("Associations", comment: "");
-        case .waste: return NSLocalizedString("Waste Dumpsters", comment: "");
-        case .wasteElectro: return NSLocalizedString("Electric Waste", comment: "");
-        case .wasteTextile: return NSLocalizedString("Textile Waste", comment: "");
-        case .wasteGeneral: return NSLocalizedString("Waste", comment: "");
-        case .nehoda: return NSLocalizedString("Accident", comment: "");
-        case .uzavirka: return NSLocalizedString("Roadblock", comment: "");
-        //default: return category.rawValue;
+    static func categoryLocalName(category: String?) -> String {
+        guard let category = category else {
+            return "";
+        }
+        if let cat = CRxCategory(rawValue: category) {
+            switch cat {
+            case .informace: return NSLocalizedString("Information", comment: "");
+            case .lekarna: return NSLocalizedString("Pharmacies", comment: "");
+            case .prvniPomoc: return NSLocalizedString("First Aid", comment: "");
+            case .policie: return NSLocalizedString("Police", comment: "");
+            case .pamatka: return NSLocalizedString("Landmarks", comment: "");
+            case .pamatnyStrom: return NSLocalizedString("Memorial Trees", comment: "");
+            case .vyznamnyStrom: return NSLocalizedString("Significant Trees", comment: "");
+            case .zajimavost: return NSLocalizedString("Points of Interest", comment: "");
+            case .remeslnik: return NSLocalizedString("Artisans", comment: "");
+            case .restaurace: return NSLocalizedString("Restaurants", comment: "");
+            case .obchod: return NSLocalizedString("Shops", comment: "");
+            case .children: return NSLocalizedString("For Families", comment: "");
+            case .sport: return NSLocalizedString("Sport", comment: "");
+            case .associations: return NSLocalizedString("Associations", comment: "");
+            case .waste: return NSLocalizedString("Waste Dumpsters", comment: "");
+            case .wasteElectro: return NSLocalizedString("Electric Waste", comment: "");
+            case .wasteTextile: return NSLocalizedString("Textile Waste", comment: "");
+            case .wasteGeneral: return NSLocalizedString("Waste", comment: "");
+            case .nehoda: return NSLocalizedString("Accident", comment: "");
+            case .uzavirka: return NSLocalizedString("Roadblock", comment: "");
+            }
+        }
+        else {
+            return category;    // not in enum
         }
     }
 
     //---------------------------------------------------------------------------
-    static func categoryLocalName(category: CRxCategory?) -> String {
-        if let cat = category {
-            return CRxEventRecord.categoryLocalName(category: cat);
+    static func categoryIconName(category: String) -> String {
+        if let cat = CRxCategory(rawValue: category) {
+            switch cat {
+            case .informace: return "c_info";
+            case .lekarna: return "c_pharmacy";
+            case .prvniPomoc: return "c_firstaid";
+            case .policie: return "c_police";
+            case .pamatka: return "c_monument";
+            case .pamatnyStrom: return "c_tree";
+            case .vyznamnyStrom: return "c_tree";
+            case .zajimavost: return "c_trekking";
+            case .remeslnik: return "c_work";
+            case .restaurace: return "c_restaurant";
+            case .obchod: return "c_shop";
+            case .children: return "c_children";
+            case .sport: return "c_sport";
+            case .associations: return "c_usergroups";
+            case .waste: return "c_waste";
+            case .wasteElectro: return "c_electrical";
+            case .wasteTextile: return "c_textile";
+            case .wasteGeneral: return "c_recycle";
+            case .nehoda: return "c_accident";
+            case .uzavirka: return "c_roadblock";
+            }
         }
         else {
             return "";
-        }
-    }
-    
-    //---------------------------------------------------------------------------
-    static func categoryIconName(category: CRxCategory) -> String {
-        switch category {
-        case .informace: return "c_info";
-        case .lekarna: return "c_pharmacy";
-        case .prvniPomoc: return "c_firstaid";
-        case .policie: return "c_police";
-        case .pamatka: return "c_monument";
-        case .pamatnyStrom: return "c_tree";
-        case .vyznamnyStrom: return "c_tree";
-        case .zajimavost: return "c_trekking";
-        case .remeslnik: return "c_work";
-        case .restaurace: return "c_restaurant";
-        case .obchod: return "c_shop";
-        case .children: return "c_children";
-        case .sport: return "c_sport";
-        case .associations: return "c_usergroups";
-        case .waste: return "c_waste";
-        case .wasteElectro: return "c_electrical";
-        case .wasteTextile: return "c_textile";
-        case .wasteGeneral: return "c_recycle";
-        case .nehoda: return "c_accident";
-        case .uzavirka: return "c_roadblock";
-        //default: return "";
         }
     }
 

@@ -119,4 +119,5 @@
     <string name="downloading_data">Downloading data...</string>
     <string name="game_you">YOU</string>
     <string name="error_downloading_data">Error when downloading data</string>
+    <string name="city_office">Office</string>
 </resources>

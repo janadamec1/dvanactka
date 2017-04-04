@@ -236,6 +236,7 @@ class CRxDataSourceManager {
 
     static final String dsRadNews = "dsRadNews";
     static final String dsRadEvents = "dsRadEvents";
+    static final String dsCityOffice = "dsCityOffice";
     static final String dsRadDeska = "dsRadDeska";
     static final String dsBiografProgram = "dsBiografProgram";
     static final String dsCooltour = "dsCooltour";
@@ -276,6 +277,7 @@ class CRxDataSourceManager {
         m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news, 0x3f4d88));
         m_dictDataSources.put(CRxDataSourceManager.dsRadEvents, new CRxDataSource(CRxDataSourceManager.dsRadEvents, res.getString(R.string.events), "ds_events", CRxDataSource.DATATYPE_events, 0xdb552d));
         m_dictDataSources.put(CRxDataSourceManager.dsRadDeska, new CRxDataSource(CRxDataSourceManager.dsRadDeska, res.getString(R.string.official_board), "ds_billboard", CRxDataSource.DATATYPE_news, 0x3f4d88));
+        m_dictDataSources.put(CRxDataSourceManager.dsCityOffice, new CRxDataSource(CRxDataSourceManager.dsCityOffice, res.getString(R.string.city_office), "ds_parliament", CRxDataSource.DATATYPE_places, 0x3f4d88));
         m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.indepenedent), "ds_magazine", CRxDataSource.DATATYPE_news, 0x08739f));
         m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_places, 0x08739f));
         m_dictDataSources.put(CRxDataSourceManager.dsBiografProgram, new CRxDataSource(CRxDataSourceManager.dsBiografProgram, "Modřanský biograf", "ds_biograf", CRxDataSource.DATATYPE_events, 0xdb552d));
@@ -330,6 +332,10 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);
         ds.m_nRefreshFreqHours = 4;
+
+        ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
+        ds.m_nRefreshFreqHours = 48;
+        ds.m_bFilterAsParentView = true;
     }
 
     //--------------------------------------------------------------------------
@@ -509,6 +515,10 @@ class CRxDataSourceManager {
         }
         else if (id.equals(CRxDataSourceManager.dsRadDeska)) {
             refreshStdJsonDataSource(id, "dyn_radDeska.json");
+            return;
+        }
+        else if (id.equals(CRxDataSourceManager.dsCityOffice)) {
+            refreshStdJsonDataSource(id, "dyn_cityOffice.json");
             return;
         }
         else if (id.equals(CRxDataSourceManager.dsWork)) {

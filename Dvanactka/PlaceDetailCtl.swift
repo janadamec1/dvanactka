@@ -176,10 +176,10 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             }
             
             if let category = rec.m_eCategory {
-                if category == .wasteTextile {
+                if category == CRxCategory.wasteTextile.rawValue {
                     m_lbNote.text = NSLocalizedString("Waste.textile.longdesc", comment: "");
                     m_lbNote.isHidden = false;
-                } else if category == .wasteElectro {
+                } else if category == CRxCategory.wasteElectro.rawValue {
                     m_lbNote.text = NSLocalizedString("Waste.electro.longdesc", comment: "");
                     m_lbNote.isHidden = false;
                 }
@@ -314,7 +314,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             var identifier = "pin"
             if !annotation.m_bForCheckIn {
                 if let category = annotation.m_rec.m_eCategory {
-                    identifier = category.rawValue; // for reusing
+                    identifier = category; // for reusing
                 }
             }
             
@@ -357,9 +357,10 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         
         mailer.setToRecipients(["\(email)"]);
         
-        if let category = rec.m_eCategory {
+        if let catStr = rec.m_eCategory,
+            let category = CRxCategory(rawValue: catStr) {
             if category == .wasteTextile || category == .waste || category == .wasteElectro {
-                mailer.setSubject(rec.m_sTitle + ", Praha 12 - " + CRxEventRecord.categoryLocalName(category: category));
+                mailer.setSubject(rec.m_sTitle + ", Praha 12 - " + CRxEventRecord.categoryLocalName(category: rec.m_eCategory));
                 mailer.setMessageBody(NSLocalizedString("(Please describe problem here)", comment:"") , isHTML: false);
             }
         }

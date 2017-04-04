@@ -145,7 +145,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         if let annotation = annotation as? CRxMapItem {
             var identifier = "pin"
             if let category = annotation.m_rec.m_eCategory {
-                identifier = category.rawValue; // for reusing
+                identifier = category; // for reusing
             }
             
             var view: MKAnnotationView

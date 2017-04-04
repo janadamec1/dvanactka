@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.roomarranger.android.dvanactka"
         minSdkVersion 16
@@ -25,11 +25,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.google.android.gms:play-services:9.0.0'
+    compile 'com.google.android.gms:play-services-location:9.0.0'
+    compile 'com.google.android.gms:play-services-maps:9.0.0'
     compile 'com.google.android.gms:play-services-analytics:9.0.0'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:customtabs:24.0.0'
+    compile 'com.android.support:customtabs:24.2.1'
     testCompile 'junit:junit:4.12'
     compile project(':segmentedControl')
 }

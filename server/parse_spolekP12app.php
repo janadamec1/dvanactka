@@ -114,6 +114,7 @@ foreach ($nodes as $i => $node) {
 			$arrContact = explode(";", $nodeContact->nodeValue);
 			foreach ($arrContact as $j => $item) {
 				$contact = trim($item);
+				if (strlen($contact) == 0) continue;
 				if (strpos($contact, "@") !== FALSE)
 					$aNewRecord["email"] = $contact;
 				else if (substr_compare($contact, "http", 0, 4) === 0)

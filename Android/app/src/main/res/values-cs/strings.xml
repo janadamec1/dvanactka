@@ -120,4 +120,5 @@
     <string name="gamestart_note">Hru začnete hrát tak, že dojdete k nejbližšímu místu ve Výletech, Odpadu nebo Firmách, a ťuknete na Jsem tu!</string>
     <string name="downloading_data">Data se stahují...</string>
     <string name="error_downloading_data">Chyba při stahování dat</string>
+    <string name="city_office">Úřad</string>
 </resources>
