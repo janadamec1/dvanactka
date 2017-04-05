@@ -29,6 +29,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBOutlet weak var m_btnEmail: UIButton!
     @IBOutlet weak var m_btnPhone: UIButton!
     @IBOutlet weak var m_btnBuy: UIButton!
+    @IBOutlet weak var m_btnPhoneMobile: UIButton!
     @IBOutlet weak var m_map: MKMapView!
     @IBOutlet weak var m_lbShowNotifications: UILabel!
     @IBOutlet weak var m_chkShowNotifications: UISwitch!
@@ -64,7 +65,23 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         
         if let rec = m_aRecord {
             m_lbTitle.text = rec.m_sTitle;
-            m_lbText.text = rec.m_sText;
+            
+            var bTextSet = false;
+            if rec.hasHtmlText() {
+                let sHtmlText = String.init(format: "<style>div {font-family: '%@'; font-size:%fpx;}</style>", m_lbText.font.fontName, m_lbText.font.pointSize) + rec.m_sText!;
+                if let htmlData = sHtmlText.data(using: String.Encoding.unicode) {
+                    do {
+                        let attributedText = try NSMutableAttributedString(data: htmlData, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil);
+                        m_lbText.attributedText = attributedText;
+                        bTextSet = true;
+                    } catch let error as NSError {
+                        print("Translating HTML text failed: \(error.localizedDescription)");
+                    }
+                }
+            }
+            if !bTextSet {
+                m_lbText.text = rec.m_sText;
+            }
             substituteRecordText();
             
             if let category = rec.m_eCategory {
@@ -208,6 +225,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             }
             else {
                 m_btnPhone.isHidden = true;
+            }
+            if let phone = rec.m_sPhoneMobileNumber {
+                m_btnPhoneMobile.setTitle(phone, for: UIControlState.normal)
+            }
+            else {
+                m_btnPhoneMobile.isHidden = true;
             }
             if rec.m_sBuyLink != nil && rec.m_sFilter != nil && rec.m_sFilter! == "Restaurace" {
                 m_btnBuy.setTitle(NSLocalizedString("Lunch menu", comment:""), for: .normal);
@@ -382,6 +405,19 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         }
     }
     
+    //--------------------------------------------------------------------------
+    @IBAction func onBtnPhoneMobileTouched(_ sender: Any) {
+        guard let rec = m_aRecord,
+            let phone = rec.m_sPhoneMobileNumber
+            else {return;}
+        
+        let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
+        
+        if let url = URL(string: "telprompt://\(cleanedNumber)") {
+            UIApplication.shared.openURL(url);
+        }
+    }
+
     //--------------------------------------------------------------------------
     @IBAction func onBtnBuyTouched(_ sender: Any) {
         guard let rec = m_aRecord

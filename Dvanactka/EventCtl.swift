@@ -596,7 +596,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             /*else if let cat = rec.m_eCategory {
                 sSubtitle = CRxEventRecord.categoryLocalName(category: cat);
             }*/
-            else if let text = rec.m_sText {
+            else if !rec.hasHtmlText(), let text = rec.m_sText {
                 sSubtitle = text;
             }
             if !sSubtitle.isEmpty {
@@ -605,9 +605,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 }
                 sDistance += sSubtitle;
             }
-            if sDistance.isEmpty {
-                sDistance = "  ";    // must not be empty, causes strange effects
-            }
+            cellPlace.m_lbText.isHidden = sDistance.isEmpty;
             cellPlace.m_lbText.text = sDistance;
             
             if rec.m_bMarkFavorite {

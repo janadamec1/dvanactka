@@ -511,7 +511,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     else if (sTodayHours != null) {
                         sSubtitle = sTodayHours;
                     }
-                    else if (rec.m_sText != null) {
+                    else if (rec.m_sText != null && !rec.hasHtmlText()) {
                         sSubtitle = rec.m_sText;
                     }
                     if (!sSubtitle.isEmpty()) {
@@ -520,10 +520,11 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         }
                         sDistance += sSubtitle;
                     }
-                    if (sDistance.isEmpty()) {
+                    /*if (sDistance.isEmpty()) {
                         sDistance = "  ";    // must not be empty, causes strange effects
-                    }
+                    }*/
                     cell.m_lbText.setText(sDistance);
+                    cell.m_lbText.setVisibility(!sDistance.isEmpty() ? View.VISIBLE : View.GONE);
 
                     int iIcon = CRxCategory.categoryIconName(rec.m_eCategory);
                     if (rec.m_bMarkFavorite)

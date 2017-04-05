@@ -183,6 +183,7 @@ class CRxEventRecord: NSObject {
     var m_aLocation: CLLocation?    // event location
     var m_aLocCheckIn: CLLocation?  // location for game check-in (usually not preset)
     var m_sPhoneNumber: String?
+    var m_sPhoneMobileNumber: String?
     var m_sEmail: String?
     var m_sContactNote: String?
     var m_arrOpeningHours: [CRxHourInterval]?
@@ -221,6 +222,7 @@ class CRxEventRecord: NSObject {
         if let filter = jsonItem["filter"] as? String { m_sFilter = filter }
         if let text = jsonItem["text"] as? String { m_sText = text }
         if let phone = jsonItem["phone"] as? String { m_sPhoneNumber = phone }
+        if let phone = jsonItem["phoneMobile"] as? String { m_sPhoneMobileNumber = phone }
         if let email = jsonItem["email"] as? String { m_sEmail = email }
         if let contactNote = jsonItem["contactNote"] as? String { m_sContactNote = contactNote }
         if let address = jsonItem["address"] as? String { m_sAddress = address }
@@ -269,6 +271,7 @@ class CRxEventRecord: NSObject {
         if let filter = m_sFilter { item["filter"] = filter as AnyObject }
         if let text = m_sText { item["text"] = text as AnyObject }
         if let phone = m_sPhoneNumber { item["phone"] = phone as AnyObject }
+        if let phone = m_sPhoneMobileNumber { item["phoneMobile"] = phone as AnyObject }
         if let email = m_sEmail { item["email"] = email as AnyObject }
         if let contactNote = m_sContactNote { item["contactNote"] = contactNote as AnyObject }
         if let address = m_sAddress { item["address"] = address as AnyObject }
@@ -528,6 +531,13 @@ class CRxEventRecord: NSObject {
             if text.range(of: sExpr, options: [.caseInsensitive, .diacriticInsensitive], range: nil, locale: Locale.current) != nil {
                 return true;
             }
+        }
+        return false;
+    }
+    //---------------------------------------------------------------------------
+    func hasHtmlText() -> Bool {
+        if let text = m_sText, text.hasPrefix("<div") {
+            return true;
         }
         return false;
     }

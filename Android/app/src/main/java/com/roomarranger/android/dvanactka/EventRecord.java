@@ -253,6 +253,7 @@ class CRxEventRecord
     Location m_aLocation = null;    // event location
     Location m_aLocCheckIn = null;  // location for game check-in (usually not preset)
     String m_sPhoneNumber = null;
+    String m_sPhoneMobileNumber = null;
     String m_sEmail = null;
     String m_sContactNote = null;
     ArrayList<CRxHourInterval> m_arrOpeningHours = null;
@@ -300,6 +301,7 @@ class CRxEventRecord
         pThis.m_sFilter = jsonItem.optString("filter", null);
         pThis.m_sText = jsonItem.optString("text", null);
         pThis.m_sPhoneNumber = jsonItem.optString("phone", null);
+        pThis.m_sPhoneMobileNumber = jsonItem.optString("phoneMobile", null);
         pThis.m_sEmail = jsonItem.optString("email", null);
         pThis.m_sContactNote = jsonItem.optString("contactNote", null);
         pThis.m_sAddress = jsonItem.optString("address", null);
@@ -370,6 +372,7 @@ class CRxEventRecord
         try { item.put("filter", m_sFilter); } catch (JSONException e) {}
         try { item.put("text", m_sText); } catch (JSONException e) {}
         try { item.put("phone", m_sPhoneNumber); } catch (JSONException e) {}
+        try { item.put("phoneMobile", m_sPhoneMobileNumber); } catch (JSONException e) {}
         try { item.put("email", m_sEmail); } catch (JSONException e) {}
         try { item.put("contactNote", m_sContactNote); } catch (JSONException e) {}
         try { item.put("address", m_sAddress); } catch (JSONException e) {}
@@ -578,6 +581,11 @@ class CRxEventRecord
                 return true;
         }
         return false;
+    }
+
+    //---------------------------------------------------------------------------
+    boolean hasHtmlText() {
+        return m_sText != null && m_sText.startsWith("<div");
     }
 
 }

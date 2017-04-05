@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -958,14 +958,14 @@ line 3</string>
                         <viewControllerLayoutGuide type="bottom" id="qIn-rX-m9O"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jTD-Yt-rct">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="740"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcN-le-YCq">
-                                <rect key="frame" x="0.0" y="20" width="320" height="620"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="720"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="bjr-FT-wWi">
-                                        <rect key="frame" x="8" y="8" width="304" height="623"/>
+                                        <rect key="frame" x="8" y="8" width="304" height="659"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9d-qA-hjD">
                                                 <rect key="frame" x="0.0" y="0.0" width="304" height="20.5"/>
@@ -1067,20 +1067,20 @@ line 3</string>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="NL6-J4-ZLf">
                                                 <rect key="frame" x="0.0" y="343" width="304" height="30"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HnF-vY-94c">
-                                                        <rect key="frame" x="0.0" y="0.0" width="37" height="30"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                        <state key="normal" title="Email"/>
-                                                        <connections>
-                                                            <action selector="onBtnEmailTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="Ibw-lK-Vxf"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6Y-zE-BJw">
-                                                        <rect key="frame" x="133.5" y="0.0" width="44" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <state key="normal" title="Phone"/>
                                                         <connections>
                                                             <action selector="onBtnPhoneTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="xKs-gu-M1q"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HnF-vY-94c">
+                                                        <rect key="frame" x="140.5" y="0.0" width="37" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <state key="normal" title="Email"/>
+                                                        <connections>
+                                                            <action selector="onBtnEmailTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="Ibw-lK-Vxf"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VF8-es-BES">
@@ -1093,8 +1093,21 @@ line 3</string>
                                                     </button>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tAn-2L-H3f">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="RMP-Qi-iZk">
                                                 <rect key="frame" x="0.0" y="379" width="304" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdQ-pg-7rq">
+                                                        <rect key="frame" x="0.0" y="0.0" width="304" height="30"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <state key="normal" title="Phone_mobile"/>
+                                                        <connections>
+                                                            <action selector="onBtnPhoneMobileTouched:" destination="IoX-1s-I15" eventType="touchUpInside" id="9hj-zm-clD"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tAn-2L-H3f">
+                                                <rect key="frame" x="0.0" y="415" width="304" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Game:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbc-W5-oCF">
                                                         <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
@@ -1119,7 +1132,7 @@ line 3</string>
                                                 </subviews>
                                             </stackView>
                                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ssk-ui-SR2">
-                                                <rect key="frame" x="0.0" y="415" width="304" height="150"/>
+                                                <rect key="frame" x="0.0" y="451" width="304" height="150"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="oGa-Vz-l8h">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="250"/>
@@ -1127,7 +1140,7 @@ line 3</string>
                                                 </constraints>
                                             </mapView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-75-kV2">
-                                                <rect key="frame" x="0.0" y="571" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="607" width="304" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcs-vc-UN8">
                                                         <rect key="frame" x="0.0" y="0.0" width="61" height="30"/>
@@ -1148,7 +1161,7 @@ line 3</string>
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jL-Ru-owg">
-                                                <rect key="frame" x="0.0" y="607" width="304" height="16"/>
+                                                <rect key="frame" x="0.0" y="643" width="304" height="16"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1178,13 +1191,14 @@ line 3</string>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="640"/>
+                    <size key="freeformSize" width="320" height="740"/>
                     <connections>
                         <outlet property="m_btnBuy" destination="VF8-es-BES" id="ZzH-LU-UH3"/>
                         <outlet property="m_btnEmail" destination="HnF-vY-94c" id="CbD-J8-pVT"/>
                         <outlet property="m_btnGameCheckIn" destination="xBA-L9-zg6" id="SGW-Ch-hpq"/>
                         <outlet property="m_btnNavigate" destination="Jcs-vc-UN8" id="4Fy-Ka-NCW"/>
                         <outlet property="m_btnPhone" destination="W6Y-zE-BJw" id="Q6p-6c-Zfh"/>
+                        <outlet property="m_btnPhoneMobile" destination="hdQ-pg-7rq" id="amF-eq-vl2"/>
                         <outlet property="m_btnReportMistake" destination="Jx3-Fi-Nyt" id="wWN-on-fj8"/>
                         <outlet property="m_btnWebsite" destination="6qg-xM-OJA" id="qY2-uc-lEd"/>
                         <outlet property="m_chkShowNotifications" destination="HL4-Uq-q6d" id="Tor-sK-6UY"/>
@@ -1208,7 +1222,7 @@ line 3</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FeN-VK-gIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3941" y="-74"/>
+            <point key="canvasLocation" x="3941" y="-43"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GWU-bG-M1o">

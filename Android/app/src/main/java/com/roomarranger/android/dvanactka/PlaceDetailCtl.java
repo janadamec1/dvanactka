@@ -58,6 +58,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     Button m_btnWebsite;
     Button m_btnEmail;
     Button m_btnPhone;
+    Button m_btnPhoneMobile;
     Button m_btnBuy;
     Space m_spaceEmail;
     Space m_spaceBuy;
@@ -109,6 +110,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         m_btnWebsite = (Button)findViewById(R.id.btnWebsite);
         m_btnEmail = (Button)findViewById(R.id.btnEmail);
         m_btnPhone = (Button)findViewById(R.id.btnPhone);
+        m_btnPhoneMobile = (Button)findViewById(R.id.btnPhoneMobile);
         m_btnBuy = (Button)findViewById(R.id.btnBuy);
         m_spaceEmail = (Space)findViewById(R.id.spaceEmail);
         m_spaceBuy = (Space)findViewById(R.id.spaceBuy);
@@ -125,7 +127,14 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
         setTitle("  "); // empty action bar title
         m_lbTitle.setText(rec.m_sTitle);
-        m_lbText.setText(rec.m_sText);
+        if (rec.hasHtmlText()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+                m_lbText.setText(Html.fromHtml(rec.m_sText, Html.FROM_HTML_MODE_COMPACT));
+            else
+                m_lbText.setText(Html.fromHtml(rec.m_sText));
+        }
+        else
+            m_lbText.setText(rec.m_sText);
         substituteRecordText();
 
         if (rec.m_eCategory != null) {
@@ -270,6 +279,12 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         else {
             m_btnPhone.setVisibility(View.GONE);
         }
+        if (rec.m_sPhoneMobileNumber != null) {
+            m_btnPhoneMobile.setText(rec.m_sPhoneMobileNumber);
+        }
+        else {
+            m_btnPhoneMobile.setVisibility(View.GONE);
+        }
         if (rec.m_sBuyLink != null && rec.m_sFilter != null && rec.m_sFilter.equals("Restaurace")) {
             m_btnBuy.setText(R.string.lunch_menu);
         }
@@ -382,6 +397,24 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
             List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
             m_btnPhone.setEnabled(!infos.isEmpty());
+        }
+        if (rec.m_sPhoneMobileNumber != null) {
+            m_btnPhoneMobile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneMobileNumber.replace(" ", ""), null));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            PackageManager pm = getPackageManager();
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
+            List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
+            m_btnPhoneMobile.setEnabled(!infos.isEmpty());
         }
         if (rec.m_sEmail != null) {
             m_btnEmail.setOnClickListener(new View.OnClickListener() {

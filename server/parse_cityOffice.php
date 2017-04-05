@@ -34,7 +34,7 @@ function downloadKontakt(&$arrItems, $linkKontakt, $sOdbor, $sCatName) {
 					if ($sLabel == "pevná linka")
 						$aNewRecord["phone"] = $sValue;
 					else if ($sLabel == "mobilní")
-						$aNewRecord["phone_mobile"] = $sValue;
+						$aNewRecord["phoneMobile"] = $sValue;
 					else if ($sLabel == "oficiální")
 						$aNewRecord["email"] = $sValue;
 				}
@@ -44,10 +44,97 @@ function downloadKontakt(&$arrItems, $linkKontakt, $sOdbor, $sCatName) {
 	}
 }
 
+//------------------------------------------------------------------------
+function downloadAgenda($linkAgenda, $sOdbor) {
+	$domAgenda = new DomDocument;
+	$domAgenda->loadHTMLFile($linkAgenda);
+	$xpathAgenda = new DomXPath($domAgenda);
+	$nodeAgenda = firstItem($xpathAgenda->query("//div[@class='obsah']/div[@class='editor']"));
+	if ($nodeAgenda != NULL) {
+		$sHtml = $domAgenda->saveHTML($nodeAgenda);
+		if ($sHtml !== FALSE) {
+			return $sHtml;
+		}
+	}
+	return "";
+}
+
+//------------------------------------------------------------------------
+function downloadSituations(&$arrItems, $linkSituat, $sOdbor) {
+	$domSituat = new DomDocument;
+	$domSituat->loadHTMLFile($linkSituat);
+	$xpathSituat = new DomXPath($domSituat);
+	$nodesSituat = $xpathSituat->query("//div[@class='obsah']/div[@class='dok']/ul/li/strong/a");
+	foreach ($nodesSituat as $i => $nodeSit) {
+		$aNewRecord = array("title" => $nodeSit->nodeValue);
+		$linkSit = $nodeSit->getAttribute("href");
+		if (substr($linkSit, 0, 4) != "http") {
+			$linkSit = "http://www.praha12.cz" . $linkSit;
+		}
+		$aNewRecord["infoLink"] = $linkSit;
+		$aNewRecord["filter"] = $sOdbor;
+		$aNewRecord["category"] = "Jak zařídit";
+		array_push($arrItems, $aNewRecord);
+	}
+	// this odbor has sub-categories, go for them
+	$nodesKategorie = $xpathSituat->query("//div[@class='obsah']/div[@class='kategorie souvisejiciodkazy']/ul/li/strong/a");
+	foreach ($nodesKategorie as $i => $nodeKat) {
+		$linkKat = $nodeKat->getAttribute("href");
+		if (substr($linkKat, 0, 4) != "http") {
+			$linkKat = "http://www.praha12.cz" . $linkKat;
+		}
+		downloadSituations($arrItems, $linkKat, $sOdbor);
+	}
+}
+
+//------------------------------------------------------------------------
 function downloadOdbor(&$arrItems, $title, $link) {
 	$domOdbor = new DomDocument;
 	$domOdbor->loadHTMLFile($link);
 	$xpathOdbor = new DomXPath($domOdbor);
+	
+	// kontakt
+	$sAddress = "";
+	$nodeAddress = firstItem($xpathOdbor->query("//div[@class='utvarkontakt']/div[@id='kvlevo']/div[@class='obsah']/div[@id='unpobtekane']/div[@class='popis']"));
+	if ($nodeAddress !== NULL) {
+		$sAddress = $nodeAddress->nodeValue;
+		$sAddress = str_replace(" [ na mapě ]", "\n", $sAddress);
+	}	
+	
+	// agenda
+	$sAgendaHtml = "";
+	$nodeAgenda = firstItem($xpathOdbor->query("//div[@class='zalozky']/ul/li[@class='z02']/a"));
+	if ($nodeAgenda !== NULL) {
+		$linkAgenda = $nodeAgenda->getAttribute("href");
+		if (substr($linkAgenda, 0, 4) != "http") {
+			$linkAgenda = "http://www.praha12.cz" . $linkAgenda;
+		}
+		$sAgendaHtml = downloadAgenda($linkAgenda, $title);
+	}
+	
+	if (strlen($sAddress) > 0 || strlen($sAgendaHtml) > 0) {
+		$aNewRecord = array("title" => $title);
+		$aNewRecord["infoLink"] = $link;
+		$aNewRecord["filter"] = $title;
+		$aNewRecord["category"] = "O odboru";
+		if (strlen($sAddress) > 0)
+			$aNewRecord["address"] = $sAddress;
+		if (strlen($sAgendaHtml) > 0)
+			$aNewRecord["text"] = $sAgendaHtml;
+		array_push($arrItems, $aNewRecord);
+	}
+	
+	// situations
+	$nodeSituat = firstItem($xpathOdbor->query("//div[@class='zalozky']/ul/li[@class='z03']/a"));
+	if ($nodeSituat !== NULL) {
+		$linkSituat = $nodeSituat->getAttribute("href");
+		if (substr($linkSituat, 0, 4) != "http") {
+			$linkSituat = "http://www.praha12.cz" . $linkSituat;
+		}
+		downloadSituations($arrItems, $linkSituat, $title);
+	}
+	
+	// employees
 	$nodesUtvary = $xpathOdbor->query("//div[@class='utvary']/ul/li");
 	foreach ($nodesUtvary as $i => $nodeUtvar) {
 		$sCatName = "";
@@ -72,6 +159,7 @@ function downloadOdbor(&$arrItems, $title, $link) {
 	}
 }
 
+//------------------------------------------------------------------------
 $arrItems = array();
 $dom = new DomDocument;
 $dom->loadHTMLFile("http://www.praha12.cz/osp/p1=2021");

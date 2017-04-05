@@ -109,20 +109,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:text="Email"
+            android:text="Phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnEmail"/>
+            android:id="@+id/btnPhone"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
             android:id="@+id/spaceEmail"/>
         <Button
-            android:text="Phone"
+            android:text="Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnPhone"/>
+            android:id="@+id/btnEmail"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -135,6 +135,21 @@
             android:id="@+id/btnBuy"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="PhoneMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPhoneMobile"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:id="@+id/spaceMob2"/>
+    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
