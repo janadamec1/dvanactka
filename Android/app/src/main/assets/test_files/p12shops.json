@@ -350,6 +350,18 @@
 "filter":"Čistírna oděvů"
 },
 {
+"title":"Prádelna v Čechtické",
+"text":"Praní a čištění prádla, žehlení a mandlování, šití dek a opravy oděvů",
+"locationLat":"50.0193833",
+"locationLong":"14.4430508",
+"address":"Čechtická 6\nPraha 4",
+"openingHours":"1: 800-1630, 2: 800-1630, 3: 800-1630, 4: 800-1630, 5: 800-1400",
+"infoLink":"http:\/\/vyzehlenakosile.cz",
+"phone":"608 283 382",
+"category":"obchod",
+"filter":"Čistírna oděvů"
+},
+{
 "title":"Řeznictví Košťál",
 "locationLat":"50.0014378",
 "locationLong":"14.4074633",
@@ -382,10 +394,11 @@
 },
 {
 "title":"Řeznictví Valenta",
+"text":"od 1.3.2017 zavřeno",
 "locationLat":"50.0142892",
 "locationLong":"14.4101108",
 "address":"K Otočče 1831\nPraha 12",
-"openingHours":"1: 730-1600, 2: 730-1600, 3: 730-1600, 4: 730-1700, 5: 730-1700, 6: 730-1100",
+"xxxopeningHours":"1: 730-1600, 2: 730-1600, 3: 730-1600, 4: 730-1700, 5: 730-1700, 6: 730-1100",
 "category":"obchod",
 "filter":"Řeznictví"
 },
@@ -514,6 +527,15 @@
 "infoLink":"http:\/\/www.emap-praha.cz",
 "phone":"261 911 452",
 "email":"obchod@emap-praha.cz",
+"category":"obchod",
+"filter":"Servis"
+},
+{
+"title":"Mobilní telefony",
+"locationLat":"50.0063217",
+"locationLong":"14.4043111",
+"address":"Modřanská 6\nPraha 12",
+"openingHours":"1: 1000-1800, 2: 1000-1800, 3: 1000-1800, 4: 1000-1800, 5: 1000-1800",
 "category":"obchod",
 "filter":"Servis"
 },

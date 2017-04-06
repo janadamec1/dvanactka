@@ -884,7 +884,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         MenuItem actSaved = menu.findItem(R.id.action_saved);
         MenuItem actSearch = menu.findItem(R.id.action_search);
         actFilter.setVisible(m_aDataSource.m_bFilterable);
-        actMap.setVisible(m_aDataSource.m_eType == CRxDataSource.DATATYPE_places);
+        actMap.setVisible(m_aDataSource.m_bMapEnabled);
         actSaved.setVisible(m_aDataSource.m_eType == CRxDataSource.DATATYPE_news && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews));
 
         SearchView viewSearch = (SearchView)actSearch.getActionView();

@@ -63,6 +63,7 @@ class CRxDataSource {
     boolean m_bFilterAsParentView = false;   // UI should first show the list of possible filters
     boolean m_bFilterable = false;           // UI can filter this datasource accoring to records' m_sFilter
     Set<String> m_setFilter = null;       // contains strings that should NOT be shown
+    boolean m_bMapEnabled = false;          // UI can display records on map (enabled for .places)
 
     CRxDataSource(String id, String title, String icon, int type, int backgroundColor) {
         super();
@@ -71,6 +72,7 @@ class CRxDataSource {
         m_sIcon = icon;
         m_eType = type;
         m_iBackgroundColor = backgroundColor;
+        m_bMapEnabled = (type == DATATYPE_places);
     }
 
     //--------------------------------------------------------------------------
@@ -335,7 +337,9 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
         ds.m_nRefreshFreqHours = 48;
+        ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
         ds.m_bFilterAsParentView = true;
+        ds.m_bMapEnabled = false;
     }
 
     //--------------------------------------------------------------------------

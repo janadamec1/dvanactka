@@ -40,6 +40,7 @@ class CRxDataSource : NSObject {
     var m_bFilterAsParentView = false   // UI should first show the list of possible filters
     var m_bFilterable = false           // UI can filter this datasource accoring to records' m_sFilter
     var m_setFilter: Set<String>?       // contains strings that should NOT be shown
+    var m_bMapEnabled = false           // UI can display records on map (enabled for .places)
     
     init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int) {
         m_sId = id;
@@ -47,6 +48,7 @@ class CRxDataSource : NSObject {
         m_sIcon = icon;
         m_eType = type;
         m_iBackgroundColor = backgroundColor;
+        m_bMapEnabled = (type == .places);
         super.init()
     }
     
@@ -248,7 +250,9 @@ class CRxDataSourceManager : NSObject {
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCityOffice] {
             ds.m_nRefreshFreqHours = 48;
+            ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
             ds.m_bFilterAsParentView = true;
+            ds.m_bMapEnabled = false;
         }
     }
     

@@ -96,7 +96,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             }
             
             var arrBtnItems = [UIBarButtonItem]();
-            if ds.m_eType == .places {
+            if ds.m_bMapEnabled {
                 // init location tracking
                 arrBtnItems.append(UIBarButtonItem(title: NSLocalizedString("Map", comment: ""), style: .plain, target: self, action: #selector(EventsCtl.showMap)));
 
@@ -162,6 +162,11 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
 
+        // clear selection when returning
+        if let selIndexPath = m_tableView.indexPathForSelectedRow {
+            m_tableView.deselectRow(at: selIndexPath, animated: animated);
+        }
+        
         guard let ds = m_aDataSource else { return }
         if ds.m_bIsBeingRefreshed {
             ds.delegate = self;
