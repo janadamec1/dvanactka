@@ -336,7 +336,7 @@ class CRxDataSourceManager {
         ds.m_nRefreshFreqHours = 4;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
-        ds.m_nRefreshFreqHours = 48;
+        ds.m_nRefreshFreqHours = 100;
         ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
         ds.m_bFilterAsParentView = true;
         ds.m_bMapEnabled = false;
