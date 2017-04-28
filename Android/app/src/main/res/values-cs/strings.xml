@@ -121,4 +121,6 @@
     <string name="downloading_data">Data se stahují...</string>
     <string name="error_downloading_data">Chyba při stahování dat</string>
     <string name="city_office">Úřad</string>
+    <string name="c_fault">Havárie</string>
+    <string name="c_toilet">WC</string>
 </resources>

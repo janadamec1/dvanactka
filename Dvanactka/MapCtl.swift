@@ -154,13 +154,17 @@ class MapCtl: UIViewController, MKMapViewDelegate {
                 view = dequeuedView
             }
             else {
+                var aIcon: UIImage?;
                 if let category = annotation.m_rec.m_eCategory {
-                    view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                    view.image = UIImage(named: CRxEventRecord.categoryIconName(category: category))
+                    aIcon = UIImage(named: CRxEventRecord.categoryIconName(category: category));
+                }
+                if let icon = aIcon {
+                    view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier);
+                    view.image = icon;
                 }
                 else {
-                    view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                    view.calloutOffset = CGPoint(x: -5, y: 5)
+                    view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier);
+                    view.calloutOffset = CGPoint(x: -5, y: 5);
                 }
                 view.canShowCallout = true
                 view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView

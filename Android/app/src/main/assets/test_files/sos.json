@@ -119,6 +119,41 @@
 "category":"policie"
 },
 {
+"title":"Elektrický proud",
+"text":"PREdistribuce\n\nVolejte, pokud došlo k výpadku dodávky elektřiny, chcete informace o obnově dodávek, nefunguje vám elektroměr či HDO apod.",
+"phone":"1236",
+"infoLink":"https:\/\/www.predistribuce.cz\/cs\/kontakt\/hlaseni-poruchy",
+"category":"havarie"
+},
+{
+"title":"Plyn",
+"text":"Pražská plynárenská",
+"infoLink":"http:\/\/www.ppas.cz",
+"phone":"1239",
+"category":"havarie"
+},
+{
+"title":"Voda, kanalizace",
+"text":"Pražské vodovody a kanalizace",
+"infoLink":"http:\/\/www.pvk.cz\/aktuality\/havarie-vody\/aktualni-havarie",
+"phone":"840 111 112",
+"category":"havarie"
+},
+{
+"title":"Veřejné osvětlení",
+"text":"PREdistribuce\n\nVolejte, pokud nesvítí veřejné osvětlení, nefungují veřejné hodiny nebo došlo k poškození sloupu či jeho patice.",
+"phone":"224 915 151",
+"infoLink":"https:\/\/www.predistribuce.cz\/cs\/kontakt\/hlaseni-poruchy",
+"category":"havarie"
+},
+{
+"title":"Světelná dopravní signalizace",
+"text":"Eltodo",
+"infoLink":"http:\/\/www.eltodo.cz\/hlaseni-poruch.html",
+"phone":"800 101 109",
+"category":"havarie"
+},
+{
 "title":"Dr. Max, Soukalova (Poliklinika Modřany)",
 "locationLat":"50.0057919",
 "locationLong":"14.4142543",
@@ -168,12 +203,12 @@
 },
 {
 "title":"Magistra Lékárna U polikliniky",
-"locationLat":"50.006141",
-"locationLong":"14.4159997",
-"address":"Čs. exilu 26\nPraha 12",
+"locationLat":"50.0057222",
+"locationLong":"14.4161081",
+"address":"Čs. exilu 30\nPraha 12",
 "phone":"730 840 250",
 "infoLink":"https:\/\/www.magistra.cz",
-"openingHours":"1: 900-1200, 1:1230-1730, 2: 900-1200, 2:1230-1730, 3: 900-1200, 3:1230-1730, 4: 900-1200, 4:1230-1730, 5: 900-1200, 5:1230-1730, 6: 900-1200, 6:1230-1730",
+"openingHours":"1: 800-1730, 2: 800-1730, 3: 800-1730, 4: 800-1730, 5: 800-1730",
 "category":"lekarna"
 },
 {
@@ -222,5 +257,29 @@
 "phone":"241 011 277",
 "openingHours":"1: 800-1830, 2: 800-1830, 3: 800-1830, 4: 800-1830, 5: 800-1830, 6: 800-1200",
 "category":"lekarna"
+},
+{
+"title":"V Pasáži Sofie",
+"locationLat":"50.0058156",
+"locationLong":"14.4182378",
+"address":"Sofijské náměstí\nPraha 12",
+"openingHours":"1: 900-1900, 2: 900-1900, 3: 900-1900, 4: 900-1900, 5: 900-1900, 6: 800-1200",
+"category":"wc"
+},
+{
+"title":"V Kauflandu",
+"locationLat":"50.0137481",
+"locationLong":"14.4192061",
+"address":"Lhotecká 2d\nPraha 12",
+"openingHours":"1: 700-2359, 2: 700-2359, 3: 700-2359, 4: 700-2359, 5: 700-2359, 6: 700-2359, 7: 700-2359",
+"category":"wc"
+},
+{
+"title":"V poliklinice",
+"locationLat":"50.0056775",
+"locationLong":"14.4143325",
+"address":"Soukalova 3\nPraha 12",
+"openingHours":"1: 700-1900, 2: 700-1900, 3: 700-1900, 4: 700-1900, 5: 700-1900",
+"category":"wc"
 }
 ]}

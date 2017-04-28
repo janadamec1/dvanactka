@@ -120,4 +120,6 @@
     <string name="game_you">YOU</string>
     <string name="error_downloading_data">Error when downloading data</string>
     <string name="city_office">Office</string>
+    <string name="c_fault">Fault</string>
+    <string name="c_toilet">Toilet</string>
 </resources>

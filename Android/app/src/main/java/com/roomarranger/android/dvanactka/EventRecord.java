@@ -173,7 +173,7 @@ class CRxEventInterval
 
 //---------------------------------------------------------------------------
 class CRxCategory {
-    static final String informace = "informace", lekarna = "lekarna", prvniPomoc = "prvniPomoc", policie = "policie";
+    static final String informace = "informace", lekarna = "lekarna", prvniPomoc = "prvniPomoc", policie = "policie", havarie = "havarie", wc = "wc";
     static final String pamatka = "pamatka", pamatnyStrom = "pamatnyStrom", vyznamnyStrom = "vyznamnyStrom", zajimavost = "zajimavost";
     static final String remeslnik = "remeslnik", restaurace = "restaurace", obchod = "obchod";
     static final String children = "children", sport = "sport", associations = "associations";
@@ -189,6 +189,8 @@ class CRxCategory {
             case lekarna: return res.getString(R.string.c_pharmacies);
             case prvniPomoc: return res.getString(R.string.c_first_aid);
             case policie: return res.getString(R.string.c_police);
+            case havarie: return res.getString(R.string.c_fault);
+            case wc: return res.getString(R.string.c_toilet);
             case pamatka: return res.getString(R.string.c_landmarks);
             case pamatnyStrom: return res.getString(R.string.c_memorial_trees);
             case vyznamnyStrom: return res.getString(R.string.c_significant_trees);
@@ -217,6 +219,8 @@ class CRxCategory {
             case lekarna: return R.drawable.c_pharmacy;
             case prvniPomoc: return R.drawable.c_firstaid;
             case policie: return R.drawable.c_police;
+            case havarie: return R.drawable.c_work;
+            case wc: return R.drawable.c_toilet;
             case pamatka: return R.drawable.c_monument;
             case pamatnyStrom: return R.drawable.c_tree;
             case vyznamnyStrom: return R.drawable.c_tree;
