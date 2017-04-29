@@ -434,6 +434,12 @@ class CRxDataSourceManager : NSObject {
     //--------------------------------------------------------------------------
     func refreshAllDataSources(force: Bool = false) {
         
+        // check if WiFi only settings applies
+        if !force && UserDefaults.standard.bool(forKey: "wifiDataOnly")
+            && !Reachability.isConnectedToNetworkViaWiFi() {
+            return;
+        }
+        
         for dsIt in m_dictDataSources {
             refreshDataSource(id: dsIt.key, force: force);
         }

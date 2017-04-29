@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -110,13 +110,13 @@
                                 <rect key="frame" x="16" y="72" width="288" height="480"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-DW-Awc">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="414.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="366.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30A-AN-Tt3">
-                                        <rect key="frame" x="0.0" y="422.5" width="288" height="30"/>
+                                        <rect key="frame" x="0.0" y="374.5" width="288" height="30"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <state key="normal" title="info@dvanactka.info"/>
                                         <connections>
@@ -124,11 +124,35 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Copyright © 2017, Jan Adamec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Klo-sB-KKI">
-                                        <rect key="frame" x="0.0" y="460.5" width="288" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="412.5" width="288" height="19.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59z-o4-25o">
+                                        <rect key="frame" x="0.0" y="440" width="288" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="Elo-ZX-EEx"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="utp-wa-ghd">
+                                        <rect key="frame" x="0.0" y="449" width="288" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download new data only via WiFi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="C3u-Kk-LjH">
+                                                <rect key="frame" x="0.0" y="0.0" width="239" height="31"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cJ6-s5-hNP">
+                                                <rect key="frame" x="239" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="onChkWifiChanged:" destination="RiZ-wt-9Oa" eventType="valueChanged" id="fzt-nz-xg6"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -149,7 +173,9 @@
                     </navigationItem>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="m_chkWifi" destination="cJ6-s5-hNP" id="Z8v-x3-bFZ"/>
                         <outlet property="m_lbText" destination="gCb-DW-Awc" id="p5P-Ex-DvF"/>
+                        <outlet property="m_lbWifi" destination="C3u-Kk-LjH" id="JUM-lI-CTv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8C-QE-ylj" userLabel="First Responder" sceneMemberID="firstResponder"/>

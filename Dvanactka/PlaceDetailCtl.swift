@@ -149,17 +149,26 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 m_lbOpeningHours2.text = sHours;
             }
             else if let events = rec.m_arrEvents {
-                var sType = "";
-                var sHours = "";
+                let sType = NSMutableAttributedString(string:"");
+                let sHours = NSMutableAttributedString(string:"");
                 var bHasVok = false;
                 var bHasBio = false;
+                let dayToday = Date();
+                let aPastAttrs = [NSForegroundColorAttributeName: UIColor.lightGray];
+                let sNewLine = NSAttributedString(string:"\n");
+
                 for it in events {
-                    if !sHours.isEmpty {
-                        sHours += "\n"
-                        sType += "\n"
+                    if sHours.length > 0 {
+                        sHours.append(sNewLine);
+                        sType.append(sNewLine);
                     }
-                    sType += it.m_sType + ": ";
-                    sHours += it.toDisplayString();
+                    var aAttrs: [String: Any]? = nil;
+                    if (it.m_dateEnd < dayToday) {
+                        aAttrs = aPastAttrs;
+                    }
+                    
+                    sType.append(NSAttributedString(string:it.m_sType + ": ", attributes:aAttrs));
+                    sHours.append(NSAttributedString(string:it.toDisplayString(), attributes:aAttrs));
                     
                     if it.m_sType == "obj. odpad" {
                         bHasVok = true;
@@ -167,11 +176,10 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                     else if it.m_sType == "bioodpad" || it.m_sType == "větve" {
                         bHasBio = true;
                     }
-                    
                 }
                 m_lbOpeningHoursTitle.text = NSLocalizedString("Timetable", comment: "")
-                m_lbOpeningHours.text = sType;
-                m_lbOpeningHours2.text = sHours;
+                m_lbOpeningHours.attributedText = sType;
+                m_lbOpeningHours2.attributedText = sHours;
                 
                 if bHasVok || bHasBio {
                     var sNote = "";
