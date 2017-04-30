@@ -60,6 +60,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
     Button m_btnRefineLocation;
 
     boolean m_bImageSelected = false;
+    boolean m_bImageOmitted = false;
     File m_fileFromCamera;
     GoogleApiClient m_GoogleApiClient = null;
     LocationRequest m_LocationRequest;
@@ -292,8 +293,19 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
             showError(getString(R.string.fill_description), m_edDescription);
             return;
         }
-        if (!m_bImageSelected) {
-            showError(getString(R.string.fill_photo), null);
+        if (!m_bImageSelected && !m_bImageOmitted) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getString(R.string.fill_photo));
+            builder.setPositiveButton(R.string.dlg_yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    m_bImageOmitted = true;
+                    onBtnSend();
+                }
+            });
+            builder.setNegativeButton(R.string.dlg_cancel, null);
+            AlertDialog alert = builder.create();
+            alert.show();
             return;
         }
         if (m_location == null) {
@@ -323,28 +335,30 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         intent.putExtra(Intent.EXTRA_TEXT, sMessageBody);
 
         // add image
-        Uri uriAttach = null;
-        if (m_fileFromCamera != null) {
-            //uriAttach = Uri.fromFile(m_fileFromCamera);
-            uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);   // this way we don't need permission to write_external_storage
-        }
-        else {
-            try {
-                File pic = new File(getCacheDir(), "foto.jpg");
-                FileOutputStream out = new FileOutputStream(pic);
-                ((BitmapDrawable) m_btnPhoto.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 85, out);
-                out.flush();
-                out.close();
-
-                uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", pic);
-            } catch (IOException e) {
-                Log.e("BROKEN", "Could not write file " + e.getMessage());
+        if (m_bImageSelected) {
+            Uri uriAttach = null;
+            if (m_fileFromCamera != null) {
+                //uriAttach = Uri.fromFile(m_fileFromCamera);
+                uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);   // this way we don't need permission to write_external_storage
             }
-        }
-        if (uriAttach != null) {
-            intent.setType("application/image");
-            intent.putExtra(Intent.EXTRA_STREAM, uriAttach);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            else {
+                try {
+                    File pic = new File(getCacheDir(), "foto.jpg");
+                    FileOutputStream out = new FileOutputStream(pic);
+                    ((BitmapDrawable) m_btnPhoto.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 85, out);
+                    out.flush();
+                    out.close();
+
+                    uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", pic);
+                } catch (IOException e) {
+                    Log.e("BROKEN", "Could not write file " + e.getMessage());
+                }
+            }
+            if (uriAttach != null) {
+                intent.setType("application/image");
+                intent.putExtra(Intent.EXTRA_STREAM, uriAttach);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
         }
 
         try {

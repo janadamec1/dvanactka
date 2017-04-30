@@ -104,7 +104,7 @@
     <string name="from_gallery">From gallery</string>
     <string name="select_photo">Select Photo</string>
     <string name="fill_description">Please fill the description.</string>
-    <string name="fill_photo">Please select the photo.</string>
+    <string name="fill_photo">Adding a photo is recommended. Are you sure to omit it?</string>
     <string name="fill_location">Please specify the location.</string>
     <string name="this_form_will_help_you_compose_the_email_for_the_municipality">This form will help you compose the e-mail for the municipality.</string>
     <string name="standard">Standard</string>
@@ -123,4 +123,7 @@
     <string name="c_fault">Fault</string>
     <string name="c_toilet">Toilet</string>
     <string name="wifi_download_only">Download new data only via WiFi</string>
+    <string name="dlg_cancel">Cancel</string>
+    <string name="dlg_yes">Yes</string>
+    <string name="photo_recommended">Photo (recommended)</string>
 </resources>

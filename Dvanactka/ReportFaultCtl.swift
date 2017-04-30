@@ -27,6 +27,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var m_keyboardHeightLayoutConstraint: NSLayoutConstraint!
     
     var m_bImageSelected: Bool = false;
+    var m_bImageOmitted: Bool = false;
     var m_locManager = CLLocationManager();
     var m_location: CLLocation?
     var m_bLocationRefined: Bool = false;
@@ -37,7 +38,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         //self.title = NSLocalizedString("Report Fault", comment: "");
         m_lbHint.text = NSLocalizedString("Report illegal dump, fault, problem", comment: "");
         m_lbAbout.text = NSLocalizedString("This form will help you compose the e-mail for the municipality.", comment: "");
-        m_lbPhoto.text = NSLocalizedString("Photo", comment: "");
+        m_lbPhoto.text = NSLocalizedString("Photo", comment: "") + " (" + NSLocalizedString("recommended", comment: "") + ")";
         m_lbDescription.text = NSLocalizedString("Description", comment: "");
         m_lbLocationTitle.text = NSLocalizedString("Location", comment: "");
         m_btnRefineLocation.setTitle(NSLocalizedString("Refine", comment: ""), for: .normal);
@@ -123,12 +124,20 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
             showError(message: NSLocalizedString("Please fill the description.", comment:""), setFocusTo: m_edDescription);
             return;
         }
-        if !m_bImageSelected {
-            showError(message: NSLocalizedString("Please select the photo.", comment:""));
-            return;
-        }
         if m_location == nil {
             showError(message: NSLocalizedString("Please specify the location.", comment:""));
+            return;
+        }
+        if !m_bImageSelected && !m_bImageOmitted {
+            let alertController = UIAlertController(title: NSLocalizedString("Adding a photo is recommended. Are you sure to omit it?", comment:""), message: nil, preferredStyle: .alert);
+            let actionYes = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { result in
+                self.m_bImageOmitted = true;
+                self.onBtnSend();
+            }
+            let actionNo = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel);
+            alertController.addAction(actionYes);
+            alertController.addAction(actionNo);
+            present(alertController, animated: true, completion: nil);
             return;
         }
         var sMessageBody = sDesc!;
@@ -151,7 +160,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         mailer.setSubject("Hlášení závady");
         mailer.setMessageBody(sMessageBody, isHTML: false);
         
-        if let image = m_btnPhoto.image(for: .normal),
+        if m_bImageSelected, let image = m_btnPhoto.image(for: .normal),
             let imageData = UIImageJPEGRepresentation(image, 0.8){
             mailer.addAttachmentData(imageData, mimeType: "image/jpeg", fileName: "photo.jpg")
         }

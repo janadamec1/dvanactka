@@ -41,7 +41,7 @@
         android:id="@+id/edDescription"/>
 
     <TextView
-        android:text="@string/photo"
+        android:text="@string/photo_recommended"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
