@@ -1,8 +1,11 @@
 package com.roomarranger.android.dvanactka;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -486,8 +489,22 @@ class CRxDataSourceManager {
         }
     }
 
+    private boolean isConnectedToNetworkViaWiFi(Context ctx)
+    {
+        ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI;
+    }
+
     //--------------------------------------------------------------------------
-    void refreshAllDataSources(boolean force) {
+    void refreshAllDataSources(boolean force, Context ctx) {
+
+        // check if WiFi only settings applies
+        if (!force) {
+            SharedPreferences sharedPref = ctx.getSharedPreferences(MainActivity.PREFERENCES_FILE, Context.MODE_PRIVATE);
+            if (sharedPref.getBoolean("wifiDataOnly", false) && !isConnectedToNetworkViaWiFi(ctx))
+                return;
+        }
 
         for (Map.Entry<String, CRxDataSource> dsIt: m_dictDataSources.entrySet()) {
             refreshDataSource(dsIt.getKey(), force);

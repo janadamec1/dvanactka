@@ -50,6 +50,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     public static final String EXTRA_EVENT_RECORD = "com.roomarranger.dvanactka.EVENT_RECORD";
     public static final String EXTRA_USER_LOCATION_LAT = "com.roomarranger.dvanactka.USER_LOCATION_LAT";
     public static final String EXTRA_USER_LOCATION_LONG = "com.roomarranger.dvanactka.USER_LOCATION_LONG";
+    public static final String PREFERENCES_FILE = "com.roomarranger.dvanactka.PREFERENCE_FILE";
 
     static final int MY_PERMISSION_REQUEST_LOCATION = 139;
     boolean m_bAskPermissionLocation = true;
@@ -214,7 +215,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         Date now = new Date();
         if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10 * 60 * 1000) {  // 10 minutes from last global refresh
             s_dateLastRefreshed = now;
-            CRxDataSourceManager.sharedInstance().refreshAllDataSources(false);
+            CRxDataSourceManager.sharedInstance().refreshAllDataSources(false, this);
             CRxGame.sharedInstance.reinit();
 
             // Google Analytics

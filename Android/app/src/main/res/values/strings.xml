@@ -122,4 +122,5 @@
     <string name="city_office">Office</string>
     <string name="c_fault">Fault</string>
     <string name="c_toilet">Toilet</string>
+    <string name="wifi_download_only">Download new data only via WiFi</string>
 </resources>

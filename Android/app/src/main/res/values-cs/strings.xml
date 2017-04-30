@@ -123,4 +123,5 @@
     <string name="city_office">Úřad</string>
     <string name="c_fault">Havárie</string>
     <string name="c_toilet">WC</string>
+    <string name="wifi_download_only">Stahovat nová data jen přes WiFi</string>
 </resources>
