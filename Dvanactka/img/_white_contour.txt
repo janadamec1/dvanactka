@@ -1,0 +1,9 @@
+Paint Shop Pro:
+(1px halo)
+1. Layer - Duplicate
+2. select bottom layer
+3. Adjust - Brightness and Contrast (Shift+B): Bright: 255, Contr: 0
+4. Effects - User defined filter: 3x3 square with all 1 around center (will get clipped to white)
+
+(1px halo)
+4. Effects - User defined filter: 5x5 square with all 1 around center
