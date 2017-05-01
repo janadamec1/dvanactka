@@ -177,6 +177,20 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 cell.lbName = (TextView)convertView.findViewById(R.id.textView);
                 cell.imgIcon = (ImageView)convertView.findViewById(R.id.imageView);
                 cell.lbBadge = (TextView)convertView.findViewById(R.id.badge);
+
+                /*convertView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        boolean bDown = motionEvent.getAction() == MotionEvent.ACTION_DOWN;
+                        Drawable aBkg = view.getBackground();
+                        if (aBkg instanceof ColorDrawable) {
+                            int color = ((ColorDrawable)aBkg).getColor();
+                            int newColor = Color.argb(bDown ? 160 : 255, Color.red(color), Color.green(color), Color.blue(color));
+                            view.setBackgroundColor(newColor);
+                        }
+                        return false;
+                    }
+                });*/
                 convertView.setTag(cell);
             } else {
                 cell = (CollectionViewHolder)convertView.getTag();

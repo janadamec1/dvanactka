@@ -16,6 +16,7 @@ import android.location.Location;
 import android.Manifest;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -445,9 +446,15 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
             case ACT_RESULT_PICK_PHOTO:
                 if (resultCode == RESULT_OK && imageReturnedIntent != null) {
-                    Uri selectedImage = imageReturnedIntent.getData();
+                    Uri uriFile = imageReturnedIntent.getData();
                     m_btnPhoto.setAdjustViewBounds(true);
-                    m_btnPhoto.setImageURI(selectedImage);
+                    //m_btnPhoto.setImageURI(uriFile);
+                    try {
+                        m_btnPhoto.setImageBitmap(handleSamplingAndRotationBitmap(this, uriFile));
+                    } catch (Exception e) {
+                        // fallback, do without rotation
+                        m_btnPhoto.setImageURI(uriFile);
+                    }
                     m_fileFromCamera = null;
                     m_bImageSelected = true;
                 }
@@ -513,7 +520,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         imageStream = context.getContentResolver().openInputStream(selectedImage);
         Bitmap img = BitmapFactory.decodeStream(imageStream, null, options);
 
-        img = rotateImageIfRequired(img, selectedImage);
+        img = rotateImageIfRequired(img, context, selectedImage);
         return img;
     }
 
@@ -573,9 +580,17 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
      * @param selectedImage Image URI
      * @return The resulted Bitmap after manipulation
      */
-    private static Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
+    private static Bitmap rotateImageIfRequired(Bitmap img, Context context, Uri selectedImage) throws IOException {
 
-        ExifInterface ei = new ExifInterface(selectedImage.getPath());
+        ExifInterface ei = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
+            ei = new ExifInterface(imageStream);
+            imageStream.close();
+        }
+        else
+            ei = new ExifInterface(selectedImage.getPath());
+
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
         switch (orientation) {

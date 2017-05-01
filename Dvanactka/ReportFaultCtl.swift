@@ -160,9 +160,26 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         mailer.setSubject("Hlášení závady");
         mailer.setMessageBody(sMessageBody, isHTML: false);
         
-        if m_bImageSelected, let image = m_btnPhoto.image(for: .normal),
-            let imageData = UIImageJPEGRepresentation(image, 0.8){
-            mailer.addAttachmentData(imageData, mimeType: "image/jpeg", fileName: "photo.jpg")
+        if m_bImageSelected, let image = m_btnPhoto.image(for: .normal) {
+            // down-scale image
+            let oldSize = image.size;
+            var newSize: CGSize;
+            if oldSize.width > oldSize.height {
+                newSize = CGSize(width: 1600, height: 1600*oldSize.height/oldSize.width);
+            }
+            else {
+                newSize = CGSize(width: 1600*oldSize.width/oldSize.height, height: 1600);
+            }
+            
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+            image.draw(in: CGRect(origin: CGPoint.zero, size: CGSize(width: newSize.width, height: newSize.height)))
+            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            
+            // encode in JPEG and add attachment
+            if let imageData = UIImageJPEGRepresentation(newImage, 0.8){
+                mailer.addAttachmentData(imageData, mimeType: "image/jpeg", fileName: "photo.jpg")
+            }
         }
 
         mailer.modalPresentationStyle = .formSheet;

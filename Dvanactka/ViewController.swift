@@ -255,6 +255,32 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             performSegue(withIdentifier: "segueEvents", sender: self)
         }
     }
+    
+    //---------------------------------------------------------------------------
+    // check bkg color on press
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        if let cell = cell, let cl = cell.backgroundColor {
+            var r: CGFloat = 0;
+            var g: CGFloat = 0;
+            var b: CGFloat = 0;
+            var a: CGFloat = 0;
+            cl.getRed(&r, green: &g, blue: &b, alpha: &a);
+            cell.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 0.7);
+        }
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        if let cell = cell, let cl = cell.backgroundColor {
+            var r: CGFloat = 0;
+            var g: CGFloat = 0;
+            var b: CGFloat = 0;
+            var a: CGFloat = 0;
+            cl.getRed(&r, green: &g, blue: &b, alpha: &a);
+            cell.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0);
+        }
+    }
 
     //---------------------------------------------------------------------------
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
