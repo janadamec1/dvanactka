@@ -1,10 +1,19 @@
 <?php
 
 function &findVokLocation(&$alias, &$ds) {	// return reference
-	$aliasCompressed = str_replace(" ", "", $alias);
-	
 	$keys = array_keys($ds);
 	$size = count($ds);
+	
+	// first find exact match in title (new records have same name as in our vokplaces.json)
+	for ($i = 0; $i < $size; $i++) {		// iterate like this, foreach can make copy
+		$key = $keys[$i];
+		$rec = &$ds[$key];					// reference!
+		if ($rec["category"] === "waste" && $alias === $rec["title"])
+			return $rec;
+	}
+
+	$aliasCompressed = str_replace(" ", "", $alias);
+	
 	for ($i = 0; $i < $size; $i++) {		// iterate like this, foreach can make copy
 		$key = $keys[$i];
 		$rec = &$ds[$key];					// reference!
