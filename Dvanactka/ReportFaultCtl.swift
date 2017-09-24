@@ -74,7 +74,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     //---------------------------------------------------------------------------
-    func keyboardNotification(notification: NSNotification) {
+    @objc func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
@@ -118,7 +118,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     //---------------------------------------------------------------------------
-    func onBtnSend() {
+    @objc func onBtnSend() {
         let sDesc = m_edDescription.text;
         if sDesc == nil || sDesc!.isEmpty {
             showError(message: NSLocalizedString("Please fill the description.", comment:""), setFocusTo: m_edDescription);

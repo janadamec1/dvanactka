@@ -197,7 +197,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
     }
     
     //--------------------------------------------------------------------------
-    func onBtnLocation() {
+    @objc func onBtnLocation() {
         if let userLoc = m_mapView.userLocation.location {
             m_coordLast = userLoc.coordinate;
         }

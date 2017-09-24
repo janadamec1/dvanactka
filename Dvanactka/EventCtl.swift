@@ -348,7 +348,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
 
     //---------------------------------------------------------------------------
-    func downloadData() {
+    @objc func downloadData() {
         if let ds = m_aDataSource {
             ds.delegate = self;
             CRxDataSourceManager.sharedInstance.refreshDataSource(id: ds.m_sId, force: true);
@@ -452,7 +452,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             
             let sText = NSMutableAttributedString(string:"");
             if let sRecFilter = rec.m_sFilter {
-                let aBoldAttr = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: cellNews.m_lbText.font.pointSize)];
+                let aBoldAttr = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: cellNews.m_lbText.font.pointSize)];
                 sText.append(NSAttributedString(string:sRecFilter, attributes: aBoldAttr));
             }
             if let sRecText = rec.m_sText, !sRecText.isEmpty {
@@ -574,7 +574,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             if let dateTo = rec.m_aDateTo {
                 bObsolete = (dateTo < Date());
             }
-            let aTitleAttr = (bObsolete ? [NSStrikethroughStyleAttributeName: 2] : nil);
+            let aTitleAttr = (bObsolete ? [NSAttributedStringKey.strikethroughStyle: 2] : nil);
             cellPlace.m_lbTitle.attributedText = NSAttributedString(string: sRecTitle, attributes: aTitleAttr);
             
             var sDistance = "";
@@ -812,7 +812,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
 
     //--------------------------------------------------------------------------
-    func showMap() {
+    @objc func showMap() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mapCtl = storyboard.instantiateViewController(withIdentifier: "mapCtl") as! MapCtl
         mapCtl.m_aDataSource = m_aDataSource;
@@ -838,7 +838,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
     
     //--------------------------------------------------------------------------
-    func onSavedNews() {
+    @objc func onSavedNews() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
         eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_aSavedNews;
@@ -855,7 +855,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
     
     //--------------------------------------------------------------------------
-    func onDefineFilter() {
+    @objc func onDefineFilter() {
         guard let ds = m_aDataSource else { return }
         
         // get the list of filter items
@@ -888,7 +888,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
     
     //--------------------------------------------------------------------------
-    func showSearch() {
+    @objc func showSearch() {
 
         if m_searchBar.isHidden {
             UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {

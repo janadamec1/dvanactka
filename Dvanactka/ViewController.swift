@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import StoreKit
 
 // dark grey color: 62,62,62
 // tint color: 0, 122, 255 (007AFF)
@@ -83,6 +84,10 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             if let builder = GAIDictionaryBuilder.createScreenView() {
                 tracker.send(builder.build() as [NSObject : AnyObject])
             }
+        }
+        
+        if #available( iOS 10.3,*){
+            SKStoreReviewController.requestReview()
         }
     }
 
@@ -319,7 +324,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
 
     //---------------------------------------------------------------------------
-    func onBtnInfo() {
+    @objc func onBtnInfo() {
         /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let appInfoCrl = storyboard.instantiateViewController(withIdentifier: "appInfoCtlNav")

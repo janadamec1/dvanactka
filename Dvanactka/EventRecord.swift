@@ -25,9 +25,9 @@ class CRxHourInterval: NSObject {
     init?(from string:String) {
         if let iColon = string.range(of: ":"),
                 let iHyphen = string.range(of: "-") {
-            let day = string.substring(to: iColon.lowerBound)
-            let hourStart = string.substring(with: Range(uncheckedBounds: (lower: iColon.upperBound, upper: iHyphen.lowerBound)))
-            let hourEnd = string.substring(from: iHyphen.upperBound)
+            let day = String(string.prefix(upTo:iColon.lowerBound));
+            let hourStart = String(string[iColon.upperBound..<iHyphen.lowerBound]);
+            let hourEnd = String(string.suffix(from: iHyphen.upperBound));
             if let iDay = Int(day),
                     let iHourStart = Int(hourStart),
                     let iHourEnd = Int(hourEnd) {

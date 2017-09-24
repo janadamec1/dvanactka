@@ -60,7 +60,7 @@ class RefineLocCtl: UIViewController {
     }
     
     //---------------------------------------------------------------------------
-    func addAnnotation(gestureRecognizer: UIGestureRecognizer) {
+    @objc func addAnnotation(gestureRecognizer: UIGestureRecognizer) {
         
         if let pin = m_aPin {
             m_mapView.removeAnnotation(pin);

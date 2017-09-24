@@ -53,7 +53,7 @@ class FilterCtl: UITableViewController {
     }
     
     //--------------------------------------------------------------------------
-    func onChkItemChanged(_ sender: Any) {
+    @objc func onChkItemChanged(_ sender: Any) {
         guard let chk = sender as? UISwitch
             else { return; }
         let item = m_arrFilter[chk.tag];
@@ -67,14 +67,14 @@ class FilterCtl: UITableViewController {
     }
     
     //--------------------------------------------------------------------------
-    func onSelectAll() {
+    @objc func onSelectAll() {
         m_setOut.removeAll();
         self.tableView.reloadData();
         m_delegate?.filterChanged(setOut: m_setOut);
     }
     
     //--------------------------------------------------------------------------
-    func onSelectNone() {
+    @objc func onSelectNone() {
         m_setOut.removeAll();
         for it in m_arrFilter {
             m_setOut.insert(it);

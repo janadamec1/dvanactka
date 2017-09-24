@@ -194,7 +194,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     }
     
     //---------------------------------------------------------------------------
-    func onBtnLeaderboard() {
+    @objc func onBtnLeaderboard() {
         guard let aDS = CRxGame.dataSource()
             else { return }
         if aDS.m_sUuid == nil {

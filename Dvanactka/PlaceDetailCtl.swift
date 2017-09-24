@@ -71,7 +71,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 let sHtmlText = String.init(format: "<style>div {font-family: '%@'; font-size:%fpx;}</style>", m_lbText.font.fontName, m_lbText.font.pointSize) + rec.m_sText!;
                 if let htmlData = sHtmlText.data(using: String.Encoding.unicode) {
                     do {
-                        let attributedText = try NSMutableAttributedString(data: htmlData, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil);
+                        let attributedText = try NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil);
                         m_lbText.attributedText = attributedText;
                         bTextSet = true;
                     } catch let error as NSError {
@@ -154,7 +154,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 var bHasVok = false;
                 var bHasBio = false;
                 let dayToday = Date();
-                let aPastAttrs = [NSForegroundColorAttributeName: UIColor.lightGray];
+                let aPastAttrs = [NSAttributedStringKey.foregroundColor: UIColor.lightGray];
                 let sNewLine = NSAttributedString(string:"\n");
 
                 for it in events {
@@ -162,7 +162,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                         sHours.append(sNewLine);
                         sType.append(sNewLine);
                     }
-                    var aAttrs: [String: Any]? = nil;
+                    var aAttrs: [NSAttributedStringKey: Any]? = nil;
                     if (it.m_dateEnd < dayToday) {
                         aAttrs = aPastAttrs;
                     }
@@ -538,7 +538,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         guard let rec = m_aRecord, let text = rec.m_sText
             else {return;}
         if text == "FAQ" {
-            let aQuestionAttr = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: m_lbText.font.pointSize+1)];
+            let aQuestionAttr = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: m_lbText.font.pointSize+1)];
             let sNewText = NSMutableAttributedString(string:"Kde se nechat vyfotit na průkazovou fotografii?", attributes: aQuestionAttr);
             sNewText.append(NSAttributedString(string:"\nVe Fotolabu na Sofijském náměstí.\n\n"));
             

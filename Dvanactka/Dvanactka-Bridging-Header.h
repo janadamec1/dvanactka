@@ -10,6 +10,5 @@
 #define BridgingHeader_h
 
 #import <Google/Analytics.h>
-#import "Appirater.h"
 
 #endif /* BridgingHeader_h */

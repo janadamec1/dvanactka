@@ -92,7 +92,6 @@
 		4D66771F1DCBC23E004876FA /* goldstar25dis@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6677191DCBC23E004876FA /* goldstar25dis@2x.png */; };
 		4D6677201DCBC23E004876FA /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D66771A1DCBC23E004876FA /* location.png */; };
 		4D6677211DCBC23E004876FA /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D66771B1DCBC23E004876FA /* location@2x.png */; };
-		4D668DD71E39F2AD00AD67C5 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D668DD51E39F2AD00AD67C5 /* Appirater.m */; };
 		4D668DDA1E39F50000AD67C5 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D668DD81E39F50000AD67C5 /* AppiraterLocalizable.strings */; };
 		4D6BC6EB1DE4B416003F241C /* p12-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6BC6EA1DE4B416003F241C /* p12-logo.png */; };
 		4D73FC821E12DB54006D9D15 /* c_accident.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D73FC7D1E12DB54006D9D15 /* c_accident.png */; };
@@ -219,9 +218,6 @@
 		4D6677191DCBC23E004876FA /* goldstar25dis@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "goldstar25dis@2x.png"; path = "img/goldstar25dis@2x.png"; sourceTree = "<group>"; };
 		4D66771A1DCBC23E004876FA /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = img/location.png; sourceTree = "<group>"; };
 		4D66771B1DCBC23E004876FA /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@2x.png"; path = "img/location@2x.png"; sourceTree = "<group>"; };
-		4D668DD41E39F2AD00AD67C5 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
-		4D668DD51E39F2AD00AD67C5 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
-		4D668DD61E39F2AD00AD67C5 /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
 		4D668DD91E39F50000AD67C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		4D668DDB1E39F50F00AD67C5 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		4D6BC6EA1DE4B416003F241C /* p12-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "p12-logo.png"; path = "img/p12-logo.png"; sourceTree = "<group>"; };
@@ -402,9 +398,6 @@
 			children = (
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
 				4D3FC6F41DD274A8000467D1 /* AppInfoCtl.swift */,
-				4D668DD41E39F2AD00AD67C5 /* Appirater.h */,
-				4D668DD51E39F2AD00AD67C5 /* Appirater.m */,
-				4D668DD61E39F2AD00AD67C5 /* AppiraterDelegate.h */,
 				4D668DD81E39F50000AD67C5 /* AppiraterLocalizable.strings */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
 				4D9F14AC1DD103D100841AD8 /* DataSource.swift */,
@@ -483,13 +476,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Jan Adamec";
 				TargetAttributes = {
 					4D9019301DC65E16001488D3 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = E3AKAD9KNP;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -682,7 +675,6 @@
 				4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */,
 				4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */,
 				4D3FC6F51DD274A8000467D1 /* AppInfoCtl.swift in Sources */,
-				4D668DD71E39F2AD00AD67C5 /* Appirater.m in Sources */,
 				4D318A6E1DD7C4A400187985 /* RefineLocCtl.swift in Sources */,
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
@@ -755,7 +747,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -763,7 +757,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -807,7 +805,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -815,7 +815,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -856,7 +860,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -874,7 +879,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

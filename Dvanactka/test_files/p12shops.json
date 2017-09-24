@@ -25,6 +25,18 @@
 "filter":"Restaurace"
 },
 {
+"title":"Otava",
+"locationLat":"50.0004014",
+"locationLong":"14.4270833",
+"address":"Pertoldova 6\nPraha 12",
+"openingHours":"1: 1030-2200, 2: 1030-2200, 3: 1030-2200, 4: 1030-2200, 5: 1030-2200, 6: 1030-2200, 7: 1030-2200",
+"infoLink":"http:\/\/restauraceotava.eu",
+"buyLink":"http:\/\/restauraceotava.eu\/dennimenu.pdf",
+"phone":"774 666 364",
+"category":"restaurace",
+"filter":"Restaurace"
+},
+{
 "title":"Port 62",
 "locationLat":"50.0140494",
 "locationLong":"14.3970908",
@@ -486,6 +498,17 @@
 "filter":"Pro domácnost"
 },
 {
+"title":"Rámařství - Karel Procházka",
+"locationLat":"50.0076397",
+"locationLong":"14.4533131",
+"address":"Papírníkova 9\nPraha 12",
+"phone":"241 715 949",
+"email":"ramarstvi.prochazka@seznam.cz",
+"openingHours":"1: 1000-1200, 1: 1300-1800, 2: 1000-1200, 2: 1300-1800, 3: 1000-1200, 3: 1300-1800, 4: 1000-1200, 4: 1300-1800, 5: 1000-1200, 5: 1300-1600",
+"category":"remeslnik",
+"filter":"Pro domácnost"
+},
+{
 "title":"Cykloservis Cyklosport Tarant",
 "locationLat":"50.0098550",
 "locationLong":"14.4277247",
@@ -704,10 +727,13 @@
 },
 {
 "title":"Med z Roubenky",
-"text":"včelař",
+"text":"včelař\nmimo otvírací dobu po telefonické dohodě",
 "infoLink":"http:\/\/medzroubenky.cz",
 "email":"bunc@seznam.cz",
-"address":"místo předání dle dohody v okolí Novodvorské",
+"locationLat":"50.0181353",
+"locationLong":"14.4367419",
+"address":"Václav Bunc\nMařatkova 1\nPraha 12",
+"openingHours":"1: 1900-2100, 2: 1900-2100, 3: 1900-2100, 4: 1900-2100, 5: 1900-2100",
 "category":"obchod",
 "filter":"Potraviny"
 },
