@@ -387,7 +387,7 @@ class CRxDataSourceManager : NSObject {
                     aNotification.timeZone = NSTimeZone.default;
                     aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ just arrived (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
                     aNotification.soundName = UILocalNotificationDefaultSoundName;
-                    aNotification.applicationIconBadgeNumber = 1;
+                    //aNotification.applicationIconBadgeNumber = 1;
                     arrNewNotifications.append(aNotification);
                     
                     // also add a notification one day earlier
@@ -398,7 +398,7 @@ class CRxDataSourceManager : NSObject {
                         aNotification.timeZone = NSTimeZone.default;
                         aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ tomorrow (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
                         aNotification.soundName = UILocalNotificationDefaultSoundName;
-                        aNotification.applicationIconBadgeNumber = 1;
+                        //aNotification.applicationIconBadgeNumber = 1;
                         arrNewNotifications.append(aNotification);
                     }
                 }

@@ -43,7 +43,7 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
 
-class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
+class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
     @IBOutlet weak var m_searchBar: UISearchBar!
     @IBOutlet weak var m_tableView: UITableView!
@@ -58,6 +58,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     var m_bAskForFilter: Bool = false      // do not show items, present filter possibilites to pass next as ParentFilter
     var m_sParentFilter: String?           // show only items with this filter (for ds with filterAsParentView)
     var m_sSearchString: String?           // if not nil, use it as search string
+    let m_searchController = UISearchController(searchResultsController: nil);
     
     // member variables:
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
@@ -73,7 +74,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         super.viewDidLoad()
 
         m_refreshCtl = UIRefreshControl();
-        m_refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
         m_refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
         m_refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
         if #available(iOS 10.0, *) {
@@ -83,6 +83,22 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         }
         
         m_searchBar.isHidden = true;
+
+        var bAddSearchToolbarButton = true;
+        if #available(iOS 11.0, *) {
+            bAddSearchToolbarButton = false;
+            m_searchBar.removeFromSuperview();      // tableView must be directly after navigationItem, hiding searchBar is not enough
+            m_searchController.searchResultsUpdater = self
+            m_searchController.hidesNavigationBarDuringPresentation = false;
+            m_searchController.dimsBackgroundDuringPresentation = false;
+            m_searchController.searchBar.sizeToFit();
+            m_searchController.searchBar.tintColor = UIColor.white;
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white];
+            self.navigationItem.searchController = m_searchController
+        }
+        else {
+            m_refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
+        }
         
         m_locManager.delegate = self;
         m_locManager.distanceFilter = 5;
@@ -110,7 +126,9 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             if ds.m_bFilterable {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
             }
-            arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(EventsCtl.showSearch)));
+            if bAddSearchToolbarButton {
+                arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(EventsCtl.showSearch)));
+            }
             /*if ds.m_sId == CRxDataSourceManager.dsSpolky {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "bulleted_list"), style: .plain, target: self, action: #selector(EventsCtl.onBtnList)));
             }*/
@@ -159,8 +177,21 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
     
     //--------------------------------------------------------------------------
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        
+        if #available(iOS 11.0, *) {
+            self.navigationItem.hidesSearchBarWhenScrolling = false;    // start with search bar on
+        }
+    }
+    
+    //--------------------------------------------------------------------------
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
+
+        if #available(iOS 11.0, *) {
+            self.navigationItem.hidesSearchBarWhenScrolling = true;
+        }
 
         // clear selection when returning
         if let selIndexPath = m_tableView.indexPathForSelectedRow {
@@ -941,6 +972,29 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         m_searchBar.resignFirstResponder(); // hide keyboard after Search button pressed
     }
     
+    //--------------------------------------------------------------------------
+    // from UISearchResultsUpdating
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText: String? = searchController.searchBar.text;
+        var bSearchActive = searchController.isActive
+        if let searchText = searchText {
+            bSearchActive = bSearchActive && (searchText.characters.count > 0);
+        }
+        
+        let bWasActive = isSearchActive();
+        if !bSearchActive && !bWasActive {
+            return;
+        }
+        else if !bSearchActive && bWasActive {
+            m_sSearchString = nil;
+        }
+        else {
+            m_sSearchString = searchText!;
+        }
+        sortRecords();
+        m_tableView.reloadData();
+    }
+
     //--------------------------------------------------------------------------
     @IBAction func onBtnFooterTouched(_ sender: Any) {
         guard let ds = m_aDataSource else { return }
