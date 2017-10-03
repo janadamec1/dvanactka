@@ -127,4 +127,6 @@
     <string name="dlg_cancel">Storno</string>
     <string name="dlg_yes">Ano</string>
     <string name="photo_recommended">Fotografie (doporučeno)</string>
+    <string name="c_waste_separated">Tříděný odpad</string>
+    <string name="subcategories">Podkategorie</string>
 </resources>

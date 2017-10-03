@@ -126,4 +126,6 @@
     <string name="dlg_cancel">Cancel</string>
     <string name="dlg_yes">Yes</string>
     <string name="photo_recommended">Photo (recommended)</string>
+    <string name="subcategories">Subcategories</string>
+    <string name="c_waste_separated">Separated Waste</string>
 </resources>

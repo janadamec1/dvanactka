@@ -147,7 +147,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
         if (rec.m_eCategory != null) {
             String sCat = CRxCategory.categoryLocalName(rec.m_eCategory, this);
-            if (rec.m_sFilter != null) {
+            if (rec.m_sFilter != null && !rec.m_sFilter.equals(sCat)) {
                 sCat += " - " + rec.m_sFilter;
             }
             m_lbCategory.setText(sCat);

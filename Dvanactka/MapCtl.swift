@@ -94,6 +94,9 @@ class MapCtl: UIViewController, MKMapViewDelegate {
                 
                 // filter
                 if ds.m_bFilterAsParentView {
+                    if rec.m_sFilter == nil {
+                        continue;   // records without filter are shown in the parent tableView
+                    }
                     if let sFilter = rec.m_sFilter,
                         let sParentFilter = m_sParentFilter {
                         if sFilter != sParentFilter {

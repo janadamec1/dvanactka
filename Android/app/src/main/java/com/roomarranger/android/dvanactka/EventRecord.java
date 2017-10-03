@@ -177,7 +177,7 @@ class CRxCategory {
     static final String pamatka = "pamatka", pamatnyStrom = "pamatnyStrom", vyznamnyStrom = "vyznamnyStrom", zajimavost = "zajimavost";
     static final String remeslnik = "remeslnik", restaurace = "restaurace", obchod = "obchod";
     static final String children = "children", sport = "sport", associations = "associations";
-    static final String waste = "waste", wasteElectro = "wasteElectro", wasteTextile = "wasteTextile", wasteGeneral = "wasteGeneral";
+    static final String waste = "waste", wasteElectro = "wasteElectro", wasteTextile = "wasteTextile", wasteGeneral = "wasteGeneral", wasteSeparated = "wasteSeparated";
     static final String nehoda = "nehoda", uzavirka = "uzavirka";
 
     //---------------------------------------------------------------------------
@@ -204,6 +204,7 @@ class CRxCategory {
             case waste: return res.getString(R.string.c_waste_dumpsters);
             case wasteElectro: return res.getString(R.string.c_waste_electro);
             case wasteTextile: return res.getString(R.string.c_waste_textile);
+            case wasteSeparated: return res.getString(R.string.c_waste_separated);
             case wasteGeneral: return res.getString(R.string.c_waste);
             case nehoda: return res.getString(R.string.c_accident);
             case uzavirka: return res.getString(R.string.c_roadblock);
@@ -234,6 +235,7 @@ class CRxCategory {
             case waste: return R.drawable.c_waste;
             case wasteElectro: return R.drawable.c_electrical;
             case wasteTextile: return R.drawable.c_textile;
+            case wasteSeparated: return R.drawable.c_recycle;
             case wasteGeneral: return R.drawable.c_recycle;
             case nehoda: return R.drawable.c_accident;
             case uzavirka: return R.drawable.c_roadblock;

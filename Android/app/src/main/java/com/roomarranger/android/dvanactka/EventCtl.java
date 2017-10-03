@@ -120,7 +120,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         }
 
         public int getChildrenCount(int groupPosition) {
-            if (isAskForFilterActive())
+            if (isAskForFilterActive() && groupPosition == 0)
                 return m_arrFilterSelection.size();
             ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
             if (arr != null)
@@ -157,8 +157,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view,
                                  ViewGroup parent) {
 
+            boolean bCellForAskingForFilter = isAskForFilterActive() && groupPosition == 0;
             int resId = R.layout.list_item_places;
-            if (isAskForFilterActive())
+            if (bCellForAskingForFilter)
                 resId = android.R.layout.simple_list_item_1;
             else {
                 switch (m_aDataSource.m_eType) {
@@ -188,7 +189,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 cell = new NewsListItemHolder();
                 cell.m_idLayout = resId;
 
-                if (isAskForFilterActive()) {
+                if (bCellForAskingForFilter) {
                     cell.m_lbTitle = (TextView) view.findViewById(android.R.id.text1);
                 }
                 else {
@@ -352,7 +353,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             }
 
             // fill cell contents
-            if (isAskForFilterActive()) {
+            if (bCellForAskingForFilter) {
                 cell.m_lbTitle.setText(m_arrFilterSelection.get(childPosition));
                 return view;
             }
@@ -580,31 +581,30 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         ExpandableListView ExpandList = (ExpandableListView)findViewById(R.id.ExpList);
         m_adapter = new ExpandListAdapter(this);
         ExpandList.setAdapter(m_adapter);
-        if (m_bAskForFilter) {
+        if (m_bAskForFilter || m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
             ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
                 @Override
                 public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
-                    Intent intent = new Intent(EventCtl.this, EventCtl.class);
-                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                    intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_arrFilterSelection.get(childPosition));
-                    startActivity(intent);
-                    return false;
+                    if (isAskForFilterActive() && groupPosition == 0) {
+                        Intent intent = new Intent(EventCtl.this, EventCtl.class);
+                        intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                        intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_arrFilterSelection.get(childPosition));
+                        startActivity(intent);
+                        return false;
+                    }
+                    else {
+                        ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
+                        CRxEventRecord rec = arr.get(childPosition);
+                        Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
+                        intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                        intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
+                        startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
+                        return false;
+                    }
                 }
             });
         }
-        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
-            ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
-                    ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
-                    CRxEventRecord rec = arr.get(childPosition);
-                    Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
-                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                    intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
-                    startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
-                    return false;
-                }
-            });
+        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
 
             m_GoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -677,7 +677,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     //--------------------------------------------------------------------------
-    class DateCategoryZip {
+    private class DateCategoryZip {
         String m_sName;
         Date m_date;
         DateCategoryZip(String name, Date date) { m_sName = name; m_date = date;}
@@ -690,7 +690,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_orderedItems.clear();
         m_orderedCategories.clear();
 
-        if (isAskForFilterActive()) {
+        boolean bAskingForFilter = isAskForFilterActive();
+        if (bAskingForFilter) {
             m_arrFilterSelection.clear();
             // get the list of filter items
             for (CRxEventRecord rec: m_aDataSource.m_arrItems) {
@@ -703,8 +704,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             Collator coll = Collator.getInstance(); // for sorting with locale
             coll.setStrength(Collator.PRIMARY);
             Collections.sort(m_arrFilterSelection, coll);
-            m_orderedCategories.add(" ");
-            return;
+            m_orderedCategories.add(getString(R.string.subcategories));
         }
 
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
@@ -724,7 +724,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance().m_setPlacesNotified.contains(rec.m_sTitle);
             }
 
-            // filter
+            // filtering by filter set by user
             if (ds.m_bFilterable) {
                 if (ds.m_setFilter != null && rec.m_sFilter != null)
                 {
@@ -733,13 +733,19 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     }
                 }
             }
-            if (ds.m_bFilterAsParentView) {
-                if (rec.m_sFilter != null && m_sParentFilter != null)
-                {
+            // filtering by category selected in parent tableView
+            if (ds.m_bFilterAsParentView && !bAskingForFilter) {
+                if (rec.m_sFilter == null) {
+                    continue;   // records without filter are shown in the parent tableView
+                }
+                if (rec.m_sFilter != null && m_sParentFilter != null) {
                     if (!rec.m_sFilter.equals(m_sParentFilter)) {
                         continue;
                     }
                 }
+            }
+            if (bAskingForFilter && rec.m_sFilter != null) {
+                continue;   // when asking for filter, show only records without filter (e.g. dsWaste)
             }
 
             // search
@@ -765,10 +771,15 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 if (rec.m_aDate == null) {
                     continue;    // remove records without date
                 }
-                if (rec.m_aDate.before(today) && rec.m_aDateTo != null && rec.m_aDateTo.after(today)
-                        && (rec.m_aDateTo.getTime()-rec.m_aDate.getTime() > 24*60*60*1000)) {     // more then 1 day
-                    sCatName = getString(R.string.multi_day_events);
-                    dateCat = rec.m_aDate;
+                if (rec.m_aDate.before(today) && rec.m_aDateTo != null && rec.m_aDateTo.after(today)) {
+                    if (rec.m_aDateTo.getTime()-rec.m_aDate.getTime() > 24*60*60*1000) {     // more then 1 day
+                        sCatName = getString(R.string.multi_day_events);
+                        dateCat = rec.m_aDate;
+                    }
+                    else {  // short events happening now
+                        sCatName = df.format(rec.m_aDate);
+                        dateCat = rec.m_aDate;
+                    }
                 }
                 else if (rec.m_aDate.before(today)) {   // do not show old events
                     continue;

@@ -86,7 +86,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             
             if let category = rec.m_eCategory {
                 var sCat = CRxEventRecord.categoryLocalName(category: category);
-                if let filter = rec.m_sFilter {
+                if let filter = rec.m_sFilter, filter != sCat {
                     sCat += " - " + filter;
                 }
                 m_lbCategory.text = sCat;

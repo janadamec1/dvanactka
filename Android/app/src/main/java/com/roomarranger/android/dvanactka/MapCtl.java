@@ -105,6 +105,9 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
             CRxEventRecord rec = m_aDataSource.m_arrItems.get(i);
             // filter
             if (m_aDataSource.m_bFilterAsParentView) {
+                if (rec.m_sFilter == null) {
+                    continue;   // records without filter are shown in the parent tableView
+                }
                 if (rec.m_sFilter != null && m_sParentFilter != null) {
                     if (!rec.m_sFilter.equals(m_sParentFilter)) {
                         continue;

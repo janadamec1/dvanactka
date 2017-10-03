@@ -233,6 +233,7 @@ class CRxDataSourceManager : NSObject {
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsWaste] {
             ds.m_sTestJsonFile = "/test_files/dyn_waste";
+            ds.m_bFilterAsParentView = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsReportFault] {
             ds.m_nRefreshFreqHours = 1000;

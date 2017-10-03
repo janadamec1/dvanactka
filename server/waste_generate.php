@@ -130,6 +130,22 @@ for ($i = 0; $i < $size; $i++) {	// iterate like this, foreach can make copy
 	}
 }
 
+// append items from separated waste
+$encoded = file_get_contents("waste_loc_separated.json");
+$arrSepItems = json_decode($encoded, true);
+if ($arrSepItems === FALSE || $arrSepItems === NULL) {
+	echo "failed to load waste_loc_separated.json";
+	exit;
+}
+$keysSep = array_keys($arrSepItems);
+$sizeSep = count($arrSepItems);
+for ($i = 0; $i < $sizeSep; $i++) {
+    $keySep = $keysSep[$i];
+    $recSep = &$arrSepItems[$keySep];
+    array_push($arrItems, $recSep);
+}
+
+// write to output
 var_dump($arrItems);
 
 $filename = "dyn_waste.json";

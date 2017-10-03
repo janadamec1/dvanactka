@@ -58,7 +58,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     var m_bAskForFilter: Bool = false      // do not show items, present filter possibilites to pass next as ParentFilter
     var m_sParentFilter: String?           // show only items with this filter (for ds with filterAsParentView)
     var m_sSearchString: String?           // if not nil, use it as search string
-    let m_searchController = UISearchController(searchResultsController: nil);
+    var m_searchController: UISearchController!
     
     // member variables:
     var m_orderedItems = [String : [CRxEventRecord]]()  // category localName -> array of records
@@ -87,6 +87,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         var bAddSearchToolbarButton = true;
         if #available(iOS 11.0, *) {
             bAddSearchToolbarButton = false;
+            m_searchController = UISearchController(searchResultsController: nil);
             m_searchBar.removeFromSuperview();      // tableView must be directly after navigationItem, hiding searchBar is not enough
             m_searchController.searchResultsUpdater = self
             m_searchController.hidesNavigationBarDuringPresentation = false;
@@ -219,8 +220,8 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         m_orderedCategories.removeAll();
         
         m_tableView.allowsSelection = (ds.m_eType == .places || isAskForFilterActive());
-        
-        if isAskForFilterActive() {
+        let bAskingForFilter = isAskForFilterActive();
+        if bAskingForFilter {
             var arrFilter = [String]();
             for rec in ds.m_arrItems {
                 if let sFilter = rec.m_sFilter {
@@ -230,8 +231,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 }
             }
             m_arrFilterSelection = arrFilter.sorted();
-            m_orderedCategories.append("");
-            return;
+            m_orderedCategories.append(NSLocalizedString("Subcategories", comment: ""));
         }
         
         let df = DateFormatter();
@@ -251,7 +251,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance.m_setPlacesNotified.contains(rec.m_sTitle);
             }
             
-            // filter
+            // filtering by filter set by user
             if ds.m_bFilterable {
                 if let setFilter = ds.m_setFilter,
                     let sFilter = rec.m_sFilter {
@@ -260,13 +260,20 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                     }
                 }
             }
-            if ds.m_bFilterAsParentView {
+            // filtering by category selected in parent tableView
+            if ds.m_bFilterAsParentView && !bAskingForFilter {
+                if rec.m_sFilter == nil {
+                    continue;   // records without filter are shown in the parent tableView
+                }
                 if let sFilter = rec.m_sFilter,
                     let sParentFilter = m_sParentFilter {
                     if sFilter != sParentFilter {
                         continue;
                     }
                 }
+            }
+            if bAskingForFilter && rec.m_sFilter != nil {
+                continue;   // when asking for filter, show only records without filter (e.g. dsWaste)
             }
             
             // search
@@ -292,10 +299,16 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 guard let date = rec.m_aDate else {
                     continue    // remove records without date
                 }
-                if date < today && rec.m_aDateTo != nil && rec.m_aDateTo! >= today &&
-                    (rec.m_aDateTo!.timeIntervalSince(date) > 24*60*60) {       // more then 1 day
-                    sCatName = NSLocalizedString("Multi-day events", comment: "");
-                    dateCat = date;
+                if date < today && rec.m_aDateTo != nil && rec.m_aDateTo! >= today {    // happening now
+                    if rec.m_aDateTo!.timeIntervalSince(date) > 24*60*60 {
+                        // more then 1 day
+                        sCatName = NSLocalizedString("Multi-day events", comment: "");
+                        dateCat = date;
+                    }
+                    else {  // short events happening now
+                        sCatName = df.string(from: date);
+                        dateCat = date;
+                    }
                 }
                 else if date < today {   // do not show old events
                     continue;
@@ -319,7 +332,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             }
         }
         
-        // sort date categories and then
+        // sort date categories
         if ds.m_eType == .events {
             let combined = zip(arrDateCategories, m_orderedCategories).sorted {$0.0 < $1.0}
             m_orderedCategories = combined.map {$0.1};
@@ -420,7 +433,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
 
     //--------------------------------------------------------------------------
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isAskForFilterActive() {
+        if isAskForFilterActive() && section == 0 {
             return m_arrFilterSelection.count;
         }
         else if let items = m_orderedItems[m_orderedCategories[section]] {
@@ -464,7 +477,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell!;
-        if isAskForFilterActive() {
+        if isAskForFilterActive() && indexPath.section == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "cellFilter", for: indexPath);
             cell.textLabel?.text = m_arrFilterSelection[indexPath.row];
             return cell;
@@ -678,7 +691,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     //--------------------------------------------------------------------------
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        if isAskForFilterActive() {
+        if isAskForFilterActive() && indexPath.section == 0 {
             let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
             eventCtl.m_aDataSource = m_aDataSource;
             eventCtl.m_sParentFilter = m_arrFilterSelection[indexPath.row];

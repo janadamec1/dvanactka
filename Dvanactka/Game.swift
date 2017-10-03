@@ -103,7 +103,7 @@ class CRxGame: NSObject {
     static func isCategoryCheckInAble(_ category: String?) -> Bool {
         if let category = category,
             let cat = CRxCategory(rawValue: category) {
-            return cat != .wasteGeneral && cat != .associations && cat != .prvniPomoc && cat != .children && cat != .nehoda && cat != .uzavirka && cat != .wc;
+            return cat != .wasteGeneral && cat != .wasteSeparated && cat != .associations && cat != .prvniPomoc && cat != .children && cat != .nehoda && cat != .uzavirka && cat != .wc;
         }
         return false;
     }

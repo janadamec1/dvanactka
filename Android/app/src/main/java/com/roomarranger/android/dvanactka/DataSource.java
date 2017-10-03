@@ -323,6 +323,7 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsWaste);
         ds.m_sTestJsonFile = "/test_files/dyn_waste";
+        ds.m_bFilterAsParentView = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsReportFault);
         ds.m_nRefreshFreqHours = 1000;
