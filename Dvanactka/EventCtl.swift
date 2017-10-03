@@ -42,6 +42,9 @@ class PlaceCell: UITableViewCell {
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_imgIcon: UIImageView!
 }
+class FilterCell: UITableViewCell {
+    @IBOutlet weak var m_lbTitle: UILabel!
+}
 
 class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
@@ -478,8 +481,9 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         
         var cell: UITableViewCell!;
         if isAskForFilterActive() && indexPath.section == 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "cellFilter", for: indexPath);
-            cell.textLabel?.text = m_arrFilterSelection[indexPath.row];
+            let cellFilter = tableView.dequeueReusableCell(withIdentifier: "cellFilter", for: indexPath) as! FilterCell;
+            cellFilter.m_lbTitle.text = m_arrFilterSelection[indexPath.row];
+            cell = cellFilter;
             return cell;
         }
 
