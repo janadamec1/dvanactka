@@ -97,6 +97,8 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
             //nCount = 1;
         }
 
+        boolean bAskingForFilter = (m_aDataSource.m_bFilterAsParentView && m_sParentFilter == null);
+
         m_mapMarkers = new HashMap<Marker, Integer>();
 
         int nVokCount = m_aDataSource.m_arrItems.size();
@@ -104,7 +106,7 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         {
             CRxEventRecord rec = m_aDataSource.m_arrItems.get(i);
             // filter
-            if (m_aDataSource.m_bFilterAsParentView) {
+            if (m_aDataSource.m_bFilterAsParentView && !bAskingForFilter) {
                 if (rec.m_sFilter == null) {
                     continue;   // records without filter are shown in the parent tableView
                 }
@@ -113,6 +115,9 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
                         continue;
                     }
                 }
+            }
+            if (bAskingForFilter && rec.m_sFilter != null) {
+                continue;   // when asking for filter, show only records without filter (e.g. dsWaste)
             }
 
             if (rec.m_aLocation != null) {

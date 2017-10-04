@@ -90,10 +90,11 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         m_mapView.delegate = self
         
         if let ds = m_aDataSource {
+            let bAskingForFilter = (ds.m_bFilterAsParentView && m_sParentFilter == nil);
             for rec in ds.m_arrItems {
                 
                 // filter
-                if ds.m_bFilterAsParentView {
+                if ds.m_bFilterAsParentView && !bAskingForFilter {
                     if rec.m_sFilter == nil {
                         continue;   // records without filter are shown in the parent tableView
                     }
@@ -103,6 +104,9 @@ class MapCtl: UIViewController, MKMapViewDelegate {
                             continue;
                         }
                     }
+                }
+                if bAskingForFilter && rec.m_sFilter != nil {
+                    continue;   // when asking for filter, show only records without filter (e.g. dsWaste)
                 }
 
                 if let loc = rec.m_aLocation {

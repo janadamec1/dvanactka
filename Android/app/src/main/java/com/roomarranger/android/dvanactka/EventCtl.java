@@ -160,7 +160,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             boolean bCellForAskingForFilter = isAskForFilterActive() && groupPosition == 0;
             int resId = R.layout.list_item_places;
             if (bCellForAskingForFilter)
-                resId = android.R.layout.simple_list_item_1;
+                resId = R.layout.list_item_filter;
             else {
                 switch (m_aDataSource.m_eType) {
                     case CRxDataSource.DATATYPE_news:
@@ -190,7 +190,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 cell.m_idLayout = resId;
 
                 if (bCellForAskingForFilter) {
-                    cell.m_lbTitle = (TextView) view.findViewById(android.R.id.text1);
+                    cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
                 }
                 else {
                     switch (m_aDataSource.m_eType) {
