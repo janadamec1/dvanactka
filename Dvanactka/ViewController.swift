@@ -85,16 +85,34 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 tracker.send(builder.build() as [NSObject : AnyObject])
             }
         }
-        
-        if #available( iOS 10.3,*){
-            SKStoreReviewController.requestReview()
-        }
     }
 
     //---------------------------------------------------------------------------
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+
+        // ask for rating
+        if #available( iOS 10.3,*){
+            if isAllowedToOpenStoreReview() {
+                SKStoreReviewController.requestReview()
+            }
+        }
+    }
+    
+    //---------------------------------------------------------------------------
+    func isAllowedToOpenStoreReview() -> Bool {
+        let today = Date();
+        let launchTime = UserDefaults.standard.double(forKey: "LastLaunchDefaultsKey");
+        if launchTime == 0.0 {
+            UserDefaults.standard.set(today.timeIntervalSince1970, forKey: "LastLaunchDefaultsKey");
+            return false;
+        }
+        let lastShown = Date(timeIntervalSince1970: launchTime);
+        if today.timeIntervalSince(lastShown) > 60*60*24*10 {  // 10 days since last review attempt
+            UserDefaults.standard.set(today.timeIntervalSince1970, forKey: "LastLaunchDefaultsKey");
+            return true;
+        }
+        return false;
     }
     
     //---------------------------------------------------------------------------

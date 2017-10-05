@@ -171,21 +171,22 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 tracker.send(builder.build() as [NSObject : AnyObject])
             }
         }
+        
+        // start with search bar visible in some cases
+        if let ds = m_aDataSource {
+            if ds.m_sId == CRxDataSourceManager.dsShops || ds.m_sId == CRxDataSourceManager.dsRadDeska
+                || ds.m_sId == CRxDataSourceManager.dsCityOffice {
+                if #available(iOS 11.0, *) {
+                    self.navigationItem.hidesSearchBarWhenScrolling = false;
+                }
+            }
+        }
     }
     
     //--------------------------------------------------------------------------
     deinit {
         if let ds = m_aDataSource {
             ds.delegate = nil;
-        }
-    }
-    
-    //--------------------------------------------------------------------------
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
-        
-        if #available(iOS 11.0, *) {
-            self.navigationItem.hidesSearchBarWhenScrolling = false;    // start with search bar on
         }
     }
     
