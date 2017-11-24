@@ -271,7 +271,13 @@
 "locationLat":"50.0137481",
 "locationLong":"14.4192061",
 "address":"Lhotecká 2d\nPraha 12",
-"openingHours":"1: 700-2359, 2: 700-2359, 3: 700-2359, 4: 700-2359, 5: 700-2359, 6: 700-2359, 7: 700-2359",
+"openingHours":"1: 700-2200, 2: 700-2200, 3: 700-2200, 4: 700-2200, 5: 700-2200, 6: 700-2200, 7: 700-2200",
+"category":"wc"
+},
+{
+"title":"Na hřišti u letiště Točná",
+"locationLat":"49.9873417",
+"locationLong":"14.4285297",
 "category":"wc"
 },
 {
