@@ -62,11 +62,17 @@ class CRxDataSource {
     static final int DATATYPE_events = 0, DATATYPE_news = 1, DATATYPE_places = 2;
     int m_eType;        // contains DATATYPE_xxxx
 
-    boolean m_bGroupByCategory = true;       // UI should show sections for each category
-    boolean m_bFilterAsParentView = false;   // UI should first show the list of possible filters
-    boolean m_bFilterable = false;           // UI can filter this datasource accoring to records' m_sFilter
-    Set<String> m_setFilter = null;       // contains strings that should NOT be shown
+    boolean m_bGroupByCategory = true;      // UI should show sections for each category
+    boolean m_bFilterAsParentView = false;  // UI should first show the list of possible filters
+    boolean m_bFilterable = false;          // UI can filter this DataSource according to records' m_sFilter
+    Set<String> m_setFilter = null;         // contains strings that should NOT be shown
     boolean m_bMapEnabled = false;          // UI can display records on map (enabled for .places)
+    boolean m_bListingFooterVisible = true;         // UI should show footer (enabled for .places)
+    boolean m_bListingSearchBarVisibleAtStart = false;      // start listing with search bar visible
+    String m_sListingFooterCustomLabelText = null;          // use custom listing footer label text
+    String m_sListingFooterCustomButtonText = null;         // use custom listing footer button text
+    String m_sListingFooterCustomButtonTargetUrl = null;    // when null, apps sends email
+    boolean m_bListingShowEventAddress = true;              // show event address in listing
 
     CRxDataSource(String id, String title, String icon, int type, int backgroundColor) {
         super();
@@ -76,6 +82,7 @@ class CRxDataSource {
         m_eType = type;
         m_iBackgroundColor = backgroundColor;
         m_bMapEnabled = (type == DATATYPE_places);
+        m_bListingFooterVisible = (type == DATATYPE_places);
     }
 
     //--------------------------------------------------------------------------
@@ -298,6 +305,7 @@ class CRxDataSourceManager {
         // additional parameters
         CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
         ds.m_bFilterable = true;
+        ds.m_bListingSearchBarVisibleAtStart = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsRadEvents);
         ds.m_bFilterable = true;
@@ -312,6 +320,7 @@ class CRxDataSourceManager {
         ds = m_dictDataSources.get(CRxDataSourceManager.dsBiografProgram);
         ds.m_nRefreshFreqHours = 48;
         ds.m_sShortTitle = "Biograf";
+        ds.m_bListingShowEventAddress = false;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCooltour);
         ds.m_nRefreshFreqHours = 48;
@@ -335,15 +344,22 @@ class CRxDataSourceManager {
         ds.m_nRefreshFreqHours = 48;
         ds.m_sTestJsonFile = "/test_files/p12shops";
         ds.m_bFilterAsParentView = true;
+        ds.m_bListingSearchBarVisibleAtStart = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);
         ds.m_nRefreshFreqHours = 4;
+
+        ds = m_dictDataSources.get(CRxDataSourceManager.dsWork);
+        ds.m_sListingFooterCustomLabelText = ctx.getString(R.string.add_new_job_offer);
+        ds.m_sListingFooterCustomButtonText = "KdeJePrace.cz";
+        ds.m_sListingFooterCustomButtonTargetUrl = "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
         ds.m_nRefreshFreqHours = 100;
         ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
         ds.m_bFilterAsParentView = true;
         ds.m_bMapEnabled = false;
+        ds.m_bListingSearchBarVisibleAtStart = true;
     }
 
     //--------------------------------------------------------------------------

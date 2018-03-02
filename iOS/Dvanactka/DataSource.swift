@@ -38,9 +38,15 @@ class CRxDataSource : NSObject {
     var m_eType: DataType
     var m_bGroupByCategory = true       // UI should show sections for each category
     var m_bFilterAsParentView = false   // UI should first show the list of possible filters
-    var m_bFilterable = false           // UI can filter this datasource accoring to records' m_sFilter
+    var m_bFilterable = false           // UI can filter this DataSource according to records' m_sFilter
     var m_setFilter: Set<String>?       // contains strings that should NOT be shown
     var m_bMapEnabled = false           // UI can display records on map (enabled for .places)
+    var m_bListingFooterVisible = true         // UI should show footer (enabled for .places)
+    var m_bListingSearchBarVisibleAtStart = false       // start listing with search bar visible
+    var m_sListingFooterCustomLabelText: String?        // use custom listing footer label text
+    var m_sListingFooterCustomButtonText: String?       // use custom listing footer button text
+    var m_sListingFooterCustomButtonTargetUrl: String?  // when nil, apps sends email
+    var m_bListingShowEventAddress = true               // show event address in listing
     
     init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int) {
         m_sId = id;
@@ -49,6 +55,7 @@ class CRxDataSource : NSObject {
         m_eType = type;
         m_iBackgroundColor = backgroundColor;
         m_bMapEnabled = (type == .places);
+        m_bListingFooterVisible = (type == .places);
         super.init()
     }
     
@@ -208,6 +215,7 @@ class CRxDataSourceManager : NSObject {
         // additional parameters
         if let ds = m_dictDataSources[CRxDataSourceManager.dsRadDeska] {
             ds.m_bFilterable = true;
+            ds.m_bListingSearchBarVisibleAtStart = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsRadEvents] {
             ds.m_bFilterable = true;
@@ -222,6 +230,7 @@ class CRxDataSourceManager : NSObject {
         if let ds = m_dictDataSources[CRxDataSourceManager.dsBiografProgram] {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sShortTitle = "Biograf";
+            ds.m_bListingShowEventAddress = false;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCooltour] {
             ds.m_nRefreshFreqHours = 48;
@@ -245,15 +254,22 @@ class CRxDataSourceManager : NSObject {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sTestJsonFile = "/test_files/p12shops";
             ds.m_bFilterAsParentView = true;
+            ds.m_bListingSearchBarVisibleAtStart = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsTraffic] {
             ds.m_nRefreshFreqHours = 4;
+        }
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsWork] {
+            ds.m_sListingFooterCustomLabelText = NSLocalizedString("Add job offer:", comment: "");
+            ds.m_sListingFooterCustomButtonText = "KdeJePrace.cz";
+            ds.m_sListingFooterCustomButtonTargetUrl = "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCityOffice] {
             ds.m_nRefreshFreqHours = 100;
             ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
             ds.m_bFilterAsParentView = true;
             ds.m_bMapEnabled = false;
+            ds.m_bListingSearchBarVisibleAtStart = true;
         }
     }
     

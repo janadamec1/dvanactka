@@ -427,7 +427,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
                     if (rec.m_sAddress != null)
                         cell.m_lbAddress.setText(rec.m_sAddress.replaceAll("\n", ", "));
-                    cell.m_lbAddress.setVisibility(rec.m_sAddress == null || m_aDataSource.m_sId.equals(CRxDataSourceManager.dsBiografProgram) ? View.GONE : View.VISIBLE);
+                    cell.m_lbAddress.setVisibility(rec.m_sAddress == null || !m_aDataSource.m_bListingShowEventAddress ? View.GONE : View.VISIBLE);
 
                     String sDateText = "";
                     if (rec.m_aDate != null) {
@@ -628,21 +628,22 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         View viewFooter = findViewById(R.id.footer);
         TextView lbFooterText = (TextView)findViewById(R.id.footerText);
         Button btnFooterButton = (Button)findViewById(R.id.btnFooter);
-        if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsWork)) {
-            lbFooterText.setText(R.string.add_new_job_offer);
-            btnFooterButton.setText("KdeJePrace.cz");
-        }
-        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places/* && !m_aDataSource.m_sId.equals(CRxDataSourceManager.dsCooltour)*/) {
-            //m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
-        }
-        else {
+
+        if (!m_aDataSource.m_bListingFooterVisible) {
             viewFooter.setVisibility(View.GONE);
         }
+        else {
+            if (m_aDataSource.m_sListingFooterCustomLabelText != null)
+                lbFooterText.setText(m_aDataSource.m_sListingFooterCustomLabelText);
+            if (m_aDataSource.m_sListingFooterCustomButtonText != null)
+                btnFooterButton.setText(m_aDataSource.m_sListingFooterCustomButtonText);
+        }
+
         btnFooterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsWork)) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app"));
+                if (m_aDataSource.m_sListingFooterCustomButtonTargetUrl != null) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(m_aDataSource.m_sListingFooterCustomButtonTargetUrl));
                     startActivity(browserIntent);
                 }
                 else {

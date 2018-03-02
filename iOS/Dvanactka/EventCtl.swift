@@ -143,15 +143,19 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             m_tableView.estimatedRowHeight = 90.0;
             
             // footer
-            if ds.m_sId == CRxDataSourceManager.dsWork {
-                m_lbFooterText.text = NSLocalizedString("Add job offer:", comment: "");
-                m_btnFooterButton.setTitle("KdeJePrace.cz", for: .normal);
-            }
-            else if ds.m_eType == .places/* && ds.m_sId != CRxDataSourceManager.dsCooltour*/ {
-                m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
+            if !ds.m_bListingFooterVisible {
+                m_viewFooter.isHidden = true;
             }
             else {
-                m_viewFooter.isHidden = true;
+                if let sCustomLabelText = ds.m_sListingFooterCustomLabelText {
+                    m_lbFooterText.text = sCustomLabelText;
+                }
+                else {
+                    m_lbFooterText.text = NSLocalizedString("Add record:", comment: "");
+                }
+                if let sCustomButtonText = ds.m_sListingFooterCustomButtonText {
+                    m_btnFooterButton.setTitle(sCustomButtonText, for: .normal);
+                }
             }
         }
         setRecordsDistance();
@@ -174,8 +178,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         
         // start with search bar visible in some cases
         if let ds = m_aDataSource {
-            if ds.m_sId == CRxDataSourceManager.dsShops || ds.m_sId == CRxDataSourceManager.dsRadDeska
-                || ds.m_sId == CRxDataSourceManager.dsCityOffice {
+            if ds.m_sListingSearchBarVisibleAtStart {
                 if #available(iOS 11.0, *) {
                     self.navigationItem.hidesSearchBarWhenScrolling = false;
                 }
@@ -551,7 +554,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             if let address = rec.m_sAddress {
                 cellEvent.m_lbAddress.text = address.replacingOccurrences(of: "\n", with: ", ");
             }
-            cellEvent.m_lbAddress.isHidden = (rec.m_sAddress == nil || ds.m_sId == CRxDataSourceManager.dsBiografProgram);
+            cellEvent.m_lbAddress.isHidden = (rec.m_sAddress == nil || !ds.m_bListingShowEventAddress);
             
             var sDateText = "";
             if let aDate = rec.m_aDate {
@@ -1016,10 +1019,9 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     //--------------------------------------------------------------------------
     @IBAction func onBtnFooterTouched(_ sender: Any) {
         guard let ds = m_aDataSource else { return }
-        if ds.m_sId == CRxDataSourceManager.dsWork {
-            if let url = URL(string: "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app") {
-                UIApplication.shared.openURL(url);
-            }
+        if let sFooterCustomButtonTargetUrl = ds.m_sListingFooterCustomButtonTargetUrl,
+            let url = URL(string: sFooterCustomButtonTargetUrl) {
+            UIApplication.shared.openURL(url);
         }
         else if MFMailComposeViewController.canSendMail() {
             let mailer = MFMailComposeViewController();
