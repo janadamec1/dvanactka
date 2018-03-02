@@ -18,20 +18,23 @@ $nodes = $xpath->query("//div[@class='titulDoc aktClanky']//li");
 foreach ($nodes as $i => $node) {
 	$nodeTitle = firstItem($xpath->query("strong//a", $node));
 	if ($nodeTitle != NULL) {
-		$title = $nodeTitle->nodeValue;
+	    if ($nodeTitle->lastChild != NULL)
+		    $title = $nodeTitle->lastChild->textContent;    // remove script
+		else
+		    $title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
 			$link = "https://www.praha12.cz" . $link;
 		}
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
-		
+
 		$nodeDate = firstItem($xpath->query("span", $node));
 		if ($nodeDate != NULL) {
 			$date = date_create_from_format("(!j.n.Y)", $nodeDate->nodeValue);
 			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
-		
+
 		$nodeText = firstItem($xpath->query("div[1]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
@@ -47,20 +50,23 @@ $nodes = $xpath->query("//div[@class='titulDoc upoClanky']//li");
 foreach ($nodes as $i => $node) {
 	$nodeTitle = firstItem($xpath->query("strong//a", $node));
 	if ($nodeTitle != NULL) {
-		$title = $nodeTitle->nodeValue;
+	    if ($nodeTitle->lastChild != NULL)
+		    $title = $nodeTitle->lastChild->textContent;    // remove script
+		else
+		    $title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
 			$link = "https://www.praha12.cz" . $link;
 		}
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
-		
+
 		$nodeDate = firstItem($xpath->query("span", $node));
 		if ($nodeDate != NULL) {
 			$date = date_create_from_format("(!j.n.Y)", $nodeDate->nodeValue);
 			$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 		}
-		
+
 		$nodeText = firstItem($xpath->query("div[1]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
