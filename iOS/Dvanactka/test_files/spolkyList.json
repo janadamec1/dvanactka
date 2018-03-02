@@ -37,6 +37,12 @@
 "category":"associations"
 },
 {
+"title":"Spolek pro Modřany",
+"text":"Spolek vznikl v reakci na záměr společnosti Fisolta zbourat obchodní centrum Sázava a na jeho místě postavit šesti až desetipodlažní, z větší části obytné, budovy.",
+"infoLink":"http:\/\/www.spolekpromodrany.cz",
+"category":"associations"
+},
+{
 "title":"Sbor dobrovolných hasičů Cholupice",
 "text":"Sbor dobrovolných hasičů založený 1903",
 "infoLink":"http:\/\/www.sdhcholupice.cz",
@@ -46,12 +52,24 @@
 "title":"Praha 12.net",
 "text":"Komunitní poskytovatel Internetu.",
 "infoLink":"http:\/\/www.praha12.net",
+"locationLat":"50.0012111",
+"locationLong":"14.4056047",
+"address":"Komořanská 35\nPraha 12",
 "category":"associations"
 },
 {
 "title":"KPZ Modřany",
 "text":"Komunitou podporované zemědělství, zdroj místních kvalitních biopotravin za spravedlivé ceny, podpora konkrétního sedláka a jeho snažení, komunita lidí s podobným zájmem.",
 "infoLink":"http:\/\/kpzmodrany.webnode.cz",
+"category":"associations"
+},
+{
+"title":"Rybáři Modřany",
+"text":"Český rybářský svaz - místní organizace Praha 12 Modřany",
+"infoLink":"http:\/\/www.rybari-modrany.cz",
+"locationLat":"50.0047281",
+"locationLong":"14.4066561",
+"address":"U Domu služeb\nPraha 12",
 "category":"associations"
 },
 {

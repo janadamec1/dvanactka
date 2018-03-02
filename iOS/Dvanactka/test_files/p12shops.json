@@ -1,6 +1,6 @@
 {"items":[
 {
-"title":"Di Pietro",
+"title":"Di Pietro (zavřeno)",
 "text":"Pizzerie",
 "locationLat":"50.0017017",
 "locationLong":"14.4226483",
@@ -37,7 +37,7 @@
 "filter":"Restaurace"
 },
 {
-"title":"Port 62",
+"title":"Port 62 (zavřeno)",
 "locationLat":"50.0140494",
 "locationLong":"14.3970908",
 "address":"Vltavanů\nPraha 12",
@@ -758,6 +758,17 @@
 "filter":"Potraviny"
 },
 {
+"title":"Pekárna Bread Market",
+"locationLat":"50.0000222",
+"locationLong":"14.4062103",
+"address":"K Vystrkovu 1c\nPraha 12",
+"openingHours":"1: 700-1800, 2: 700-1800, 3: 700-1800, 4: 700-1800, 5: 700-1800, 6: 800-1200",
+"infoLink":"http:\/\/www.breadmarket.cz",
+"phone":"774 188 801",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
 "title":"Vethope",
 "locationLat":"50.0000989",
 "locationLong":"14.4135844",
@@ -767,7 +778,19 @@
 "phone":"212 246 809",
 "email":"info@vethope.cz",
 "category":"obchod",
-"filter":"Veterina"
+"filter":"Veterinární ordinace"
+},
+{
+"title":"Náš veterinář",
+"locationLat":"50.0000989",
+"locationLong":"14.4135844",
+"address":"Československého exilu 32\nPraha 12",
+"openingHours":"1: 900-1200, 1: 1400-1900, 2: 900-1200, 2: 1400-1900, 3: 900-1200, 3: 1400-1900, 4: 900-1200, 4: 1400-1900, 5: 900-1200, 5: 1400-1900, 6: 900-1200",
+"infoLink":"http:\/\/www.nasveterinar.cz",
+"phone":"734 11 33 88",
+"email":"info@nasveterinar.cz",
+"category":"obchod",
+"filter":"Veterinární ordinace"
 },
 {
 "title":"IVET",
@@ -778,7 +801,7 @@
 "infoLink":"http:\/\/www.veterinarni-klinika.net",
 "phone":"241 714 358",
 "category":"obchod",
-"filter":"Veterina"
+"filter":"Veterinární ordinace"
 },
 {
 "title":"Horus EYE",
