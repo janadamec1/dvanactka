@@ -178,7 +178,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         
         // start with search bar visible in some cases
         if let ds = m_aDataSource {
-            if ds.m_sListingSearchBarVisibleAtStart {
+            if ds.m_bListingSearchBarVisibleAtStart {
                 if #available(iOS 11.0, *) {
                     self.navigationItem.hidesSearchBarWhenScrolling = false;
                 }

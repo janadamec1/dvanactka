@@ -52,6 +52,7 @@
 		4D42642C1DD08D62008ED01F /* c_waste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4264181DD08D62008ED01F /* c_waste@2x.png */; };
 		4D42642D1DD08D62008ED01F /* c_work.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D4264191DD08D62008ED01F /* c_work.png */; };
 		4D42642E1DD08D62008ED01F /* c_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D42641A1DD08D62008ED01F /* c_work@2x.png */; };
+		4D4600C2204AD01800F30E31 /* test_files in Resources */ = {isa = PBXBuildFile; fileRef = 4D4600C1204AD01800F30E31 /* test_files */; };
 		4D464C3E1DE1F25E003EC137 /* c_trekking.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D464C3C1DE1F25E003EC137 /* c_trekking.png */; };
 		4D464C3F1DE1F25E003EC137 /* c_trekking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D464C3D1DE1F25E003EC137 /* c_trekking@2x.png */; };
 		4D464C411DE23D14003EC137 /* ds_billboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D464C401DE23D14003EC137 /* ds_billboard.png */; };
@@ -106,7 +107,6 @@
 		4D90193C1DC65E16001488D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D90193B1DC65E16001488D3 /* Assets.xcassets */; };
 		4D90193F1DC65E17001488D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D90193D1DC65E17001488D3 /* LaunchScreen.storyboard */; };
 		4D9019491DC669B7001488D3 /* EventCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9019481DC669B7001488D3 /* EventCtl.swift */; };
-		4D90194D1DC67FB6001488D3 /* test_files in Resources */ = {isa = PBXBuildFile; fileRef = 4D90194C1DC67FB6001488D3 /* test_files */; };
 		4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90194E1DC69A0D001488D3 /* EventRecord.swift */; };
 		4D9F14AD1DD103D100841AD8 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9F14AC1DD103D100841AD8 /* DataSource.swift */; };
 		4D9F14AF1DD1135700841AD8 /* ds_news.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D9F14AE1DD1135700841AD8 /* ds_news.png */; };
@@ -178,6 +178,7 @@
 		4D4264181DD08D62008ED01F /* c_waste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_waste@2x.png"; path = "img/c_waste@2x.png"; sourceTree = "<group>"; };
 		4D4264191DD08D62008ED01F /* c_work.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_work.png; path = img/c_work.png; sourceTree = "<group>"; };
 		4D42641A1DD08D62008ED01F /* c_work@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_work@2x.png"; path = "img/c_work@2x.png"; sourceTree = "<group>"; };
+		4D4600C1204AD01800F30E31 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; name = test_files; path = ../../test_files; sourceTree = "<group>"; };
 		4D464C3C1DE1F25E003EC137 /* c_trekking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_trekking.png; path = img/c_trekking.png; sourceTree = "<group>"; };
 		4D464C3D1DE1F25E003EC137 /* c_trekking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_trekking@2x.png"; path = "img/c_trekking@2x.png"; sourceTree = "<group>"; };
 		4D464C401DE23D14003EC137 /* ds_billboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_billboard.png; path = img/ds_billboard.png; sourceTree = "<group>"; };
@@ -235,7 +236,6 @@
 		4D90193E1DC65E17001488D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D9019401DC65E17001488D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D9019481DC669B7001488D3 /* EventCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCtl.swift; sourceTree = "<group>"; };
-		4D90194C1DC67FB6001488D3 /* test_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test_files; sourceTree = "<group>"; };
 		4D90194E1DC69A0D001488D3 /* EventRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRecord.swift; sourceTree = "<group>"; };
 		4D9F14AC1DD103D100841AD8 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		4D9F14AE1DD1135700841AD8 /* ds_news.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_news.png; path = img/ds_news.png; sourceTree = "<group>"; };
@@ -417,11 +417,11 @@
 				4D9019381DC65E16001488D3 /* Main.storyboard */,
 				4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */,
 				4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */,
+				4DF266521EB527B2003144DF /* Reachability.swift */,
 				4D318A6D1DD7C4A400187985 /* RefineLocCtl.swift */,
 				4D318A691DD7897800187985 /* ReportFaultCtl.swift */,
-				4D90194C1DC67FB6001488D3 /* test_files */,
+				4D4600C1204AD01800F30E31 /* test_files */,
 				4D9019361DC65E16001488D3 /* ViewController.swift */,
-				4DF266521EB527B2003144DF /* Reachability.swift */,
 			);
 			path = Dvanactka;
 			sourceTree = "<group>";
@@ -538,6 +538,7 @@
 				4D663B6C1DF5C07A00145AED /* ds_game.png in Resources */,
 				4D0469D41DFA0DF300E7B760 /* ds_usergroups@2x.png in Resources */,
 				4D42641D1DD08D62008ED01F /* c_info.png in Resources */,
+				4D4600C2204AD01800F30E31 /* test_files in Resources */,
 				4D464C4A1DE2F525003EC137 /* star@2x.png in Resources */,
 				4D52699B1DF49FE4008FA122 /* c_children@2x.png in Resources */,
 				4D4264251DD08D62008ED01F /* c_restaurant.png in Resources */,
@@ -570,7 +571,6 @@
 				4D52698A1DF20624008FA122 /* c_recycle.png in Resources */,
 				4D464C491DE2F525003EC137 /* star.png in Resources */,
 				4D0469D51DFA0DF300E7B760 /* ds_waste@2x.png in Resources */,
-				4D90194D1DC67FB6001488D3 /* test_files in Resources */,
 				4D73FC8B1E12DD07006D9D15 /* ds_roadblock@2x.png in Resources */,
 				4D1F44451E2D33640013EE52 /* ds_magazine.png in Resources */,
 				4D4264221DD08D62008ED01F /* c_pharmacy@2x.png in Resources */,
