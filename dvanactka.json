@@ -12,6 +12,7 @@
   {
     "id":"dsRadEvents",
     "title":"Events",
+    "title@cs":"Akce",
     "icon":"ds_events",
     "type":"events",
     "backgroundColor":"#2d55db",
@@ -20,6 +21,7 @@
   {
     "id":"dsRadDeska",
     "title":"Official Board",
+    "title@cs":"Úřední deska",
     "icon":"ds_billboard",
     "type":"news",
     "backgroundColor":"#884d3f",
@@ -29,6 +31,7 @@
   {
     "id":"dsSpolky",
     "title":"Independent",
+    "title@cs":"Nezávisle",
     "icon":"ds_magazine",
     "type":"news",
     "backgroundColor":"#9f7308",
@@ -37,6 +40,7 @@
   {
     "id":"dsSpolkyList",
     "title":"Associations",
+    "title@cs":"Spolky",
     "icon":"ds_usergroups",
     "type":"places",
     "backgroundColor":"#9f7308",
@@ -46,6 +50,7 @@
   {
     "id":"dsCityOffice",
     "title":"City Office",
+    "title@cs":"Úřad",
     "icon":"ds_parliament",
     "type":"places",
     "backgroundColor":"#884d3f",
@@ -58,6 +63,7 @@
   {
     "id":"dsBiografProgram",
     "title":"Modřanský biograf",
+    "title@cs":"Program Modřanského biografu",
     "shortTitle":"Biograf",
     "icon":"ds_biograf",
     "type":"events",
@@ -68,6 +74,7 @@
   {
     "id":"dsCooltour",
     "title":"Trips",
+    "title@cs":"Výlety",
     "icon":"ds_landmarks",
     "type":"places",
     "backgroundColor":"#008000",
@@ -77,6 +84,7 @@
   {
     "id":"dsWaste",
     "title":"Waste",
+    "title@cs":"Odpad",
     "icon":"ds_waste",
     "type":"places",
     "backgroundColor":"#008000",
@@ -87,6 +95,7 @@
   {
     "id":"dsSosContacts",
     "title":"Help",
+    "title@cs":"Pomoc",
     "icon":"ds_help",
     "type":"places",
     "backgroundColor":"#9f7308",
@@ -96,6 +105,7 @@
   {
     "id":"dsReportFault",
     "title":"Report Fault",
+    "title@cs":"Vyfotit závadu",
     "icon":"ds_reportfault",
     "type":"places",
     "backgroundColor":"#411ab1",
@@ -104,6 +114,7 @@
   {
     "id":"dsGame",
     "title":"Game",
+    "title@cs":"Hra",
     "icon":"ds_game",
     "type":"places",
     "backgroundColor":"#bb3c60",
@@ -112,6 +123,7 @@
   {
     "id":"dsShops",
     "title":"Shops",
+    "title@cs":"Firmy",
     "icon":"ds_shop",
     "type":"places",
     "backgroundColor":"#b2b20a",
@@ -123,16 +135,19 @@
   {
     "id":"dsWork",
     "title":"Work",
+    "title@cs":"Práce",
     "icon":"ds_work",
     "type":"places",
     "backgroundColor":"#b2b20a",
     "listingFooterCustomLabelText":"Add job offer:",
+    "listingFooterCustomLabelText@cs":"Přidat nabídku:",
     "listingFooterCustomButtonText":"KdeJePrace.cz",
     "listingFooterCustomButtonTargetUrl":"https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app"
   },
   {
     "id":"dsTraffic",
     "title":"Traffic",
+    "title@cs":"Doprava",
     "icon":"ds_roadblock",
     "type":"places",
     "backgroundColor":"#411ab1",

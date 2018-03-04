@@ -214,13 +214,6 @@
 "contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
-{
-"title":"ZŠ Na Beránku",
-"locationLat":"50.0002697",
-"locationLong":"14.4315203",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"category":"wasteTextile"
-},
 
 {
 "title":"Botevova x Pejevové",
@@ -489,7 +482,7 @@
 {
 "title":"Zárubova",
 "locationLong":"14.433998006831237",
-"locationLat":"50.013511005203206",
+"locationLat":"50.013511005203206", 
 "text":"Parkoviště při ulici Zárubova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -497,7 +490,7 @@
 {
 "title":"Darwinova x Voborského",
 "locationLong":"14.4071217",
-"locationLat":"50.0089967",
+"locationLat":"50.0089967", 
 "text":"Křižovatka ulic Darwinova a Voborského",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -505,7 +498,7 @@
 {
 "title":"Kolářova x K Beránku",
 "locationLong":"14.4134314",
-"locationLat":"49.9979356",
+"locationLat":"49.9979356", 
 "text":"Křižovatka ulic Kolářova a K Beránku",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -513,7 +506,7 @@
 {
 "title":"Lysinská x K Orionce",
 "locationLong":"14.4096383",
-"locationLat":"50.0126414",
+"locationLat":"50.0126414", 
 "text":"Křižovatka ulic Lysinská a K Orionce",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -521,7 +514,7 @@
 {
 "title":"Šumavského x Emlerova",
 "locationLong":"14.4125994",
-"locationLat":"50.0102419",
+"locationLat":"50.0102419", 
 "text":"Křižovatka ulic Šumavského a Emlerova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -529,7 +522,7 @@
 {
 "title":"U Klubu x Nad Teplárnou",
 "locationLong":"14.4079042",
-"locationLat":"49.9921042",
+"locationLat":"49.9921042", 
 "text":"Křižovatka ulic U klubu a Nad teplárnou",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -537,8 +530,16 @@
 {
 "title":"Do Čtvrti x U Šumavěnky",
 "locationLong":"14.4118161",
-"locationLat":"50.0149303",
+"locationLat":"50.0149303", 
 "text":"Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Liškova x Cihlářova",
+"locationLong":"14.4410161",
+"locationLat":"50.0148875", 
+"text":"Křižovatka ulic Liškova a Cihlářova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 }
