@@ -16,37 +16,38 @@ protocol CRxDataSourceRefreshDelegate {
 }
 
 class CRxDataSource : NSObject {
-    var m_sId: String
-    var m_sTitle: String           // human readable
-    var m_sShortTitle: String?
-    var m_sIcon: String
+    var m_sId: String;
+    var m_sTitle: String;           // human readable
+    var m_sShortTitle: String?;     // used on main screen, optional
+    var m_sIcon: String;
     var m_iBackgroundColor: Int;
     var m_nRefreshFreqHours: Int = 18;  // refresh after 18 hours
-    var m_sTestJsonFile: String?;       // offline data file
+    var m_sServerDataFile: String?;     // url where to get the current data
+    var m_sOfflineDataFile: String?;    // offline data file
     var m_sLastItemShown: String = "";  // hash of the last record user displayed (to count unread news, etc)
     var m_sUuid: String?;               // id used in game data source
-    var m_dateLastRefreshed: Date?
-    var m_bIsBeingRefreshed: Bool = false
-    var m_arrItems: [CRxEventRecord] = [CRxEventRecord]()   // the data
-    var delegate: CRxDataSourceRefreshDelegate?
+    var m_dateLastRefreshed: Date?;
+    var m_bIsBeingRefreshed: Bool = false;
+    var m_arrItems: [CRxEventRecord] = [CRxEventRecord]();   // the data
+    var delegate: CRxDataSourceRefreshDelegate?;
     
     enum DataType {
         case events
         case news
         case places
     }
-    var m_eType: DataType
-    var m_bGroupByCategory = true       // UI should show sections for each category
-    var m_bFilterAsParentView = false   // UI should first show the list of possible filters
-    var m_bFilterable = false           // UI can filter this DataSource according to records' m_sFilter
-    var m_setFilter: Set<String>?       // contains strings that should NOT be shown
-    var m_bMapEnabled = false           // UI can display records on map (enabled for .places)
-    var m_bListingFooterVisible = true         // UI should show footer (enabled for .places)
-    var m_bListingSearchBarVisibleAtStart = false       // start listing with search bar visible
-    var m_sListingFooterCustomLabelText: String?        // use custom listing footer label text
-    var m_sListingFooterCustomButtonText: String?       // use custom listing footer button text
-    var m_sListingFooterCustomButtonTargetUrl: String?  // when nil, apps sends email
-    var m_bListingShowEventAddress = true               // show event address in listing
+    var m_eType: DataType;
+    var m_bGroupByCategory = true;      // UI should show sections for each category
+    var m_bFilterAsParentView = false;  // UI should first show the list of possible filters
+    var m_bFilterable = false;          // UI can filter this DataSource according to records' m_sFilter
+    var m_setFilter: Set<String>?;      // contains strings that should NOT be shown
+    var m_bMapEnabled = false;          // UI can display records on map (enabled for .places)
+    var m_bListingFooterVisible = true;        // UI should show footer (enabled for .places)
+    var m_bListingSearchBarVisibleAtStart = false;      // start listing with search bar visible
+    var m_sListingFooterCustomLabelText: String?;       // use custom listing footer label text
+    var m_sListingFooterCustomButtonText: String?;      // use custom listing footer button text
+    var m_sListingFooterCustomButtonTargetUrl: String?; // when nil, apps sends email
+    var m_bListingShowEventAddress = true;              // show event address in listing
     
     init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int) {
         m_sId = id;
@@ -190,7 +191,7 @@ class CRxDataSourceManager : NSObject {
     var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x808080);    // (records over all news sources)
     var m_setPlacesNotified: Set<String> = [];  // (titles)
     var delegate: CRxDataSourceRefreshDelegate? // one global delegate (main viewController)
-
+    
     func defineDatasources() {
         
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -213,35 +214,46 @@ class CRxDataSourceManager : NSObject {
         m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places, backgroundColor:0xb11a41);
         
         // additional parameters
+        if let ds = m_dictDataSources[CRxDataSourceManager.dsRadNews] {
+            ds.m_sServerDataFile = "dyn_radAktual.json";
+        }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsRadDeska] {
+            ds.m_sServerDataFile = "dyn_radDeska.json";
             ds.m_bFilterable = true;
             ds.m_bListingSearchBarVisibleAtStart = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsRadEvents] {
+            ds.m_sServerDataFile = "dyn_events.php";
             ds.m_bFilterable = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolky] {
+            ds.m_sServerDataFile = "dyn_spolky.php";
             ds.m_bFilterable = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolkyList] {
             ds.m_nRefreshFreqHours = 48;
-            ds.m_sTestJsonFile = "/test_files/spolkyList";
+            ds.m_sServerDataFile = "spolkyList.json";
+            ds.m_sOfflineDataFile = "/test_files/spolkyList";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsBiografProgram] {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sShortTitle = "Biograf";
+            ds.m_sServerDataFile = "dyn_biograf.json";
             ds.m_bListingShowEventAddress = false;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCooltour] {
             ds.m_nRefreshFreqHours = 48;
-            ds.m_sTestJsonFile = "/test_files/p12kultpamatky";
+            ds.m_sServerDataFile = "p12kultpamatky.json";
+            ds.m_sOfflineDataFile = "/test_files/p12kultpamatky";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsSosContacts] {
             ds.m_nRefreshFreqHours = 48;
-            ds.m_sTestJsonFile = "/test_files/sos";
+            ds.m_sServerDataFile = "sos.json";
+            ds.m_sOfflineDataFile = "/test_files/sos";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsWaste] {
-            ds.m_sTestJsonFile = "/test_files/dyn_waste";
+            ds.m_sServerDataFile = "dyn_waste.json";
+            ds.m_sOfflineDataFile = "/test_files/dyn_waste";
             ds.m_bFilterAsParentView = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsReportFault] {
@@ -252,21 +264,25 @@ class CRxDataSourceManager : NSObject {
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsShops] {
             ds.m_nRefreshFreqHours = 48;
-            ds.m_sTestJsonFile = "/test_files/p12shops";
+            ds.m_sServerDataFile = "p12shops.json";
+            ds.m_sOfflineDataFile = "/test_files/p12shops";
             ds.m_bFilterAsParentView = true;
             ds.m_bListingSearchBarVisibleAtStart = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsTraffic] {
+            ds.m_sServerDataFile = "dyn_doprava.json";
             ds.m_nRefreshFreqHours = 4;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsWork] {
+            ds.m_sServerDataFile = "dyn_kdejeprace.json";
             ds.m_sListingFooterCustomLabelText = NSLocalizedString("Add job offer:", comment: "");
             ds.m_sListingFooterCustomButtonText = "KdeJePrace.cz";
             ds.m_sListingFooterCustomButtonTargetUrl = "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCityOffice] {
             ds.m_nRefreshFreqHours = 100;
-            ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
+            ds.m_sServerDataFile = "dyn_cityOffice.json";
+            ds.m_sOfflineDataFile = "/test_files/dyn_cityOffice";
             ds.m_bFilterAsParentView = true;
             ds.m_bMapEnabled = false;
             ds.m_bListingSearchBarVisibleAtStart = true;
@@ -283,10 +299,10 @@ class CRxDataSourceManager : NSObject {
         for itemIt in m_dictDataSources {
             let ds = itemIt.value;
             ds.loadFromJSON(file: fileForDataSource(id: ds.m_sId));
-
+            
             // load test data in case we don't have any previously saved
             if ds.m_arrItems.isEmpty {
-                if let testFile = ds.m_sTestJsonFile,
+                if let testFile = ds.m_sOfflineDataFile,
                     let url = Bundle.main.url(forResource: testFile, withExtension: "json") {
                     ds.loadFromJSON(file: url);
                 }
@@ -366,7 +382,7 @@ class CRxDataSourceManager : NSObject {
         let urlNews = m_urlDocumentsDir.appendingPathComponent("favNews.json");
         m_aSavedNews.saveToJSON(file: urlNews);
     }
-
+    
     //--------------------------------------------------------------------------
     func loadFavorities() {
         let urlPlaces = m_urlDocumentsDir.appendingPathComponent("favPlaces.txt");
@@ -475,67 +491,13 @@ class CRxDataSourceManager : NSObject {
             return;
         }
         
-        if id == CRxDataSourceManager.dsRadNews {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_radAktual.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsRadEvents {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_events.php");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsRadDeska {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_radDeska.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsCityOffice {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_cityOffice.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsWork {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_kdejeprace.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsSpolky {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_spolky.php");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsBiografProgram {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_biograf.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsTraffic {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_doprava.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsSpolkyList {
-            refreshStdJsonDataSource(sDsId: id, url: "spolkyList.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsCooltour {
-            refreshStdJsonDataSource(sDsId: id, url: "p12kultpamatky.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsWaste {
-            refreshStdJsonDataSource(sDsId: id, url: "dyn_waste.json");
-            /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-                refreshWasteDataSource();
-                ds.delegate?.dataSourceRefreshEnded(nil);
-                return;
-            }*/
-        }
-        else if id == CRxDataSourceManager.dsSosContacts {
-            refreshStdJsonDataSource(sDsId: id, url: "sos.json");
-            return;
-        }
-        else if id == CRxDataSourceManager.dsShops {
-            refreshStdJsonDataSource(sDsId: id, url: "p12shops.json");
-            return;
+        if let url = ds.m_sServerDataFile {
+            refreshStdJsonDataSource(sDsId: id, url: url);
         }
     }
     
     //--------------------------------------------------------------------------
-    // downloading daa from URL: http://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
+    // downloading data from URL: http://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
     // async
     static func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
         URLSession.shared.dataTask(with: url) {
@@ -558,7 +520,7 @@ class CRxDataSourceManager : NSObject {
                 urlDownload = URL(string: "https://dvanactka.info/own/p12/" + url);
             }
         }
-        else if let testFile = aDS.m_sTestJsonFile {
+        else if let testFile = aDS.m_sOfflineDataFile {
             urlDownload = Bundle.main.url(forResource: testFile, withExtension: "json");
         }
         else {
@@ -599,181 +561,6 @@ class CRxDataSourceManager : NSObject {
                     self.resetAllNotifications();
                 }
             }
-        }
-    }
-    
-    /*/--------------------------------------------------------------------------
-    func refreshHtmlDataSource(sDsId: String, url: String, testFile: String, completition: ((_ error: String?) -> Void)?, htmlCodeHandler: @escaping (_ doc: HTMLDocument, _ arrNewItems: inout [CRxEventRecord]) -> Void) {
-        
-        guard let aDS = self.m_dictDataSources[sDsId]
-            else { return }
-        
-        var urlDownload: URL?
-        if !g_bUseTestFiles {
-            urlDownload = URL(string: url);
-        }
-        else {
-            urlDownload = Bundle.main.url(forResource: testFile, withExtension: "html");
-        }
-        guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded("Cannot resolve URL"); return; }
-        
-        aDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
-        
-        getDataFromUrl(url: url) { (data, response, error) in
-            guard let data = data, error == nil
-                else {
-                    DispatchQueue.main.async() { () -> Void in
-                        aDS.m_bIsBeingRefreshed = false;
-                        completition?(NSLocalizedString("Error when downloading data", comment: ""));
-                        self.hideNetworkIndicator();
-                    }
-                    return;
-            }
-            
-            if let doc = HTML(html:data, encoding: .utf8) {
-                
-                var arrNewItems = [CRxEventRecord]()
-                
-                htmlCodeHandler(doc, &arrNewItems);
-                
-                DispatchQueue.main.async() { () -> Void in
-                    if arrNewItems.count > 0 {
-                        aDS.m_arrItems = arrNewItems;
-                        aDS.sortNewsByDate();
-                    }
-                    aDS.m_dateLastRefreshed = Date();
-                    aDS.m_bIsBeingRefreshed = false;
-                    self.save(dataSource: aDS);
-                    self.hideNetworkIndicator();
-                    aDS.delegate?.dataSourceRefreshEnded(nil);
-                    self.delegate?.dataSourceRefreshEnded(nil);     // to refresh unread count badge
-                }
-            }
-        }
-    } */
-    
-    //--------------------------------------------------------------------------
-    func findVokLocation(alias: String, ds: CRxDataSource) -> CRxEventRecord? {
-        let sAliasCompressed = alias.replacingOccurrences(of: " ", with: "");
-        for rec in ds.m_arrItems {
-            if let text = rec.m_sText {
-                let sTextCompressed = text.replacingOccurrences(of: " ", with: "");
-                if sTextCompressed.range(of: sAliasCompressed, options:[.diacriticInsensitive, .caseInsensitive]) != nil {
-                    return rec;
-                }
-            }
-        }
-        return nil;
-    }
-    
-    func processWasteDataFile(csv: String, type: String, into ds: CRxDataSource) {
-        
-        var iTimeStartCol = 2;
-        var iTimeEndCol = 3;
-        var iLocCol = 4;
-        var iTypeCol = -1;
-        if type == "bio" {
-            iTimeStartCol = 1;
-            iTimeEndCol = 2;
-            iLocCol = 3;
-            iTypeCol = 5;
-        }
-        
-        let aCalendar = Calendar.current;
-        
-        let lines = csv.components(separatedBy: .newlines);
-        var nProcessedCount = 0;
-        for line in lines {
-            let lineItems = line.components(separatedBy: ";");
-            if lineItems.count < 5 {
-                continue;
-            }
-            
-            if let rec = findVokLocation(alias: lineItems[iLocCol], ds: ds) {
-                let sDateComps = lineItems[0].components(separatedBy: ".");
-                let sTimeStartComps = lineItems[iTimeStartCol].components(separatedBy: ":")
-                let sTimeEndComps = lineItems[iTimeEndCol].components(separatedBy: ":")
-                if sDateComps.count != 3 || sTimeStartComps.count != 2 || sTimeEndComps.count != 2 {
-                    continue;
-                }
-                
-                var aDateComps = DateComponents();
-                aDateComps.day = Int(sDateComps[0]);
-                aDateComps.month = Int(sDateComps[1]);
-                aDateComps.year = Int(sDateComps[2]);
-                
-                aDateComps.hour = Int(sTimeStartComps[0]);
-                aDateComps.minute = Int(sTimeStartComps[1]);
-                
-                var dateStart = aCalendar.date(from: aDateComps);
-                
-                aDateComps.hour = Int(sTimeEndComps[0]);
-                aDateComps.minute = Int(sTimeEndComps[1]);
-                var dateEnd = aCalendar.date(from: aDateComps);
-                
-                if lineItems[iTimeStartCol] == "0:00" && lineItems[iTimeEndCol] == "0:00" {
-                    // exception, duration is entire weekend
-                    aDateComps.hour = 15;
-                    dateStart = aCalendar.date(from: aDateComps);
-                    aDateComps.hour = 8;
-                    dateEnd = aCalendar.date(from: aDateComps)?.addingTimeInterval(3*24*60*60); // add 3 days (weekend)
-                }
-                
-                if let dateStart = dateStart, let dateEnd = dateEnd {
-                    // add new record to rec
-                    if rec.m_arrEvents == nil {
-                        rec.m_arrEvents = [CRxEventInterval]();
-                    }
-                    
-                    var sRecType = type;
-                    if iTypeCol >= 0 && iTypeCol < lineItems.count {
-                        sRecType = lineItems[iTypeCol]
-                    }
-                    
-                    rec.m_arrEvents?.append(CRxEventInterval(start: dateStart, end: dateEnd, type: sRecType));
-                    nProcessedCount += 1;
-                }
-            }
-        }
-        print("\(type) lines \(lines.count), processed \(nProcessedCount)");
-    }
-    
-    func refreshWasteDataSource(completition: ((_ error: String?) -> Void)? = nil) {
-        
-        guard let aVokDS = m_dictDataSources[CRxDataSourceManager.dsWaste]
-            else { return }
-        
-        //if let doc = HTML(url: url!, encoding: .utf8) {
-        if let pathVok = Bundle.main.path(forResource: "/test_files/vok_vok", ofType: "csv"),
-            let pathBio = Bundle.main.path(forResource: "/test_files/vok_bio", ofType: "csv") {
-            
-            // remove all events
-            for rec in aVokDS.m_arrItems {
-                rec.m_arrEvents = nil;
-            }
-            
-            let csvVok = try! String(contentsOfFile: pathVok, encoding: .utf8);
-            processWasteDataFile(csv: csvVok, type: "obj. odpad", into: aVokDS);
-            
-            let csvBio = try! String(contentsOfFile: pathBio, encoding: .utf8);
-            processWasteDataFile(csv: csvBio, type: "bio", into: aVokDS);
-            
-            // sort all events (and fill static info link)
-            for rec in aVokDS.m_arrItems {
-                if let events = rec.m_arrEvents {
-                    rec.m_arrEvents = events.sorted(by: { $0.m_dateStart < $1.m_dateStart });
-                }
-                if let category = rec.m_eCategory {
-                    if category == CRxCategory.waste.rawValue {
-                        rec.m_sInfoLink = "https://www.praha12.cz/odpady/ds-1138/";
-                    }
-                }
-            }
-            
-            aVokDS.m_dateLastRefreshed = Date();
-            save(dataSource: aVokDS);
-            resetAllNotifications();
         }
     }
 }

@@ -1,5 +1,9 @@
 {
 "title":"Dvanáctka",
+"website":"https://www.dvanactka.info",
+"contactEmail":"info@dvanactka.info",
+"outgoinglinkParameter":"utm_source=dvanactka.info&utm_medium=app",
+"serverDataBaseUrl":"https://www.dvanactka.info/own/p12/",
 "dataSources":[
   {
     "id":"dsRadNews",
@@ -7,15 +11,17 @@
     "title@cs":"Aktuality",
     "icon":"ds_news",
     "type":"news",
+    "serverDataFile":"dyn_radAktual.json",
     "backgroundColor":"#884d3f"
   },
   {
-    "id":"dsRadEvents",
-    "title":"Events",
-    "title@cs":"Akce",
-    "icon":"ds_events",
-    "type":"events",
-    "backgroundColor":"#2d55db",
+    "id":"dsSpolky",
+    "title":"Independent",
+    "title@cs":"Nezávisle",
+    "icon":"ds_magazine",
+    "type":"news",
+    "serverDataFile":"dyn_spolky.php",
+    "backgroundColor":"#9f7308",
     "filterable":true
   },
   {
@@ -24,41 +30,20 @@
     "title@cs":"Úřední deska",
     "icon":"ds_billboard",
     "type":"news",
+    "serverDataFile":"dyn_radDeska.json",
     "backgroundColor":"#884d3f",
     "filterable":true,
     "listingSearchBarVisibleAtStart":true
   },
   {
-    "id":"dsSpolky",
-    "title":"Independent",
-    "title@cs":"Nezávisle",
-    "icon":"ds_magazine",
-    "type":"news",
-    "backgroundColor":"#9f7308",
+    "id":"dsRadEvents",
+    "title":"Events",
+    "title@cs":"Akce",
+    "icon":"ds_events",
+    "type":"events",
+    "serverDataFile":"dyn_events.php",
+    "backgroundColor":"#2d55db",
     "filterable":true
-  },
-  {
-    "id":"dsSpolkyList",
-    "title":"Associations",
-    "title@cs":"Spolky",
-    "icon":"ds_usergroups",
-    "type":"places",
-    "backgroundColor":"#9f7308",
-    "refreshFreqHours":48,
-    "offlineJsonFile":"test_files/spolkyList"
-  },
-  {
-    "id":"dsCityOffice",
-    "title":"City Office",
-    "title@cs":"Úřad",
-    "icon":"ds_parliament",
-    "type":"places",
-    "backgroundColor":"#884d3f",
-    "refreshFreqHours":100,
-    "offlineJsonFile":"test_files/dyn_cityOffice",
-    "filterAsParentView":true,
-    "mapEnabled":false,
-    "listingSearchBarVisibleAtStart":true
   },
   {
     "id":"dsBiografProgram",
@@ -67,58 +52,21 @@
     "shortTitle":"Biograf",
     "icon":"ds_biograf",
     "type":"events",
+    "serverDataFile":"dyn_biograf.json",
     "backgroundColor":"#2d55db",
     "refreshFreqHours":48,
     "listingShowEventAddress":false
   },
   {
-    "id":"dsCooltour",
-    "title":"Trips",
-    "title@cs":"Výlety",
-    "icon":"ds_landmarks",
+    "id":"dsSpolkyList",
+    "title":"Associations",
+    "title@cs":"Spolky",
+    "icon":"ds_usergroups",
     "type":"places",
-    "backgroundColor":"#008000",
-    "refreshFreqHours":48,
-    "offlineJsonFile":"test_files/p12kultpamatky"
-  },
-  {
-    "id":"dsWaste",
-    "title":"Waste",
-    "title@cs":"Odpad",
-    "icon":"ds_waste",
-    "type":"places",
-    "backgroundColor":"#008000",
-    "refreshFreqHours":48,
-    "offlineJsonFile":"test_files/dyn_waste",
-    "filterAsParentView":true
-  },
-  {
-    "id":"dsSosContacts",
-    "title":"Help",
-    "title@cs":"Pomoc",
-    "icon":"ds_help",
-    "type":"places",
+    "serverDataFile":"spolkyList.json",
+    "offlineDataFile":"test_files/spolkyList.json",
     "backgroundColor":"#9f7308",
-    "refreshFreqHours":48,
-    "offlineJsonFile":"test_files/sos"
-  },
-  {
-    "id":"dsReportFault",
-    "title":"Report Fault",
-    "title@cs":"Vyfotit závadu",
-    "icon":"ds_reportfault",
-    "type":"places",
-    "backgroundColor":"#411ab1",
-    "refreshFreqHours":1000
-  },
-  {
-    "id":"dsGame",
-    "title":"Game",
-    "title@cs":"Hra",
-    "icon":"ds_game",
-    "type":"places",
-    "backgroundColor":"#bb3c60",
-    "refreshFreqHours":1000
+    "refreshFreqHours":48
   },
   {
     "id":"dsShops",
@@ -126,9 +74,10 @@
     "title@cs":"Firmy",
     "icon":"ds_shop",
     "type":"places",
+    "serverDataFile":"p12shops.json",
+    "offlineDataFile":"test_files/p12shops.json",
     "backgroundColor":"#b2b20a",
     "refreshFreqHours":48,
-    "offlineJsonFile":"test_files/p12shops",
     "filterAsParentView":true,
     "listingSearchBarVisibleAtStart":true
   },
@@ -138,6 +87,7 @@
     "title@cs":"Práce",
     "icon":"ds_work",
     "type":"places",
+    "serverDataFile":"dyn_kdejeprace.json",
     "backgroundColor":"#b2b20a",
     "listingFooterCustomLabelText":"Add job offer:",
     "listingFooterCustomLabelText@cs":"Přidat nabídku:",
@@ -150,8 +100,75 @@
     "title@cs":"Doprava",
     "icon":"ds_roadblock",
     "type":"places",
+    "serverDataFile":"dyn_doprava.json",
     "backgroundColor":"#411ab1",
     "refreshFreqHours":4
+  },
+  {
+    "id":"dsWaste",
+    "title":"Waste",
+    "title@cs":"Odpad",
+    "icon":"ds_waste",
+    "type":"places",
+    "serverDataFile":"dyn_waste.json",
+    "offlineDataFile":"test_files/dyn_waste.json",
+    "backgroundColor":"#008000",
+    "refreshFreqHours":48,
+    "filterAsParentView":true
+  },
+  {
+    "id":"dsReportFault",
+    "title":"Report Fault",
+    "title@cs":"Vyfotit závadu",
+    "icon":"ds_reportfault",
+    "type":"places",
+    "backgroundColor":"#411ab1",
+    "refreshFreqHours":1000
+  },
+  {
+    "id":"dsCooltour",
+    "title":"Trips",
+    "title@cs":"Výlety",
+    "icon":"ds_landmarks",
+    "type":"places",
+    "serverDataFile":"p12kultpamatky.json",
+    "offlineDataFile":"test_files/p12kultpamatky.json",
+    "backgroundColor":"#008000",
+    "refreshFreqHours":48
+  },
+  {
+    "id":"dsCityOffice",
+    "title":"City Office",
+    "title@cs":"Úřad",
+    "icon":"ds_parliament",
+    "type":"places",
+    "serverDataFile":"dyn_cityOffice.json",
+    "offlineDataFile":"test_files/dyn_cityOffice.json",
+    "backgroundColor":"#884d3f",
+    "refreshFreqHours":100,
+    "filterAsParentView":true,
+    "mapEnabled":false,
+    "listingSearchBarVisibleAtStart":true
+  },
+  {
+    "id":"dsSosContacts",
+    "title":"Help",
+    "title@cs":"Pomoc",
+    "icon":"ds_help",
+    "type":"places",
+    "serverDataFile":"sos.json",
+    "offlineDataFile":"test_files/sos.json",
+    "backgroundColor":"#9f7308",
+    "refreshFreqHours":48
+  },
+  {
+    "id":"dsGame",
+    "title":"Game",
+    "title@cs":"Hra",
+    "icon":"ds_game",
+    "type":"places",
+    "backgroundColor":"#bb3c60",
+    "refreshFreqHours":1000
   }
   ]
 }

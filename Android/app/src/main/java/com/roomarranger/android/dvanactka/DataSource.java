@@ -51,12 +51,13 @@ class CRxDataSource {
     String m_sIcon;
     int m_iBackgroundColor;
     int m_nRefreshFreqHours = 18;   // refresh after 18 hours
-    String m_sTestJsonFile = null;  // offline data file
+    String m_sServerDataFile = null;    // url where to get the current data
+    String m_sOfflineDataFile = null;   // offline data file
     String m_sLastItemShown = "";   // hash of the last record user displayed (to count unread news, etc)
     String m_sUuid = null;          // id used in game data source
     Date m_dateLastRefreshed = null;
     boolean m_bIsBeingRefreshed = false;
-    ArrayList<CRxEventRecord> m_arrItems = new ArrayList<CRxEventRecord>();   // the data
+    ArrayList<CRxEventRecord> m_arrItems = new ArrayList<>();   // the data
     CRxDataSourceRefreshDelegate delegate = null;
 
     static final int DATATYPE_events = 0, DATATYPE_news = 1, DATATYPE_places = 2;
@@ -97,11 +98,11 @@ class CRxDataSource {
 
     //--------------------------------------------------------------------------
     void loadFromJSONStream(InputStream inputStream) {
-        String jsonData = "";
+        String jsonData;
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String receiveString = "";
+            String receiveString;
             StringBuilder stringBuilder = new StringBuilder();
 
             while ((receiveString = bufferedReader.readLine()) != null) {
@@ -138,7 +139,7 @@ class CRxDataSource {
                     m_arrItems.add(aNewRecord);
             }
         }
-        catch (JSONException e) {};
+        catch (JSONException e) {}
 
         // load config
         try {
@@ -244,7 +245,7 @@ class CRxDataSource {
 class CRxDataSourceManager {
     private static final boolean g_bUseTestFiles = false;
 
-    HashMap<String, CRxDataSource> m_dictDataSources = new HashMap<String, CRxDataSource>(); // dictionary on data sources, id -> source
+    HashMap<String, CRxDataSource> m_dictDataSources = new HashMap<>(); // dictionary on data sources, id -> source
 
     static final String dsRadNews = "dsRadNews";
     static final String dsRadEvents = "dsRadEvents";
@@ -263,11 +264,11 @@ class CRxDataSourceManager {
     static final String dsTraffic = "dsTraffic";
     static final String dsSavedNews = "dsSavedNews";
 
-    int m_nNetworkIndicatorUsageCount = 0;
-    File m_urlDocumentsDir;
+    private int m_nNetworkIndicatorUsageCount = 0;
+    private File m_urlDocumentsDir;
     private static AssetManager m_assetMan = null;
     CRxDataSource m_aSavedNews = new CRxDataSource(CRxDataSourceManager.dsSavedNews, "Saved News", "ds_news", CRxDataSource.DATATYPE_news, 0xffffff);    // (records over all news sources)
-    Set<String> m_setPlacesNotified = new HashSet<String>();  // (titles)
+    Set<String> m_setPlacesNotified = new HashSet<>();  // (titles)
     CRxDataSourceRefreshDelegate delegate = null; // one global delegate (main viewController)
 
     private static CRxDataSourceManager instance = null;
@@ -303,35 +304,46 @@ class CRxDataSourceManager {
         m_dictDataSources.put(CRxDataSourceManager.dsTraffic, new CRxDataSource(CRxDataSourceManager.dsTraffic, res.getString(R.string.traffix), "ds_roadblock", CRxDataSource.DATATYPE_places, 0xb11a41));
 
         // additional parameters
-        CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
+        CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadNews);
+        ds.m_sServerDataFile = "dyn_radAktual.json";
+
+        ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
+        ds.m_sServerDataFile = "dyn_radDeska.json";
         ds.m_bFilterable = true;
         ds.m_bListingSearchBarVisibleAtStart = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsRadEvents);
+        ds.m_sServerDataFile = "dyn_events.php";
         ds.m_bFilterable = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolky);
+        ds.m_sServerDataFile = "dyn_spolky.php";
         ds.m_bFilterable = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolkyList);
         ds.m_nRefreshFreqHours = 48;
-        ds.m_sTestJsonFile = "/test_files/spolkyList";
+        ds.m_sServerDataFile = "spolkyList.json";
+        ds.m_sOfflineDataFile = "/test_files/spolkyList";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsBiografProgram);
         ds.m_nRefreshFreqHours = 48;
         ds.m_sShortTitle = "Biograf";
+        ds.m_sServerDataFile = "dyn_biograf.json";
         ds.m_bListingShowEventAddress = false;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCooltour);
         ds.m_nRefreshFreqHours = 48;
-        ds.m_sTestJsonFile = "/test_files/p12kultpamatky";
+        ds.m_sServerDataFile = "p12kultpamatky.json";
+        ds.m_sOfflineDataFile = "/test_files/p12kultpamatky";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSosContacts);
         ds.m_nRefreshFreqHours = 48;
-        ds.m_sTestJsonFile = "/test_files/sos";
+        ds.m_sServerDataFile = "sos.json";
+        ds.m_sOfflineDataFile = "/test_files/sos";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsWaste);
-        ds.m_sTestJsonFile = "/test_files/dyn_waste";
+        ds.m_sServerDataFile = "dyn_waste.json";
+        ds.m_sOfflineDataFile = "/test_files/dyn_waste";
         ds.m_bFilterAsParentView = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsReportFault);
@@ -342,28 +354,32 @@ class CRxDataSourceManager {
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsShops);
         ds.m_nRefreshFreqHours = 48;
-        ds.m_sTestJsonFile = "/test_files/p12shops";
+        ds.m_sServerDataFile = "p12shops.json";
+        ds.m_sOfflineDataFile = "/test_files/p12shops";
         ds.m_bFilterAsParentView = true;
         ds.m_bListingSearchBarVisibleAtStart = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);
+        ds.m_sServerDataFile = "dyn_doprava.json";
         ds.m_nRefreshFreqHours = 4;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsWork);
+        ds.m_sServerDataFile = "dyn_kdejeprace.json";
         ds.m_sListingFooterCustomLabelText = ctx.getString(R.string.add_new_job_offer);
         ds.m_sListingFooterCustomButtonText = "KdeJePrace.cz";
         ds.m_sListingFooterCustomButtonTargetUrl = "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
         ds.m_nRefreshFreqHours = 100;
-        ds.m_sTestJsonFile = "/test_files/dyn_cityOffice";
+        ds.m_sServerDataFile = "dyn_cityOffice.json";
+        ds.m_sOfflineDataFile = "/test_files/dyn_cityOffice";
         ds.m_bFilterAsParentView = true;
         ds.m_bMapEnabled = false;
         ds.m_bListingSearchBarVisibleAtStart = true;
     }
 
     //--------------------------------------------------------------------------
-    File fileForDataSource(String id) {
+    private File fileForDataSource(String id) {
         return new File(m_urlDocumentsDir, id + ".json");
     }
 
@@ -374,9 +390,9 @@ class CRxDataSourceManager {
             ds.loadFromJSON(fileForDataSource(ds.m_sId));
 
             // load test data in case we don't have any previously saved
-            if (ds.m_arrItems.isEmpty() && ds.m_sTestJsonFile != null) {
+            if (ds.m_arrItems.isEmpty() && ds.m_sOfflineDataFile != null) {
                 try {
-                    ds.loadFromJSONStream(m_assetMan.open(ds.m_sTestJsonFile.substring(1) + ".json"));
+                    ds.loadFromJSONStream(m_assetMan.open(ds.m_sOfflineDataFile.substring(1) + ".json"));
                 }
                 catch (Exception e) { e.printStackTrace(); }
             }
@@ -443,13 +459,14 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void saveFavorities() {
-        String sList = "";
+    private void saveFavorities() {
+        StringBuilder aListStringBuilder = new StringBuilder("");
         for (String sVal: m_setPlacesNotified)
         {
-            if (!sList.isEmpty()) sList += "|";
-            sList += sVal;
+            if (aListStringBuilder.length() > 0) aListStringBuilder.append("|");
+            aListStringBuilder.append(sVal);
         }
+        String sList = aListStringBuilder.toString();
         File urlPlaces = new File(m_urlDocumentsDir, "favPlaces.txt");
         try {
             OutputStreamWriter stream = new OutputStreamWriter(new FileOutputStream(urlPlaces));
@@ -464,13 +481,13 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void loadFavorities() {
+    private void loadFavorities() {
         File urlPlaces = new File(m_urlDocumentsDir, "favPlaces.txt");
         try {
             InputStream inputStream = new FileInputStream(urlPlaces);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String receiveString = "";
+            String receiveString;
             StringBuilder stringBuilder = new StringBuilder();
 
             while ((receiveString = bufferedReader.readLine()) != null) {
@@ -489,7 +506,7 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void showNetworkIndicator() {
+    private void showNetworkIndicator() {
         if (m_nNetworkIndicatorUsageCount == 0) {
             //UIApplication.shared.isNetworkActivityIndicatorVisible = true;
         }
@@ -497,7 +514,7 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void hideNetworkIndicator() {
+    private void hideNetworkIndicator() {
         if (m_nNetworkIndicatorUsageCount > 0) {
             m_nNetworkIndicatorUsageCount -= 1;
         }
@@ -509,6 +526,9 @@ class CRxDataSourceManager {
     private boolean isConnectedToNetworkViaWiFi(Context ctx)
     {
         ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null)
+            return true;
+
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
@@ -543,65 +563,8 @@ class CRxDataSourceManager {
             return;
         }
 
-        if (id.equals(CRxDataSourceManager.dsRadNews)) {
-            refreshStdJsonDataSource(id, "dyn_radAktual.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsRadEvents)) {
-            refreshStdJsonDataSource(id, "dyn_events.php");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsRadDeska)) {
-            refreshStdJsonDataSource(id, "dyn_radDeska.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsCityOffice)) {
-            refreshStdJsonDataSource(id, "dyn_cityOffice.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsWork)) {
-            refreshStdJsonDataSource(id, "dyn_kdejeprace.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsSpolky)) {
-            refreshStdJsonDataSource(id, "dyn_spolky.php");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsBiografProgram)) {
-            refreshStdJsonDataSource(id, "dyn_biograf.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsTraffic)) {
-            refreshStdJsonDataSource(id, "dyn_doprava.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsSpolkyList)) {
-            refreshStdJsonDataSource(id, "spolkyList.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsCooltour)) {
-            refreshStdJsonDataSource(id, "p12kultpamatky.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsWaste)) {
-            refreshStdJsonDataSource(id, "dyn_waste.json");
-            return;
-
-            /*if let path = Bundle.main.url(forResource: "/test_files/vokplaces", withExtension: "json") {
-                ds.loadFromJSON(file: path);
-                refreshWasteDataSource();
-                ds.delegate?.dataSourceRefreshEnded(nil);
-                return;
-            }*/
-        }
-        else if (id.equals(CRxDataSourceManager.dsSosContacts)) {
-            refreshStdJsonDataSource(id, "sos.json");
-            return;
-        }
-        else if (id.equals(CRxDataSourceManager.dsShops)) {
-            refreshStdJsonDataSource(id, "p12shops.json");
-            return;
-        }
+        if (ds.m_sServerDataFile != null)
+            refreshStdJsonDataSource(id, ds.m_sServerDataFile);
     }
 
     //--------------------------------------------------------------------------
@@ -653,7 +616,7 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void refreshStdJsonDataSource(String sDsId, String url) {
+    private void refreshStdJsonDataSource(String sDsId, String url) {
 
         final CRxDataSource aDS = m_dictDataSources.get(sDsId);
         if (aDS == null) { return; }
@@ -668,8 +631,8 @@ class CRxDataSourceManager {
                     urlDownload = new URL("https://dvanactka.info/own/p12/" + url);
                 }
             }
-            else if (aDS.m_sTestJsonFile != null) {
-                urlDownload = new URL("file:///android_asset" + aDS.m_sTestJsonFile + ".json");
+            else if (aDS.m_sOfflineDataFile != null) {
+                urlDownload = new URL("file:///android_asset" + aDS.m_sOfflineDataFile + ".json");
             }
             else
                 return;
