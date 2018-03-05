@@ -31,7 +31,7 @@ class CRxDataSource : NSObject {
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]();   // the data
     var delegate: CRxDataSourceRefreshDelegate?;
     
-    enum DataType {
+    enum DataType: String {
         case events
         case news
         case places
@@ -55,9 +55,56 @@ class CRxDataSource : NSObject {
         m_sIcon = icon;
         m_eType = type;
         m_iBackgroundColor = backgroundColor;
-        m_bMapEnabled = (type == .places);
-        m_bListingFooterVisible = (type == .places);
-        super.init()
+        m_bMapEnabled = (m_eType == .places);
+        m_bListingFooterVisible = (m_eType == .places);
+        super.init();
+    }
+    
+    //--------------------------------------------------------------------------
+    init?(fromAppDefJson json: [String: AnyObject]) {
+        // required values
+        if let val = json["id"] as? String { m_sId = val; } else { return nil; }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "title", from: json) { m_sTitle = val; } else { return nil; }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "icon", from: json) { m_sIcon = val; } else { return nil; }
+        if let sType = json["type"] as? String,
+            let eType = DataType(rawValue: sType) { m_eType = eType;} else { return nil; }
+        
+        m_iBackgroundColor = 0xCCCCCC;
+        if let val = json["backgroundColor"] as? String {
+            var sColorHex = val;
+            if sColorHex.hasPrefix("#") {
+                sColorHex.remove(at: sColorHex.startIndex);
+            }
+            if sColorHex.count == 6 {
+                if let cl = Int(sColorHex, radix: 16) {
+                    m_iBackgroundColor = ((cl & 0xFF0000) >> 16) + (cl & 0xFF00) + ((cl & 0xFF) << 16);
+                }
+            }
+        }
+
+        m_bMapEnabled = (m_eType == .places);
+        m_bListingFooterVisible = (m_eType == .places);
+
+        // optional values
+        if let val = AppDefinition.shared.loadLocalizedString(key: "shortTitle", from: json) { m_sShortTitle = val; }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "serverDataFile", from: json) { m_sServerDataFile = val; }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "offlineDataFile", from: json) { m_sOfflineDataFile = val; }
+        if let val = json["refreshFreqHours"] as? Int { m_nRefreshFreqHours = val; }
+        if let val = json["filterAsParentView"] as? Bool { m_bFilterAsParentView = val; }
+        if let val = json["mapEnabled"] as? Bool { m_bMapEnabled = val; }
+        if let val = json["listingShowEventAddress"] as? Bool { m_bListingShowEventAddress = val; }
+        if let val = json["listingSearchBarVisibleAtStart"] as? Bool { m_bListingSearchBarVisibleAtStart = val; }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomLabelText", from: json) {
+            m_sListingFooterCustomLabelText = val;
+        }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonText", from: json) {
+            m_sListingFooterCustomButtonText = val;
+        }
+        if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonTargetUrl", from: json) {
+            m_sListingFooterCustomButtonTargetUrl = val;
+        }
+
+        super.init();
     }
     
     //--------------------------------------------------------------------------
@@ -167,7 +214,6 @@ class CRxDataSourceManager : NSObject {
     var m_dictDataSources = [String: CRxDataSource]()   // dictionary on data sources, id -> source
     
     static let sharedInstance = CRxDataSourceManager()  // singleton
-    private override init() {}     // "private" prevents others from using the default '()' initializer for this class (so being singleton)
     
     static let dsRadNews = "dsRadNews";
     static let dsRadEvents = "dsRadEvents";
@@ -187,16 +233,21 @@ class CRxDataSourceManager : NSObject {
     static let dsSavedNews = "dsSavedNews";
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
-    var m_urlDocumentsDir: URL!
+    var m_urlDocumentsDir: URL
     var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x808080);    // (records over all news sources)
     var m_setPlacesNotified: Set<String> = [];  // (titles)
     var delegate: CRxDataSourceRefreshDelegate? // one global delegate (main viewController)
     
+    //--------------------------------------------------------------------------
+    // "private" prevents others from using the default '()' initializer for this class (so being singleton)
+    private override init() {
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!;
+        m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString);
+        super.init();
+    }
+
+    //--------------------------------------------------------------------------
     func defineDatasources() {
-        
-        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString)
-        
         m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x3f4d88);
         m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events, backgroundColor:0xdb552d);
         m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, backgroundColor:0x3f4d88);

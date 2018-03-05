@@ -82,6 +82,8 @@
 		4D5A802D1DD0ADF0006723B5 /* c_textile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80291DD0ADF0006723B5 /* c_textile@2x.png */; };
 		4D5AC6491E467135009F94E8 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5AC6471E467135009F94E8 /* search.png */; };
 		4D5AC64A1E467135009F94E8 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5AC6481E467135009F94E8 /* search@2x.png */; };
+		4D5C5D4E204D6C320000C1A7 /* AppDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C5D4D204D6C320000C1A7 /* AppDefinition.swift */; };
+		4D5C5D50204DB1F40000C1A7 /* dvanactka.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D5C5D4F204DB1F30000C1A7 /* dvanactka.json */; };
 		4D663B6C1DF5C07A00145AED /* ds_game.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D663B6B1DF5C07A00145AED /* ds_game.png */; };
 		4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6677091DCB340F004876FA /* MapKit.framework */; };
 		4D66770E1DCB7774004876FA /* PlaceDetailCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */; };
@@ -208,6 +210,8 @@
 		4D5A80291DD0ADF0006723B5 /* c_textile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_textile@2x.png"; path = "img/c_textile@2x.png"; sourceTree = "<group>"; };
 		4D5AC6471E467135009F94E8 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = search.png; path = img/search.png; sourceTree = "<group>"; };
 		4D5AC6481E467135009F94E8 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "search@2x.png"; path = "img/search@2x.png"; sourceTree = "<group>"; };
+		4D5C5D4D204D6C320000C1A7 /* AppDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefinition.swift; sourceTree = "<group>"; };
+		4D5C5D4F204DB1F30000C1A7 /* dvanactka.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = dvanactka.json; path = ../../dvanactka.json; sourceTree = "<group>"; };
 		4D663B6B1DF5C07A00145AED /* ds_game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_game.png; path = img/ds_game.png; sourceTree = "<group>"; };
 		4D6677091DCB340F004876FA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4D66770D1DCB7774004876FA /* PlaceDetailCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailCtl.swift; sourceTree = "<group>"; };
@@ -396,12 +400,14 @@
 		4D9019331DC65E16001488D3 /* Dvanactka */ = {
 			isa = PBXGroup;
 			children = (
+				4D5C5D4D204D6C320000C1A7 /* AppDefinition.swift */,
 				4D9019341DC65E16001488D3 /* AppDelegate.swift */,
 				4D3FC6F41DD274A8000467D1 /* AppInfoCtl.swift */,
 				4D668DD81E39F50000AD67C5 /* AppiraterLocalizable.strings */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
 				4D9F14AC1DD103D100841AD8 /* DataSource.swift */,
 				4D11D02E1DFF1C9300BA2052 /* Dvanactka-Bridging-Header.h */,
+				4D5C5D4F204DB1F30000C1A7 /* dvanactka.json */,
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 				4D464C4C1DE305B2003EC137 /* FilterCtl.swift */,
@@ -606,6 +612,7 @@
 				4D0469D01DFA0DF300E7B760 /* ds_landmarks@2x.png in Resources */,
 				4D9F14B81DD11A3E00841AD8 /* ds_events.png in Resources */,
 				4DBF467D1DEC8DD600E7238D /* p12-logo@3x.png in Resources */,
+				4D5C5D50204DB1F40000C1A7 /* dvanactka.json in Resources */,
 				4D52699F1DF49FE4008FA122 /* c_usergroups@2x.png in Resources */,
 				4D5AC64A1E467135009F94E8 /* search@2x.png in Resources */,
 				4D1F44461E2D33640013EE52 /* ds_magazine@2x.png in Resources */,
@@ -678,6 +685,7 @@
 				4D318A6E1DD7C4A400187985 /* RefineLocCtl.swift in Sources */,
 				4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */,
 				4D90194F1DC69A0D001488D3 /* EventRecord.swift in Sources */,
+				4D5C5D4E204D6C320000C1A7 /* AppDefinition.swift in Sources */,
 				4D2C34BD1DF751C600165EAC /* Game.swift in Sources */,
 				4D9019371DC65E16001488D3 /* ViewController.swift in Sources */,
 				4DBBDFD31DF5DBDB00013D67 /* GameCtl.swift in Sources */,

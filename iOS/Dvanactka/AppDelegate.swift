@@ -15,11 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let dsm = CRxDataSourceManager.sharedInstance;
-        dsm.defineDatasources();
-        dsm.loadData();
-        dsm.refreshAllDataSources();
-        //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
+        if let urlAppDef = Bundle.main.url(forResource: "dvanactka.json", withExtension: "") {
+            AppDefinition.shared.loadFromJson(file: urlAppDef);
+            let dsm = CRxDataSourceManager.sharedInstance;
+            //dsm.defineDatasources();
+            dsm.loadData();
+            dsm.refreshAllDataSources();
+            //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
+        }
         application.applicationIconBadgeNumber = 0;
         CRxGame.sharedInstance.reinit();
         
@@ -31,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Optional: configure GAI options.
         if let gai = GAI.sharedInstance() {
             gai.trackUncaughtExceptions = false  // report uncaught exceptions
-            gai.logger.logLevel = GAILogLevel.none  // remove before app release
+            gai.logger.logLevel = GAILogLevel.none
             //gai.logger.logLevel = GAILogLevel.verbose  // remove before app release
         }
         return true
