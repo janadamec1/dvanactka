@@ -323,7 +323,7 @@ class CRxDataSourceManager {
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolkyList);
         ds.m_nRefreshFreqHours = 48;
         ds.m_sServerDataFile = "spolkyList.json";
-        ds.m_sOfflineDataFile = "/test_files/spolkyList";
+        ds.m_sOfflineDataFile = "test_files/spolkyList.json";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsBiografProgram);
         ds.m_nRefreshFreqHours = 48;
@@ -334,16 +334,16 @@ class CRxDataSourceManager {
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCooltour);
         ds.m_nRefreshFreqHours = 48;
         ds.m_sServerDataFile = "p12kultpamatky.json";
-        ds.m_sOfflineDataFile = "/test_files/p12kultpamatky";
+        ds.m_sOfflineDataFile = "test_files/p12kultpamatky.json";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsSosContacts);
         ds.m_nRefreshFreqHours = 48;
         ds.m_sServerDataFile = "sos.json";
-        ds.m_sOfflineDataFile = "/test_files/sos";
+        ds.m_sOfflineDataFile = "test_files/sos.json";
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsWaste);
         ds.m_sServerDataFile = "dyn_waste.json";
-        ds.m_sOfflineDataFile = "/test_files/dyn_waste";
+        ds.m_sOfflineDataFile = "test_files/dyn_waste.json";
         ds.m_bFilterAsParentView = true;
 
         ds = m_dictDataSources.get(CRxDataSourceManager.dsReportFault);
@@ -355,7 +355,7 @@ class CRxDataSourceManager {
         ds = m_dictDataSources.get(CRxDataSourceManager.dsShops);
         ds.m_nRefreshFreqHours = 48;
         ds.m_sServerDataFile = "p12shops.json";
-        ds.m_sOfflineDataFile = "/test_files/p12shops";
+        ds.m_sOfflineDataFile = "test_files/p12shops.json";
         ds.m_bFilterAsParentView = true;
         ds.m_bListingSearchBarVisibleAtStart = true;
 
@@ -372,7 +372,7 @@ class CRxDataSourceManager {
         ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
         ds.m_nRefreshFreqHours = 100;
         ds.m_sServerDataFile = "dyn_cityOffice.json";
-        ds.m_sOfflineDataFile = "/test_files/dyn_cityOffice";
+        ds.m_sOfflineDataFile = "test_files/dyn_cityOffice.json";
         ds.m_bFilterAsParentView = true;
         ds.m_bMapEnabled = false;
         ds.m_bListingSearchBarVisibleAtStart = true;
@@ -389,10 +389,10 @@ class CRxDataSourceManager {
             CRxDataSource ds = itemIt.getValue();
             ds.loadFromJSON(fileForDataSource(ds.m_sId));
 
-            // load test data in case we don't have any previously saved
+            // load offline data in case we don't have any previously saved
             if (ds.m_arrItems.isEmpty() && ds.m_sOfflineDataFile != null) {
                 try {
-                    ds.loadFromJSONStream(m_assetMan.open(ds.m_sOfflineDataFile.substring(1) + ".json"));
+                    ds.loadFromJSONStream(m_assetMan.open(ds.m_sOfflineDataFile));
                 }
                 catch (Exception e) { e.printStackTrace(); }
             }
@@ -632,7 +632,7 @@ class CRxDataSourceManager {
                 }
             }
             else if (aDS.m_sOfflineDataFile != null) {
-                urlDownload = new URL("file:///android_asset" + aDS.m_sOfflineDataFile + ".json");
+                urlDownload = new URL("file:///android_asset/" + aDS.m_sOfflineDataFile);
             }
             else
                 return;

@@ -233,7 +233,7 @@ class CRxDataSourceManager : NSObject {
         if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolkyList] {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sServerDataFile = "spolkyList.json";
-            ds.m_sOfflineDataFile = "/test_files/spolkyList";
+            ds.m_sOfflineDataFile = "test_files/spolkyList.json";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsBiografProgram] {
             ds.m_nRefreshFreqHours = 48;
@@ -244,16 +244,16 @@ class CRxDataSourceManager : NSObject {
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCooltour] {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sServerDataFile = "p12kultpamatky.json";
-            ds.m_sOfflineDataFile = "/test_files/p12kultpamatky";
+            ds.m_sOfflineDataFile = "test_files/p12kultpamatky.json";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsSosContacts] {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sServerDataFile = "sos.json";
-            ds.m_sOfflineDataFile = "/test_files/sos";
+            ds.m_sOfflineDataFile = "test_files/sos.json";
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsWaste] {
             ds.m_sServerDataFile = "dyn_waste.json";
-            ds.m_sOfflineDataFile = "/test_files/dyn_waste";
+            ds.m_sOfflineDataFile = "test_files/dyn_waste.json";
             ds.m_bFilterAsParentView = true;
         }
         if let ds = m_dictDataSources[CRxDataSourceManager.dsReportFault] {
@@ -265,7 +265,7 @@ class CRxDataSourceManager : NSObject {
         if let ds = m_dictDataSources[CRxDataSourceManager.dsShops] {
             ds.m_nRefreshFreqHours = 48;
             ds.m_sServerDataFile = "p12shops.json";
-            ds.m_sOfflineDataFile = "/test_files/p12shops";
+            ds.m_sOfflineDataFile = "test_files/p12shops.json";
             ds.m_bFilterAsParentView = true;
             ds.m_bListingSearchBarVisibleAtStart = true;
         }
@@ -282,7 +282,7 @@ class CRxDataSourceManager : NSObject {
         if let ds = m_dictDataSources[CRxDataSourceManager.dsCityOffice] {
             ds.m_nRefreshFreqHours = 100;
             ds.m_sServerDataFile = "dyn_cityOffice.json";
-            ds.m_sOfflineDataFile = "/test_files/dyn_cityOffice";
+            ds.m_sOfflineDataFile = "test_files/dyn_cityOffice.json";
             ds.m_bFilterAsParentView = true;
             ds.m_bMapEnabled = false;
             ds.m_bListingSearchBarVisibleAtStart = true;
@@ -302,8 +302,8 @@ class CRxDataSourceManager : NSObject {
             
             // load test data in case we don't have any previously saved
             if ds.m_arrItems.isEmpty {
-                if let testFile = ds.m_sOfflineDataFile,
-                    let url = Bundle.main.url(forResource: testFile, withExtension: "json") {
+                if let sOfflineFile = ds.m_sOfflineDataFile,
+                    let url = Bundle.main.url(forResource: sOfflineFile, withExtension: "") {
                     ds.loadFromJSON(file: url);
                 }
             }
@@ -520,8 +520,8 @@ class CRxDataSourceManager : NSObject {
                 urlDownload = URL(string: "https://dvanactka.info/own/p12/" + url);
             }
         }
-        else if let testFile = aDS.m_sOfflineDataFile {
-            urlDownload = Bundle.main.url(forResource: testFile, withExtension: "json");
+        else if let sOfflineFile = aDS.m_sOfflineDataFile {
+            urlDownload = Bundle.main.url(forResource: sOfflineFile, withExtension: "");
         }
         else {
             return;
