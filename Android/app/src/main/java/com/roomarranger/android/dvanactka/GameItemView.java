@@ -52,7 +52,7 @@ public class GameItemView extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        CRxGameCategory item = CRxGame.sharedInstance.m_arrCategories.get(m_iGameCategory);
+        CRxGameCategory item = CRxGame.shared.m_arrCategories.get(m_iGameCategory);
 
         float fCellSize = canvas.getWidth()-1;
         float fRadius = fCellSize/3;

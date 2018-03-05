@@ -19,8 +19,8 @@ import java.util.UUID;
 
 class CRxGameCategory {
     int m_iProgress = 0;   // visited locations
-    int m_i2ndStarAt;      // 2nd star awarded at this progress
-    int m_i3rdStarAt;      // 3rd star at (all items in this category)
+    private int m_i2ndStarAt;      // 2nd star awarded at this progress
+    private int m_i3rdStarAt;      // 3rd star at (all items in this category)
     String m_sName;
     String m_sHintMessage;
 
@@ -80,14 +80,14 @@ class CRxGame {
     static double checkInDistance = 50.0;
 
     int m_iPoints = 0;
-    CRxGameCategory m_catForester, m_catCulturist, m_catVisitor, m_catRecyclist;
+    private CRxGameCategory m_catForester, m_catCulturist, m_catVisitor, m_catRecyclist;
     ArrayList<CRxGameCategory> m_arrCategories = new ArrayList<>();
 
-    boolean m_bWasteVokVisited = false;
-    boolean m_bWasteTextileVisited = false;
-    boolean m_bWasteElectroVisited = false;
+    private boolean m_bWasteVokVisited = false;
+    private boolean m_bWasteTextileVisited = false;
+    private boolean m_bWasteElectroVisited = false;
 
-    static CRxGame sharedInstance = new CRxGame();  // singleton
+    static CRxGame shared = new CRxGame();  // singleton
 
     private CRxGame() {
         super();
@@ -117,11 +117,11 @@ class CRxGame {
 
     //---------------------------------------------------------------------------
     static CRxDataSource dataSource() {
-        return CRxDataSourceManager.sharedInstance().m_dictDataSources.get(CRxDataSourceManager.dsGame);
+        return CRxDataSourceManager.shared.m_dictDataSources.get(CRxDataSourceManager.dsGame);
     }
 
     //---------------------------------------------------------------------------
-    void calcPointsFromDataSources() {
+    private void calcPointsFromDataSources() {
         CRxDataSource aDS = CRxGame.dataSource();
         if (aDS == null) { return; }
 
@@ -150,7 +150,7 @@ class CRxGame {
         int newLevel = 0;
         String catName = null;
     }
-    CRxCheckInReward addPoints(CRxEventRecord record) {
+    private CRxCheckInReward addPoints(CRxEventRecord record) {
         int iReward = 40;
         int iNewStars = 0;
         String sCatName = null;
@@ -204,7 +204,7 @@ class CRxGame {
         recGame.m_eCategory = record.m_eCategory;
         recGame.m_aDate = new Date();
         aDS.m_arrItems.add(recGame);
-        CRxDataSourceManager.sharedInstance().save(aDS);
+        CRxDataSourceManager.shared.save(aDS);
 
         // return reward
         int iOldLevel = playerLevel().level;
@@ -266,7 +266,7 @@ class CRxGame {
         if (aDS.m_sUuid == null) {
             // generate new unique ID for this device
             aDS.m_sUuid = UUID.randomUUID().toString();
-            CRxDataSourceManager.sharedInstance().save(aDS);
+            CRxDataSourceManager.shared.save(aDS);
         }
         if (aDS.m_sUuid != null) {
             String sScore = String.format(Locale.US, "%d", m_iPoints);

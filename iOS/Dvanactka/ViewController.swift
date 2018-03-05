@@ -76,7 +76,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         m_arrSources.append(CRxDataSourceManager.dsCityOffice);
         m_arrSources.append(CRxDataSourceManager.dsSosContacts);
         m_arrSources.append(CRxDataSourceManager.dsGame);
-        CRxDataSourceManager.sharedInstance.delegate = self;
+        CRxDataSourceManager.shared.delegate = self;
         
         // Google Analytics
         if let tracker = GAI.sharedInstance().defaultTracker {
@@ -141,7 +141,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellDS", for: indexPath) as! CRxDSCell
         
-        if let ds = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_arrSources[indexPath.row]] {
+        if let ds = CRxDataSourceManager.shared.m_dictDataSources[m_arrSources[indexPath.row]] {
             var sTitle = ds.m_sTitle;
             if let shortTitle = ds.m_sShortTitle {
                 sTitle = shortTitle;
@@ -322,7 +322,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     //---------------------------------------------------------------------------
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let aDS = CRxDataSourceManager.sharedInstance.m_dictDataSources[m_sDsSelected];
+        let aDS = CRxDataSourceManager.shared.m_dictDataSources[m_sDsSelected];
         if segue.identifier == "segueEvents" {
             let destVC = segue.destination as! EventsCtl
             destVC.m_aDataSource = aDS;
@@ -333,11 +333,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     //---------------------------------------------------------------------------
     func dataSourceRefreshEnded(dsId: String, error: String?) {
         if error == nil {
-            let aDS = CRxDataSourceManager.sharedInstance.m_dictDataSources[dsId];
+            let aDS = CRxDataSourceManager.shared.m_dictDataSources[dsId];
             if ViewController.dsHasBadge(aDS) {
                 self.collectionView?.reloadData();  // update badges
             }
-            CRxGame.sharedInstance.reinit();
+            CRxGame.shared.reinit();
         }
     }
 

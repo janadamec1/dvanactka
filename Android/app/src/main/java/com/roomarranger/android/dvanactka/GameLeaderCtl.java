@@ -35,7 +35,7 @@ public class GameLeaderCtl extends Activity {
         }
     }
 
-    ArrayList<CRxBoardItem> m_arrItems = new ArrayList<CRxBoardItem>();
+    ArrayList<CRxBoardItem> m_arrItems = new ArrayList<>();
     String m_sMyUuid = null;
     int m_iMyScore = 0;
     boolean m_bLoading = true;
@@ -51,7 +51,7 @@ public class GameLeaderCtl extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_leader_ctl);
 
-        m_iMyScore = CRxGame.sharedInstance.m_iPoints;
+        m_iMyScore = CRxGame.shared.m_iPoints;
         CRxDataSource aDS = CRxGame.dataSource();
         if (aDS != null)  {
             m_sMyUuid = aDS.m_sUuid;
@@ -103,7 +103,7 @@ public class GameLeaderCtl extends Activity {
                 }
                 CRxBoardItem item = m_arrItems.get(position);
 
-                String sPlace = "";
+                String sPlace;
                 if (item.m_iPlaceFrom != item.m_iPlaceTo) {
                     sPlace = String.format(Locale.US, "%d. - %d.", item.m_iPlaceFrom, item.m_iPlaceTo);
                 }
@@ -170,7 +170,7 @@ public class GameLeaderCtl extends Activity {
     //---------------------------------------------------------------------------
     void loadTableFrom(String sData) {
         boolean bPlayerFound = false;
-        ArrayList<CRxBoardItem> arrNewItems = new ArrayList<CRxBoardItem>();
+        ArrayList<CRxBoardItem> arrNewItems = new ArrayList<>();
         String[] lines = sData.split("\\r?\\n");
         for (String line: lines) {
             String[] lineItems = line.split("\\|");
@@ -204,7 +204,7 @@ public class GameLeaderCtl extends Activity {
                 }
             });
             // calc places and filter out places with same score
-            ArrayList<CRxBoardItem> arrFilteredItems = new ArrayList<CRxBoardItem>();
+            ArrayList<CRxBoardItem> arrFilteredItems = new ArrayList<>();
             int iPrevScore = 99999999;
             for (int i = 0; i < arrNewItems.size(); i++) {
                 CRxBoardItem aItem = arrNewItems.get(i);

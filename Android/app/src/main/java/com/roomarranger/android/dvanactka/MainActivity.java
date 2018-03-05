@@ -37,7 +37,7 @@ import java.util.Date;
 
 public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate, ActivityCompat.OnRequestPermissionsResultCallback
 {
-    ArrayList<String> m_arrSources = new ArrayList<String>();    // data source ids in order they should appear in the collection
+    ArrayList<String> m_arrSources = new ArrayList<>();    // data source ids in order they should appear in the collection
     static boolean s_bInited = false;
     static Date s_dateLastRefreshed = null;
     static private Tracker s_GlobalTracker = null;
@@ -59,14 +59,14 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         // from AppDelegate.swift
         s_appContext = ctx.getApplicationContext();
         if (s_bInited) return;
-        CRxDataSourceManager dsm = CRxDataSourceManager.sharedInstance();
+        CRxDataSourceManager dsm = CRxDataSourceManager.shared;
         dsm.defineDatasources(ctx);
         dsm.loadData();
         //dsm.refreshAllDataSources(false); // is called in onResume
         //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
         //application.applicationIconBadgeNumber = 0;
-        CRxGame.sharedInstance.init(ctx);
-        CRxGame.sharedInstance.reinit();
+        CRxGame.shared.init(ctx);
+        CRxGame.shared.reinit();
         s_bInited = true;
     }
 
@@ -97,7 +97,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         m_arrSources.add(CRxDataSourceManager.dsCityOffice);
         m_arrSources.add(CRxDataSourceManager.dsSosContacts);
         m_arrSources.add(CRxDataSourceManager.dsGame);
-        CRxDataSourceManager.sharedInstance().delegate = this;
+        CRxDataSourceManager.shared.delegate = this;
 
         /*try {
             getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorActionBarBkg)));
@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 String sDsSelected = m_arrSources.get(position);
-                CRxDataSource aDS = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDsSelected);
+                CRxDataSource aDS = CRxDataSourceManager.shared.m_dictDataSources.get(sDsSelected);
 
                 // hide unread badge
                 try {
@@ -196,7 +196,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 cell = (CollectionViewHolder)convertView.getTag();
             }
 
-            CRxDataSource ds = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(m_list.get(position));
+            CRxDataSource ds = CRxDataSourceManager.shared.m_dictDataSources.get(m_list.get(position));
             if (ds != null) {
                 int iconId = m_Context.getResources().getIdentifier(ds.m_sIcon, "drawable", m_Context.getPackageName());
                 cell.imgIcon.setImageResource(iconId);
@@ -229,8 +229,8 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         Date now = new Date();
         if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10 * 60 * 1000) {  // 10 minutes from last global refresh
             s_dateLastRefreshed = now;
-            CRxDataSourceManager.sharedInstance().refreshAllDataSources(false, this);
-            CRxGame.sharedInstance.reinit();
+            CRxDataSourceManager.shared.refreshAllDataSources(false, this);
+            CRxGame.shared.reinit();
 
             // Google Analytics
             Tracker aTracker = MainActivity.getDefaultTracker();
@@ -277,7 +277,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     //---------------------------------------------------------------------------
     @Override
     protected void onDestroy() {
-        CRxDataSourceManager.sharedInstance().delegate = null;
+        CRxDataSourceManager.shared.delegate = null;
         super.onDestroy();
     }
 
@@ -286,10 +286,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     public void dataSourceRefreshEnded(String sDsId, String error) {
         if (error == null) {
             // TODO: refresh only one cell
-            CRxDataSource ds = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDsId);
+            CRxDataSource ds = CRxDataSourceManager.shared.m_dictDataSources.get(sDsId);
             if (MainActivity.dsHasBadge(ds) && m_adapter != null)
                 m_adapter.notifyDataSetChanged();  // update badges
-            CRxGame.sharedInstance.reinit();
+            CRxGame.shared.reinit();
         }
     }
 
@@ -355,7 +355,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             Intent notificationIntent = new Intent(ctx, NotificationPublisher.class);
             for (int iId = 0; iId < iLastNotificationCount; iId++) {
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_NO_CREATE);
-                if (pendingIntent != null)
+                if (alarmManager != null && pendingIntent != null)
                     alarmManager.cancel(pendingIntent);
             }
         }
@@ -363,7 +363,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         // go through all favorite locations and set notifications to future intervals
         Date dateNow = Calendar.getInstance().getTime();
 
-        CRxDataSourceManager manager = CRxDataSourceManager.sharedInstance();
+        CRxDataSourceManager manager = CRxDataSourceManager.shared;
         CRxDataSource ds = manager.m_dictDataSources.get(CRxDataSourceManager.dsWaste);
         if (ds == null) return;
 

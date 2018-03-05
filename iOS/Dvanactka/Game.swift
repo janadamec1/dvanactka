@@ -81,7 +81,7 @@ class CRxGame: NSObject {
     var m_bWasteTextileVisited = false;
     var m_bWasteElectroVisited = false;
     
-    static let sharedInstance = CRxGame()  // singleton
+    static let shared = CRxGame()  // singleton
 
     private override init() {
         m_catForester = CRxGameCategory(name: NSLocalizedString("Forester", comment: ""), secondStarAt: 5, thirdAt: 15,
@@ -110,7 +110,7 @@ class CRxGame: NSObject {
     
     //---------------------------------------------------------------------------
     static func dataSource() -> CRxDataSource? {
-        return CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsGame];
+        return CRxDataSourceManager.shared.m_dictDataSources[CRxDataSourceManager.dsGame];
     }
     
     //---------------------------------------------------------------------------
@@ -188,7 +188,7 @@ class CRxGame: NSObject {
         recGame.m_eCategory = record.m_eCategory;
         recGame.m_aDate = Date();
         aDS.m_arrItems.append(recGame);
-        CRxDataSourceManager.sharedInstance.save(dataSource: aDS);
+        CRxDataSourceManager.shared.save(dataSource: aDS);
         
         // return reward
         let iOldLevel = playerLevel().level;
@@ -241,7 +241,7 @@ class CRxGame: NSObject {
         if aDS.m_sUuid == nil {
             // generate new unique ID for this device
             aDS.m_sUuid = UUID().uuidString;
-            CRxDataSourceManager.sharedInstance.save(dataSource: aDS);
+            CRxDataSourceManager.shared.save(dataSource: aDS);
         }
         if let uuid = aDS.m_sUuid {
             let sScore = String(format: "%d", m_iPoints);

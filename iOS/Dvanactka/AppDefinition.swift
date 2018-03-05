@@ -71,7 +71,7 @@ class AppDefinition: NSObject {
                 if let jsonItems = json["dataSources"] as? [[String : AnyObject]] {
                     for item in jsonItems {
                         if let aNewDS = CRxDataSource(fromAppDefJson: item) {
-                            CRxDataSourceManager.sharedInstance.m_dictDataSources[aNewDS.m_sId] = aNewDS;
+                            CRxDataSourceManager.shared.m_dictDataSources[aNewDS.m_sId] = aNewDS;
                             m_arrDataSourceOrder.append(aNewDS.m_sId);
                         }
                     }

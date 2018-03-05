@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.Manifest;
 import android.net.Uri;
@@ -17,7 +16,6 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -100,7 +98,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         String sRecordHash = getIntent().getStringExtra(MainActivity.EXTRA_EVENT_RECORD);
         if (sDataSource == null || sRecordHash == null) return;
-        CRxDataSource aDs = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
+        CRxDataSource aDs = CRxDataSourceManager.shared.m_dictDataSources.get(sDataSource);
         if (aDs == null) return;
         rec = aDs.recordWithHash(sRecordHash);
         if (rec == null) return;
@@ -183,31 +181,31 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         if (rec.m_arrOpeningHours != null) {
             DateFormatSymbols symbols = new DateFormatSymbols();
             String[] dayNames = symbols.getShortWeekdays();
-            String sDays = "";
-            String sHours = "";
+            StringBuilder sDays = new StringBuilder();
+            StringBuilder sHours = new StringBuilder();
             int iLastDay = 0;
             for (CRxHourInterval it : rec.m_arrOpeningHours) {
                 String sWeekDay = dayNames[(it.m_weekday % 7)+ 1];
                 String sRange = " " + it.toIntervalDisplayString();
                 if (iLastDay == it.m_weekday) {
-                    sHours += sRange;    // another interval within same day
+                    sHours.append(sRange);    // another interval within same day
                 }
                 else {
-                    if (!sHours.isEmpty()) {
-                        sHours += "\n";
-                        sDays += "\n";
+                    if (sHours.length() > 0) {
+                        sHours.append("\n");
+                        sDays.append("\n");
                     }
-                    sDays += sWeekDay + ": ";
-                    sHours += sRange;
+                    sDays.append(sWeekDay); sDays.append(": ");
+                    sHours.append(sRange);
                     iLastDay = it.m_weekday;
                 }
             }
-            m_lbOpeningHours.setText(sDays);
-            m_lbOpeningHours2.setText(sHours);
+            m_lbOpeningHours.setText(sDays.toString());
+            m_lbOpeningHours2.setText(sHours.toString());
         }
         else if (rec.m_arrEvents != null) {
-            String sType = "";
-            String sHours = "";
+            StringBuilder sType = new StringBuilder();
+            StringBuilder sHours = new StringBuilder();
             boolean bHasVok = false;
             boolean bHasBio = false;
             Date dayToday = Calendar.getInstance().getTime();
@@ -215,12 +213,12 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             int iGrayedEndHours = 0;
 
             for (CRxEventInterval it: rec.m_arrEvents) {
-                if (!sHours.isEmpty()) {
-                    sHours += "\n";
-                    sType += "\n";
+                if (sHours.length() > 0) {
+                    sHours.append("\n");
+                    sType.append("\n");
                 }
-                sType += it.m_sType + ": ";
-                sHours += it.toDisplayString();
+                sType.append(it.m_sType); sType.append(": ");
+                sHours.append(it.toDisplayString());
                 if (it.m_dateEnd.before(dayToday)) {
                     iGrayedEndType = sType.length();
                     iGrayedEndHours = sHours.length();
@@ -236,7 +234,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
             m_lbOpeningHoursTitle.setText(R.string.timetable);
             if (iGrayedEndType > 0) {
-                SpannableString ssType = new SpannableString(sType);
+                SpannableString ssType = new SpannableString(sType.toString());
                 ssType.setSpan(new ForegroundColorSpan(Color.LTGRAY), 0, iGrayedEndType, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 m_lbOpeningHours.setText(ssType);
             }
@@ -244,7 +242,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 m_lbOpeningHours.setText(sType);
 
             if (iGrayedEndHours > 0) {
-                SpannableString ssHours = new SpannableString(sHours);
+                SpannableString ssHours = new SpannableString(sHours.toString());
                 ssHours.setSpan(new ForegroundColorSpan(Color.LTGRAY), 0, iGrayedEndHours, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 m_lbOpeningHours2.setText(ssHours);
             }
@@ -337,7 +335,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         if (rec.m_aLocation != null && CRxGame.isCategoryCheckInAble(rec.m_eCategory)
                 && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             m_lbGame.setText(getString(R.string.game) + ":");
-            if (CRxGame.sharedInstance.playerWas(rec)) {
+            if (CRxGame.shared.playerWas(rec)) {
                 m_eGameStatus = EGameStatus.visited;
                 m_lbGameDist.setText(R.string.you_were_already_here);
                 m_btnGameCheckIn.setVisibility(View.GONE);
@@ -496,7 +494,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
                     rec.m_bMarkFavorite = bChecked;
-                    CRxDataSourceManager.sharedInstance().setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
+                    CRxDataSourceManager.shared.setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
                     setResult(RESULT_OK);       // change star icon, resort, to refresh EventCtl using CODE_DETAIL_PLACE_REFRESH
                 }
             });
@@ -638,7 +636,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     //--------------------------------------------------------------------------
     void onBtnGameCheckIn() {
         if (rec == null) return;
-        CRxGame.CRxCheckInReward reward = CRxGame.sharedInstance.checkIn(rec);
+        CRxGame.CRxCheckInReward reward = CRxGame.shared.checkIn(rec);
         m_eGameStatus = EGameStatus.visited;
         m_btnGameCheckIn.setVisibility(View.GONE);
         if (reward != null) {
@@ -646,9 +644,10 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             String sAlertMessage = sReward;
             if (reward.newStars > 0 && reward.catName != null) {
                 String sStarEmoji = new String(Character.toChars(0x2B50));
-                String sStars = "";
+                StringBuilder aStarsBuilder = new StringBuilder();
                 for (int i = 0; i < reward.newStars; i++)
-                    sStars += sStarEmoji;
+                    aStarsBuilder.append(sStarEmoji);
+                String sStars = aStarsBuilder.toString();
                 sReward += ", " + reward.catName + ": " + sStars;
                 sAlertMessage += "\n" + reward.catName + ": " + sStars;
             }

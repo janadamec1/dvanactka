@@ -271,15 +271,9 @@ class CRxDataSourceManager {
     Set<String> m_setPlacesNotified = new HashSet<>();  // (titles)
     CRxDataSourceRefreshDelegate delegate = null; // one global delegate (main viewController)
 
-    private static CRxDataSourceManager instance = null;
-    private CRxDataSourceManager() {} // "private" prevents others from using the default '()' initializer for this class (so being singleton)
+    static CRxDataSourceManager shared = new CRxDataSourceManager();  // singleton
 
-    public static CRxDataSourceManager sharedInstance()
-    {
-        if (instance == null)
-            instance = new CRxDataSourceManager();
-        return instance;
-    }
+    private CRxDataSourceManager() {} // "private" prevents others from using the default '()' initializer for this class (so being singleton)
 
     void defineDatasources(Context ctx) {
         Resources res = ctx.getResources();

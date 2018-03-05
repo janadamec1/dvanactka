@@ -269,7 +269,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             if rec.m_aLocation != nil && CRxGame.isCategoryCheckInAble(rec.m_eCategory)
                 && CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                 
-                if CRxGame.sharedInstance.playerWas(at: rec) {
+                if CRxGame.shared.playerWas(at: rec) {
                     m_eGameStatus = .visited;
                     m_lbGameDist.text = NSLocalizedString("You were already here", comment: "");
                     m_btnGameCheckIn.isHidden = true;
@@ -315,7 +315,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBAction func onChkNotificationsChanged(_ sender: Any) {
         if let rec = m_aRecord {
             rec.m_bMarkFavorite = m_chkShowNotifications.isOn;
-            CRxDataSourceManager.sharedInstance.setFavorite(place: rec.m_sTitle, set: rec.m_bMarkFavorite);
+            CRxDataSourceManager.shared.setFavorite(place: rec.m_sTitle, set: rec.m_bMarkFavorite);
             m_refreshParentDelegate?.detailRequestsRefresh(); // change star icon, resort
             
             let notTypes: UIUserNotificationType = ([.alert, .sound, .badge])
@@ -464,7 +464,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBAction func onBtnGameCheckIn(_ sender: Any) {
         guard let rec = m_aRecord
             else {return;}
-        let reward = CRxGame.sharedInstance.checkIn(at: rec);
+        let reward = CRxGame.shared.checkIn(at: rec);
         m_eGameStatus = .visited;
         m_btnGameCheckIn.isHidden = true;
         if let reward = reward {

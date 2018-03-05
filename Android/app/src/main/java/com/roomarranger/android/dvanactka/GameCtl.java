@@ -36,7 +36,7 @@ public class GameCtl extends Activity {
         TextView lbLevel = (TextView)findViewById(R.id.level);
         ProgressBar progress = (ProgressBar)findViewById(R.id.progress);
         TextView lbXp = (TextView)findViewById(R.id.xp);
-        CRxGame.CRxPlayerStats aPlayerStats = CRxGame.sharedInstance.playerLevel();
+        CRxGame.CRxPlayerStats aPlayerStats = CRxGame.shared.playerLevel();
         lbLevel.setText(getString(R.string.level) + " " + String.valueOf(aPlayerStats.level));
         progress.setMax(aPlayerStats.pointsNextLevel-aPlayerStats.pointsPrevLevel);
         progress.setProgress(aPlayerStats.points-aPlayerStats.pointsPrevLevel);
@@ -58,14 +58,14 @@ public class GameCtl extends Activity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                CRxGameCategory item = CRxGame.sharedInstance.m_arrCategories.get(position);
+                CRxGameCategory item = CRxGame.shared.m_arrCategories.get(position);
                 Toast.makeText(GameCtl.this, item.m_sHintMessage, Toast.LENGTH_SHORT).show();
             }
         });
 
         CRxDataSource aDS = CRxGame.dataSource();
-        if (aDS != null && aDS.m_sUuid == null && CRxGame.sharedInstance.m_iPoints > 0)
-            CRxGame.sharedInstance.sendScoreToServer();
+        if (aDS != null && aDS.m_sUuid == null && CRxGame.shared.m_iPoints > 0)
+            CRxGame.shared.sendScoreToServer();
     }
 
     //---------------------------------------------------------------------------
@@ -82,7 +82,7 @@ public class GameCtl extends Activity {
             m_context = c;
         }
 
-        public int getCount() { return CRxGame.sharedInstance.m_arrCategories.size(); }
+        public int getCount() { return CRxGame.shared.m_arrCategories.size(); }
         public Object getItem(int position) { return null;}
         public long getItemId(int position) { return 0; }
 
@@ -103,7 +103,7 @@ public class GameCtl extends Activity {
                 cell = (CollectionViewHolder)convertView.getTag();
             }
 
-            CRxGameCategory item = CRxGame.sharedInstance.m_arrCategories.get(position);
+            CRxGameCategory item = CRxGame.shared.m_arrCategories.get(position);
             cell.m_item.setGameCategory(position);
             cell.m_lbName.setText(item.m_sName);
             cell.m_lbProgress.setText(String.format(Locale.US, "%d / %d", item.m_iProgress, item.nextStarPoints()));

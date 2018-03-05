@@ -48,6 +48,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -258,7 +259,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                                 aRecClicked.m_bMarkFavorite = !aRecClicked.m_bMarkFavorite;
                                 ImageButton btn = (ImageButton)view;
                                 btn.setImageResource(aRecClicked.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);
-                                CRxDataSourceManager.sharedInstance().setFavorite(aRecClicked, aRecClicked.m_bMarkFavorite);
+                                CRxDataSourceManager.shared.setFavorite(aRecClicked, aRecClicked.m_bMarkFavorite);
 
                                 if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews)){
                                     setResult(EventCtl.CODE_DETAIL_REFRESH_PARENT);
@@ -437,7 +438,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         Calendar calFrom = Calendar.getInstance();
                         calFrom.setTime(rec.m_aDate);
 
-                        if ((int)calFrom.get(Calendar.HOUR_OF_DAY) == 0 && (int)calFrom.get(Calendar.MINUTE) == 0) {
+                        if (calFrom.get(Calendar.HOUR_OF_DAY) == 0 && calFrom.get(Calendar.MINUTE) == 0) {
                             iTimeStyle = -1;
                         }
                         sDateText = EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDate);
@@ -445,13 +446,13 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             Calendar calTo = Calendar.getInstance();
                             calTo.setTime(rec.m_aDateTo);
 
-                            if ((int)calFrom.get(Calendar.DAY_OF_YEAR) != (int)calTo.get(Calendar.DAY_OF_YEAR)) {
+                            if (calFrom.get(Calendar.DAY_OF_YEAR) != calTo.get(Calendar.DAY_OF_YEAR)) {
                                 iDateStyle = DateFormat.SHORT;
                                 sDateText = EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDate);
                             }
 
                             iTimeStyle = DateFormat.SHORT;
-                            if ((int)calTo.get(Calendar.HOUR_OF_DAY) == 0 && (int)calTo.get(Calendar.MINUTE) == 0) {
+                            if (calTo.get(Calendar.HOUR_OF_DAY) == 0 && calTo.get(Calendar.MINUTE) == 0) {
                                 iTimeStyle = -1;
                             }
                             sDateText += "\n- " + EventCtl.formatDate(iDateStyle, iTimeStyle, rec.m_aDateTo);
@@ -476,7 +477,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 case CRxDataSource.DATATYPE_places: {
 
                     String sRecTitle = rec.m_sTitle;
-                    if (CRxGame.sharedInstance.playerWas(rec))
+                    if (CRxGame.shared.playerWas(rec))
                         sRecTitle += " ✓";
                     cell.m_lbTitle.setText(sRecTitle);
 
@@ -497,10 +498,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     String sDistance = "";
                     if (m_bUserLocationAcquired && rec.m_aLocation != null) {
                         if (rec.m_distFromUser > 1000) {
-                            sDistance = String.format("%.2f km ", rec.m_distFromUser/1000.0);
+                            sDistance = String.format(Locale.getDefault(),"%.2f km ", rec.m_distFromUser/1000.0);
                         }
                         else {
-                            sDistance = String.format("%d m ", (int)rec.m_distFromUser);
+                            sDistance = String.format(Locale.getDefault(), "%d m ", (int)rec.m_distFromUser);
                         }
                     }
                     String sSubtitle = "";
@@ -558,9 +559,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
         if (sDataSource.equals(CRxDataSourceManager.dsSavedNews))
-            m_aDataSource = CRxDataSourceManager.sharedInstance().m_aSavedNews;
+            m_aDataSource = CRxDataSourceManager.shared.m_aSavedNews;
         else
-            m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
+            m_aDataSource = CRxDataSourceManager.shared.m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
         m_bAskForFilter = getIntent().getBooleanExtra(MainActivity.EXTRA_ASK_FOR_FILTER, false);
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
@@ -713,16 +714,16 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         Calendar c = Calendar.getInstance();
         Date today = c.getTime();
 
-        ArrayList<Date> arrDateCategories = new ArrayList<Date>();
+        ArrayList<Date> arrDateCategories = new ArrayList<>();
 
         // first add objects to groups
         for (CRxEventRecord rec: ds.m_arrItems) {
             // favorities
             if (ds.m_eType == CRxDataSource.DATATYPE_news) {
-                rec.m_bMarkFavorite = (CRxDataSourceManager.sharedInstance().findFavorite(rec) != null);
+                rec.m_bMarkFavorite = (CRxDataSourceManager.shared.findFavorite(rec) != null);
 
             } else if (ds.m_eType == CRxDataSource.DATATYPE_places) {
-                rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance().m_setPlacesNotified.contains(rec.m_sTitle);
+                rec.m_bMarkFavorite = CRxDataSourceManager.shared.m_setPlacesNotified.contains(rec.m_sTitle);
             }
 
             // filtering by filter set by user
@@ -793,7 +794,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             }
             // categories
             if (!m_orderedItems.containsKey(sCatName)) {
-                ArrayList<CRxEventRecord> arr = new ArrayList<CRxEventRecord>();
+                ArrayList<CRxEventRecord> arr = new ArrayList<>();
                 arr.add(rec);
                 m_orderedItems.put(sCatName, arr);   // new category
                 m_orderedCategories.add(sCatName);
@@ -863,7 +864,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 String sNewRecHash = ds.m_arrItems.get(0).recordHash();
                 if (!sNewRecHash.equals(ds.m_sLastItemShown)) { // resave only when something changed
                     ds.m_sLastItemShown = sNewRecHash;
-                    CRxDataSourceManager.sharedInstance().save(ds);
+                    CRxDataSourceManager.shared.save(ds);
                 }
             }
         }
@@ -1080,7 +1081,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     @Override
     public void onRefresh() {       // from refreshLayout
         m_aDataSource.delegate = this;
-        CRxDataSourceManager.sharedInstance().refreshDataSource(m_aDataSource.m_sId, true);
+        CRxDataSourceManager.shared.refreshDataSource(m_aDataSource.m_sId, true);
     }
 
     //---------------------------------------------------------------------------

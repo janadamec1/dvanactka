@@ -90,8 +90,8 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Leaderboard", comment: ""), style: .plain, target: self, action: #selector(GameCtl.onBtnLeaderboard));
         
         if let aDS = CRxGame.dataSource() {
-            if aDS.m_sUuid == nil && CRxGame.sharedInstance.m_iPoints > 0 {
-                CRxGame.sharedInstance.sendScoreToServer();
+            if aDS.m_sUuid == nil && CRxGame.shared.m_iPoints > 0 {
+                CRxGame.shared.sendScoreToServer();
             }
         }
     }
@@ -102,7 +102,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         if kind == UICollectionElementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerGame", for: indexPath) as! CRxGameHeader;
-            let aPlayerStats = CRxGame.sharedInstance.playerLevel();
+            let aPlayerStats = CRxGame.shared.playerLevel();
             headerView.m_lbLevel.text = NSLocalizedString("Level", comment: "") + " \(aPlayerStats.level)";
             headerView.m_progress.progress = Float(aPlayerStats.points-aPlayerStats.pointsPrevLevel) / Float(aPlayerStats.pointsNextLevel-aPlayerStats.pointsPrevLevel);
             headerView.m_lbXp.text = "\(aPlayerStats.points) / \(aPlayerStats.pointsNextLevel) XP";
@@ -131,13 +131,13 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CRxGame.sharedInstance.m_arrCategories.count;
+        return CRxGame.shared.m_arrCategories.count;
     }
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellGame", for: indexPath) as! CRxGameCell
-        let item = CRxGame.sharedInstance.m_arrCategories[indexPath.row];
+        let item = CRxGame.shared.m_arrCategories[indexPath.row];
         cell.m_item = item;
         cell.m_lbName.text = item.m_sName;
         cell.m_lbProgress.text = String(format: "%d / %d", item.m_iProgress, item.nextStarPoints());
@@ -179,7 +179,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = CRxGame.sharedInstance.m_arrCategories[indexPath.row];
+        let item = CRxGame.shared.m_arrCategories[indexPath.row];
         showToast(message: item.m_sHintMessage);
     }
     

@@ -66,7 +66,7 @@ public class FilterCtl extends Activity {
 
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
-        m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
+        m_aDataSource = CRxDataSourceManager.shared.m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
 
         if (m_aDataSource.m_setFilter != null)
@@ -96,7 +96,7 @@ public class FilterCtl extends Activity {
     void notifyFilterChanged() {
         if (m_aDataSource != null) {
             m_aDataSource.m_setFilter = m_setOut;
-            CRxDataSourceManager.sharedInstance().save(m_aDataSource);
+            CRxDataSourceManager.shared.save(m_aDataSource);
         }
         setResult(RESULT_OK);
     }

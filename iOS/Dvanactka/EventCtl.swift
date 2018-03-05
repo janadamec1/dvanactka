@@ -252,10 +252,10 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         for rec in ds.m_arrItems {
             // favorities
             if ds.m_eType == .news {
-                rec.m_bMarkFavorite = (CRxDataSourceManager.sharedInstance.findFavorite(news: rec) != nil);
+                rec.m_bMarkFavorite = (CRxDataSourceManager.shared.findFavorite(news: rec) != nil);
                 
             } else if ds.m_eType == .places {
-                rec.m_bMarkFavorite = CRxDataSourceManager.sharedInstance.m_setPlacesNotified.contains(rec.m_sTitle);
+                rec.m_bMarkFavorite = CRxDataSourceManager.shared.m_setPlacesNotified.contains(rec.m_sTitle);
             }
             
             // filtering by filter set by user
@@ -365,7 +365,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 let sNewRecHash = recFirst.recordHash();
                 if sNewRecHash != ds.m_sLastItemShown { // resave only when something changed
                     ds.m_sLastItemShown = sNewRecHash;
-                    CRxDataSourceManager.sharedInstance.save(dataSource: ds);
+                    CRxDataSourceManager.shared.save(dataSource: ds);
                 }
             }
         }
@@ -402,7 +402,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     @objc func downloadData() {
         if let ds = m_aDataSource {
             ds.delegate = self;
-            CRxDataSourceManager.sharedInstance.refreshDataSource(id: ds.m_sId, force: true);
+            CRxDataSourceManager.shared.refreshDataSource(id: ds.m_sId, force: true);
         }
     }
     
@@ -612,7 +612,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             let cellPlace = tableView.dequeueReusableCell(withIdentifier: "cellPlace", for: indexPath) as! PlaceCell
 
             var sRecTitle = rec.m_sTitle;
-            if (CRxGame.sharedInstance.playerWas(at: rec)) {
+            if (CRxGame.shared.playerWas(at: rec)) {
                 sRecTitle += " ✓";
             }
 
@@ -879,7 +879,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.m_bMarkFavorite = !rec.m_bMarkFavorite;
             btn.setImage(UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis")), for: .normal);
-            CRxDataSourceManager.sharedInstance.setFavorite(news: rec, set: rec.m_bMarkFavorite);
+            CRxDataSourceManager.shared.setFavorite(news: rec, set: rec.m_bMarkFavorite);
             
             if let ds = m_aDataSource {
                 if ds.m_sId == CRxDataSourceManager.dsSavedNews {
@@ -893,7 +893,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     @objc func onSavedNews() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
-        eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_aSavedNews;
+        eventCtl.m_aDataSource = CRxDataSourceManager.shared.m_aSavedNews;
         eventCtl.m_refreshParentDelegate = self;
         navigationController?.pushViewController(eventCtl, animated: true);
     }
@@ -902,7 +902,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     func onBtnList() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
-        eventCtl.m_aDataSource = CRxDataSourceManager.sharedInstance.m_dictDataSources[CRxDataSourceManager.dsSpolkyList];
+        eventCtl.m_aDataSource = CRxDataSourceManager.shared.m_dictDataSources[CRxDataSourceManager.dsSpolkyList];
         navigationController?.pushViewController(eventCtl, animated: true);
     }
     
@@ -934,7 +934,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     func filterChanged(setOut: Set<String>) {
         guard let ds = m_aDataSource else { return }
         ds.m_setFilter = setOut;
-        CRxDataSourceManager.sharedInstance.save(dataSource: ds);
+        CRxDataSourceManager.shared.save(dataSource: ds);
         sortRecords();
         m_tableView.reloadData();
     }

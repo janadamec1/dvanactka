@@ -31,7 +31,7 @@ class GameLeaderCtl: UITableViewController {
 
         self.title = NSLocalizedString("Leaderboard", comment: "");
         
-        m_iMyScore = CRxGame.sharedInstance.m_iPoints;
+        m_iMyScore = CRxGame.shared.m_iPoints;
         if let aDS = CRxGame.dataSource() {
             m_sMyUuid = aDS.m_sUuid;
         }

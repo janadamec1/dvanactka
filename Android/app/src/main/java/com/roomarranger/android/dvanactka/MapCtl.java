@@ -1,7 +1,5 @@
 package com.roomarranger.android.dvanactka;
 
-import android.*;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -46,7 +44,7 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
 
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         if (sDataSource == null) return;
-        m_aDataSource = CRxDataSourceManager.sharedInstance().m_dictDataSources.get(sDataSource);
+        m_aDataSource = CRxDataSourceManager.shared.m_dictDataSources.get(sDataSource);
         if (m_aDataSource == null) return;
         m_sParentFilter = getIntent().getStringExtra(MainActivity.EXTRA_PARENT_FILTER);
 
@@ -161,7 +159,7 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
                 // http://stackoverflow.com/questions/13692579/movecamera-with-cameraupdatefactory-newlatlngbounds-crashes
                 final View mapView = getFragmentManager().findFragmentById(R.id.map).getView();
                 try {
-                    if (mapView.getViewTreeObserver().isAlive()) {
+                    if (mapView != null && mapView.getViewTreeObserver().isAlive()) {
                         final Location _coordMin = coordMin;
                         final Location _coordMax = coordMax;
                         mapView.getViewTreeObserver().addOnGlobalLayoutListener(

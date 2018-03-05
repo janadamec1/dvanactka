@@ -213,7 +213,7 @@ class CRxDataSource : NSObject {
 class CRxDataSourceManager : NSObject {
     var m_dictDataSources = [String: CRxDataSource]()   // dictionary on data sources, id -> source
     
-    static let sharedInstance = CRxDataSourceManager()  // singleton
+    static let shared = CRxDataSourceManager()  // singleton
     
     static let dsRadNews = "dsRadNews";
     static let dsRadEvents = "dsRadEvents";
@@ -455,7 +455,7 @@ class CRxDataSourceManager : NSObject {
             else {return}
         
         // go through all favorite locations and set notifications to future intervals
-        let manager = CRxDataSourceManager.sharedInstance;
+        let manager = CRxDataSourceManager.shared;
         let dateNow = Date();
         var arrNewNotifications = [UILocalNotification]();
         for rec in ds.m_arrItems {

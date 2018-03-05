@@ -17,14 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if let urlAppDef = Bundle.main.url(forResource: "dvanactka.json", withExtension: "") {
             AppDefinition.shared.loadFromJson(file: urlAppDef);
-            let dsm = CRxDataSourceManager.sharedInstance;
+            let dsm = CRxDataSourceManager.shared;
             //dsm.defineDatasources();
             dsm.loadData();
             dsm.refreshAllDataSources();
             //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing
         }
         application.applicationIconBadgeNumber = 0;
-        CRxGame.sharedInstance.reinit();
+        CRxGame.shared.reinit();
         
         // Configure tracker from GoogleService-Info.plist.
         var configureError:NSError?
@@ -53,8 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         application.applicationIconBadgeNumber = 0;
-        CRxDataSourceManager.sharedInstance.refreshAllDataSources();
-        CRxGame.sharedInstance.reinit();
+        CRxDataSourceManager.shared.refreshAllDataSources();
+        CRxGame.shared.reinit();
 
         // Google Analytics
         if let tracker = GAI.sharedInstance().defaultTracker {
