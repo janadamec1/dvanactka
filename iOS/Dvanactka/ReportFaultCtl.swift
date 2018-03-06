@@ -151,12 +151,17 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         }
         sMessageBody += "\n\n";
         
+        guard let email = AppDefinition.shared.m_sReportFaultEmail
+            else { return; }
+        
         let mailer = MFMailComposeViewController();
         if mailer == nil { return; }
         mailer.mailComposeDelegate = self;
         
-        mailer.setToRecipients(["informace@praha12.cz"]);
-        mailer.setCcRecipients(["info@dvanactka.info"])
+        mailer.setToRecipients([email]);
+        if let emailCc = AppDefinition.shared.m_sReportFaultEmailCc {
+            mailer.setCcRecipients([emailCc]);
+        }
         mailer.setSubject("Hlášení závady");
         mailer.setMessageBody(sMessageBody, isHTML: false);
         

@@ -133,9 +133,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             if bAddSearchToolbarButton {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(EventsCtl.showSearch)));
             }
-            /*if ds.m_sId == CRxDataSourceManager.dsSpolky {
-                arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "bulleted_list"), style: .plain, target: self, action: #selector(EventsCtl.onBtnList)));
-            }*/
             if arrBtnItems.count > 0 {
                 self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
             }
@@ -155,6 +152,9 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 }
                 if let sCustomButtonText = ds.m_sListingFooterCustomButtonText {
                     m_btnFooterButton.setTitle(sCustomButtonText, for: .normal);
+                }
+                else if let email = AppDefinition.shared.recordUpdateEmail() {
+                    m_btnFooterButton.setTitle(email, for: .normal);
                 }
             }
         }
@@ -707,6 +707,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         }
         else if let rec = record(at: indexPath) {
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl;
+            placeCtl.m_aDataSource = m_aDataSource;
             placeCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
             placeCtl.m_refreshParentDelegate = self;
             navigationController?.pushViewController(placeCtl, animated: true);
@@ -899,14 +900,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
 
     //--------------------------------------------------------------------------
-    func onBtnList() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let eventCtl = storyboard.instantiateViewController(withIdentifier: "eventCtl") as! EventsCtl
-        eventCtl.m_aDataSource = CRxDataSourceManager.shared.m_dictDataSources[CRxDataSourceManager.dsSpolkyList];
-        navigationController?.pushViewController(eventCtl, animated: true);
-    }
-    
-    //--------------------------------------------------------------------------
     @objc func onDefineFilter() {
         guard let ds = m_aDataSource else { return }
         
@@ -1018,17 +1011,20 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
 
     //--------------------------------------------------------------------------
     @IBAction func onBtnFooterTouched(_ sender: Any) {
-        guard let ds = m_aDataSource else { return }
+        guard let ds = m_aDataSource else { return; }
         if let sFooterCustomButtonTargetUrl = ds.m_sListingFooterCustomButtonTargetUrl,
             let url = URL(string: sFooterCustomButtonTargetUrl) {
             UIApplication.shared.openURL(url);
         }
         else if MFMailComposeViewController.canSendMail() {
+
+            guard let email = AppDefinition.shared.recordUpdateEmail() else { return; }
+            
             let mailer = MFMailComposeViewController();
             if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
-            mailer.setToRecipients(["info@dvanactka.info"]);
+            mailer.setToRecipients([email]);
             mailer.setSubject("Aplikace Dvanáctka - přidat záznam");
             var sTitle = ds.m_sTitle;
             if let sParentFilter = m_sParentFilter {

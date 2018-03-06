@@ -11,8 +11,11 @@ import UIKit
 class AppDefinition: NSObject {
     var m_sTitle: String?;
     var m_sWebsite: String?;
+    var m_sCopyright: String?;
     var m_sContactEmail: String?;
     var m_sRecordUpdateEmail: String?;
+    var m_sReportFaultEmail: String?;
+    var m_sReportFaultEmailCc: String?;
     var m_sOutgoinglinkParameter: String?;
     var m_sServerDataBaseUrl: String?;
     var m_arrDataSourceOrder = [String]();
@@ -62,8 +65,11 @@ class AppDefinition: NSObject {
             if let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String : AnyObject] {
                 if let val = loadLocalizedString(key: "title", from: json) { m_sTitle = val; }
                 if let val = loadLocalizedString(key: "website", from: json) { m_sWebsite = val; }
+                if let val = loadLocalizedString(key: "copyright", from: json) { m_sCopyright = val; }
                 if let val = loadLocalizedString(key: "contactEmail", from: json) { m_sContactEmail = val; }
                 if let val = loadLocalizedString(key: "recordUpdateEmail", from: json) { m_sRecordUpdateEmail = val; }
+                if let val = loadLocalizedString(key: "reportFaultEmail", from: json) { m_sReportFaultEmail = val; }
+                if let val = loadLocalizedString(key: "reportFaultEmailCc", from: json) { m_sReportFaultEmailCc = val; }
                 if let val = loadLocalizedString(key: "outgoinglinkParameter", from: json) { m_sOutgoinglinkParameter = val; }
                 if let val = loadLocalizedString(key: "serverDataBaseUrl", from: json) { m_sServerDataBaseUrl = val; }
                 
@@ -83,9 +89,27 @@ class AppDefinition: NSObject {
     }
     
     //--------------------------------------------------------------------------
+    // load string with possible localizatio into current locale (in json: "key@locale":value)
     func loadLocalizedString(key: String, from json: [String : AnyObject]) -> String? {
         if let sVal = json[key + "@" + m_sCurrentLocale] as? String { return sVal; }    // load localized
         if let sVal = json[key] as? String { return sVal; }     // load english
+        return nil;
+    }
+    
+    //--------------------------------------------------------------------------
+    // convert color as CSS hex string into integer
+    static func loadColor(key: String, from json: [String : AnyObject]) -> Int? {
+        if let sVal = json[key] as? String {
+            var sColorHex = sVal;
+            if sColorHex.hasPrefix("#") {
+                sColorHex.remove(at: sColorHex.startIndex);
+            }
+            if sColorHex.count == 6 {
+                if let cl = Int(sColorHex, radix: 16) {
+                    return ((cl & 0xFF0000) >> 16) + (cl & 0xFF00) + ((cl & 0xFF) << 16);
+                }
+            }
+        }
         return nil;
     }
 

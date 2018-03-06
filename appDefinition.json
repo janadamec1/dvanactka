@@ -1,7 +1,11 @@
 {
 "title":"Dvanáctka",
 "website":"https://www.dvanactka.info",
+"copyright":"Copyright © 2017, Jan Adamec",
 "contactEmail":"info@dvanactka.info",
+"recordUpdateEmail":"info@dvanactka.info",
+"reportFaultEmail":"informace@praha12.cz",
+"reportFaultEmailCc":"info@dvanactka.info",
 "outgoinglinkParameter":"utm_source=dvanactka.info&utm_medium=app",
 "serverDataBaseUrl":"https://www.dvanactka.info/own/p12/",
 "dataSources":[
@@ -113,8 +117,8 @@
     "serverDataFile":"dyn_waste.json",
     "offlineDataFile":"test_files/dyn_waste.json",
     "backgroundColor":"#008000",
-    "refreshFreqHours":48,
-    "filterAsParentView":true
+    "filterAsParentView":true,
+    "localNotificationsForEvents":true
   },
   {
     "id":"dsReportFault",

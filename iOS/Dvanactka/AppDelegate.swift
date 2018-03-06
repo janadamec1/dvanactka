@@ -15,10 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if let urlAppDef = Bundle.main.url(forResource: "dvanactka.json", withExtension: "") {
+        if let urlAppDef = Bundle.main.url(forResource: "appDefinition.json", withExtension: "") {
             AppDefinition.shared.loadFromJson(file: urlAppDef);
             let dsm = CRxDataSourceManager.shared;
-            //dsm.defineDatasources();
             dsm.loadData();
             dsm.refreshAllDataSources();
             //dsm.refreshDataSource(id: CRxDataSourceManager.dsSpolky, force: true);  // force reload for testing

@@ -42,7 +42,10 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
     @IBOutlet weak var m_btnGameCheckIn: UIButton!
     
     var m_locManager = CLLocationManager();
+    // input:
+    var m_aDataSource: CRxDataSource?
     var m_aRecord: CRxEventRecord?
+    
     var m_refreshParentDelegate: CRxDetailRefreshParentDelegate?
     
     enum EGameStatus {
@@ -189,10 +192,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                     m_lbNote.text = sNote;
                     m_lbNote.isHidden = false;
                 }
-                m_lbShowNotifications.isHidden = false;
-                m_chkShowNotifications.isHidden = false;
-                m_lbNotificationExplanation.isHidden = false;
-                m_chkShowNotifications.isOn = rec.m_bMarkFavorite;
+                if let ds = m_aDataSource, ds.m_bLocalNotificationsForEvents {
+                    m_lbShowNotifications.isHidden = false;
+                    m_chkShowNotifications.isHidden = false;
+                    m_lbNotificationExplanation.isHidden = false;
+                    m_chkShowNotifications.isOn = rec.m_bMarkFavorite;
+                }
             }
             else {
                 m_lbOpeningHoursTitle.isHidden = true;
@@ -442,13 +447,16 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         if (MFMailComposeViewController.canSendMail())
         {
             guard let rec = m_aRecord
-                else {return;}
+                else { return; }
+            
+            guard let email = AppDefinition.shared.recordUpdateEmail()
+                else { return; }
             
             let mailer = MFMailComposeViewController();
             if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
-            mailer.setToRecipients(["info@dvanactka.info"]);
+            mailer.setToRecipients([email]);
             mailer.setSubject(rec.m_sTitle + " - " + CRxEventRecord.categoryLocalName(category: rec.m_eCategory) + " - problem (iOS)");
             mailer.setMessageBody(NSLocalizedString("(Please describe problem here)", comment:"") , isHTML: false);
             mailer.modalPresentationStyle = .formSheet;

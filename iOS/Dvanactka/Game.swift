@@ -253,7 +253,8 @@ class CRxGame: NSObject {
             for el in bufScore { iChecksum = iChecksum + Int(el); }
             
             let sParams = String(format: "?id=%@&s=%@&c=%d", uuid, sScore, iChecksum);
-            if let url = URL(string: "https://dvanactka.info/own/p12/game_putscore.php" + sParams) {
+            if let serverUrl = AppDefinition.shared.m_sServerDataBaseUrl,
+                let url = URL(string: serverUrl + "game_putscore.php" + sParams) {
                 // send it
                 URLSession.shared.dataTask(with: url).resume();
             }

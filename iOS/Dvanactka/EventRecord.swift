@@ -386,14 +386,16 @@ class CRxEventRecord: NSObject {
     //---------------------------------------------------------------------------
     func infoLinkUrl() -> URL? {
         if let link = m_sInfoLink {
-            var sParameter: String;
-            if link.contains("?") {
-                sParameter = "&";
+            var sParameter: String = "";
+            if let linkUtm = AppDefinition.shared.m_sOutgoinglinkParameter {
+                if link.contains("?") {
+                    sParameter = "&";
+                }
+                else {
+                    sParameter = "?";
+                }
+                sParameter += linkUtm;
             }
-            else {
-                sParameter = "?";
-            }
-            sParameter += "utm_source=dvanactka.info&utm_medium=app";
             return URL(string: link + sParameter);
         }
         return nil;

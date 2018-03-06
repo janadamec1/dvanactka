@@ -48,7 +48,10 @@ class CRxDataSource : NSObject {
     var m_sListingFooterCustomButtonText: String?;      // use custom listing footer button text
     var m_sListingFooterCustomButtonTargetUrl: String?; // when nil, apps sends email
     var m_bListingShowEventAddress = true;              // show event address in listing
+    var m_bLocalNotificationsForEvents = false;         // send local notifications for events in records (dsWaste)
     
+    //--------------------------------------------------------------------------
+    // this constructor is no longer used
     init(id: String, title: String, icon: String, type: DataType, backgroundColor: Int) {
         m_sId = id;
         m_sTitle = title;
@@ -61,6 +64,7 @@ class CRxDataSource : NSObject {
     }
     
     //--------------------------------------------------------------------------
+    // reading dataSource definition from appDefinition.json
     init?(fromAppDefJson json: [String: AnyObject]) {
         // required values
         if let val = json["id"] as? String { m_sId = val; } else { return nil; }
@@ -69,18 +73,7 @@ class CRxDataSource : NSObject {
         if let sType = json["type"] as? String,
             let eType = DataType(rawValue: sType) { m_eType = eType;} else { return nil; }
         
-        m_iBackgroundColor = 0xCCCCCC;
-        if let val = json["backgroundColor"] as? String {
-            var sColorHex = val;
-            if sColorHex.hasPrefix("#") {
-                sColorHex.remove(at: sColorHex.startIndex);
-            }
-            if sColorHex.count == 6 {
-                if let cl = Int(sColorHex, radix: 16) {
-                    m_iBackgroundColor = ((cl & 0xFF0000) >> 16) + (cl & 0xFF00) + ((cl & 0xFF) << 16);
-                }
-            }
-        }
+        if let cl = AppDefinition.loadColor(key: "backgroundColor", from: json) { m_iBackgroundColor = cl; } else { m_iBackgroundColor = 0xCCCCCC; }
 
         m_bMapEnabled = (m_eType == .places);
         m_bListingFooterVisible = (m_eType == .places);
@@ -90,6 +83,7 @@ class CRxDataSource : NSObject {
         if let val = AppDefinition.shared.loadLocalizedString(key: "serverDataFile", from: json) { m_sServerDataFile = val; }
         if let val = AppDefinition.shared.loadLocalizedString(key: "offlineDataFile", from: json) { m_sOfflineDataFile = val; }
         if let val = json["refreshFreqHours"] as? Int { m_nRefreshFreqHours = val; }
+        if let val = json["filterable"] as? Bool { m_bFilterable = val; }
         if let val = json["filterAsParentView"] as? Bool { m_bFilterAsParentView = val; }
         if let val = json["mapEnabled"] as? Bool { m_bMapEnabled = val; }
         if let val = json["listingShowEventAddress"] as? Bool { m_bListingShowEventAddress = val; }
@@ -103,11 +97,13 @@ class CRxDataSource : NSObject {
         if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonTargetUrl", from: json) {
             m_sListingFooterCustomButtonTargetUrl = val;
         }
+        if let val = json["localNotificationsForEvents"] as? Bool { m_bLocalNotificationsForEvents = val; }
 
         super.init();
     }
     
     //--------------------------------------------------------------------------
+    // load dataSource contents from json in file
     func loadFromJSON(file: URL) {
         var jsonData: Data?
         do {
@@ -122,6 +118,7 @@ class CRxDataSource : NSObject {
     }
     
     //--------------------------------------------------------------------------
+    // load dataSource contents from json data
     func loadFromJSON(data: Data) {
         // decode JSON
         var json: AnyObject
@@ -152,6 +149,7 @@ class CRxDataSource : NSObject {
     }
     
     //--------------------------------------------------------------------------
+    // save dataSource contents to json file
     func saveToJSON(file: URL) {
         // save data
         var jsonItems = [AnyObject]()
@@ -215,21 +213,8 @@ class CRxDataSourceManager : NSObject {
     
     static let shared = CRxDataSourceManager()  // singleton
     
-    static let dsRadNews = "dsRadNews";
-    static let dsRadEvents = "dsRadEvents";
-    static let dsRadDeska = "dsRadDeska";
-    static let dsCityOffice = "dsCityOffice";
-    static let dsBiografProgram = "dsBiografProgram";
-    static let dsCooltour = "dsCooltour";
-    static let dsSosContacts = "dsSosContacts";
-    static let dsWaste = "dsWaste";
-    static let dsShops = "dsShops";
-    static let dsWork = "dsWork";
-    static let dsSpolky = "dsSpolky";
-    static let dsSpolkyList = "dsSpolkyList";
     static let dsReportFault = "dsReportFault";
     static let dsGame = "dsGame";
-    static let dsTraffic = "dsTraffic";
     static let dsSavedNews = "dsSavedNews";
     
     var m_nNetworkIndicatorUsageCount: Int = 0;
@@ -244,100 +229,6 @@ class CRxDataSourceManager : NSObject {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!;
         m_urlDocumentsDir = URL(fileURLWithPath: documentsDirectoryPathString);
         super.init();
-    }
-
-    //--------------------------------------------------------------------------
-    func defineDatasources() {
-        m_dictDataSources[CRxDataSourceManager.dsRadNews] = CRxDataSource(id: CRxDataSourceManager.dsRadNews, title: NSLocalizedString("News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x3f4d88);
-        m_dictDataSources[CRxDataSourceManager.dsRadEvents] = CRxDataSource(id: CRxDataSourceManager.dsRadEvents, title: NSLocalizedString("Events", comment: ""), icon: "ds_events", type: .events, backgroundColor:0xdb552d);
-        m_dictDataSources[CRxDataSourceManager.dsRadDeska] = CRxDataSource(id: CRxDataSourceManager.dsRadDeska, title: NSLocalizedString("Official Board", comment: ""), icon: "ds_billboard", type: .news, backgroundColor:0x3f4d88);
-        m_dictDataSources[CRxDataSourceManager.dsSpolky] = CRxDataSource(id: CRxDataSourceManager.dsSpolky, title: NSLocalizedString("Independent", comment: ""), icon: "ds_magazine", type: .news, backgroundColor:0x08739f);
-        m_dictDataSources[CRxDataSourceManager.dsSpolkyList] = CRxDataSource(id: CRxDataSourceManager.dsSpolkyList, title: NSLocalizedString("Associations", comment: ""), icon: "ds_usergroups", type: .places, backgroundColor:0x08739f);
-        m_dictDataSources[CRxDataSourceManager.dsCityOffice] = CRxDataSource(id: CRxDataSourceManager.dsCityOffice, title: NSLocalizedString("City Office", comment: ""), icon: "ds_parliament", type: .places, backgroundColor:0x3f4d88);
-        m_dictDataSources[CRxDataSourceManager.dsBiografProgram] = CRxDataSource(id: CRxDataSourceManager.dsBiografProgram, title: "Modřanský biograf", icon: "ds_biograf", type: .events, backgroundColor:0xdb552d);
-        m_dictDataSources[CRxDataSourceManager.dsCooltour] = CRxDataSource(id: CRxDataSourceManager.dsCooltour, title: NSLocalizedString("Trips", comment: ""), icon: "ds_landmarks", type: .places, backgroundColor:0x008000);
-        m_dictDataSources[CRxDataSourceManager.dsWaste] = CRxDataSource(id: CRxDataSourceManager.dsWaste, title: NSLocalizedString("Waste", comment: ""), icon: "ds_waste", type: .places, backgroundColor:0x008000);
-        m_dictDataSources[CRxDataSourceManager.dsSosContacts] = CRxDataSource(id: CRxDataSourceManager.dsSosContacts, title: NSLocalizedString("Help", comment: ""), icon: "ds_help", type: .places, backgroundColor:0x08739f);
-        m_dictDataSources[CRxDataSourceManager.dsReportFault] = CRxDataSource(id: CRxDataSourceManager.dsReportFault, title: NSLocalizedString("Report Fault", comment: ""), icon: "ds_reportfault", type: .places, backgroundColor:0xb11a41);
-        m_dictDataSources[CRxDataSourceManager.dsGame] = CRxDataSource(id: CRxDataSourceManager.dsGame, title: NSLocalizedString("Game", comment: ""), icon: "ds_game", type: .places, backgroundColor:0x603cbb);
-        m_dictDataSources[CRxDataSourceManager.dsShops] = CRxDataSource(id: CRxDataSourceManager.dsShops, title: NSLocalizedString("Shops", comment: ""), icon: "ds_shop", type: .places, backgroundColor:0x0ab2b2);
-        m_dictDataSources[CRxDataSourceManager.dsWork] = CRxDataSource(id: CRxDataSourceManager.dsWork, title: NSLocalizedString("Work", comment: ""), icon: "ds_work", type: .places, backgroundColor:0x0ab2b2);
-        m_dictDataSources[CRxDataSourceManager.dsTraffic] = CRxDataSource(id: CRxDataSourceManager.dsTraffic, title: NSLocalizedString("Traffic", comment: ""), icon: "ds_roadblock", type: .places, backgroundColor:0xb11a41);
-        
-        // additional parameters
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsRadNews] {
-            ds.m_sServerDataFile = "dyn_radAktual.json";
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsRadDeska] {
-            ds.m_sServerDataFile = "dyn_radDeska.json";
-            ds.m_bFilterable = true;
-            ds.m_bListingSearchBarVisibleAtStart = true;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsRadEvents] {
-            ds.m_sServerDataFile = "dyn_events.php";
-            ds.m_bFilterable = true;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolky] {
-            ds.m_sServerDataFile = "dyn_spolky.php";
-            ds.m_bFilterable = true;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsSpolkyList] {
-            ds.m_nRefreshFreqHours = 48;
-            ds.m_sServerDataFile = "spolkyList.json";
-            ds.m_sOfflineDataFile = "test_files/spolkyList.json";
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsBiografProgram] {
-            ds.m_nRefreshFreqHours = 48;
-            ds.m_sShortTitle = "Biograf";
-            ds.m_sServerDataFile = "dyn_biograf.json";
-            ds.m_bListingShowEventAddress = false;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsCooltour] {
-            ds.m_nRefreshFreqHours = 48;
-            ds.m_sServerDataFile = "p12kultpamatky.json";
-            ds.m_sOfflineDataFile = "test_files/p12kultpamatky.json";
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsSosContacts] {
-            ds.m_nRefreshFreqHours = 48;
-            ds.m_sServerDataFile = "sos.json";
-            ds.m_sOfflineDataFile = "test_files/sos.json";
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsWaste] {
-            ds.m_sServerDataFile = "dyn_waste.json";
-            ds.m_sOfflineDataFile = "test_files/dyn_waste.json";
-            ds.m_bFilterAsParentView = true;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsReportFault] {
-            ds.m_nRefreshFreqHours = 1000;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsGame] {
-            ds.m_nRefreshFreqHours = 1000;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsShops] {
-            ds.m_nRefreshFreqHours = 48;
-            ds.m_sServerDataFile = "p12shops.json";
-            ds.m_sOfflineDataFile = "test_files/p12shops.json";
-            ds.m_bFilterAsParentView = true;
-            ds.m_bListingSearchBarVisibleAtStart = true;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsTraffic] {
-            ds.m_sServerDataFile = "dyn_doprava.json";
-            ds.m_nRefreshFreqHours = 4;
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsWork] {
-            ds.m_sServerDataFile = "dyn_kdejeprace.json";
-            ds.m_sListingFooterCustomLabelText = NSLocalizedString("Add job offer:", comment: "");
-            ds.m_sListingFooterCustomButtonText = "KdeJePrace.cz";
-            ds.m_sListingFooterCustomButtonTargetUrl = "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app";
-        }
-        if let ds = m_dictDataSources[CRxDataSourceManager.dsCityOffice] {
-            ds.m_nRefreshFreqHours = 100;
-            ds.m_sServerDataFile = "dyn_cityOffice.json";
-            ds.m_sOfflineDataFile = "test_files/dyn_cityOffice.json";
-            ds.m_bFilterAsParentView = true;
-            ds.m_bMapEnabled = false;
-            ds.m_bListingSearchBarVisibleAtStart = true;
-        }
     }
     
     //--------------------------------------------------------------------------
@@ -450,40 +341,44 @@ class CRxDataSourceManager : NSObject {
     
     //--------------------------------------------------------------------------
     func resetAllNotifications() {
-        
-        guard let ds = m_dictDataSources[CRxDataSourceManager.dsWaste]
-            else {return}
-        
         // go through all favorite locations and set notifications to future intervals
         let manager = CRxDataSourceManager.shared;
         let dateNow = Date();
         var arrNewNotifications = [UILocalNotification]();
-        for rec in ds.m_arrItems {
-            if !manager.m_setPlacesNotified.contains(rec.m_sTitle) {
+
+        for itemIt in m_dictDataSources {
+            let ds = itemIt.value;
+            if !ds.m_bLocalNotificationsForEvents {
                 continue;
             }
-            guard let events = rec.m_arrEvents else { continue }
-            for aEvent in events {
-                if aEvent.m_dateStart > dateNow {
-                    
-                    var aNotification = UILocalNotification();
-                    aNotification.fireDate = aEvent.m_dateStart;
-                    aNotification.timeZone = NSTimeZone.default;
-                    aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ just arrived (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
-                    aNotification.soundName = UILocalNotificationDefaultSoundName;
-                    //aNotification.applicationIconBadgeNumber = 1;
-                    arrNewNotifications.append(aNotification);
-                    
-                    // also add a notification one day earlier
-                    let dateBefore = aEvent.m_dateStart.addingTimeInterval(-24*60*60);
-                    if dateBefore > dateNow {
-                        aNotification = UILocalNotification();
-                        aNotification.fireDate = dateBefore;
+
+            for rec in ds.m_arrItems {
+                if !manager.m_setPlacesNotified.contains(rec.m_sTitle) {
+                    continue;
+                }
+                guard let events = rec.m_arrEvents else { continue }
+                for aEvent in events {
+                    if aEvent.m_dateStart > dateNow {
+                        
+                        var aNotification = UILocalNotification();
+                        aNotification.fireDate = aEvent.m_dateStart;
                         aNotification.timeZone = NSTimeZone.default;
-                        aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ tomorrow (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
+                        aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ just arrived (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
                         aNotification.soundName = UILocalNotificationDefaultSoundName;
                         //aNotification.applicationIconBadgeNumber = 1;
                         arrNewNotifications.append(aNotification);
+                        
+                        // also add a notification one day earlier
+                        let dateBefore = aEvent.m_dateStart.addingTimeInterval(-24*60*60);
+                        if dateBefore > dateNow {
+                            aNotification = UILocalNotification();
+                            aNotification.fireDate = dateBefore;
+                            aNotification.timeZone = NSTimeZone.default;
+                            aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ tomorrow (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
+                            aNotification.soundName = UILocalNotificationDefaultSoundName;
+                            //aNotification.applicationIconBadgeNumber = 1;
+                            arrNewNotifications.append(aNotification);
+                        }
                     }
                 }
             }
@@ -567,8 +462,11 @@ class CRxDataSourceManager : NSObject {
             if (url.hasPrefix("http")) {
                 urlDownload = URL(string: url);
             }
+            else if let serverUrl = AppDefinition.shared.m_sServerDataBaseUrl {
+                urlDownload = URL(string: serverUrl + url);
+            }
             else {
-                urlDownload = URL(string: "https://dvanactka.info/own/p12/" + url);
+                return;
             }
         }
         else if let sOfflineFile = aDS.m_sOfflineDataFile {
@@ -608,7 +506,7 @@ class CRxDataSourceManager : NSObject {
                 self.hideNetworkIndicator();
                 aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: nil);
                 self.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: nil);     // to refresh unread count badge
-                if (aDS.m_sId == CRxDataSourceManager.dsWaste) {
+                if (aDS.m_bLocalNotificationsForEvents) {
                     self.resetAllNotifications();
                 }
             }

@@ -37,8 +37,8 @@ class GameLeaderCtl: UITableViewController {
         }
         
         // start downloading leaderboard
-        let url = URL(string: "https://dvanactka.info/own/p12/game_leaders.txt");
-        if let url = url {
+        if let serverUrl = AppDefinition.shared.m_sServerDataBaseUrl,
+            let url = URL(string: serverUrl + "game_leaders.txt") {
             CRxDataSourceManager.getDataFromUrl(url: url) { (data, response, error) in
                 guard let data = data, error == nil
                     else {

@@ -39,7 +39,6 @@ class CRxDSCell : UICollectionViewCell {
 }
 
 class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate, CRxDataSourceRefreshDelegate {
-    var m_arrSources = [String]();    // data source ids in order they should appear in the collection
     var m_sDsSelected = "";
     var m_locManager = CLLocationManager();
     var m_coordLast = CLLocationCoordinate2D(latitude:0, longitude: 0);
@@ -61,21 +60,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btnInfo);
         
-        m_arrSources.append(CRxDataSourceManager.dsRadNews);
-        m_arrSources.append(CRxDataSourceManager.dsSpolky);
-        m_arrSources.append(CRxDataSourceManager.dsRadDeska);
-        m_arrSources.append(CRxDataSourceManager.dsRadEvents);
-        m_arrSources.append(CRxDataSourceManager.dsBiografProgram);
-        m_arrSources.append(CRxDataSourceManager.dsSpolkyList);
-        m_arrSources.append(CRxDataSourceManager.dsShops);
-        m_arrSources.append(CRxDataSourceManager.dsWork);
-        m_arrSources.append(CRxDataSourceManager.dsTraffic);
-        m_arrSources.append(CRxDataSourceManager.dsWaste);
-        m_arrSources.append(CRxDataSourceManager.dsReportFault);
-        m_arrSources.append(CRxDataSourceManager.dsCooltour);
-        m_arrSources.append(CRxDataSourceManager.dsCityOffice);
-        m_arrSources.append(CRxDataSourceManager.dsSosContacts);
-        m_arrSources.append(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.shared.delegate = self;
         
         // Google Analytics
@@ -134,14 +118,14 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return m_arrSources.count;
+        return AppDefinition.shared.m_arrDataSourceOrder.count;
     }
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellDS", for: indexPath) as! CRxDSCell
         
-        if let ds = CRxDataSourceManager.shared.m_dictDataSources[m_arrSources[indexPath.row]] {
+        if let ds = CRxDataSourceManager.shared.m_dictDataSources[AppDefinition.shared.m_arrDataSourceOrder[indexPath.row]] {
             var sTitle = ds.m_sTitle;
             if let shortTitle = ds.m_sShortTitle {
                 sTitle = shortTitle;
@@ -260,7 +244,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        m_sDsSelected = m_arrSources[indexPath.row];
+        m_sDsSelected = AppDefinition.shared.m_arrDataSourceOrder[indexPath.row];
         
         // hide unread badge
         if let cell = collectionView.cellForItem(at: indexPath) as? CRxDSCell,

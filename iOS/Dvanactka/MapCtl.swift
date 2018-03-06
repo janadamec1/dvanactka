@@ -188,6 +188,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl
+            placeCtl.m_aDataSource = m_aDataSource;
             placeCtl.m_aRecord = aMapItem.m_rec;
             navigationController?.pushViewController(placeCtl, animated: true);
         }

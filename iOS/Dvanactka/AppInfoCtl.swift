@@ -14,6 +14,8 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_lbText: UILabel!
     @IBOutlet weak var m_lbWifi: UILabel!
     @IBOutlet weak var m_chkWifi: UISwitch!
+    @IBOutlet weak var m_btnContact: UIButton!
+    @IBOutlet weak var m_lbCopyright: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,13 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
         title = NSLocalizedString("About the App", comment: "");
         m_lbText.text = NSLocalizedString("AppInfo.longtext", comment: "");
         m_lbWifi.text = NSLocalizedString("Download new data only via WiFi", comment: "");
+
+        if let email = AppDefinition.shared.m_sContactEmail {
+            m_btnContact.setTitle(email, for: .normal);
+        }
+        else {
+            m_btnContact.isHidden = true;
+        }
         
         m_chkWifi.isOn = UserDefaults.standard.bool(forKey: "wifiDataOnly");
     }
@@ -40,11 +49,14 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBAction func onBtnContactTouched(_ sender: Any) {
         if (MFMailComposeViewController.canSendMail())
         {
+            guard let email = AppDefinition.shared.m_sContactEmail
+                else { return; }
+
             let mailer = MFMailComposeViewController();
             if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
-            mailer.setToRecipients(["info@dvanactka.info"]);
+            mailer.setToRecipients([email]);
             mailer.setSubject("Aplikace Dvanáctka (iOS)");
             mailer.modalPresentationStyle = .formSheet;
             present(mailer, animated: true, completion: nil);
