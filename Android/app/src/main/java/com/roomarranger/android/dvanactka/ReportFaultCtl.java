@@ -327,11 +327,14 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         }
         sMessageBody += "\n\n";
 
+        if (CRxAppDefinition.shared.m_sReportFaultEmail == null)
+            return;
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"informace@praha12.cz"});
-        intent.putExtra(Intent.EXTRA_CC, new String[] {"info@dvanactka.info"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.m_sReportFaultEmail});
+        if (CRxAppDefinition.shared.m_sReportFaultEmailCc != null)
+            intent.putExtra(Intent.EXTRA_CC, new String[] {CRxAppDefinition.shared.m_sReportFaultEmailCc});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Hlášení závady");
         intent.putExtra(Intent.EXTRA_TEXT, sMessageBody);
 

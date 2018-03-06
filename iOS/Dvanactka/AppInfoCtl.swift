@@ -24,7 +24,7 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
         m_lbText.text = NSLocalizedString("AppInfo.longtext", comment: "");
         m_lbWifi.text = NSLocalizedString("Download new data only via WiFi", comment: "");
 
-        if let email = AppDefinition.shared.m_sContactEmail {
+        if let email = CRxAppDefinition.shared.m_sContactEmail {
             m_btnContact.setTitle(email, for: .normal);
         }
         else {
@@ -49,7 +49,7 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBAction func onBtnContactTouched(_ sender: Any) {
         if (MFMailComposeViewController.canSendMail())
         {
-            guard let email = AppDefinition.shared.m_sContactEmail
+            guard let email = CRxAppDefinition.shared.m_sContactEmail
                 else { return; }
 
             let mailer = MFMailComposeViewController();
@@ -57,7 +57,13 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients([email]);
-            mailer.setSubject("Aplikace Dvanáctka (iOS)");
+
+            var sAppName = "CityApp";
+            if let appTitle = CRxAppDefinition.shared.m_sTitle {
+                sAppName = appTitle;
+            }
+            mailer.setSubject("Aplikace " + sAppName + " (iOS)");
+            
             mailer.modalPresentationStyle = .formSheet;
             present(mailer, animated: true, completion: nil);
         }

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class AppDefinition: NSObject {
+class CRxAppDefinition: NSObject {
+    // properties from json
     var m_sTitle: String?;
     var m_sWebsite: String?;
     var m_sCopyright: String?;
@@ -16,13 +17,14 @@ class AppDefinition: NSObject {
     var m_sRecordUpdateEmail: String?;
     var m_sReportFaultEmail: String?;
     var m_sReportFaultEmailCc: String?;
-    var m_sOutgoinglinkParameter: String?;
+    var m_sOutgoingLinkParameter: String?;
     var m_sServerDataBaseUrl: String?;
-    var m_arrDataSourceOrder = [String]();
     
-    private var m_sCurrentLocale: String;     // for loading localized strings from app definition json
+    // members
+    var m_arrDataSourceOrder = [String]();      // dataSource IDs in order in which they were in the json
+    private var m_sCurrentLocale: String;       // for loading localized strings from app definition json
     
-    static let shared = AppDefinition();  // singleton
+    static let shared = CRxAppDefinition();  // singleton
 
     //--------------------------------------------------------------------------
     // "private" prevents others from using the default '()' initializer for this class (so being singleton)
@@ -70,7 +72,7 @@ class AppDefinition: NSObject {
                 if let val = loadLocalizedString(key: "recordUpdateEmail", from: json) { m_sRecordUpdateEmail = val; }
                 if let val = loadLocalizedString(key: "reportFaultEmail", from: json) { m_sReportFaultEmail = val; }
                 if let val = loadLocalizedString(key: "reportFaultEmailCc", from: json) { m_sReportFaultEmailCc = val; }
-                if let val = loadLocalizedString(key: "outgoinglinkParameter", from: json) { m_sOutgoinglinkParameter = val; }
+                if let val = loadLocalizedString(key: "outgoingLinkParameter", from: json) { m_sOutgoingLinkParameter = val; }
                 if let val = loadLocalizedString(key: "serverDataBaseUrl", from: json) { m_sServerDataBaseUrl = val; }
                 
                 // load dataSources

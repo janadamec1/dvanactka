@@ -638,6 +638,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 lbFooterText.setText(m_aDataSource.m_sListingFooterCustomLabelText);
             if (m_aDataSource.m_sListingFooterCustomButtonText != null)
                 btnFooterButton.setText(m_aDataSource.m_sListingFooterCustomButtonText);
+            else if (CRxAppDefinition.shared.recordUpdateEmail() != null)
+                btnFooterButton.setText(CRxAppDefinition.shared.recordUpdateEmail());
         }
 
         btnFooterButton.setOnClickListener(new View.OnClickListener() {
@@ -647,11 +649,16 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(m_aDataSource.m_sListingFooterCustomButtonTargetUrl));
                     startActivity(browserIntent);
                 }
-                else {
+                else if (CRxAppDefinition.shared.recordUpdateEmail() != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace Dvanáctka - přidat záznam");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.recordUpdateEmail()});
+
+                    String sAppName = "CityApp";
+                    if (CRxAppDefinition.shared.m_sTitle != null)
+                        sAppName = CRxAppDefinition.shared.m_sTitle;
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace " + sAppName + " - přidat záznam");
+
                     String sTitle = m_aDataSource.m_sTitle;
                     if (m_sParentFilter != null)
                         sTitle += m_sParentFilter;

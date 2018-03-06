@@ -129,7 +129,8 @@ public class GameLeaderCtl extends Activity {
 
         URL urlDownload = null;
         try {
-            urlDownload = new URL("https://dvanactka.info/own/p12/game_leaders.txt");
+            if (CRxAppDefinition.shared.m_sServerDataBaseUrl != null)
+                urlDownload = new URL(CRxAppDefinition.shared.m_sServerDataBaseUrl + "game_leaders.txt");
         }
         catch (Exception e) {
             Log.e("GAME", "download leaderboard exception: " + e.getMessage());

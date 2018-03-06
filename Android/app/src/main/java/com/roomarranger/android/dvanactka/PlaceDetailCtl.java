@@ -78,6 +78,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     TextView m_lbGameDist;
     Button m_btnGameCheckIn;
 
+    CRxDataSource m_aDataSource = null;
     CRxEventRecord rec = null;
 
     enum EGameStatus {
@@ -98,9 +99,9 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         String sDataSource = getIntent().getStringExtra(MainActivity.EXTRA_DATASOURCE);
         String sRecordHash = getIntent().getStringExtra(MainActivity.EXTRA_EVENT_RECORD);
         if (sDataSource == null || sRecordHash == null) return;
-        CRxDataSource aDs = CRxDataSourceManager.shared.m_dictDataSources.get(sDataSource);
-        if (aDs == null) return;
-        rec = aDs.recordWithHash(sRecordHash);
+        m_aDataSource = CRxDataSourceManager.shared.m_dictDataSources.get(sDataSource);
+        if (m_aDataSource == null) return;
+        rec = m_aDataSource.recordWithHash(sRecordHash);
         if (rec == null) return;
 
         m_lbTitle = (TextView)findViewById(R.id.title);
@@ -257,9 +258,11 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 m_lbNote.setText(sNote);
                 m_lbNote.setVisibility(View.VISIBLE);
             }
-            m_chkShowNotifications.setVisibility(View.VISIBLE);
-            m_lbNotificationExplanation.setVisibility(View.VISIBLE);
-            m_chkShowNotifications.setChecked(rec.m_bMarkFavorite);
+            if (m_aDataSource.m_bLocalNotificationsForEvents) {
+                m_chkShowNotifications.setVisibility(View.VISIBLE);
+                m_lbNotificationExplanation.setVisibility(View.VISIBLE);
+                m_chkShowNotifications.setChecked(rec.m_bMarkFavorite);
+            }
         }
         else {
             m_lbOpeningHoursTitle.setVisibility(View.GONE);
@@ -473,21 +476,23 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 }
             });
         }
-        m_btnReportMistake.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("message/rfc822");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + " - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this) + " - problem (Android)");
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
-                try {
-                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        if (CRxAppDefinition.shared.recordUpdateEmail() != null) {
+            m_btnReportMistake.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.recordUpdateEmail()});
+                    intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + " - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this) + " - problem (Android)");
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
+                    try {
+                        startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         if (m_chkShowNotifications.getVisibility() != View.GONE) {
             m_chkShowNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

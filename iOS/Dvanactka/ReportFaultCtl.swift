@@ -151,7 +151,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         }
         sMessageBody += "\n\n";
         
-        guard let email = AppDefinition.shared.m_sReportFaultEmail
+        guard let email = CRxAppDefinition.shared.m_sReportFaultEmail
             else { return; }
         
         let mailer = MFMailComposeViewController();
@@ -159,7 +159,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         mailer.mailComposeDelegate = self;
         
         mailer.setToRecipients([email]);
-        if let emailCc = AppDefinition.shared.m_sReportFaultEmailCc {
+        if let emailCc = CRxAppDefinition.shared.m_sReportFaultEmailCc {
             mailer.setCcRecipients([emailCc]);
         }
         mailer.setSubject("Hlášení závady");

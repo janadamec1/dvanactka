@@ -417,11 +417,13 @@ class CRxEventRecord
     String infoLinkUrl() {
         if (m_sInfoLink != null) {
             String link = m_sInfoLink;
-            if (m_sInfoLink.contains("?"))
-                link += "&";
-            else
-                link += "?";
-            link += "utm_source=dvanactka.info&utm_medium=app";
+            if (CRxAppDefinition.shared.m_sOutgoingLinkParameter != null) {
+                if (m_sInfoLink.contains("?"))
+                    link += "&";
+                else
+                    link += "?";
+                link += CRxAppDefinition.shared.m_sOutgoingLinkParameter;
+            }
             return link;
         }
         return null;

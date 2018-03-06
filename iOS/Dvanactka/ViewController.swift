@@ -118,14 +118,14 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return AppDefinition.shared.m_arrDataSourceOrder.count;
+        return CRxAppDefinition.shared.m_arrDataSourceOrder.count;
     }
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellDS", for: indexPath) as! CRxDSCell
         
-        if let ds = CRxDataSourceManager.shared.m_dictDataSources[AppDefinition.shared.m_arrDataSourceOrder[indexPath.row]] {
+        if let ds = CRxDataSourceManager.shared.m_dictDataSources[CRxAppDefinition.shared.m_arrDataSourceOrder[indexPath.row]] {
             var sTitle = ds.m_sTitle;
             if let shortTitle = ds.m_sShortTitle {
                 sTitle = shortTitle;
@@ -244,7 +244,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     //---------------------------------------------------------------------------
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        m_sDsSelected = AppDefinition.shared.m_arrDataSourceOrder[indexPath.row];
+        m_sDsSelected = CRxAppDefinition.shared.m_arrDataSourceOrder[indexPath.row];
         
         // hide unread badge
         if let cell = collectionView.cellForItem(at: indexPath) as? CRxDSCell,

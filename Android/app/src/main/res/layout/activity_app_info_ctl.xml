@@ -33,7 +33,7 @@
         android:id="@+id/copyright"/>
 
     <Button
-        android:text="info@dvanactka.info"
+        android:text="info@email.cz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/copyright"

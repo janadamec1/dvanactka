@@ -153,7 +153,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 if let sCustomButtonText = ds.m_sListingFooterCustomButtonText {
                     m_btnFooterButton.setTitle(sCustomButtonText, for: .normal);
                 }
-                else if let email = AppDefinition.shared.recordUpdateEmail() {
+                else if let email = CRxAppDefinition.shared.recordUpdateEmail() {
                     m_btnFooterButton.setTitle(email, for: .normal);
                 }
             }
@@ -1018,14 +1018,20 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         }
         else if MFMailComposeViewController.canSendMail() {
 
-            guard let email = AppDefinition.shared.recordUpdateEmail() else { return; }
+            guard let email = CRxAppDefinition.shared.recordUpdateEmail() else { return; }
             
             let mailer = MFMailComposeViewController();
             if mailer == nil { return; }
             mailer.mailComposeDelegate = self;
             
             mailer.setToRecipients([email]);
-            mailer.setSubject("Aplikace Dvanáctka - přidat záznam");
+            
+            var sAppName = "CityApp";
+            if let appTitle = CRxAppDefinition.shared.m_sTitle {
+                sAppName = appTitle;
+            }
+            mailer.setSubject("Aplikace " + sAppName + " - přidat záznam");
+            
             var sTitle = ds.m_sTitle;
             if let sParentFilter = m_sParentFilter {
                 sTitle = sParentFilter;

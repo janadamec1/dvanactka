@@ -387,7 +387,7 @@ class CRxEventRecord: NSObject {
     func infoLinkUrl() -> URL? {
         if let link = m_sInfoLink {
             var sParameter: String = "";
-            if let linkUtm = AppDefinition.shared.m_sOutgoinglinkParameter {
+            if let linkUtm = CRxAppDefinition.shared.m_sOutgoingLinkParameter {
                 if link.contains("?") {
                     sParameter = "&";
                 }

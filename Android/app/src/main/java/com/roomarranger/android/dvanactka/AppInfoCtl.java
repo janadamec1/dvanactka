@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AppInfoCtl extends Activity {
@@ -31,20 +32,33 @@ public class AppInfoCtl extends Activity {
             }
         });
 
+        if (CRxAppDefinition.shared.m_sCopyright != null) {
+            TextView lbCopyright = (TextView)findViewById(R.id.copyright);
+            lbCopyright.setText(CRxAppDefinition.shared.m_sCopyright);
+        }
+
         Button btnEmail = (Button)findViewById(R.id.btnEmail);
-        btnEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("message/rfc822");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@dvanactka.info"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace Dvanáctka (Android)");
-                try {
-                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(AppInfoCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        if (CRxAppDefinition.shared.m_sContactEmail == null)
+            btnEmail.setVisibility(View.GONE);
+        else
+            btnEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.m_sContactEmail});
+
+                    String sAppName = "CityApp";
+                    if (CRxAppDefinition.shared.m_sTitle != null)
+                        sAppName = CRxAppDefinition.shared.m_sTitle;
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace " + sAppName + " (Android)");
+
+                    try {
+                        startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(AppInfoCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
     }
 }

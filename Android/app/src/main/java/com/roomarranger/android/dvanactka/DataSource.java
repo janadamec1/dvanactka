@@ -74,6 +74,7 @@ class CRxDataSource {
     String m_sListingFooterCustomButtonText = null;         // use custom listing footer button text
     String m_sListingFooterCustomButtonTargetUrl = null;    // when null, apps sends email
     boolean m_bListingShowEventAddress = true;              // show event address in listing
+    boolean m_bLocalNotificationsForEvents = false;         // send local notifications for events in records (dsWaste)
 
     CRxDataSource(String id, String title, String icon, int type, int backgroundColor) {
         super();
@@ -84,6 +85,46 @@ class CRxDataSource {
         m_iBackgroundColor = backgroundColor;
         m_bMapEnabled = (type == DATATYPE_places);
         m_bListingFooterVisible = (type == DATATYPE_places);
+    }
+
+    //---------------------------------------------------------------------------
+    static CRxDataSource fromAppDefJson(JSONObject json) {
+        // required values
+        String sId, sTitle, sIcon, sType;
+        int eType, iBackgroundColor;
+        try {
+            sId = json.getString("id");
+            sTitle = CRxAppDefinition.shared.loadLocalizedString("title", json);
+            sIcon = CRxAppDefinition.shared.loadLocalizedString("icon", json);
+            sType = CRxAppDefinition.shared.loadLocalizedString("type", json);
+            iBackgroundColor = CRxAppDefinition.loadColor("backgroundColor", json, 0xCCCCCC);
+        } catch (JSONException e) {
+            return null;
+        }
+        if (sTitle == null || sIcon == null || sType == null) return null;
+
+        if (sType.equals("news")) eType = DATATYPE_news;
+        else if (sType.equals("events")) eType = DATATYPE_events;
+        else if (sType.equals("places")) eType = DATATYPE_places;
+        else return null;
+
+        CRxDataSource pThis = new CRxDataSource(sId, sTitle, sIcon, eType, iBackgroundColor);
+        
+        // optional values
+        pThis.m_sShortTitle = CRxAppDefinition.shared.loadLocalizedString("shortTitle", json);
+        pThis.m_sServerDataFile = CRxAppDefinition.shared.loadLocalizedString("serverDataFile", json);
+        pThis.m_sOfflineDataFile = CRxAppDefinition.shared.loadLocalizedString("offlineDataFile", json);
+        pThis.m_nRefreshFreqHours = json.optInt("refreshFreqHours", pThis.m_nRefreshFreqHours);
+        pThis.m_bFilterable = json.optBoolean("filterable", pThis.m_bFilterable);
+        pThis.m_bFilterAsParentView = json.optBoolean("filterAsParentView", pThis.m_bFilterAsParentView);
+        pThis.m_bMapEnabled = json.optBoolean("mapEnabled", pThis.m_bMapEnabled);
+        pThis.m_bListingShowEventAddress = json.optBoolean("listingShowEventAddress", pThis.m_bListingShowEventAddress);
+        pThis.m_bListingSearchBarVisibleAtStart = json.optBoolean("listingSearchBarVisibleAtStart", pThis.m_bListingSearchBarVisibleAtStart);
+        pThis.m_sListingFooterCustomLabelText = CRxAppDefinition.shared.loadLocalizedString("listingFooterCustomLabelText", json);
+        pThis.m_sListingFooterCustomButtonText = CRxAppDefinition.shared.loadLocalizedString("listingFooterCustomButtonText", json);
+        pThis.m_sListingFooterCustomButtonTargetUrl = CRxAppDefinition.shared.loadLocalizedString("listingFooterCustomButtonTargetUrl", json);
+        pThis.m_bLocalNotificationsForEvents = json.optBoolean("localNotificationsForEvents", pThis.m_bLocalNotificationsForEvents);
+        return pThis;
     }
 
     //--------------------------------------------------------------------------
@@ -247,21 +288,8 @@ class CRxDataSourceManager {
 
     HashMap<String, CRxDataSource> m_dictDataSources = new HashMap<>(); // dictionary on data sources, id -> source
 
-    static final String dsRadNews = "dsRadNews";
-    static final String dsRadEvents = "dsRadEvents";
-    static final String dsCityOffice = "dsCityOffice";
-    static final String dsRadDeska = "dsRadDeska";
-    static final String dsBiografProgram = "dsBiografProgram";
-    static final String dsCooltour = "dsCooltour";
-    static final String dsSosContacts = "dsSosContacts";
-    static final String dsWaste = "dsWaste";
-    static final String dsShops = "dsShops";
-    static final String dsWork = "dsWork";
-    static final String dsSpolky = "dsSpolky";
-    static final String dsSpolkyList = "dsSpolkyList";
     static final String dsReportFault = "dsReportFault";
     static final String dsGame = "dsGame";
-    static final String dsTraffic = "dsTraffic";
     static final String dsSavedNews = "dsSavedNews";
 
     private int m_nNetworkIndicatorUsageCount = 0;
@@ -275,101 +303,11 @@ class CRxDataSourceManager {
 
     private CRxDataSourceManager() {} // "private" prevents others from using the default '()' initializer for this class (so being singleton)
 
-    void defineDatasources(Context ctx) {
+    void init(Context ctx) {
         Resources res = ctx.getResources();
         m_assetMan = res.getAssets();
         m_urlDocumentsDir = ctx.getDir("json", Context.MODE_PRIVATE);
         m_aSavedNews.m_sTitle = res.getString(R.string.saved_news);
-
-        m_dictDataSources.put(CRxDataSourceManager.dsRadNews, new CRxDataSource(CRxDataSourceManager.dsRadNews, res.getString(R.string.news), "ds_news", CRxDataSource.DATATYPE_news, 0x3f4d88));
-        m_dictDataSources.put(CRxDataSourceManager.dsRadEvents, new CRxDataSource(CRxDataSourceManager.dsRadEvents, res.getString(R.string.events), "ds_events", CRxDataSource.DATATYPE_events, 0xdb552d));
-        m_dictDataSources.put(CRxDataSourceManager.dsRadDeska, new CRxDataSource(CRxDataSourceManager.dsRadDeska, res.getString(R.string.official_board), "ds_billboard", CRxDataSource.DATATYPE_news, 0x3f4d88));
-        m_dictDataSources.put(CRxDataSourceManager.dsCityOffice, new CRxDataSource(CRxDataSourceManager.dsCityOffice, res.getString(R.string.city_office), "ds_parliament", CRxDataSource.DATATYPE_places, 0x3f4d88));
-        m_dictDataSources.put(CRxDataSourceManager.dsSpolky, new CRxDataSource(CRxDataSourceManager.dsSpolky, res.getString(R.string.indepenedent), "ds_magazine", CRxDataSource.DATATYPE_news, 0x08739f));
-        m_dictDataSources.put(CRxDataSourceManager.dsSpolkyList, new CRxDataSource(CRxDataSourceManager.dsSpolkyList, res.getString(R.string.associations), "ds_usergroups", CRxDataSource.DATATYPE_places, 0x08739f));
-        m_dictDataSources.put(CRxDataSourceManager.dsBiografProgram, new CRxDataSource(CRxDataSourceManager.dsBiografProgram, "Modřanský biograf", "ds_biograf", CRxDataSource.DATATYPE_events, 0xdb552d));
-        m_dictDataSources.put(CRxDataSourceManager.dsCooltour, new CRxDataSource(CRxDataSourceManager.dsCooltour, res.getString(R.string.trips), "ds_landmarks", CRxDataSource.DATATYPE_places, 0x008000));
-        m_dictDataSources.put(CRxDataSourceManager.dsWaste, new CRxDataSource(CRxDataSourceManager.dsWaste, res.getString(R.string.waste), "ds_waste", CRxDataSource.DATATYPE_places, 0x008000));
-        m_dictDataSources.put(CRxDataSourceManager.dsSosContacts, new CRxDataSource(CRxDataSourceManager.dsSosContacts, res.getString(R.string.help), "ds_help", CRxDataSource.DATATYPE_places, 0x08739f));
-        m_dictDataSources.put(CRxDataSourceManager.dsReportFault, new CRxDataSource(CRxDataSourceManager.dsReportFault, res.getString(R.string.report_fault), "ds_reportfault", CRxDataSource.DATATYPE_places, 0xb11a41));
-        m_dictDataSources.put(CRxDataSourceManager.dsGame, new CRxDataSource(CRxDataSourceManager.dsGame, res.getString(R.string.game), "ds_game", CRxDataSource.DATATYPE_places, 0x603cbb));
-        m_dictDataSources.put(CRxDataSourceManager.dsShops, new CRxDataSource(CRxDataSourceManager.dsShops, res.getString(R.string.shops), "ds_shop", CRxDataSource.DATATYPE_places, 0x0ab2b2));
-        m_dictDataSources.put(CRxDataSourceManager.dsWork, new CRxDataSource(CRxDataSourceManager.dsWork, res.getString(R.string.work), "ds_work", CRxDataSource.DATATYPE_places, 0x0ab2b2));
-        m_dictDataSources.put(CRxDataSourceManager.dsTraffic, new CRxDataSource(CRxDataSourceManager.dsTraffic, res.getString(R.string.traffix), "ds_roadblock", CRxDataSource.DATATYPE_places, 0xb11a41));
-
-        // additional parameters
-        CRxDataSource ds = m_dictDataSources.get(CRxDataSourceManager.dsRadNews);
-        ds.m_sServerDataFile = "dyn_radAktual.json";
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsRadDeska);
-        ds.m_sServerDataFile = "dyn_radDeska.json";
-        ds.m_bFilterable = true;
-        ds.m_bListingSearchBarVisibleAtStart = true;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsRadEvents);
-        ds.m_sServerDataFile = "dyn_events.php";
-        ds.m_bFilterable = true;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolky);
-        ds.m_sServerDataFile = "dyn_spolky.php";
-        ds.m_bFilterable = true;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsSpolkyList);
-        ds.m_nRefreshFreqHours = 48;
-        ds.m_sServerDataFile = "spolkyList.json";
-        ds.m_sOfflineDataFile = "test_files/spolkyList.json";
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsBiografProgram);
-        ds.m_nRefreshFreqHours = 48;
-        ds.m_sShortTitle = "Biograf";
-        ds.m_sServerDataFile = "dyn_biograf.json";
-        ds.m_bListingShowEventAddress = false;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsCooltour);
-        ds.m_nRefreshFreqHours = 48;
-        ds.m_sServerDataFile = "p12kultpamatky.json";
-        ds.m_sOfflineDataFile = "test_files/p12kultpamatky.json";
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsSosContacts);
-        ds.m_nRefreshFreqHours = 48;
-        ds.m_sServerDataFile = "sos.json";
-        ds.m_sOfflineDataFile = "test_files/sos.json";
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsWaste);
-        ds.m_sServerDataFile = "dyn_waste.json";
-        ds.m_sOfflineDataFile = "test_files/dyn_waste.json";
-        ds.m_bFilterAsParentView = true;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsReportFault);
-        ds.m_nRefreshFreqHours = 1000;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsGame);
-        ds.m_nRefreshFreqHours = 1000;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsShops);
-        ds.m_nRefreshFreqHours = 48;
-        ds.m_sServerDataFile = "p12shops.json";
-        ds.m_sOfflineDataFile = "test_files/p12shops.json";
-        ds.m_bFilterAsParentView = true;
-        ds.m_bListingSearchBarVisibleAtStart = true;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsTraffic);
-        ds.m_sServerDataFile = "dyn_doprava.json";
-        ds.m_nRefreshFreqHours = 4;
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsWork);
-        ds.m_sServerDataFile = "dyn_kdejeprace.json";
-        ds.m_sListingFooterCustomLabelText = ctx.getString(R.string.add_new_job_offer);
-        ds.m_sListingFooterCustomButtonText = "KdeJePrace.cz";
-        ds.m_sListingFooterCustomButtonTargetUrl = "https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app";
-
-        ds = m_dictDataSources.get(CRxDataSourceManager.dsCityOffice);
-        ds.m_nRefreshFreqHours = 100;
-        ds.m_sServerDataFile = "dyn_cityOffice.json";
-        ds.m_sOfflineDataFile = "test_files/dyn_cityOffice.json";
-        ds.m_bFilterAsParentView = true;
-        ds.m_bMapEnabled = false;
-        ds.m_bListingSearchBarVisibleAtStart = true;
     }
 
     //--------------------------------------------------------------------------
@@ -621,15 +559,13 @@ class CRxDataSourceManager {
                 if (url.startsWith("http")) {
                     urlDownload = new URL(url);
                 }
-                else {
-                    urlDownload = new URL("https://dvanactka.info/own/p12/" + url);
+                else if (CRxAppDefinition.shared.m_sServerDataBaseUrl != null) {
+                    urlDownload = new URL(CRxAppDefinition.shared.m_sServerDataBaseUrl + url);
                 }
             }
             else if (aDS.m_sOfflineDataFile != null) {
                 urlDownload = new URL("file:///android_asset/" + aDS.m_sOfflineDataFile);
             }
-            else
-                return;
         }
         catch (Exception e) {
             Log.e("JSON", "refreshStdJsonDataSource exception: " + e.getMessage());
@@ -674,7 +610,7 @@ class CRxDataSourceManager {
                         if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, null);
                         if (delegate != null) delegate.dataSourceRefreshEnded(aDS.m_sId, null);     // to refresh unread count badge
 
-                        if (aDS.m_sId.equals(CRxDataSourceManager.dsWaste))
+                        if (aDS.m_bLocalNotificationsForEvents)
                             MainActivity.resetAllNotifications();
                     }
                 });

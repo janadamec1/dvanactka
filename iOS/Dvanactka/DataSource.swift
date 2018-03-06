@@ -68,33 +68,33 @@ class CRxDataSource : NSObject {
     init?(fromAppDefJson json: [String: AnyObject]) {
         // required values
         if let val = json["id"] as? String { m_sId = val; } else { return nil; }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "title", from: json) { m_sTitle = val; } else { return nil; }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "icon", from: json) { m_sIcon = val; } else { return nil; }
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "title", from: json) { m_sTitle = val; } else { return nil; }
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "icon", from: json) { m_sIcon = val; } else { return nil; }
         if let sType = json["type"] as? String,
             let eType = DataType(rawValue: sType) { m_eType = eType;} else { return nil; }
         
-        if let cl = AppDefinition.loadColor(key: "backgroundColor", from: json) { m_iBackgroundColor = cl; } else { m_iBackgroundColor = 0xCCCCCC; }
+        if let cl = CRxAppDefinition.loadColor(key: "backgroundColor", from: json) { m_iBackgroundColor = cl; } else { m_iBackgroundColor = 0xCCCCCC; }
 
         m_bMapEnabled = (m_eType == .places);
         m_bListingFooterVisible = (m_eType == .places);
 
         // optional values
-        if let val = AppDefinition.shared.loadLocalizedString(key: "shortTitle", from: json) { m_sShortTitle = val; }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "serverDataFile", from: json) { m_sServerDataFile = val; }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "offlineDataFile", from: json) { m_sOfflineDataFile = val; }
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "shortTitle", from: json) { m_sShortTitle = val; }
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "serverDataFile", from: json) { m_sServerDataFile = val; }
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "offlineDataFile", from: json) { m_sOfflineDataFile = val; }
         if let val = json["refreshFreqHours"] as? Int { m_nRefreshFreqHours = val; }
         if let val = json["filterable"] as? Bool { m_bFilterable = val; }
         if let val = json["filterAsParentView"] as? Bool { m_bFilterAsParentView = val; }
         if let val = json["mapEnabled"] as? Bool { m_bMapEnabled = val; }
         if let val = json["listingShowEventAddress"] as? Bool { m_bListingShowEventAddress = val; }
         if let val = json["listingSearchBarVisibleAtStart"] as? Bool { m_bListingSearchBarVisibleAtStart = val; }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomLabelText", from: json) {
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "listingFooterCustomLabelText", from: json) {
             m_sListingFooterCustomLabelText = val;
         }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonText", from: json) {
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonText", from: json) {
             m_sListingFooterCustomButtonText = val;
         }
-        if let val = AppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonTargetUrl", from: json) {
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "listingFooterCustomButtonTargetUrl", from: json) {
             m_sListingFooterCustomButtonTargetUrl = val;
         }
         if let val = json["localNotificationsForEvents"] as? Bool { m_bLocalNotificationsForEvents = val; }
@@ -462,18 +462,12 @@ class CRxDataSourceManager : NSObject {
             if (url.hasPrefix("http")) {
                 urlDownload = URL(string: url);
             }
-            else if let serverUrl = AppDefinition.shared.m_sServerDataBaseUrl {
+            else if let serverUrl = CRxAppDefinition.shared.m_sServerDataBaseUrl {
                 urlDownload = URL(string: serverUrl + url);
-            }
-            else {
-                return;
             }
         }
         else if let sOfflineFile = aDS.m_sOfflineDataFile {
             urlDownload = Bundle.main.url(forResource: sOfflineFile, withExtension: "");
-        }
-        else {
-            return;
         }
         
         guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: "Cannot resolve URL"); return; }

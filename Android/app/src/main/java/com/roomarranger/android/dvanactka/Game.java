@@ -268,7 +268,7 @@ class CRxGame {
             aDS.m_sUuid = UUID.randomUUID().toString();
             CRxDataSourceManager.shared.save(aDS);
         }
-        if (aDS.m_sUuid != null) {
+        if (aDS.m_sUuid != null && CRxAppDefinition.shared.m_sServerDataBaseUrl != null) {
             String sScore = String.format(Locale.US, "%d", m_iPoints);
             // calc checksum
             int iChecksum = 0;
@@ -277,7 +277,7 @@ class CRxGame {
 
             String sParams = String.format(Locale.US, "?id=%s&s=%s&c=%d", aDS.m_sUuid, sScore, iChecksum);
             try {
-                final URL url = new URL("https://dvanactka.info/own/p12/game_putscore.php" + sParams);
+                final URL url = new URL(CRxAppDefinition.shared.m_sServerDataBaseUrl + "game_putscore.php" + sParams);
                 Thread thread = new Thread(new Runnable(){
                     @Override
                     public void run(){

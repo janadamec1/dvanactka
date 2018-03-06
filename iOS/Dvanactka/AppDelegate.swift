@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if let urlAppDef = Bundle.main.url(forResource: "appDefinition.json", withExtension: "") {
-            AppDefinition.shared.loadFromJson(file: urlAppDef);
+            CRxAppDefinition.shared.loadFromJson(file: urlAppDef);
             let dsm = CRxDataSourceManager.shared;
             dsm.loadData();
             dsm.refreshAllDataSources();

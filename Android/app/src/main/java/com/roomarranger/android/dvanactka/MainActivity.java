@@ -34,10 +34,10 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class MainActivity extends Activity implements CRxDataSourceRefreshDelegate, ActivityCompat.OnRequestPermissionsResultCallback
 {
-    ArrayList<String> m_arrSources = new ArrayList<>();    // data source ids in order they should appear in the collection
     static boolean s_bInited = false;
     static Date s_dateLastRefreshed = null;
     static private Tracker s_GlobalTracker = null;
@@ -59,8 +59,15 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         // from AppDelegate.swift
         s_appContext = ctx.getApplicationContext();
         if (s_bInited) return;
+
         CRxDataSourceManager dsm = CRxDataSourceManager.shared;
-        dsm.defineDatasources(ctx);
+        dsm.init(ctx);
+
+        try {
+            CRxAppDefinition.shared.loadFromJSONStream(ctx.getResources().getAssets().open("appDefinition.json"));
+        }
+        catch (Exception e) { e.printStackTrace(); return; }
+
         dsm.loadData();
         //dsm.refreshAllDataSources(false); // is called in onResume
         //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
@@ -82,35 +89,20 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         s_GlobalTracker = analytics.newTracker(R.xml.global_tracker);
 
         // from ViewController.swift
-        m_arrSources.add(CRxDataSourceManager.dsRadNews);
-        m_arrSources.add(CRxDataSourceManager.dsSpolky);
-        m_arrSources.add(CRxDataSourceManager.dsRadDeska);
-        m_arrSources.add(CRxDataSourceManager.dsRadEvents);
-        m_arrSources.add(CRxDataSourceManager.dsBiografProgram);
-        m_arrSources.add(CRxDataSourceManager.dsSpolkyList);
-        m_arrSources.add(CRxDataSourceManager.dsShops);
-        m_arrSources.add(CRxDataSourceManager.dsWork);
-        m_arrSources.add(CRxDataSourceManager.dsTraffic);
-        m_arrSources.add(CRxDataSourceManager.dsWaste);
-        m_arrSources.add(CRxDataSourceManager.dsReportFault);
-        m_arrSources.add(CRxDataSourceManager.dsCooltour);
-        m_arrSources.add(CRxDataSourceManager.dsCityOffice);
-        m_arrSources.add(CRxDataSourceManager.dsSosContacts);
-        m_arrSources.add(CRxDataSourceManager.dsGame);
         CRxDataSourceManager.shared.delegate = this;
 
         /*try {
             getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorActionBarBkg)));
         } catch (Exception e) {}*/
 
-        m_adapter = new ImageAdapter(this, m_arrSources);
+        m_adapter = new ImageAdapter(this, CRxAppDefinition.shared.m_arrDataSourceOrder);
         GridView gridview = (GridView)findViewById(R.id.gridview);
         gridview.setAdapter(m_adapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                String sDsSelected = m_arrSources.get(position);
+                String sDsSelected = CRxAppDefinition.shared.m_arrDataSourceOrder.get(position);
                 CRxDataSource aDS = CRxDataSourceManager.shared.m_dictDataSources.get(sDsSelected);
 
                 // hide unread badge
@@ -335,7 +327,8 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, iId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
+        if (alarmManager != null)
+            alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
     }
 
     //---------------------------------------------------------------------------
@@ -362,36 +355,39 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 
         // go through all favorite locations and set notifications to future intervals
         Date dateNow = Calendar.getInstance().getTime();
+        int iNotificationId = 0;
 
         CRxDataSourceManager manager = CRxDataSourceManager.shared;
-        CRxDataSource ds = manager.m_dictDataSources.get(CRxDataSourceManager.dsWaste);
-        if (ds == null) return;
-
-        int iNotificationId = 0;
-        for (CRxEventRecord rec : ds.m_arrItems) {
-            if (!manager.m_setPlacesNotified.contains(rec.m_sTitle)) {
+        for (Map.Entry<String, CRxDataSource> itemIt: manager.m_dictDataSources.entrySet()) {
+            CRxDataSource ds = itemIt.getValue();
+            if (ds == null || !ds.m_bLocalNotificationsForEvents)
                 continue;
-            }
-            Log.v("DVANACTKA", "Scheduling!");
 
-            if (rec.m_arrEvents == null) {
-                continue;
-            }
-            for (CRxEventInterval aEvent : rec.m_arrEvents) {
-                if (aEvent.m_dateStart.after(dateNow)) {
-                    scheduleNotification(ctx, String.format(ctx.getString(R.string.dumpster_at_s_arrived_s), rec.m_sTitle, aEvent.m_sType),
-                            aEvent.m_dateStart, iNotificationId);
-                    iNotificationId++;
+            for (CRxEventRecord rec : ds.m_arrItems) {
+                if (!manager.m_setPlacesNotified.contains(rec.m_sTitle)) {
+                    continue;
+                }
+                Log.v("DVANACTKA", "Scheduling!");
 
-                    // also add a notification one day earlier
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(aEvent.m_dateStart);
-                    cal.add(Calendar.DAY_OF_MONTH, -1);
-                    Date dayBefore = cal.getTime();
-                    if (dayBefore.after(dateNow)) {
-                        scheduleNotification(ctx, String.format(ctx.getString(R.string.dumpster_at_s_tomorrow_s), rec.m_sTitle, aEvent.m_sType),
-                                dayBefore, iNotificationId);
+                if (rec.m_arrEvents == null) {
+                    continue;
+                }
+                for (CRxEventInterval aEvent : rec.m_arrEvents) {
+                    if (aEvent.m_dateStart.after(dateNow)) {
+                        scheduleNotification(ctx, String.format(ctx.getString(R.string.dumpster_at_s_arrived_s), rec.m_sTitle, aEvent.m_sType),
+                                aEvent.m_dateStart, iNotificationId);
                         iNotificationId++;
+
+                        // also add a notification one day earlier
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(aEvent.m_dateStart);
+                        cal.add(Calendar.DAY_OF_MONTH, -1);
+                        Date dayBefore = cal.getTime();
+                        if (dayBefore.after(dateNow)) {
+                            scheduleNotification(ctx, String.format(ctx.getString(R.string.dumpster_at_s_tomorrow_s), rec.m_sTitle, aEvent.m_sType),
+                                    dayBefore, iNotificationId);
+                            iNotificationId++;
+                        }
                     }
                 }
             }

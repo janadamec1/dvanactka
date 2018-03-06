@@ -449,7 +449,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             guard let rec = m_aRecord
                 else { return; }
             
-            guard let email = AppDefinition.shared.recordUpdateEmail()
+            guard let email = CRxAppDefinition.shared.recordUpdateEmail()
                 else { return; }
             
             let mailer = MFMailComposeViewController();
