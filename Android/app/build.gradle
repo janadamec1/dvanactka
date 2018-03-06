@@ -36,3 +36,15 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+task copyAppDefinitionFile(type: Copy) {
+    from '../../appDefinition.json'
+    into 'src/main/assets'
+}
+task copyOfflineJsonFiles(type: Copy) {
+    from '../../test_files'
+    into 'src/main/assets/test_files'
+}
+
+preBuild.dependsOn(copyAppDefinitionFile)
+preBuild.dependsOn(copyOfflineJsonFiles)

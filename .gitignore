@@ -1,3 +1,6 @@
+# copies of shared files in Android projects
+Android/app/src/main/assets
+
 #ignore thumbnails created by windows
 Thumbs.db
 
