@@ -174,7 +174,7 @@ class CRxEventInterval
 //---------------------------------------------------------------------------
 class CRxCategory {
     static final String informace = "informace", lekarna = "lekarna", prvniPomoc = "prvniPomoc", policie = "policie", havarie = "havarie", wc = "wc";
-    static final String pamatka = "pamatka", pamatnyStrom = "pamatnyStrom", vyznamnyStrom = "vyznamnyStrom", zajimavost = "zajimavost";
+    static final String pamatka = "pamatka", pamatnyStrom = "pamatnyStrom", vyznamnyStrom = "vyznamnyStrom", zajimavost = "zajimavost", ohniste = "ohniste";
     static final String remeslnik = "remeslnik", restaurace = "restaurace", obchod = "obchod";
     static final String children = "children", sport = "sport", associations = "associations";
     static final String waste = "waste", wasteElectro = "wasteElectro", wasteTextile = "wasteTextile", wasteGeneral = "wasteGeneral", wasteSeparated = "wasteSeparated";
@@ -195,6 +195,7 @@ class CRxCategory {
             case pamatnyStrom: return res.getString(R.string.c_memorial_trees);
             case vyznamnyStrom: return res.getString(R.string.c_significant_trees);
             case zajimavost: return res.getString(R.string.c_points_of_interest);
+            case ohniste: return res.getString(R.string.c_campfire);
             case remeslnik: return res.getString(R.string.c_artisans);
             case restaurace: return res.getString(R.string.c_restaurants);
             case obchod: return res.getString(R.string.c_shops);
@@ -226,6 +227,7 @@ class CRxCategory {
             case pamatnyStrom: return R.drawable.c_tree;
             case vyznamnyStrom: return R.drawable.c_tree;
             case zajimavost: return R.drawable.c_trekking;
+            case ohniste: return R.drawable.c_campfire;
             case remeslnik: return R.drawable.c_work;
             case restaurace: return R.drawable.c_restaurant;
             case obchod: return R.drawable.c_shop;

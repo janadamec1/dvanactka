@@ -74,6 +74,8 @@
 		4D52699D1DF49FE4008FA122 /* c_sport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5269971DF49FE4008FA122 /* c_sport@2x.png */; };
 		4D52699E1DF49FE4008FA122 /* c_usergroups.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5269981DF49FE4008FA122 /* c_usergroups.png */; };
 		4D52699F1DF49FE4008FA122 /* c_usergroups@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5269991DF49FE4008FA122 /* c_usergroups@2x.png */; };
+		4D573BFD20821AEF00661C71 /* c_campfire.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D573BFB20821AEE00661C71 /* c_campfire.png */; };
+		4D573BFE20821AEF00661C71 /* c_campfire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D573BFC20821AEF00661C71 /* c_campfire@2x.png */; };
 		4D5997AD1DE0935100C4BE86 /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5997AA1DE0935100C4BE86 /* photo.png */; };
 		4D5997AE1DE0935100C4BE86 /* photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5997AB1DE0935100C4BE86 /* photo@2x.png */; };
 		4D5A802A1DD0ADF0006723B5 /* c_electrical.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A80261DD0ADF0006723B5 /* c_electrical.png */; };
@@ -202,6 +204,8 @@
 		4D5269971DF49FE4008FA122 /* c_sport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_sport@2x.png"; path = "img/c_sport@2x.png"; sourceTree = "<group>"; };
 		4D5269981DF49FE4008FA122 /* c_usergroups.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_usergroups.png; path = img/c_usergroups.png; sourceTree = "<group>"; };
 		4D5269991DF49FE4008FA122 /* c_usergroups@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_usergroups@2x.png"; path = "img/c_usergroups@2x.png"; sourceTree = "<group>"; };
+		4D573BFB20821AEE00661C71 /* c_campfire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_campfire.png; path = img/c_campfire.png; sourceTree = "<group>"; };
+		4D573BFC20821AEF00661C71 /* c_campfire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_campfire@2x.png"; path = "img/c_campfire@2x.png"; sourceTree = "<group>"; };
 		4D5997AA1DE0935100C4BE86 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = photo.png; path = img/photo.png; sourceTree = "<group>"; };
 		4D5997AB1DE0935100C4BE86 /* photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "photo@2x.png"; path = "img/photo@2x.png"; sourceTree = "<group>"; };
 		4D5A80261DD0ADF0006723B5 /* c_electrical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_electrical.png; path = img/c_electrical.png; sourceTree = "<group>"; };
@@ -289,6 +293,8 @@
 				4D5269901DF36B7A008FA122 /* bulleted_list@3x.png */,
 				4D73FC7D1E12DB54006D9D15 /* c_accident.png */,
 				4D73FC7E1E12DB54006D9D15 /* c_accident@2x.png */,
+				4D573BFB20821AEE00661C71 /* c_campfire.png */,
+				4D573BFC20821AEF00661C71 /* c_campfire@2x.png */,
 				4D5A80261DD0ADF0006723B5 /* c_electrical.png */,
 				4D5A80271DD0ADF0006723B5 /* c_electrical@2x.png */,
 				4D4264071DD08D62008ED01F /* c_firstaid.png */,
@@ -524,6 +530,7 @@
 				4D4264271DD08D62008ED01F /* c_shop.png in Resources */,
 				4D6BC6EB1DE4B416003F241C /* p12-logo.png in Resources */,
 				4D52699C1DF49FE4008FA122 /* c_sport.png in Resources */,
+				4D573BFE20821AEF00661C71 /* c_campfire@2x.png in Resources */,
 				4D464C4B1DE2F525003EC137 /* star@3x.png in Resources */,
 				4DA2C9001DC8EE8400E28A0E /* Localizable.strings in Resources */,
 				4D464C481DE2F525003EC137 /* filter@2x.png in Resources */,
@@ -598,6 +605,7 @@
 				4D9F14B71DD11A3E00841AD8 /* ds_biograf.png in Resources */,
 				4D0469D61DFA0DF300E7B760 /* ds_work@2x.png in Resources */,
 				4D73FC851E12DB54006D9D15 /* c_roadblock@2x.png in Resources */,
+				4D573BFD20821AEF00661C71 /* c_campfire.png in Resources */,
 				4D66771F1DCBC23E004876FA /* goldstar25dis@2x.png in Resources */,
 				4D5A802C1DD0ADF0006723B5 /* c_textile.png in Resources */,
 				4D5997AE1DE0935100C4BE86 /* photo@2x.png in Resources */,

@@ -29,8 +29,8 @@ foreach ($nodes as $i => $node) {
 		}
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
-		
-		$nodeDate = firstItem($xpath->query("span[1]", $node));
+
+		$nodeDate = firstItem($xpath->query("span[2]", $node));
 		if ($nodeDate != NULL) {
 			//echo $nodeDate->nodeValue, "\n";
 			$arrParts = explode(" ", rtrim($nodeDate->nodeValue, ")"));
@@ -47,7 +47,7 @@ foreach ($nodes as $i => $node) {
 				}
 			}
 		}
-		
+
 		$nodeText = firstItem($xpath->query("div[@class='ktg']", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
