@@ -83,7 +83,7 @@
 "locationLat":"49.9867744",
 "locationLong":"14.4253350",
 "text":"Výletní místo nejenom pro piloty a letecké modeláře, ale díky velkému dětskému hřišti i pro celé rodiny. Dříve zde probíhal výcvik pilotů, motorové létání a plachtění. V hangáru je vidět letoun Lockheed Electra 10 A, který patřil Janu Antonínu Baťovi.",
-"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Leti%C5%A1t%C4%9B_To%C4%8Dn%C3%A1", 
+"infoLink":"https:\/\/cs.wikipedia.org\/wiki\/Leti%C5%A1t%C4%9B_To%C4%8Dn%C3%A1",
 "category":"zajimavost"
 },
 {
@@ -142,31 +142,25 @@
 "category":"zajimavost"
 },
 {
-"title":"Ohniště v Modřanské rokli",
+"title":"V Modřanské rokli",
 "locationLat":"50.0028944",
 "locationLong":"14.4527950",
 "category":"ohniste"
 },
 {
-"title":"Ohniště na oddechové louce u Vltavy",
+"title":"Na oddechové louce u Vltavy",
 "locationLat":"49.9916578",
 "locationLong":"14.4016506",
 "category":"ohniste"
 },
 {
-"title":"Ohniště na oddechové louce u Vltavy",
-"locationLat":"49.9916578",
-"locationLong":"14.4016506",
-"category":"ohniste"
-},
-{
-"title":"Ohniště na louce pod Policejní akademií",
+"title":"Na louce pod Policejní akademií",
 "locationLat":"50.0166228",
 "locationLong":"14.4241033",
 "category":"ohniste"
 },
 {
-"title":"Ohniště u Belárie",
+"title":"U Belárie",
 "locationLat":"50.0106486",
 "locationLong":"14.3988758",
 "infoLink":"http:\/\/www.ctyrkazije.cz\/2014\/07\/v-modranech-vytvareji-dobrovolnici-hraci-louku-s-ohnisti",
