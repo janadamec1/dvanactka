@@ -1,30 +1,37 @@
 <?php
 include_once "parse_common.php";
 
-function downloadKontakt(&$arrItems, $linkKontakt, $sOdbor, $sCatName) {
+function downloadEmployee(&$arrItems, $linkKontakt, $sOdbor, $sCatName) {
 	$domKontakt = new DomDocument;
 	$domKontakt->loadHTMLFile($linkKontakt);
 	$xpathKontakt = new DomXPath($domKontakt);
-	$nodeName = firstItem($xpathKontakt->query("//div[@id='stred']/div/h2[@class='cvi notranslate']"));
+	$nodeName = firstItem($xpathKontakt->query("//div[@id='stred']/div[@id='zahlavi']/h2"));
 	if ($nodeName !== NULL) {
 		$aNewRecord = array("title" => $nodeName->nodeValue);	// person name
 		$aNewRecord["infoLink"] = $linkKontakt;
 		$aNewRecord["filter"] = $sOdbor;
 		if (strlen($sCatName) > 0)
 			$aNewRecord["category"] = $sCatName;
-		
-		$nodeParent = firstItem($xpathKontakt->query("//div[@id='kvlevo']"));
+
+		$nodeParent = firstItem($xpathKontakt->query("//div[@class='obsah']/div[@id='kvlevo']"));
 		if ($nodeParent !== NULL) {
-			$nodeText = firstItem($xpathKontakt->query("div[@class='zobrazeno']", $nodeParent));
+			$nodeText = firstItem($xpathKontakt->query("div[@class='zobrazeno text-to-speech']", $nodeParent));
 			if ($nodeText !== NULL) {
 				$aNewRecord["text"] = $nodeText->nodeValue;		// what he does
 			}
-			$nodeAddress = firstItem($xpathKontakt->query("div[@class='popis']/text()", $nodeParent));
+			$nodeAddress = firstItem($xpathKontakt->query("div[@class='popis text-to-speech']/text()", $nodeParent));
 			if ($nodeAddress !== NULL) {
-				$sAddress = trim($nodeAddress->nodeValue, " [");
-				$aNewRecord["address"] = $sAddress;
+				$sAddress = $nodeAddress->nodeValue;
+				if (strpos($sAddress, " [") !== FALSE)  // contains "na mape"
+  				$aNewRecord["address"] = trim($sAddress, " [");
 			}
-			$nodesTel = $xpathKontakt->query("dl/dd", $nodeParent);
+			/*  // not everybody has this address
+			$nodeAddress = firstItem($xpathKontakt->query("dl[@class='neodsadit text-to-speech']/dd/div[2]", $nodeParent));
+			if ($nodeAddress !== NULL) {
+				$sAddress = trim($nodeAddress->nodeValue);
+				$aNewRecord["address"] = $sAddress;
+			}*/
+			$nodesTel = $xpathKontakt->query("dl[@class='text-to-speech']/dd", $nodeParent);
 			foreach ($nodesTel as $i => $nodeTel) {
 				$sItem = $nodeTel->nodeValue;
 				$iColon = strpos($sItem, ':');
@@ -45,11 +52,34 @@ function downloadKontakt(&$arrItems, $linkKontakt, $sOdbor, $sCatName) {
 }
 
 //------------------------------------------------------------------------
+function downloadKontakty(&$arrItems, $linkKontakty, $sOdbor) {
+	$domKontakty = new DomDocument;
+	$domKontakty->loadHTMLFile($linkKontakty);
+	$xpathOdborKont = new DomXPath($domKontakty);
+	$nodesKategorie = $xpathOdborKont->query("//dl[@class='kontakty']//ul/li");
+	foreach ($nodesKategorie as $i => $nodeUtvar) {
+		$sCatName = "";
+  	$nodeCatTitle = firstItem($xpathOdborKont->query("strong/a", $nodeUtvar));
+    if ($nodeCatTitle !== NULL)
+      $sCatName = trim($nodeCatTitle->nodeValue);
+
+		$nodesKontakty = $xpathOdborKont->query("ul/li/strong/a", $nodeUtvar);
+		foreach ($nodesKontakty as $j => $nodeKontakt) {
+			$linkKontakt = $nodeKontakt->getAttribute("href");
+			if (substr($linkKontakt, 0, 4) != "http") {
+				$linkKontakt = "http://www.praha12.cz" . $linkKontakt;
+			}
+			downloadEmployee($arrItems, $linkKontakt, $sOdbor, $sCatName);
+		}
+	}
+}
+
+//------------------------------------------------------------------------
 function downloadAgenda($linkAgenda, $sOdbor) {
 	$domAgenda = new DomDocument;
 	$domAgenda->loadHTMLFile($linkAgenda);
 	$xpathAgenda = new DomXPath($domAgenda);
-	$nodeAgenda = firstItem($xpathAgenda->query("//div[@class='obsah']/div[@class='editor']"));
+	$nodeAgenda = firstItem($xpathAgenda->query("//div[@class='obsah']/div[@class='editor text-to-speech']"));
 	if ($nodeAgenda != NULL) {
 		$sHtml = $domAgenda->saveHTML($nodeAgenda);
 		if ($sHtml !== FALSE) {
@@ -88,30 +118,46 @@ function downloadSituations(&$arrItems, $linkSituat, $sOdbor) {
 }
 
 //------------------------------------------------------------------------
+function downloadSituationsIntro(&$arrItems, $linkSituat, $sOdbor) {
+	$domSituat = new DomDocument;
+	$domSituat->loadHTMLFile($linkSituat);
+	$xpathSituat = new DomXPath($domSituat);
+	$nodesKategorie = $xpathSituat->query("//div[@class='obsah mapa-stranek-2016']/div[@class='odkazy souvisejici text-to-speech']/div/a");
+	foreach ($nodesKategorie as $i => $nodeKat) {
+		$linkKat = $nodeKat->getAttribute("href");
+		if (substr($linkKat, 0, 4) != "http") {
+			$linkKat = "http://www.praha12.cz" . $linkKat;
+		}
+		downloadSituations($arrItems, $linkKat, $sOdbor);
+	}
+}
+
+//------------------------------------------------------------------------
 function downloadOdbor(&$arrItems, $title, $link) {
 	$domOdbor = new DomDocument;
 	$domOdbor->loadHTMLFile($link);
 	$xpathOdbor = new DomXPath($domOdbor);
-	
-	// kontakt
+
 	$sAddress = "";
-	$nodeAddress = firstItem($xpathOdbor->query("//div[@class='utvarkontakt']/div[@id='kvlevo']/div[@class='obsah']/div[@id='unpobtekane']/div[@class='popis']"));
-	if ($nodeAddress !== NULL) {
-		$sAddress = $nodeAddress->nodeValue;
-		$sAddress = str_replace(" [ na mapě ]", "\n", $sAddress);
-	}	
-	
-	// agenda
-	$sAgendaHtml = "";
-	$nodeAgenda = firstItem($xpathOdbor->query("//div[@class='zalozky']/ul/li[@class='z02']/a"));
-	if ($nodeAgenda !== NULL) {
-		$linkAgenda = $nodeAgenda->getAttribute("href");
-		if (substr($linkAgenda, 0, 4) != "http") {
-			$linkAgenda = "http://www.praha12.cz" . $linkAgenda;
-		}
-		$sAgendaHtml = downloadAgenda($linkAgenda, $title);
+	$linkKontakty = "";
+	$linkSituations = "";
+
+  // find kategories
+	$nodesOdkazy = $xpathOdbor->query("//div[@class='odkazy souvisejici text-to-speech']/ul[@class='ui']/li/strong/a");
+	foreach ($nodesOdkazy as $i => $nodeOdkaz) {
+		$linkOdkaz = $nodeOdkaz->getAttribute("href");
+		if (substr($linkOdkaz, 0, 4) != "http") {
+			$linkOdkaz = "http://www.praha12.cz" . $linkOdkaz;
+    }
+		$sKategorie = trim($nodeOdkaz->nodeValue);
+		if ($sKategorie === "Kontakt")
+		  $linkKontakty = $linkOdkaz;
+		else if ($sKategorie === "Náplň činnosti")
+		  $sAgendaHtml = downloadAgenda($linkOdkaz, $title);
+		else if ($sKategorie === "Životní situace")
+		  $linkSituations = $linkOdkaz;
 	}
-	
+
 	if (strlen($sAddress) > 0 || strlen($sAgendaHtml) > 0) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
@@ -123,58 +169,43 @@ function downloadOdbor(&$arrItems, $title, $link) {
 			$aNewRecord["text"] = $sAgendaHtml;
 		array_push($arrItems, $aNewRecord);
 	}
-	
-	// situations
-	$nodeSituat = firstItem($xpathOdbor->query("//div[@class='zalozky']/ul/li[@class='z03']/a"));
-	if ($nodeSituat !== NULL) {
-		$linkSituat = $nodeSituat->getAttribute("href");
-		if (substr($linkSituat, 0, 4) != "http") {
-			$linkSituat = "http://www.praha12.cz" . $linkSituat;
-		}
-		downloadSituations($arrItems, $linkSituat, $title);
+
+	if (strlen($linkSituations) > 0) {
+		downloadSituationsIntro($arrItems, $linkSituations, $title);
 	}
-	
-	// employees
-	$nodesUtvary = $xpathOdbor->query("//div[@class='utvary']/ul/li");
-	foreach ($nodesUtvary as $i => $nodeUtvar) {
-		$sCatName = "";
-		$sKontaktQuery = "strong/a";
-		$sLiClass = $nodeUtvar->getAttribute("class");
-		if ($sLiClass !== "o") {
-			$sKontaktQuery = "ul/li[@class='o']/strong/a";
-			$nodeCategoryName = firstItem($xpathOdbor->query("strong", $nodeUtvar));
-			if ($nodeCategoryName !== NULL) {
-				$sCatName = $nodeCategoryName->nodeValue;	// vedouci, nazev oddeleni, ...
-			}
-		}
-			
-		$nodesKontakty = $xpathOdbor->query($sKontaktQuery, $nodeUtvar);
-		foreach ($nodesKontakty as $j => $nodeKontakt) {
-			$linkKontakt = $nodeKontakt->getAttribute("href");
-			if (substr($linkKontakt, 0, 4) != "http") {
-				$linkKontakt = "http://www.praha12.cz" . $linkKontakt;
-			}
-			downloadKontakt($arrItems, $linkKontakt, $title, $sCatName);
-		}
+	if (strlen($linkKontakty) > 0) {
+		downloadKontakty($arrItems, $linkKontakty, $title);
+	}
+	else {
+	  // vedeni metske casti ma lidi rovnou tady
+    $nodesKontakty = $xpathOdbor->query("//dl[@class='kontakty']//ul/li/strong/a");
+    foreach ($nodesKontakty as $i => $nodeKontakt) {
+      $linkKontakt = $nodeKontakt->getAttribute("href");
+      if (substr($linkKontakt, 0, 4) != "http") {
+        $linkKontakt = "http://www.praha12.cz" . $linkKontakt;
+      }
+      downloadEmployee($arrItems, $linkKontakt, $title, "");
+    }
 	}
 }
 
 //------------------------------------------------------------------------
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.praha12.cz/osp/p1=2021");
+$dom->loadHTMLFile("http://www.praha12.cz/odbory-umc-praha-12/ms-64333/p1=64333");
 $xpath = new DomXPath($dom);
-$nodes = $xpath->query("//div[@id='menu']/ul[@class='menu']/li[@class='akt']/ul/li");
+$nodes = $xpath->query("//div[@class='odkazy souvisejici text-to-speech souvisejiciodkazy']/ul[@class='ui']/li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("a", $node));
+	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
 		$title = trim($nodeTitle->nodeValue);
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
 			$link = "http://www.praha12.cz" . $link;
 		}
-
 		downloadOdbor($arrItems, $title, $link);
+
+    //if (count($arrItems) > 0) break;
 	}
 }
 

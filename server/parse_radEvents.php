@@ -13,17 +13,17 @@ foreach ($nodes as $i => $node) {
 	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
-		
+
 		if (substr($title, 0, strlen($sKlubSlunicko)) == $sKlubSlunicko)
 			continue;
-		
+
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
 			$link = "https://www.praha12.cz" . $link;
 		}
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
-		
+
 		$sFilter = "praha12.cz";
 		$nodeDate = firstItem($xpath->query("div[1]", $node));
 		if ($nodeDate != NULL) {
@@ -33,7 +33,7 @@ foreach ($nodes as $i => $node) {
 			if ($iCommaPos !== FALSE) {
 				$sAddress = trim(substr($sDateFromTo, $iCommaPos+1));
 				$sDateFromTo = substr($sDateFromTo, 0, $iCommaPos);
-				
+
 				if (strpos($sAddress, "Pertoldova") !== FALSE) {
 					$sAddress = "KC \"12\" @ Pertoldova 10, Praha 12";
 					$sFilter = "KC \"12\" pobočka Pertoldova";
@@ -49,6 +49,16 @@ foreach ($nodes as $i => $node) {
 				else if (strpos($sAddress, "Husova knihovna") !== FALSE) {
 					$sAddress = "Husova knihovna @ Komořanská 12, Praha 12";
 					$sFilter = "Husova knihovna";
+				}
+				else if (strpos($sAddress, "MC Balónek") !== FALSE) {
+					$sAddress = "MC Balónek @ Ke Kamýku 2, Praha 12";
+					$sFilter = "MC Balónek";
+				}
+				else if (strpos($sAddress, "Viniční domek") !== FALSE) {
+					$sAddress = "Viniční domek @ Chuchelská 1, Praha 12";
+				}
+				else if (strpos($sAddress, "PRIOR") !== FALSE) {
+					$sAddress = "PRIOR @ Sofijské náměstí 6, Praha 12";
 				}
 				else if (strpos($sAddress, "biograf") !== FALSE)
 					$sAddress = "Modřanský biograf @ U Kina 1, Praha 12";
@@ -73,7 +83,7 @@ foreach ($nodes as $i => $node) {
 				}
 				else
 					$aNewRecord["date"] = date_format($dateFrom, "Y-m-d\TH:i");
-				
+
 				if ($iArrFromToCount > 1) {		// date & time to
 					$sDateTo = trim($arrFromTo[1]);
 					//echo $sDateTo, " -- TO\n";
@@ -100,13 +110,13 @@ foreach ($nodes as $i => $node) {
 				}
 			}
 		}
-		
+
 		$nodeText = firstItem($xpath->query("div[2]", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce) {
 				$aNewRecord["text"] = $text;
-				
+
 				if (strpos($text, "jara@kc12.cz") !== FALSE) {
 					$aNewRecord["email"] = "jara@kc12.cz";
 					$aNewRecord["phone"] = "778 482 787";
