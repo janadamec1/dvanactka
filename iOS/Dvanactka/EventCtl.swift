@@ -966,7 +966,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     
     //--------------------------------------------------------------------------
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let bSearchActive = (searchText.characters.count > 1);
+        let bSearchActive = (searchText.count > 1);
         let bWasActive = isSearchActive();
         if !bSearchActive && !bWasActive {
             return;
@@ -992,7 +992,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         let searchText: String? = searchController.searchBar.text;
         var bSearchActive = searchController.isActive
         if let searchText = searchText {
-            bSearchActive = bSearchActive && (searchText.characters.count > 0);
+            bSearchActive = bSearchActive && (searchText.count > 0);
         }
         
         let bWasActive = isSearchActive();

@@ -37,13 +37,13 @@
 "filter":"Restaurace"
 },
 {
-"title":"Port 62 (zavřeno)",
+"title":"Rosmarina",
 "locationLat":"50.0140494",
 "locationLong":"14.3970908",
 "address":"Vltavanů\nPraha 12",
-"openingHours":"2: 1100-1700, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-1700",
-"infoLink":"http:\/\/www.port62.cz",
-"buyLink":"http:\/\/www.port62.cz\/menu\/menu-restaurace\/denni-menu",
+"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
+"infoLink":"https:\/\/www.rosmarina.eu",
+"buyLink":"https:\/\/www.rosmarina.eu\/restaurace\/restaurant\/",
 "phone":"733 762 237",
 "category":"restaurace",
 "filter":"Restaurace"
@@ -57,6 +57,17 @@
 "infoLink":"http:\/\/www.restauracearcha.cz",
 "buyLink":"http:\/\/www.restauracearcha.cz\/denni-menu",
 "phone":"244 402 255",
+"category":"restaurace",
+"filter":"Restaurace"
+},
+{
+"title":"Jemný Bistro",
+"locationLat":"50.0062133",
+"locationLong":"14.4165844",
+"address":"Sofijské náměstí 3\nPraha 12",
+"openingHours":"2: 1200-2300, 3: 1200-2300, 4: 1200-2300, 5: 1200-2359, 6: 1200-2359",
+"infoLink":"https:\/\/www.facebook.com\/jemnybistro",
+"phone":"774 101 466",
 "category":"restaurace",
 "filter":"Restaurace"
 },
