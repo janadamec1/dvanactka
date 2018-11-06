@@ -522,7 +522,7 @@ class CRxDataSourceManager {
                     BufferedInputStream bufferedReader = new BufferedInputStream(stream);
 
                     byte[] buffer = new byte[2048];
-                    int bytesRead = 0;
+                    int bytesRead;
                     ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
 
                     while ((bytesRead = bufferedReader.read(buffer))!= -1) {

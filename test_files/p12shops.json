@@ -309,6 +309,19 @@
 "filter":"Fitness"
 },
 {
+"title":"Fiala's Gym",
+"text":"Fitness centrum, skupinové lekce",
+"locationLat":"50.0170836",
+"locationLong":"14.4434706",
+"address":"OC Jasná, 1. patro\nZdislavická 1\nPraha 12",
+"openingHours":"1: 600-2300, 2: 600-2300, 3: 600-2300, 4: 600-2300, 5: 600-2300, 6: 600-2300, 7: 600-2300",
+"infoLink":"http:\/\/www.fialasgym.com",
+"phone":"245 008 408",
+"email":"dagy@4gym.eu",
+"category":"obchod",
+"filter":"Fitness"
+},
+{
 "title":"Hodinář v pasáži",
 "locationLat":"50.0056569",
 "locationLong":"14.4182111",
@@ -560,6 +573,18 @@
 "locationLong":"14.4043111",
 "address":"Modřanská 6\nPraha 12",
 "openingHours":"1: 1000-1800, 2: 1000-1800, 3: 1000-1800, 4: 1000-1800, 5: 1000-1800",
+"category":"obchod",
+"filter":"Servis"
+},
+{
+"title":"ITC services - servis počítačů, IT oursourcing",
+"locationLat":"49.9999822",
+"locationLong":"14.4227111",
+"address":"Platónova 26\nPraha 12",
+"openingHours":"1: 900-1200, 1: 1300-1700, 2: 900-1200, 2: 1300-1700, 3: 900-1200, 3: 1300-1700, 4: 900-1200, 4: 1300-1700, 5: 900-1200, 5: 1300-1700",
+"infoLink":"http:\/\/www.itc-services.cz",
+"phone":"722 44 33 22",
+"email":"info@itc-services.cz",
 "category":"obchod",
 "filter":"Servis"
 },

@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '27.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.roomarranger.android.dvanactka"
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 28
         versionCode 25
         versionName "2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,18 +21,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.google.android.gms:play-services-location:9.0.0'
-    compile 'com.google.android.gms:play-services-maps:9.0.0'
-    compile 'com.google.android.gms:play-services-analytics:9.0.0'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:multidex:1.0.2'
-    compile 'com.android.support:customtabs:24.2.1'
-    testCompile 'junit:junit:4.12'
-    compile project(':segmentedControl')
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.android.gms:play-services-location:9.0.0'
+    implementation 'com.google.android.gms:play-services-maps:9.0.0'
+    implementation 'com.google.firebase:firebase-core:9.0.0'
+    implementation 'com.google.android.gms:play-services-analytics:9.0.0'
+    testImplementation 'junit:junit:4.12'
+    implementation project(':segmentedControl')
 }
 
 apply plugin: 'com.google.gms.google-services'
