@@ -27,10 +27,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +36,6 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 {
     static boolean s_bInited = false;
     static Date s_dateLastRefreshed = null;
-    static private Tracker s_GlobalTracker = null;
     static private Context s_appContext = null;
     BaseAdapter m_adapter = null;
 
@@ -85,8 +80,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 
         MainActivity.verifyDataInited(this);
 
+        /*
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         s_GlobalTracker = analytics.newTracker(R.xml.global_tracker);
+        */
 
         // from ViewController.swift
         CRxDataSourceManager.shared.delegate = this;
@@ -224,13 +221,6 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             CRxDataSourceManager.shared.refreshAllDataSources(false, this);
             CRxGame.shared.reinit();
 
-            // Google Analytics
-            Tracker aTracker = MainActivity.getDefaultTracker();
-            if (aTracker != null) {
-                aTracker.setScreenName("Home");
-                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
-            }
-
             // Location permission
             if (m_bAskPermissionLocation && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // Should we show an explanation?
@@ -303,11 +293,6 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //---------------------------------------------------------------------------
-    public static Tracker getDefaultTracker() {
-        return s_GlobalTracker;
     }
 
     //---------------------------------------------------------------------------

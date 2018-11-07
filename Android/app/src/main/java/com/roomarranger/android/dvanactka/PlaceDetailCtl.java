@@ -25,8 +25,6 @@ import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -583,15 +581,6 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         super.onResume();
         if (m_GoogleApiClient != null && m_GoogleApiClient.isConnected())
             startLocationUpdates();
-
-        // Google Analytics
-        /*if (m_lbTitle != null) {
-            Tracker aTracker = MainActivity.getDefaultTracker();
-            if (aTracker != null) {
-                aTracker.setScreenName("Place_" + m_lbTitle.getText());
-                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
-            }
-        }*/
     }
 
     @Override
@@ -675,23 +664,6 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             dialog.show();
 
             // TODO: animation, big applause
-
-            // Google Analytics
-            Tracker aTracker = MainActivity.getDefaultTracker();
-            if (aTracker != null) {
-                aTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("CheckIn")
-                        .setAction("Done")
-                        .setLabel(rec.m_sTitle)
-                        .build());
-                if (reward.newStars > 0 && reward.catName != null) {
-                    aTracker.send(new HitBuilders.EventBuilder()
-                            .setCategory(String.format(Locale.US, "Achievement %d", reward.newStars))
-                            .setAction("Unlocked")
-                            .setLabel(reward.catName)
-                            .build());
-                }
-            }
         }
     }
 

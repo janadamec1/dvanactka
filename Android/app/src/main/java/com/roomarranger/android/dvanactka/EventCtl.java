@@ -30,8 +30,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -238,16 +236,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
                             if (aRecClicked != null)
                                 aRecClicked.openBuyLink(EventCtl.this);
-
-                            // Google Analytics
-                            Tracker aTracker = MainActivity.getDefaultTracker();
-                            if (aTracker != null) {
-                                aTracker.send(new HitBuilders.EventBuilder()
-                                        .setCategory("Buy")
-                                        .setAction("Buy")
-                                        .setLabel(getTitle().toString())
-                                        .build());
-                            }
                         }
                     });
                 if (cell.m_btnFavorite != null)
@@ -671,18 +659,6 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 }
             }
         });
-
-        // Google Analytics
-        if (m_aDataSource != null) {
-            Tracker aTracker = MainActivity.getDefaultTracker();
-            if (aTracker != null) {
-                if (m_sParentFilter != null)
-                    aTracker.setScreenName("DS_" + m_sParentFilter);
-                else
-                    aTracker.setScreenName("DS_" + m_aDataSource.m_sId);
-                aTracker.send(new HitBuilders.ScreenViewBuilder().build());
-            }
-        }
     }
 
     //--------------------------------------------------------------------------

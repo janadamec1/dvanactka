@@ -22,7 +22,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.os.ResultReceiver;
+import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,8 +34,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -152,13 +150,6 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                 startActivityForResult(intent, ACT_RESULT_REFINE_LOCATION);
             }
         });
-
-        // Google Analytics
-        Tracker aTracker = MainActivity.getDefaultTracker();
-        if (aTracker != null) {
-            aTracker.setScreenName("DS_ReportFault");
-            aTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        }
     }
 
     //---------------------------------------------------------------------------
@@ -384,7 +375,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
     //---------------------------------------------------------------------------
     class AddressResultReceiver extends ResultReceiver {
-        public AddressResultReceiver(Handler handler) {
+        AddressResultReceiver(Handler handler) {
             super(handler);
         }
 
