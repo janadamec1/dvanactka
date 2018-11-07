@@ -24,18 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         application.applicationIconBadgeNumber = 0;
         CRxGame.shared.reinit();
-        
-        // Configure tracker from GoogleService-Info.plist.
-        var configureError:NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        //assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        
-        // Optional: configure GAI options.
-        if let gai = GAI.sharedInstance() {
-            gai.trackUncaughtExceptions = false  // report uncaught exceptions
-            gai.logger.logLevel = GAILogLevel.none
-            //gai.logger.logLevel = GAILogLevel.verbose  // remove before app release
-        }
         return true
     }
 
@@ -54,14 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.applicationIconBadgeNumber = 0;
         CRxDataSourceManager.shared.refreshAllDataSources();
         CRxGame.shared.reinit();
-
-        // Google Analytics
-        if let tracker = GAI.sharedInstance().defaultTracker {
-            tracker.set(kGAIScreenName, value: "Home");
-            if let builder = GAIDictionaryBuilder.createScreenView() {
-                tracker.send(builder.build() as [NSObject : AnyObject])
-            }
-        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

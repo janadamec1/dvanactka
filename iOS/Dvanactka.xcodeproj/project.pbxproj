@@ -21,7 +21,6 @@
 		4D0469D41DFA0DF300E7B760 /* ds_usergroups@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469C81DFA0DF300E7B760 /* ds_usergroups@2x.png */; };
 		4D0469D51DFA0DF300E7B760 /* ds_waste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469C91DFA0DF300E7B760 /* ds_waste@2x.png */; };
 		4D0469D61DFA0DF300E7B760 /* ds_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */; };
-		4D11D02D1DFF1ACE00BA2052 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */; };
 		4D1F44451E2D33640013EE52 /* ds_magazine.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F44431E2D33640013EE52 /* ds_magazine.png */; };
 		4D1F44461E2D33640013EE52 /* ds_magazine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F44441E2D33640013EE52 /* ds_magazine@2x.png */; };
 		4D2C34BD1DF751C600165EAC /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2C34BC1DF751C600165EAC /* Game.swift */; };
@@ -130,7 +129,6 @@
 		4DF266501EB3A64D003144DF /* c_toilet.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF2664E1EB3A64D003144DF /* c_toilet.png */; };
 		4DF266511EB3A64D003144DF /* c_toilet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF2664F1EB3A64D003144DF /* c_toilet@2x.png */; };
 		4DF266531EB527B2003144DF /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF266521EB527B2003144DF /* Reachability.swift */; };
-		C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -148,8 +146,6 @@
 		4D0469C81DFA0DF300E7B760 /* ds_usergroups@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_usergroups@2x.png"; path = "img/ds_usergroups@2x.png"; sourceTree = "<group>"; };
 		4D0469C91DFA0DF300E7B760 /* ds_waste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_waste@2x.png"; path = "img/ds_waste@2x.png"; sourceTree = "<group>"; };
 		4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_work@2x.png"; path = "img/ds_work@2x.png"; sourceTree = "<group>"; };
-		4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		4D11D02E1DFF1C9300BA2052 /* Dvanactka-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dvanactka-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D1F44431E2D33640013EE52 /* ds_magazine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ds_magazine.png; path = img/ds_magazine.png; sourceTree = "<group>"; };
 		4D1F44441E2D33640013EE52 /* ds_magazine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ds_magazine@2x.png"; path = "img/ds_magazine@2x.png"; sourceTree = "<group>"; };
 		4D2C34BC1DF751C600165EAC /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -263,9 +259,6 @@
 		4DF2664E1EB3A64D003144DF /* c_toilet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c_toilet.png; path = img/c_toilet.png; sourceTree = "<group>"; };
 		4DF2664F1EB3A64D003144DF /* c_toilet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "c_toilet@2x.png"; path = "img/c_toilet@2x.png"; sourceTree = "<group>"; };
 		4DF266521EB527B2003144DF /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
-		5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.debug.xcconfig"; sourceTree = "<group>"; };
-		BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dvanactka.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka.release.xcconfig"; sourceTree = "<group>"; };
-		F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dvanactka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,7 +269,6 @@
 				4D6677141DCBA4DA004876FA /* EventKitUI.framework in Frameworks */,
 				4D6677101DCB8CDD004876FA /* MessageUI.framework in Frameworks */,
 				4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */,
-				C96B336CA7EC9EB6B8C9C75F /* Pods_Dvanactka.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +382,6 @@
 			children = (
 				4D9019331DC65E16001488D3 /* Dvanactka */,
 				4D9019321DC65E16001488D3 /* Products */,
-				DBA60CC5189BA63706E19895 /* Pods */,
 				E3CDB31E01A8E10F30D48DD5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -413,14 +404,12 @@
 				4D668DD81E39F50000AD67C5 /* AppiraterLocalizable.strings */,
 				4D90193B1DC65E16001488D3 /* Assets.xcassets */,
 				4D9F14AC1DD103D100841AD8 /* DataSource.swift */,
-				4D11D02E1DFF1C9300BA2052 /* Dvanactka-Bridging-Header.h */,
 				4D9019481DC669B7001488D3 /* EventCtl.swift */,
 				4D90194E1DC69A0D001488D3 /* EventRecord.swift */,
 				4D464C4C1DE305B2003EC137 /* FilterCtl.swift */,
 				4D2C34BC1DF751C600165EAC /* Game.swift */,
 				4DBBDFD21DF5DBDB00013D67 /* GameCtl.swift */,
 				4D31DC6A1E6097B30092F5FA /* GameLeaderCtl.swift */,
-				4D11D02C1DFF1ACE00BA2052 /* GoogleService-Info.plist */,
 				4D6677151DCBC226004876FA /* img */,
 				4D9019401DC65E17001488D3 /* Info.plist */,
 				4D30AABF1DCA891200A402C9 /* InfoPlist.strings */,
@@ -438,22 +427,12 @@
 			path = Dvanactka;
 			sourceTree = "<group>";
 		};
-		DBA60CC5189BA63706E19895 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */,
-				BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		E3CDB31E01A8E10F30D48DD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				4D6677131DCBA4DA004876FA /* EventKitUI.framework */,
 				4D66770F1DCB8CDD004876FA /* MessageUI.framework */,
 				4D6677091DCB340F004876FA /* MapKit.framework */,
-				F6F95FB3C74A48403918816A /* Pods_Dvanactka.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -465,12 +444,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D9019431DC65E17001488D3 /* Build configuration list for PBXNativeTarget "Dvanactka" */;
 			buildPhases = (
-				CC5617BF9F63B6AE2DC6946A /* [CP] Check Pods Manifest.lock */,
 				4D90192D1DC65E16001488D3 /* Sources */,
 				4D90192E1DC65E16001488D3 /* Frameworks */,
 				4D90192F1DC65E16001488D3 /* Resources */,
-				8A0E9D480E9C4CA6CBC1B337 /* [CP] Embed Pods Frameworks */,
-				9BCE1CD9B7C8A26B85021933 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -588,7 +564,6 @@
 				4D73FC8B1E12DD07006D9D15 /* ds_roadblock@2x.png in Resources */,
 				4D1F44451E2D33640013EE52 /* ds_magazine.png in Resources */,
 				4D4264221DD08D62008ED01F /* c_pharmacy@2x.png in Resources */,
-				4D11D02D1DFF1ACE00BA2052 /* GoogleService-Info.plist in Resources */,
 				4D42641B1DD08D62008ED01F /* c_firstaid.png in Resources */,
 				4D0469CE1DFA0DF300E7B760 /* ds_game@2x.png in Resources */,
 				4D42641E1DD08D62008ED01F /* c_info@2x.png in Resources */,
@@ -631,54 +606,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8A0E9D480E9C4CA6CBC1B337 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9BCE1CD9B7C8A26B85021933 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dvanactka/Pods-Dvanactka-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CC5617BF9F63B6AE2DC6946A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4D90192D1DC65E16001488D3 /* Sources */ = {
@@ -868,7 +795,6 @@
 		};
 		4D9019441DC65E17001488D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A808AE73807641677F83C49 /* Pods-Dvanactka.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -878,7 +804,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -888,7 +814,6 @@
 		};
 		4D9019451DC65E17001488D3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDE54F9EF03DF01827D6E401 /* Pods-Dvanactka.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -898,7 +823,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

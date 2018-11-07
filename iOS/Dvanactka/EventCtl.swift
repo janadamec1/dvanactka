@@ -161,21 +161,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         setRecordsDistance();
         sortRecords();
         
-        // Google Analytics
-        if let ds = m_aDataSource,
-            let tracker = GAI.sharedInstance().defaultTracker {
-            if let parentFilter = m_sParentFilter {
-                tracker.set(kGAIScreenName, value: "DS_" + parentFilter);
-            }
-            else {
-                tracker.set(kGAIScreenName, value: "DS_" + ds.m_sId);
-            }
-            
-            if let builder = GAIDictionaryBuilder.createScreenView() {
-                tracker.send(builder.build() as [NSObject : AnyObject])
-            }
-        }
-        
         // start with search bar visible in some cases
         if let ds = m_aDataSource {
             if ds.m_bListingSearchBarVisibleAtStart {
@@ -735,12 +720,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         if let btn = sender as? UIButton,
             let rec = record(at: btnIndexPath(from: btn.tag)) {
             rec.openBuyLink(fromCtl: self);
-            
-            // Google Analytics
-            if let tracker = GAI.sharedInstance().defaultTracker,
-                let builder = GAIDictionaryBuilder.createEvent(withCategory: "Buy", action: "Buy", label: title ?? "", value: 1) {
-                tracker.send(builder.build() as [NSObject : AnyObject])
-            }
         }
     }
     

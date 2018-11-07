@@ -1,6 +1,0 @@
-framework module Pods_Dvanactka {
-  umbrella header "Pods-Dvanactka-umbrella.h"
-
-  export *
-  module * { export * }
-}

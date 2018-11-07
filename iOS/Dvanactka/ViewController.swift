@@ -61,14 +61,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btnInfo);
         
         CRxDataSourceManager.shared.delegate = self;
-        
-        // Google Analytics
-        if let tracker = GAI.sharedInstance().defaultTracker {
-            tracker.set(kGAIScreenName, value: "Home");
-            if let builder = GAIDictionaryBuilder.createScreenView() {
-                tracker.send(builder.build() as [NSObject : AnyObject])
-            }
-        }
     }
 
     //---------------------------------------------------------------------------
