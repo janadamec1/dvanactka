@@ -1,26 +1,17 @@
 <?php
-
-function firstItem($arrNodes) {
-	if ($arrNodes === NULL || $arrNodes === FALSE) return NULL;
-	return $arrNodes->item(0);
-}
-
-/* Set HTTP response header to plain text for debugging output */
-header("Content-type: text/plain");
-/* Use internal libxml errors -- turn on in production, off for debugging */
-libxml_use_internal_errors(true);
+include_once "parse_common.php";
 
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.praha12.cz");
+$dom->loadHTMLFile("https://www.praha12.cz/vismo/zobraz_dok.asp?vybery=2");
 $xpath = new DomXPath($dom);
-$nodes = $xpath->query("//div[@class='titulDoc aktClanky']//li");
+$nodes = $xpath->query("//div[@class='dok']/ul/li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("strong//a", $node));
+	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
 	    if ($nodeTitle->lastChild != NULL)
 		    $title = $nodeTitle->lastChild->textContent;    // remove script
-		else
+	    else
 		    $title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
@@ -46,13 +37,17 @@ foreach ($nodes as $i => $node) {
     }
 }
 
-$nodes = $xpath->query("//div[@class='titulDoc upoClanky']//li");
+// add Upozorneni
+$dom = new DomDocument;
+$dom->loadHTMLFile("https://www.praha12.cz/dp/vybery=1");
+$xpath = new DomXPath($dom);
+$nodes = $xpath->query("//div[@class='dok']/ul/li");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("strong//a", $node));
+	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
 	    if ($nodeTitle->lastChild != NULL)
 		    $title = $nodeTitle->lastChild->textContent;    // remove script
-		else
+	    else
 		    $title = $nodeTitle->nodeValue;
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
@@ -74,9 +69,10 @@ foreach ($nodes as $i => $node) {
 		}
 		$aNewRecord["filter"] = "Úřad MČ P12";
 		if (array_key_exists("date", $aNewRecord))
-    		array_push($arrItems, $aNewRecord);
+	    	array_push($arrItems, $aNewRecord);
     }
 }
+
 if (count($arrItems) > 0) {
 	$arr = array("items" => $arrItems);
 	$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
@@ -85,5 +81,5 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "done.";
+echo "parse_rad done, " . count($arrItems) . " items\n";
 ?>

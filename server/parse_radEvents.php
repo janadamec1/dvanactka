@@ -1,7 +1,7 @@
 <?php
 include_once "parse_common.php";
 
-$sKlubSlunicko = "Klub Slun";
+$sKlubSlunicko = "Sluníčko";
 $sTypAkce = "Typ akce";
 
 $arrItems = array();
@@ -12,7 +12,10 @@ $nodes = $xpath->query("//div[@class='dok']//ul[@class='ui']//li");
 foreach ($nodes as $i => $node) {
 	$nodeTitle = firstItem($xpath->query("strong/a", $node));
 	if ($nodeTitle != NULL) {
-		$title = $nodeTitle->nodeValue;
+	    if ($nodeTitle->lastChild != NULL)
+		    $title = $nodeTitle->lastChild->textContent;    // remove script
+	    else
+		    $title = $nodeTitle->nodeValue;
 
 		if (substr($title, 0, strlen($sKlubSlunicko)) == $sKlubSlunicko)
 			continue;
