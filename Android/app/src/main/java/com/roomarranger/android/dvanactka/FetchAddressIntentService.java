@@ -6,7 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.os.ResultReceiver;
+import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -86,13 +86,25 @@ public class FetchAddressIntentService extends IntentService {
 
             // Fetch the address lines using getAddressLine,
             // join them, and send them to the thread.
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                addressFragments.add(address.getAddressLine(i));
+            String sAddressOnLines = "";
+            if (address.getMaxAddressLineIndex() > 0) {
+                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                    addressFragments.add(address.getAddressLine(i));
+                }
+                sAddressOnLines = TextUtils.join(System.getProperty("line.separator"),
+                        addressFragments);
             }
-            Log.i("Loc2Addr", "address found");
-            deliverResultToReceiver(FetchAddressIntentService.SUCCESS_RESULT,
-                    TextUtils.join(System.getProperty("line.separator"),
-                            addressFragments));
+            else {
+                // new version of Geocoder returns everything at index 0
+                try {
+                    sAddressOnLines = address.getAddressLine(0);
+                    sAddressOnLines = sAddressOnLines.replaceAll(", ", System.getProperty("line.separator"));
+                } catch (Exception ignored) {}
+            }
+            if (!sAddressOnLines.isEmpty()) {
+                Log.i("Loc2Addr", "address found");
+                deliverResultToReceiver(FetchAddressIntentService.SUCCESS_RESULT, sAddressOnLines);
+            }
         }
     }
 
