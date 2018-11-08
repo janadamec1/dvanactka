@@ -31,12 +31,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.gms:play-services-location:9.0.0'
     implementation 'com.google.android.gms:play-services-maps:9.0.0'
-    //implementation 'com.google.firebase:firebase-core:9.0.0'
     testImplementation 'junit:junit:4.12'
     implementation project(':segmentedControl')
 }
-
-apply plugin: 'com.google.gms.google-services'
 
 task copyAppDefinitionFile(type: Copy) {
     from '../../appDefinition.json'
