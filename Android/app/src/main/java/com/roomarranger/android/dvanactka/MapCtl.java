@@ -27,6 +27,20 @@ import org.nairteashop.SegmentedControl;
 
 import java.util.HashMap;
 
+/*
+ Copyright 2016-2018 Jan Adamec.
+
+ This file is part of "Dvanactka".
+
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+*/
+
 public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
 
     CRxDataSource m_aDataSource = null;

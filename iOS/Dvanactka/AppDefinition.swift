@@ -1,10 +1,16 @@
-//
-//  AppDefinition.swift
-//  Dvanactka
-//
-//  Created by Jan Adamec on 05.03.18.
-//  Copyright © 2018 Jan Adamec. All rights reserved.
-//
+/*
+ Copyright 2018 Jan Adamec.
+ 
+ This file is part of "Dvanactka".
+ 
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+ 
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+ */
 
 import UIKit
 

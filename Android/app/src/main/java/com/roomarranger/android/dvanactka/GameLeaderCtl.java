@@ -22,6 +22,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
 
+/*
+ Copyright 2017-2018 Jan Adamec.
+
+ This file is part of "Dvanactka".
+
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+*/
+
 public class GameLeaderCtl extends Activity {
 
     class CRxBoardItem {

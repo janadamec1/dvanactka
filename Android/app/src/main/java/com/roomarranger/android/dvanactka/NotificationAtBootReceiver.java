@@ -5,9 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+/*
+ Copyright 2017-2018 Jan Adamec.
+
+ This file is part of "Dvanactka".
+
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+*/
+
 /**
- * Created by jadamec on 30.01.17.
- *
  * This class receives the broadcast about reboot (see manifest). Time to re-schedule our notifications.
  */
 

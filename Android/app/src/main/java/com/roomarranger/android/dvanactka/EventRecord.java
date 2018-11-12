@@ -22,9 +22,19 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-/**
- * Created by jadamec on 28.12.16.
- */
+/*
+ Copyright 2016-2018 Jan Adamec.
+
+ This file is part of "Dvanactka".
+
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+*/
 
 class CRxHourInterval
 {

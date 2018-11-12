@@ -15,9 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by jadamec on 28.01.17.
- */
+/*
+ Copyright 2017-2018 Jan Adamec.
+
+ This file is part of "Dvanactka".
+
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+*/
 
 // from https://developer.android.com/reference/android/location/Address.html
 
