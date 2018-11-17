@@ -29,6 +29,7 @@ import android.widget.Toast;
 public class AppInfoCtl extends Activity {
 
     CheckBox m_chkWifi;
+    CheckBox m_chkDebugUseTestData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,21 @@ public class AppInfoCtl extends Activity {
                 sharedPref2.edit().putBoolean("wifiDataOnly", bChecked).apply();
             }
         });
+
+        m_chkDebugUseTestData = (CheckBox) findViewById(R.id.chkDebugUseTestData);
+        if (BuildConfig.DEBUG) {
+            m_chkDebugUseTestData.setChecked(CRxDataSourceManager.g_bUseTestFiles);
+            m_chkDebugUseTestData.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
+                    CRxDataSourceManager.g_bUseTestFiles = bChecked;
+                    CRxDataSourceManager.shared.refreshAllDataSources(true, true, AppInfoCtl.this);
+                }
+            });
+        }
+        else {
+            m_chkDebugUseTestData.setVisibility(View.INVISIBLE);
+        }
 
         if (CRxAppDefinition.shared.m_sCopyright != null) {
             TextView lbCopyright = (TextView)findViewById(R.id.copyright);

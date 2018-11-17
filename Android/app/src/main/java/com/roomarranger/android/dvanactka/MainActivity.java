@@ -78,7 +78,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         catch (Exception e) { e.printStackTrace(); return; }
 
         dsm.loadData();
-        //dsm.refreshAllDataSources(false); // is called in onResume
+        //dsm.refreshAllDataSources(false, false); // is called in onResume
         //dsm.refreshDataSource(CRxDataSourceManager.dsSosContacts, true);
         //application.applicationIconBadgeNumber = 0;
         CRxGame.shared.init(ctx);
@@ -232,7 +232,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         Date now = new Date();
         if (s_dateLastRefreshed == null || (now.getTime() - s_dateLastRefreshed.getTime()) > 10 * 60 * 1000) {  // 10 minutes from last global refresh
             s_dateLastRefreshed = now;
-            CRxDataSourceManager.shared.refreshAllDataSources(false, this);
+            CRxDataSourceManager.shared.refreshAllDataSources(false, false, this);
             CRxGame.shared.reinit();
 
             // Location permission

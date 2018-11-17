@@ -15,7 +15,7 @@
 import UIKit
 import MapKit
 
-private let g_bUseTestFiles = false;
+var g_bUseTestFiles = false;
 
 protocol CRxDataSourceRefreshDelegate {
     func dataSourceRefreshEnded(dsId: String, error: String?);
@@ -417,7 +417,7 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func refreshAllDataSources(force: Bool = false) {
+    func refreshAllDataSources(force: Bool = false, removeOldData: Bool = false) {
         
         // check if WiFi only settings applies
         if !force && UserDefaults.standard.bool(forKey: "wifiDataOnly")
@@ -426,12 +426,12 @@ class CRxDataSourceManager : NSObject {
         }
         
         for dsIt in m_dictDataSources {
-            refreshDataSource(id: dsIt.key, force: force);
+            refreshDataSource(id: dsIt.key, force: force, removeOldData: removeOldData);
         }
     }
     
     //--------------------------------------------------------------------------
-    func refreshDataSource(id: String, force: Bool) {
+    func refreshDataSource(id: String, force: Bool, removeOldData: Bool = false) {
         
         guard let ds = m_dictDataSources[id]
             else { return; }
@@ -442,7 +442,11 @@ class CRxDataSourceManager : NSObject {
             ds.delegate?.dataSourceRefreshEnded(dsId: id, error: nil);
             return;
         }
-        
+
+        if removeOldData {
+            ds.m_arrItems.removeAll();
+        }
+
         if let url = ds.m_sServerDataFile {
             refreshStdJsonDataSource(sDsId: id, url: url);
         }

@@ -22,6 +22,8 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var m_chkWifi: UISwitch!
     @IBOutlet weak var m_btnContact: UIButton!
     @IBOutlet weak var m_lbCopyright: UILabel!
+    @IBOutlet weak var m_stackDebugUseTestFiles: UIStackView!
+    @IBOutlet weak var m_chkDebugUseTestFiles: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +40,26 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
         }
         
         m_chkWifi.isOn = UserDefaults.standard.bool(forKey: "wifiDataOnly");
+        
+        #if DEBUG
+        m_chkDebugUseTestFiles.isOn = g_bUseTestFiles;
+        #else
+        m_stackDebugUseTestFiles.isHidden = true;
+        #endif
     }
 
     //---------------------------------------------------------------------------
     @IBAction func onChkWifiChanged(_ sender: Any) {
         UserDefaults.standard.set(m_chkWifi.isOn, forKey: "wifiDataOnly");
         UserDefaults.standard.synchronize();
+    }
+    
+    //---------------------------------------------------------------------------
+    @IBAction func onChkUseTestFilesChanged(_ sender: Any) {
+        if g_bUseTestFiles != m_chkDebugUseTestFiles.isOn {
+            g_bUseTestFiles = m_chkDebugUseTestFiles.isOn;
+            CRxDataSourceManager.shared.refreshAllDataSources(force: true, removeOldData:true);
+        }
     }
     
     //---------------------------------------------------------------------------

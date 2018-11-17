@@ -294,7 +294,7 @@ class CRxDataSource {
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 class CRxDataSourceManager {
-    private static final boolean g_bUseTestFiles = false;
+    static boolean g_bUseTestFiles = false;
 
     HashMap<String, CRxDataSource> m_dictDataSources = new HashMap<>(); // dictionary on data sources, id -> source
 
@@ -476,7 +476,7 @@ class CRxDataSourceManager {
     }
 
     //--------------------------------------------------------------------------
-    void refreshAllDataSources(boolean force, Context ctx) {
+    void refreshAllDataSources(boolean force, boolean removeOldData, Context ctx) {
 
         // check if WiFi only settings applies
         if (!force) {
@@ -486,12 +486,12 @@ class CRxDataSourceManager {
         }
 
         for (Map.Entry<String, CRxDataSource> dsIt: m_dictDataSources.entrySet()) {
-            refreshDataSource(dsIt.getKey(), force);
+            refreshDataSource(dsIt.getKey(), force, removeOldData);
         }
     }
 
     //--------------------------------------------------------------------------
-    void refreshDataSource(String id, boolean force) {
+    void refreshDataSource(String id, boolean force, boolean removeOldData) {
 
         CRxDataSource ds = m_dictDataSources.get(id);
         if (ds == null) { return; }
@@ -504,6 +504,9 @@ class CRxDataSourceManager {
                 ds.delegate.dataSourceRefreshEnded(id, null);
             return;
         }
+
+        if (removeOldData)
+            ds.m_arrItems.clear();
 
         if (ds.m_sServerDataFile != null)
             refreshStdJsonDataSource(id, ds.m_sServerDataFile);

@@ -1077,7 +1077,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     @Override
     public void onRefresh() {       // from refreshLayout
         m_aDataSource.delegate = this;
-        CRxDataSourceManager.shared.refreshDataSource(m_aDataSource.m_sId, true);
+        CRxDataSourceManager.shared.refreshDataSource(m_aDataSource.m_sId, true, false);
     }
 
     //---------------------------------------------------------------------------
