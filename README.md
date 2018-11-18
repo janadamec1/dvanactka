@@ -36,12 +36,12 @@ It is also possible (and welcomed) to update the information about the shops, re
 
 Please verify the JSON is valid in [JSONLint](https://jsonlint.com) before submitting your changes.
 
-## Future of this project
+## Future
 
-There are several possibilies we can imagine the project further developed.
+There are several possibilities we can imagine the project is further developed.
 
 1. There will be list of municipalities inside one mobile app, and user is asked to select his/her municipality. Thus there will be only one general app for all those municipalities in app stores.
 
 1. Each municipality clones the repository, but continues to contribute into the original one.
 
-Last but not least. As people are often reluctant to install apps into their phones, **it would be nice to have some web frontend** to present the collected map data, as the data files often contain the detaits that cannot be found anywhere else on the Internet.
+Last but not least. As people are often reluctant to install apps into their phones, **it would be nice to have some web frontend** to present the collected map data, as the data files often contain the details that cannot be found anywhere else on the Internet.
