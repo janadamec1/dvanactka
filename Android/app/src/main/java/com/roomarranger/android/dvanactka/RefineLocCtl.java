@@ -107,6 +107,9 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
         else {
             // center will be center of Praha 12
             LatLng coord = new LatLng(50.0020275, 14.4185889);
+            if (CRxAppDefinition.shared.m_aMunicipalityCenter != null) {
+                coord = MapCtl.loc2LatLng(CRxAppDefinition.shared.m_aMunicipalityCenter);
+            }
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coord, 15);
             m_map.moveCamera(cameraUpdate);
         }

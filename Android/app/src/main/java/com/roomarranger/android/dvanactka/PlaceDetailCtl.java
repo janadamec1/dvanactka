@@ -468,7 +468,11 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
                     if (rec.m_eCategory != null) {
                         if (rec.m_eCategory.equals(CRxCategory.wasteTextile) || rec.m_eCategory.equals(CRxCategory.waste) || rec.m_eCategory.equals(CRxCategory.wasteElectro)) {
-                            intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + ", Praha 12 - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this));
+                            String sMunicipality = "";
+                            if (CRxAppDefinition.shared.m_sMunicipality != null) {
+                                sMunicipality = CRxAppDefinition.shared.m_sMunicipality;
+                            }
+                            intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + ", " + sMunicipality +" - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this));
                             intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
                         }
                     }

@@ -52,7 +52,10 @@ class RefineLocCtl: UIViewController {
         }
         else {
             // center will be center of Praha 12
-            let coord = CLLocationCoordinate2D(latitude: 50.0020275, longitude: 14.4185889);
+            var coord = CLLocationCoordinate2D(latitude: 50.0020275, longitude: 14.4185889);
+            if let municipalityCenter = CRxAppDefinition.shared.m_aMunicipalityCenter {
+                coord = municipalityCenter.coordinate;
+            }
             let regView = MKCoordinateRegionMakeWithDistance(coord, 1500, 3500);
             m_mapView.setRegion(regView, animated: false);
         }

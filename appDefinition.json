@@ -8,6 +8,9 @@
 "reportFaultEmailCc":"info@dvanactka.info",
 "outgoingLinkParameter":"utm_source=dvanactka.info&utm_medium=app",
 "serverDataBaseUrl":"https://www.dvanactka.info/own/p12/",
+"municipality":"Praha 12",
+"municipalityCenterLat":"50.0020275",
+"municipalityCenterLong":"14.4185889",
 "dataSources":[
   {
     "id":"dsRadNews",

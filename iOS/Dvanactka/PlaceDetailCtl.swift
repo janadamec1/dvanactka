@@ -391,7 +391,11 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         if let catStr = rec.m_eCategory,
             let category = CRxCategory(rawValue: catStr) {
             if category == .wasteTextile || category == .waste || category == .wasteElectro {
-                mailer.setSubject(rec.m_sTitle + ", Praha 12 - " + CRxEventRecord.categoryLocalName(category: rec.m_eCategory));
+                var sMunicipality = "";
+                if let city = CRxAppDefinition.shared.m_sMunicipality {
+                    sMunicipality = city;
+                }
+                mailer.setSubject(rec.m_sTitle + ", " + sMunicipality + " - " + CRxEventRecord.categoryLocalName(category: rec.m_eCategory));
                 mailer.setMessageBody(NSLocalizedString("(Please describe problem here)", comment:"") , isHTML: false);
             }
         }

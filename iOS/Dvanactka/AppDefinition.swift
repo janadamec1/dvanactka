@@ -13,6 +13,7 @@
  */
 
 import UIKit
+import CoreLocation
 
 class CRxAppDefinition: NSObject {
     // properties from json
@@ -25,7 +26,9 @@ class CRxAppDefinition: NSObject {
     var m_sReportFaultEmailCc: String?;
     var m_sOutgoingLinkParameter: String?;
     var m_sServerDataBaseUrl: String?;
-    
+    var m_sMunicipality: String?;
+    var m_aMunicipalityCenter: CLLocation?;
+
     // members
     var m_arrDataSourceOrder = [String]();      // dataSource IDs in order in which they were in the json
     private var m_sCurrentLocale: String;       // for loading localized strings from app definition json
@@ -80,7 +83,13 @@ class CRxAppDefinition: NSObject {
                 if let val = loadLocalizedString(key: "reportFaultEmailCc", from: json) { m_sReportFaultEmailCc = val; }
                 if let val = loadLocalizedString(key: "outgoingLinkParameter", from: json) { m_sOutgoingLinkParameter = val; }
                 if let val = loadLocalizedString(key: "serverDataBaseUrl", from: json) { m_sServerDataBaseUrl = val; }
-                
+                if let val = loadLocalizedString(key: "municipality", from: json) { m_sMunicipality = val; }
+
+                if let locationLat = json["municipalityCenterLat"] as? String,
+                    let locationLong = json["municipalityCenterLong"] as? String,
+                    let dLocLat = Double(locationLat),
+                    let dLocLong = Double(locationLong) { m_aMunicipalityCenter = CLLocation(latitude: dLocLat, longitude: dLocLong) }
+
                 // load dataSources
                 if let jsonItems = json["dataSources"] as? [[String : AnyObject]] {
                     for item in jsonItems {

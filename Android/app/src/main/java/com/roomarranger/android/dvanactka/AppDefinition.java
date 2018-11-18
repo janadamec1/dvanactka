@@ -1,5 +1,6 @@
 package com.roomarranger.android.dvanactka;
 
+import android.location.Location;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -36,6 +37,8 @@ class CRxAppDefinition {
     String m_sReportFaultEmailCc = null;
     String m_sOutgoingLinkParameter = null;
     String m_sServerDataBaseUrl = null;
+    String m_sMunicipality = null;
+    Location m_aMunicipalityCenter = null;
 
     ArrayList<String> m_arrDataSourceOrder = new ArrayList<>(); // dataSource IDs in order in which they were in the json
     private String m_sCurrentLocale = "en";     // for loading localized strings from app definition json
@@ -91,6 +94,18 @@ class CRxAppDefinition {
         m_sReportFaultEmailCc = loadLocalizedString("reportFaultEmailCc", json);
         m_sOutgoingLinkParameter = loadLocalizedString("outgoingLinkParameter", json);
         m_sServerDataBaseUrl = loadLocalizedString("serverDataBaseUrl", json);
+        m_sMunicipality = loadLocalizedString("municipality", json);
+
+        try {
+            String locationLat = json.getString("municipalityCenterLat");
+            String locationLong = json.getString("municipalityCenterLong");
+            double dLocLat = Double.parseDouble(locationLat);
+            double dLocLong = Double.parseDouble(locationLong);
+            m_aMunicipalityCenter = new Location("json");
+            m_aMunicipalityCenter.setLatitude(dLocLat);
+            m_aMunicipalityCenter.setLongitude(dLocLong);
+        }
+        catch (Exception e) {}
 
         // load dataSources
         try {
