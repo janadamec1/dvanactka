@@ -577,11 +577,11 @@ line 3</string>
                         <viewControllerLayoutGuide type="bottom" id="4E0-dO-Bek"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="AU1-mD-rma">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="594"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="658"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3O5-AS-YI1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="594"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="594"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Glb-hg-4Uy">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
@@ -942,7 +942,7 @@ line 3</string>
                             <constraint firstItem="4E0-dO-Bek" firstAttribute="top" secondItem="3O5-AS-YI1" secondAttribute="bottom" id="r2p-q9-xpZ"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="658"/>
                     <connections>

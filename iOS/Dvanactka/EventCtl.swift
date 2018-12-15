@@ -105,6 +105,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             m_searchController.searchBar.tintColor = UIColor.white;
             UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white];
             self.navigationItem.searchController = m_searchController
+            self.definesPresentationContext = true
         }
         else {
             m_refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);

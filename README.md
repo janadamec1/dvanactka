@@ -11,6 +11,10 @@ version 3](https://www.gnu.org/licenses/gpl.html).
 
 Please contact us in case you would like to purchase the commercial license enabling to use the cloned repository without providing your app source code.
 
+### Why open-sourced municipality app?
+
+Cities often end up in software solutions that lock them to products and services provided by one company (i.e. vendor lock-in). Having the app with open source code can enable municipality to maintain control over the source code and still enable paid contractors to improve the product.
+
 ## Contributing
 
 Please contact us using the contact form at [dvanactka.info](https://dvanactka.info) before changing or implementing your ideas.
