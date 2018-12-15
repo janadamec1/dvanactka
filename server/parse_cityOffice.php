@@ -150,7 +150,7 @@ function downloadOdbor(&$arrItems, $title, $link) {
 			$linkOdkaz = "http://www.praha12.cz" . $linkOdkaz;
     }
 		$sKategorie = trim($nodeOdkaz->nodeValue);
-		if ($sKategorie === "Kontakt")
+		if ($sKategorie === "Kontakt" || $sKategorie === "Kontakty")
 		  $linkKontakty = $linkOdkaz;
 		else if ($sKategorie === "Náplň činnosti")
 		  $sAgendaHtml = downloadAgenda($linkOdkaz, $title);
