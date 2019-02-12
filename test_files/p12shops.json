@@ -1,18 +1,5 @@
 {"items":[
 {
-"title":"Di Pietro (zavřeno)",
-"text":"Pizzerie",
-"locationLat":"50.0017017",
-"locationLong":"14.4226483",
-"address":"Hubičkova 2\nPraha 12",
-"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
-"infoLink":"http:\/\/dipietro.cz",
-"buyLink":"http:\/\/dipietro.cz\/denni-menu",
-"phone":"244 400 894",
-"category":"restaurace",
-"filter":"Restaurace"
-},
-{
 "title":"Mont Fort",
 "locationLat":"50.0003400",
 "locationLong":"14.4273744",
@@ -49,14 +36,13 @@
 "filter":"Restaurace"
 },
 {
-"title":"Modřanská Archa",
+"title":"Jaro",
 "locationLat":"50.0059903",
 "locationLong":"14.4171928",
 "address":"Sofijské náměstí 2\nPraha 12",
 "openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2359, 6: 1100-2359, 7: 1100-2300",
-"infoLink":"http:\/\/www.restauracearcha.cz",
-"buyLink":"http:\/\/www.restauracearcha.cz\/denni-menu",
-"phone":"244 402 255",
+"infoLink":"https:\/\/www.facebook.com\/vietnamska.kuchyne",
+"phone":"608 695 999",
 "category":"restaurace",
 "filter":"Restaurace"
 },
@@ -134,17 +120,6 @@
 "openingHours":"1: 1100-2200, 2: 1100-2200, 3: 1100-2200, 4: 1100-2200, 5: 1100-2300, 6: 1130-2300, 7: 1130-2100",
 "infoLink":"http:\/\/drevakrestaurace.cz",
 "phone":"273 139 327",
-"category":"restaurace",
-"filter":"Restaurace"
-},
-{
-"title":"Majlo restaurant",
-"locationLat":"49.9892681",
-"locationLong":"14.4128061",
-"address":"K Nouzovu 1\nPraha 12",
-"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
-"infoLink":"http:\/\/www.majlo-restaurant.cz",
-"phone":"720 978 578",
 "category":"restaurace",
 "filter":"Restaurace"
 },
