@@ -1,193 +1,97 @@
 Datum;Den;Od;Do;Lokalita
-03.04.2018;NA;15:00;19:00;Cholupický vrch v ulici Malá Lada
-02.05.2018;NA;15:00;19:00;Cholupický vrch v ulici Malá Lada
-04.06.2018;NA;15:00;19:00;Cholupický vrch v ulici Malá Lada
-03.04.2018;NA;15:00;19:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
-02.05.2018;NA;15:00;19:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
-04.06.2018;NA;15:00;19:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
-04.04.2018;NA;15:00;19:00;Točná – nám. Antonína Pecáka
-03.05.2018;NA;15:00;19:00;Točná – nám. Antonína Pecáka
-05.06.2018;NA;15:00;19:00;Točná – nám. Antonína Pecáka
-04.04.2018;NA;15:00;19:00;Křižovatka ulic Na Stráňkách a K Závorám
-03.05.2018;NA;15:00;19:00;Křižovatka ulic Na Stráňkách a K Závorám
-05.06.2018;NA;15:00;19:00;Křižovatka ulic Na Stráňkách a K Závorám
-05.04.2018;NA;15:00;19:00;Křižovatka ulic Starý lis a Hájíčkova
-09.05.2018;NA;15:00;19:00;Křižovatka ulic Starý lis a Hájíčkova
-06.06.2018;NA;15:00;19:00;Křižovatka ulic Starý lis a Hájíčkova
-05.04.2018;NA;15:00;19:00;Komořany – proti restauraci U Bukačů
-09.05.2018;NA;15:00;19:00;Komořany – proti restauraci U Bukačů
-06.06.2018;NA;15:00;19:00;Komořany – proti restauraci U Bukačů
-09.04.2018;NA;15:00;19:00;Ulice Nad Teplárnou
-10.05.2018;NA;15:00;19:00;Ulice Nad Teplárnou
-07.06.2018;NA;15:00;19:00;Ulice Nad Teplárnou
-09.04.2018;NA;15:00;19:00;Křižovatka ulic Palmetová a Pod Lesem
-10.05.2018;NA;15:00;19:00;Křižovatka ulic Palmetová a Pod Lesem
-07.06.2018;NA;15:00;19:00;Křižovatka ulic Palmetová a Pod Lesem
-10.04.2018;NA;15:00;19:00;Křižovatka ulic Pertoldova a Vokrojova
-14.05.2018;NA;15:00;19:00;Křižovatka ulic Pertoldova a Vokrojova
-11.06.2018;NA;15:00;19:00;Křižovatka ulic Pertoldova a Vokrojova
-10.04.2018;NA;15:00;19:00;Krouzova u automatické telefonní ústředny Modřany
-14.05.2018;NA;15:00;19:00;Krouzova u automatické telefonní ústředny Modřany
-11.06.2018;NA;15:00;19:00;Krouzova u automatické telefonní ústředny Modřany
-11.04.2018;NA;15:00;19:00;Mráčkova u prodejny Billa (Labe)
-15.05.2018;NA;15:00;19:00;Mráčkova u prodejny Billa (Labe)
-12.06.2018;NA;15:00;19:00;Mráčkova u prodejny Billa (Labe)
-11.04.2018;NA;15:00;19:00;Hasova ulice
-15.05.2018;NA;15:00;19:00;Hasova ulice
-12.06.2018;NA;15:00;19:00;Hasova ulice
-12.04.2018;NA;15:00;19:00;Parkoviště při ulici Zárubova
-16.05.2018;NA;15:00;19:00;Parkoviště při ulici Zárubova
-13.06.2018;NA;15:00;19:00;Parkoviště při ulici Zárubova
-12.04.2018;NA;15:00;19:00;Durychova – parkoviště u prodejny Jasná
-16.05.2018;NA;15:00;19:00;Durychova – parkoviště u prodejny Jasná
-13.06.2018;NA;15:00;19:00;Durychova – parkoviště u prodejny Jasná
-16.04.2018;NA;15:00;19:00;Cílkova u ÚMČ Praha 12
-17.05.2018;NA;15:00;19:00;Cílkova u ÚMČ Praha 12
-14.06.2018;NA;15:00;19:00;Cílkova u ÚMČ Praha 12
-16.04.2018;NA;15:00;19:00;Parkoviště v ulici Dolnojirčanská
-17.05.2018;NA;15:00;19:00;Parkoviště v ulici Dolnojirčanská
-14.06.2018;NA;15:00;19:00;Parkoviště v ulici Dolnojirčanská
-29.03.2018;NA;15:00;19:00;Parkoviště v ulici Rabyňská
-31.05.2018;NA;15:00;19:00;Parkoviště v ulici Rabyňská
-28.06.2018;NA;15:00;19:00;Parkoviště v ulici Rabyňská
-29.03.2018;NA;15:00;19:00;Ulice Levského u lesa
-31.05.2018;NA;15:00;19:00;Ulice Levského u lesa
-28.06.2018;NA;15:00;19:00;Ulice Levského u lesa
-17.04.2018;NA;15:00;19:00;Křižovatka ulic Botevova a Pejevové
-21.05.2018;NA;15:00;19:00;Křižovatka ulic Botevova a Pejevové
-18.06.2018;NA;15:00;19:00;Křižovatka ulic Botevova a Pejevové
-17.04.2018;NA;15:00;19:00;ul. Pejevové parkoviště před školou
-21.05.2018;NA;15:00;19:00;ul. Pejevové parkoviště před školou
-18.06.2018;NA;15:00;19:00;ul. Pejevové parkoviště před školou
-18.04.2018;NA;15:00;19:00;Pavlíkova ulice – parkoviště u kotelny
-22.05.2018;NA;15:00;19:00;Pavlíkova ulice – parkoviště u kotelny
-19.06.2018;NA;15:00;19:00;Pavlíkova ulice – parkoviště u kotelny
-18.04.2018;NA;15:00;19:00;Baba III – ulice Urbánkova u parkoviště
-22.05.2018;NA;15:00;19:00;Baba III – ulice Urbánkova u parkoviště
-19.06.2018;NA;15:00;19:00;Baba III – ulice Urbánkova u parkoviště
-19.04.2018;NA;15:00;19:00;Křižovatka ulic Lešetínská a K Beránku
-23.05.2018;NA;15:00;19:00;Křižovatka ulic Lešetínská a K Beránku
-20.06.2018;NA;15:00;19:00;Křižovatka ulic Lešetínská a K Beránku
-19.04.2018;NA;15:00;19:00;Násirovo náměstí
-23.05.2018;NA;15:00;19:00;Násirovo náměstí
-20.06.2018;NA;15:00;19:00;Násirovo náměstí
-23.04.2018;NA;15:00;19:00;Křižovatka ulic Nad Rážákem a Bojovská
-24.05.2018;NA;15:00;19:00;Křižovatka ulic Nad Rážákem a Bojovská
-21.06.2018;NA;15:00;19:00;Křižovatka ulic Nad Rážákem a Bojovská
-23.04.2018;NA;15:00;19:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
-24.05.2018;NA;15:00;19:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
-21.06.2018;NA;15:00;19:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
-24.04.2018;NA;15:00;19:00;Křižovatka ulic Lysinská a Šumavského
-28.05.2018;NA;15:00;19:00;Křižovatka ulic Lysinská a Šumavského
-25.06.2018;NA;15:00;19:00;Křižovatka ulic Lysinská a Šumavského
-24.04.2018;NA;15:00;19:00;U modřanské školy
-28.05.2018;NA;15:00;19:00;U modřanské školy
-25.06.2018;NA;15:00;19:00;U modřanské školy
-25.04.2018;NA;15:00;19:00;Křižovatka ulic Na Floře a U Čokoládoven
-29.05.2018;NA;15:00;19:00;Křižovatka ulic Na Floře a U Čokoládoven
-26.06.2018;NA;15:00;19:00;Křižovatka ulic Na Floře a U Čokoládoven
-25.04.2018;NA;15:00;19:00;Křižovatka ulic K Dolům a Na Havránce
-29.05.2018;NA;15:00;19:00;Křižovatka ulic K Dolům a Na Havránce
-26.06.2018;NA;15:00;19:00;Křižovatka ulic K Dolům a Na Havránce
-26.04.2018;NA;15:00;19:00;Hornocholupická u trafa proti ulici Skalnatá
-30.05.2018;NA;15:00;19:00;Hornocholupická u trafa proti ulici Skalnatá
-27.06.2018;NA;15:00;19:00;Hornocholupická u trafa proti ulici Skalnatá
-26.04.2018;NA;15:00;19:00;Ploštilova – u hřiště
-30.05.2018;NA;15:00;19:00;Ploštilova – u hřiště
-27.06.2018;NA;15:00;19:00;Ploštilova – u hřiště
-03.09.2018;NA;14:00;18:00;Parkoviště v ulici Rabyňská
-01.10.2018;NA;14:00;18:00;Parkoviště v ulici Rabyňská
-29.10.2018;NA;14:00;18:00;Parkoviště v ulici Rabyňská
-03.09.2018;NA;14:00;18:00;Ulice Levského u lesa
-01.10.2018;NA;14:00;18:00;Ulice Levského u lesa
-29.10.2018;NA;14:00;18:00;Ulice Levského u lesa
-04.09.2018;NA;14:00;18:00;Cholupický vrch v ulici Malá Lada
-02.10.2018;NA;14:00;18:00;Cholupický vrch v ulici Malá Lada
-30.10.2018;NA;14:00;18:00;Cholupický vrch v ulici Malá Lada
-04.09.2018;NA;14:00;18:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
-02.10.2018;NA;14:00;18:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
-30.10.2018;NA;14:00;18:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
-05.09.2018;NA;14:00;18:00;Točná – nám. Antonína Pecáka
-03.10.2018;NA;14:00;18:00;Točná – nám. Antonína Pecáka
-31.10.2018;NA;14:00;18:00;Točná – nám. Antonína Pecáka
-05.09.2018;NA;14:00;18:00;Křižovatka ulic Na Stráňkách a K Závorám
-03.10.2018;NA;14:00;18:00;Křižovatka ulic Na Stráňkách a K Závorám
-31.10.2018;NA;14:00;18:00;Křižovatka ulic Na Stráňkách a K Závorám
-06.09.2018;NA;14:00;18:00;Křižovatka ulic Starý lis a Hájíčkova
-04.10.2018;NA;14:00;18:00;Křižovatka ulic Starý lis a Hájíčkova
-01.11.2018;NA;14:00;18:00;Křižovatka ulic Starý lis a Hájíčkova
-06.09.2018;NA;14:00;18:00;Komořany – proti restauraci U Bukačů
-04.10.2018;NA;14:00;18:00;Komořany – proti restauraci U Bukačů
-01.11.2018;NA;14:00;18:00;Komořany – proti restauraci U Bukačů
-10.09.2018;NA;14:00;18:00;Ulice Nad Teplárnou
-08.10.2018;NA;14:00;18:00;Ulice Nad Teplárnou
-05.11.2018;NA;14:00;18:00;Ulice Nad Teplárnou
-10.09.2018;NA;14:00;18:00;Křižovatka ulic Palmetová a Pod Lesem
-08.10.2018;NA;14:00;18:00;Křižovatka ulic Palmetová a Pod Lesem
-05.11.2018;NA;14:00;18:00;Křižovatka ulic Palmetová a Pod Lesem
-11.09.2018;NA;14:00;18:00;Křižovatka ulic Pertoldova a Vokrojova
-09.10.2018;NA;14:00;18:00;Křižovatka ulic Pertoldova a Vokrojova
-06.11.2018;NA;14:00;18:00;Křižovatka ulic Pertoldova a Vokrojova
-11.09.2018;NA;14:00;18:00;Krouzova u automatické telefonní ústředny Modřany
-09.10.2018;NA;14:00;18:00;Krouzova u automatické telefonní ústředny Modřany
-06.11.2018;NA;14:00;18:00;Krouzova u automatické telefonní ústředny Modřany
-12.09.2018;NA;14:00;18:00;Mráčkova u prodejny Billa (Labe)
-10.10.2018;NA;14:00;18:00;Mráčkova u prodejny Billa (Labe)
-07.11.2018;NA;14:00;18:00;Mráčkova u prodejny Billa (Labe)
-12.09.2018;NA;14:00;18:00;Hasova ulice
-10.10.2018;NA;14:00;18:00;Hasova ulice
-07.11.2018;NA;14:00;18:00;Hasova ulice
-13.09.2018;NA;14:00;18:00;Parkoviště při ulici Zárubova
-11.10.2018;NA;14:00;18:00;Parkoviště při ulici Zárubova
-08.11.2018;NA;14:00;18:00;Parkoviště při ulici Zárubova
-13.09.2018;NA;14:00;18:00;Durychova – parkoviště u prodejny Jasná
-11.10.2018;NA;14:00;18:00;Durychova – parkoviště u prodejny Jasná
-08.11.2018;NA;14:00;18:00;Durychova – parkoviště u prodejny Jasná
-17.09.2018;NA;14:00;18:00;Cílkova u ÚMČ Praha 12
-15.10.2018;NA;14:00;18:00;Cílkova u ÚMČ Praha 12
-12.11.2018;NA;14:00;18:00;Cílkova u ÚMČ Praha 12
-17.09.2018;NA;14:00;18:00;Parkoviště v ulici Dolnojirčanská
-15.10.2018;NA;14:00;18:00;Parkoviště v ulici Dolnojirčanská
-12.11.2018;NA;14:00;18:00;Parkoviště v ulici Dolnojirčanská
-18.09.2018;NA;14:00;18:00;Křižovatka ulic Botevova a Pejevové
-16.10.2018;NA;14:00;18:00;Křižovatka ulic Botevova a Pejevové
-13.11.2018;NA;14:00;18:00;Křižovatka ulic Botevova a Pejevové
-18.09.2018;NA;14:00;18:00;ul. Pejevové parkoviště před školou
-16.10.2018;NA;14:00;18:00;ul. Pejevové parkoviště před školou
-13.11.2018;NA;14:00;18:00;ul. Pejevové parkoviště před školou
-19.09.2018;NA;14:00;18:00;Pavlíkova ulice – parkoviště u kotelny
-17.10.2018;NA;14:00;18:00;Pavlíkova ulice – parkoviště u kotelny
-14.11.2018;NA;14:00;18:00;Pavlíkova ulice – parkoviště u kotelny
-19.09.2018;NA;14:00;18:00;Baba III – ulice Urbánkova u parkoviště
-17.10.2018;NA;14:00;18:00;Baba III – ulice Urbánkova u parkoviště
-14.11.2018;NA;14:00;18:00;Baba III – ulice Urbánkova u parkoviště
-20.09.2018;NA;14:00;18:00;Křižovatka ulic Lešetínská a K Beránku
-18.10.2018;NA;14:00;18:00;Křižovatka ulic Lešetínská a K Beránku
-15.11.2018;NA;14:00;18:00;Křižovatka ulic Lešetínská a K Beránku
-20.09.2018;NA;14:00;18:00;Násirovo náměstí
-18.10.2018;NA;14:00;18:00;Násirovo náměstí
-15.11.2018;NA;14:00;18:00;Násirovo náměstí
-24.09.2018;NA;14:00;18:00;Křižovatka ulic Nad Rážákem a Bojovská
-22.10.2018;NA;14:00;18:00;Křižovatka ulic Nad Rážákem a Bojovská
-19.11.2018;NA;14:00;18:00;Křižovatka ulic Nad Rážákem a Bojovská
-24.09.2018;NA;14:00;18:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
-22.10.2018;NA;14:00;18:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
-19.11.2018;NA;14:00;18:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
-25.09.2018;NA;14:00;18:00;Křižovatka ulic Lysinská a Šumavského
-23.10.2018;NA;14:00;18:00;Křižovatka ulic Lysinská a Šumavského
-20.11.2018;NA;14:00;18:00;Křižovatka ulic Lysinská a Šumavského
-25.09.2018;NA;14:00;18:00;U modřanské školy
-23.10.2018;NA;14:00;18:00;U modřanské školy
-20.11.2018;NA;14:00;18:00;U modřanské školy
-26.09.2018;NA;14:00;18:00;Křižovatka ulic Na Floře a U Čokoládoven
-24.10.2018;NA;14:00;18:00;Křižovatka ulic Na Floře a U Čokoládoven
-21.11.2018;NA;14:00;18:00;Křižovatka ulic Na Floře a U Čokoládoven
-26.09.2018;NA;14:00;18:00;Křižovatka ulic K Dolům a Na Havránce
-24.10.2018;NA;14:00;18:00;Křižovatka ulic K Dolům a Na Havránce
-21.11.2018;NA;14:00;18:00;Křižovatka ulic K Dolům a Na Havránce
-27.09.2018;NA;14:00;18:00;Hornocholupická u trafa proti ulici Skalnatá
-25.10.2018;NA;14:00;18:00;Hornocholupická u trafa proti ulici Skalnatá
-22.11.2018;NA;14:00;18:00;Hornocholupická u trafa proti ulici Skalnatá
-27.09.2018;NA;14:00;18:00;Ploštilova – u hřiště
-25.10.2018;NA;14:00;18:00;Ploštilova – u hřiště
-22.11.2018;NA;14:00;18:00;Ploštilova – u hřiště
+28.03.2019;NA;14:00;18:00;Parkoviště v ulici Rabyňská
+30.05.2019;NA;14:00;18:00;Parkoviště v ulici Rabyňská
+27.06.2019;NA;14:00;18:00;Parkoviště v ulici Rabyňská
+28.03.2019;NA;14:00;18:00;Ulice Levského u lesa
+30.05.2019;NA;14:00;18:00;Ulice Levského u lesa
+27.06.2019;NA;14:00;18:00;Ulice Levského u lesa
+02.04.2019;NA;14:00;18:00;Cholupický vrch v ulici Malá Lada
+02.05.2019;NA;14:00;18:00;Cholupický vrch v ulici Malá Lada
+03.06.2019;NA;14:00;18:00;Cholupický vrch v ulici Malá Lada
+02.04.2019;NA;14:00;18:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
+02.05.2019;NA;14:00;18:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
+03.06.2019;NA;14:00;18:00;Cholupice – křižovatka ulic Ražická a Ke Kálku
+03.04.2019;NA;14:00;18:00;Točná – nám. Antonína Pecáka
+02.05.2019;NA;14:00;18:00;Točná – nám. Antonína Pecáka
+04.06.2019;NA;14:00;18:00;Točná – nám. Antonína Pecáka
+03.04.2019;NA;14:00;18:00;Křižovatka ulic Na Stráňkách a K Závorám
+02.05.2019;NA;14:00;18:00;Křižovatka ulic Na Stráňkách a K Závorám
+04.06.2019;NA;14:00;18:00;Křižovatka ulic Na Stráňkách a K Závorám
+04.04.2019;NA;14:00;18:00;Křižovatka ulic Starý lis a Hájíčkova
+09.05.2019;NA;14:00;18:00;Křižovatka ulic Starý lis a Hájíčkova
+05.06.2019;NA;14:00;18:00;Křižovatka ulic Starý lis a Hájíčkova
+04.04.2019;NA;14:00;18:00;Komořany – proti restauraci U Bukačů
+09.05.2019;NA;14:00;18:00;Komořany – proti restauraci U Bukačů
+05.06.2019;NA;14:00;18:00;Komořany – proti restauraci U Bukačů
+08.04.2019;NA;14:00;18:00;Ulice Nad Teplárnou
+09.05.2019;NA;14:00;18:00;Ulice Nad Teplárnou
+06.06.2019;NA;14:00;18:00;Ulice Nad Teplárnou
+08.04.2019;NA;14:00;18:00;Křižovatka ulic Palmetová a Pod Lesem
+09.05.2019;NA;14:00;18:00;Křižovatka ulic Palmetová a Pod Lesem
+06.06.2019;NA;14:00;18:00;Křižovatka ulic Palmetová a Pod Lesem
+09.04.2019;NA;14:00;18:00;Křižovatka ulic Pertoldova a Vokrojova
+13.05.2019;NA;14:00;18:00;Křižovatka ulic Pertoldova a Vokrojova
+10.06.2019;NA;14:00;18:00;Křižovatka ulic Pertoldova a Vokrojova
+09.04.2019;NA;14:00;18:00;Krouzova u automatické telefonní ústředny Modřany
+13.05.2019;NA;14:00;18:00;Krouzova u automatické telefonní ústředny Modřany
+10.06.2019;NA;14:00;18:00;Krouzova u automatické telefonní ústředny Modřany
+10.04.2019;NA;14:00;18:00;Mráčkova u prodejny Billa (Labe)
+14.05.2019;NA;14:00;18:00;Mráčkova u prodejny Billa (Labe)
+11.06.2019;NA;14:00;18:00;Mráčkova u prodejny Billa (Labe)
+10.04.2019;NA;14:00;18:00;Hasova ulice
+14.05.2019;NA;14:00;18:00;Hasova ulice
+11.06.2019;NA;14:00;18:00;Hasova ulice
+11.04.2019;NA;14:00;18:00;Parkoviště při ulici Zárubova
+15.05.2019;NA;14:00;18:00;Parkoviště při ulici Zárubova
+12.06.2019;NA;14:00;18:00;Parkoviště při ulici Zárubova
+11.04.2019;NA;14:00;18:00;Durychova – parkoviště u prodejny Jasná
+15.05.2019;NA;14:00;18:00;Durychova – parkoviště u prodejny Jasná
+12.06.2019;NA;14:00;18:00;Durychova – parkoviště u prodejny Jasná
+15.04.2019;NA;14:00;18:00;Cílkova u ÚMČ Praha 12
+16.05.2019;NA;14:00;18:00;Cílkova u ÚMČ Praha 12
+13.06.2019;NA;14:00;18:00;Cílkova u ÚMČ Praha 12
+15.04.2019;NA;14:00;18:00;Parkoviště v ulici Dolnojirčanská
+16.05.2019;NA;14:00;18:00;Parkoviště v ulici Dolnojirčanská
+13.06.2019;NA;14:00;18:00;Parkoviště v ulici Dolnojirčanská
+16.04.2019;NA;14:00;18:00;Křižovatka ulic Botevova a Pejevové
+20.05.2019;NA;14:00;18:00;Křižovatka ulic Botevova a Pejevové
+17.06.2019;NA;14:00;18:00;Křižovatka ulic Botevova a Pejevové
+16.04.2019;NA;14:00;18:00;ul. Pejevové parkoviště před školou
+20.05.2019;NA;14:00;18:00;ul. Pejevové parkoviště před školou
+17.06.2019;NA;14:00;18:00;ul. Pejevové parkoviště před školou
+17.04.2019;NA;14:00;18:00;Pavlíkova ulice – parkoviště u kotelny
+21.05.2019;NA;14:00;18:00;Pavlíkova ulice – parkoviště u kotelny
+18.06.2019;NA;14:00;18:00;Pavlíkova ulice – parkoviště u kotelny
+17.04.2019;NA;14:00;18:00;Baba III – ulice Urbánkova u parkoviště
+21.05.2019;NA;14:00;18:00;Baba III – ulice Urbánkova u parkoviště
+18.06.2019;NA;14:00;18:00;Baba III – ulice Urbánkova u parkoviště
+18.04.2019;NA;14:00;18:00;Křižovatka ulic Lešetínská a K Beránku
+22.05.2019;NA;14:00;18:00;Křižovatka ulic Lešetínská a K Beránku
+19.06.2019;NA;14:00;18:00;Křižovatka ulic Lešetínská a K Beránku
+18.04.2019;NA;14:00;18:00;Násirovo náměstí
+22.05.2019;NA;14:00;18:00;Násirovo náměstí
+19.06.2019;NA;14:00;18:00;Násirovo náměstí
+23.04.2019;NA;14:00;18:00;Křižovatka ulic Nad Rážákem a Bojovská
+23.05.2019;NA;14:00;18:00;Křižovatka ulic Nad Rážákem a Bojovská
+20.06.2019;NA;14:00;18:00;Křižovatka ulic Nad Rážákem a Bojovská
+23.04.2019;NA;14:00;18:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
+23.05.2019;NA;14:00;18:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
+20.06.2019;NA;14:00;18:00;Tyršova čtvrť – křižovatka ulic K Otočce a Zátišská
+23.04.2019;NA;14:00;18:00;Křižovatka ulic Lysinská a Šumavského
+27.05.2019;NA;14:00;18:00;Křižovatka ulic Lysinská a Šumavského
+24.06.2019;NA;14:00;18:00;Křižovatka ulic Lysinská a Šumavského
+23.04.2019;NA;14:00;18:00;U modřanské školy
+27.05.2019;NA;14:00;18:00;U modřanské školy
+24.06.2019;NA;14:00;18:00;U modřanské školy
+24.04.2019;NA;14:00;18:00;Křižovatka ulic Na Floře a U Čokoládoven
+28.05.2019;NA;14:00;18:00;Křižovatka ulic Na Floře a U Čokoládoven
+25.06.2019;NA;14:00;18:00;Křižovatka ulic Na Floře a U Čokoládoven
+24.04.2019;NA;14:00;18:00;Křižovatka ulic K Dolům a Na Havránce
+28.05.2019;NA;14:00;18:00;Křižovatka ulic K Dolům a Na Havránce
+25.06.2019;NA;14:00;18:00;Křižovatka ulic K Dolům a Na Havránce
+25.04.2019;NA;14:00;18:00;Hornocholupická u trafa proti ulici Skalnatá
+29.05.2019;NA;14:00;18:00;Hornocholupická u trafa proti ulici Skalnatá
+26.06.2019;NA;14:00;18:00;Hornocholupická u trafa proti ulici Skalnatá
+25.04.2019;NA;14:00;18:00;Ploštilova – u hřiště
+29.05.2019;NA;14:00;18:00;Ploštilova – u hřiště
+26.06.2019;NA;14:00;18:00;Ploštilova – u hřiště
