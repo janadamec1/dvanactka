@@ -214,6 +214,107 @@
 "contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
+{
+"title":"Mazancova",
+"locationLat":"50.0135781",
+"locationLong":"14.4200553",
+"infoLink":"http:\/\/www.kloktex.cz",
+"phone":"774 026 712",
+"email":"koutex@koutecky.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+
+{
+"title":"MŠ Oáza - Nechanická",
+"locationLat":"50.0194369",
+"locationLong":"14.4443722",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"MŠ Hvězdička - Liškova 10",
+"locationLat":"50.0150017",
+"locationLong":"14.4426261",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"MŠ Karásek - Vojtova",
+"locationLat":"50.0082242",
+"locationLong":"14.4106675",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"MŠ Srdíčko - Levského 19",
+"locationLat":"50.0079406",
+"locationLong":"14.4317819",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"ZŠ Na Beránku - Pavelkova",
+"locationLat":"50.0002947",
+"locationLong":"14.4314439",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"ZŠ ANGEL - Angelovova",
+"locationLat":"50.0099875",
+"locationLong":"14.4287617",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"ZŠ Písnická - Libeřská",
+"locationLat":"50.0196928",
+"locationLong":"14.4400458",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"ZŠ Rakovského",
+"locationLat":"50.0095722",
+"locationLong":"14.4240142",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"ZŠ Smolkova",
+"locationLat":"50.0087050",
+"locationLong":"14.4507533",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
+"title":"ZŠ Zárubova",
+"locationLat":"50.0141761",
+"locationLong":"14.4328764",
+"infoLink":"http:\/\/www.diakoniebroumov.cz",
+"phone":"224 316 800",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
 
 {
 "title":"Botevova x Pejevové",
@@ -482,7 +583,7 @@
 {
 "title":"Zárubova",
 "locationLong":"14.433998006831237",
-"locationLat":"50.013511005203206", 
+"locationLat":"50.013511005203206",
 "text":"Parkoviště při ulici Zárubova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -490,7 +591,7 @@
 {
 "title":"Darwinova x Voborského",
 "locationLong":"14.4071217",
-"locationLat":"50.0089967", 
+"locationLat":"50.0089967",
 "text":"Křižovatka ulic Darwinova a Voborského",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -498,7 +599,7 @@
 {
 "title":"Kolářova x K Beránku",
 "locationLong":"14.4134314",
-"locationLat":"49.9979356", 
+"locationLat":"49.9979356",
 "text":"Křižovatka ulic Kolářova a K Beránku",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -506,7 +607,7 @@
 {
 "title":"Lysinská x K Orionce",
 "locationLong":"14.4096383",
-"locationLat":"50.0126414", 
+"locationLat":"50.0126414",
 "text":"Křižovatka ulic Lysinská a K Orionce",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -514,7 +615,7 @@
 {
 "title":"Šumavského x Emlerova",
 "locationLong":"14.4125994",
-"locationLat":"50.0102419", 
+"locationLat":"50.0102419",
 "text":"Křižovatka ulic Šumavského a Emlerova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -522,7 +623,7 @@
 {
 "title":"U Klubu x Nad Teplárnou",
 "locationLong":"14.4079042",
-"locationLat":"49.9921042", 
+"locationLat":"49.9921042",
 "text":"Křižovatka ulic U klubu a Nad teplárnou",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -530,7 +631,7 @@
 {
 "title":"Do Čtvrti x U Šumavěnky",
 "locationLong":"14.4118161",
-"locationLat":"50.0149303", 
+"locationLat":"50.0149303",
 "text":"Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
@@ -538,7 +639,7 @@
 {
 "title":"Liškova x Cihlářova",
 "locationLong":"14.4410161",
-"locationLat":"50.0148875", 
+"locationLat":"50.0148875",
 "text":"Křižovatka ulic Liškova a Cihlářova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
