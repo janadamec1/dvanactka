@@ -224,6 +224,13 @@
 "contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
+{
+"title":"Palmetová",
+"locationLat":"49.9873158",
+"locationLong":"14.4117833",
+"infoLink":"http:\/\/textil-eco.cz",
+"category":"wasteTextile"
+},
 
 {
 "title":"MŠ Oáza - Nechanická",

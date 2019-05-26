@@ -805,18 +805,6 @@
 "filter":"Veterinární ordinace"
 },
 {
-"title":"Horus EYE",
-"text":"Fotoateliér, fotografické kurzy, tvorba webových stránek.\n\nvchod je z druhé strany domu",
-"locationLat":"50.0130289",
-"locationLong":"14.4196189",
-"address":"Krouzova 28\nPraha 12",
-"infoLink":"http:\/\/www.horoviny.cz",
-"phone":"776 209 970",
-"email":"hora@horuseye.cz",
-"category":"obchod",
-"filter":"Fotoateliér"
-},
-{
 "title":"Bibliobus Těšíkova",
 "text":"Bibliobus – knihovna na kolečkách. Pojízdná knihovna čtenářům nabízí široký výběr čtení pro děti i dospělé a internet. Správnou knihu pro každou příležitost pomůže vybrat „pojízdný“ knihovník.",
 "locationLat":"50.0146389",
