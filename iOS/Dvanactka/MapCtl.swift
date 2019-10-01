@@ -138,15 +138,15 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         if nCount > 0 {
             var regView: MKCoordinateRegion!;
             if nCount == 1 {
-                regView = MKCoordinateRegionMakeWithDistance(coordMin, 1500, 1500); }
+                regView = MKCoordinateRegion.init(center: coordMin, latitudinalMeters: 1500, longitudinalMeters: 1500); }
             else
             {
                 var coordCenter = coordMin;
                 coordCenter.latitude = (coordMin.latitude + coordMax.latitude)/2;
                 coordCenter.longitude = (coordMin.longitude + coordMax.longitude)/2;
                 
-                regView = MKCoordinateRegionMake(coordCenter, MKCoordinateSpanMake((coordMax.latitude - coordMin.latitude)*1.5,
-                                                                                   (coordMax.longitude - coordMin.longitude)*1.5));
+                regView = MKCoordinateRegion.init(center: coordCenter, span: MKCoordinateSpan.init(latitudeDelta: (coordMax.latitude - coordMin.latitude)*1.5,
+                                                                                   longitudeDelta: (coordMax.longitude - coordMin.longitude)*1.5));
             }
             m_mapView.setRegion(regView, animated: true);
         }
@@ -215,7 +215,7 @@ class MapCtl: UIViewController, MKMapViewDelegate {
         if let userLoc = m_mapView.userLocation.location {
             m_coordLast = userLoc.coordinate;
         }
-        let regView = MKCoordinateRegionMakeWithDistance(m_coordLast, 1000, 1000);
+        let regView = MKCoordinateRegion.init(center: m_coordLast, latitudinalMeters: 1000, longitudinalMeters: 1000);
         m_mapView.setRegion(regView, animated: true);
     }
 }

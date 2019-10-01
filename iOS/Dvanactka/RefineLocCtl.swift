@@ -40,7 +40,7 @@ class RefineLocCtl: UIViewController {
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem:.done, target: self, action: #selector(RefineLocCtl.onBtnDone));
 
         if let loc = m_locInit {
-            let regView = MKCoordinateRegionMakeWithDistance(loc.coordinate, 500, 500);
+            let regView = MKCoordinateRegion.init(center: loc.coordinate, latitudinalMeters: 500, longitudinalMeters: 500);
             m_mapView.setRegion(regView, animated: false);
             
             let annotation = MKPointAnnotation();
@@ -56,7 +56,7 @@ class RefineLocCtl: UIViewController {
             if let municipalityCenter = CRxAppDefinition.shared.m_aMunicipalityCenter {
                 coord = municipalityCenter.coordinate;
             }
-            let regView = MKCoordinateRegionMakeWithDistance(coord, 1500, 3500);
+            let regView = MKCoordinateRegion.init(center: coord, latitudinalMeters: 1500, longitudinalMeters: 3500);
             m_mapView.setRegion(regView, animated: false);
         }
         

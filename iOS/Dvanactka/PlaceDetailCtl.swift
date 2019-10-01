@@ -163,7 +163,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 var bHasVok = false;
                 var bHasBio = false;
                 let dayToday = Date();
-                let aPastAttrs = [NSAttributedStringKey.foregroundColor: UIColor.lightGray];
+                let aPastAttrs = [NSAttributedString.Key.foregroundColor: UIColor.lightGray];
                 let sNewLine = NSAttributedString(string:"\n");
 
                 for it in events {
@@ -171,7 +171,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                         sHours.append(sNewLine);
                         sType.append(sNewLine);
                     }
-                    var aAttrs: [NSAttributedStringKey: Any]? = nil;
+                    var aAttrs: [NSAttributedString.Key: Any]? = nil;
                     if (it.m_dateEnd < dayToday) {
                         aAttrs = aPastAttrs;
                     }
@@ -222,7 +222,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             }
 
             if let link = rec.m_sInfoLink?.removingPercentEncoding {
-                m_btnWebsite.setTitle(link, for: UIControlState.normal)
+                m_btnWebsite.setTitle(link, for: UIControl.State.normal)
             }
             else {
                 m_btnWebsite.isHidden = true;
@@ -234,19 +234,19 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
                 m_lbContactNote.isHidden = true;
             }
             if let email = rec.m_sEmail {
-                m_btnEmail.setTitle(email, for: UIControlState.normal)
+                m_btnEmail.setTitle(email, for: UIControl.State.normal)
             }
             else {
                 m_btnEmail.isHidden = true;
             }
             if let phone = rec.m_sPhoneNumber {
-                m_btnPhone.setTitle(phone, for: UIControlState.normal)
+                m_btnPhone.setTitle(phone, for: UIControl.State.normal)
             }
             else {
                 m_btnPhone.isHidden = true;
             }
             if let phone = rec.m_sPhoneMobileNumber {
-                m_btnPhoneMobile.setTitle(phone, for: UIControlState.normal)
+                m_btnPhoneMobile.setTitle(phone, for: UIControl.State.normal)
             }
             else {
                 m_btnPhoneMobile.isHidden = true;
@@ -259,7 +259,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             }
             
             if let location = rec.m_aLocation {
-                let regView = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500);
+                let regView = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500);
                 m_map.setRegion(regView, animated:false);
                 m_map.addAnnotation(CRxMapItem(record: rec));
                 m_map.delegate = self;
@@ -529,7 +529,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         guard let rec = m_aRecord, let text = rec.m_sText
             else {return;}
         if text == "FAQ" {
-            let aQuestionAttr = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: m_lbText.font.pointSize+1)];
+            let aQuestionAttr = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: m_lbText.font.pointSize+1)];
             let sNewText = NSMutableAttributedString(string:"Kde se nechat vyfotit na průkazovou fotografii?", attributes: aQuestionAttr);
             sNewText.append(NSAttributedString(string:"\nVe Fotolabu na Sofijském náměstí.\n\n"));
             

@@ -231,7 +231,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let nRealSpacing = 6*(nRealItemsPerRow-1);
         let leftInset = floor((nRealViewWidth - CGFloat(nCellWidth*nRealItemsPerRow + nRealSpacing)) / 2); // center
         
-        return UIEdgeInsetsMake(nMinInsets, leftInset-1, nMinInsets, leftInset-1);
+        return UIEdgeInsets.init(top: nMinInsets, left: leftInset-1, bottom: nMinInsets, right: leftInset-1);
     }
     
     //---------------------------------------------------------------------------

@@ -103,7 +103,24 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             m_searchController.dimsBackgroundDuringPresentation = false;
             m_searchController.searchBar.sizeToFit();
             m_searchController.searchBar.tintColor = UIColor.white;
-            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white];
+            //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = convertToNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white]);
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white];
+            
+            // workaround for iOS 13.1 white background bug (https://stackoverflow.com/questions/57746292/navigation-bar-becomes-white-when-a-uisearchcontroller-is-added-to-it)
+            if #available(iOS 13.0, *) {
+                
+                /*m_searchController.searchBar.barTintColor = UIColor(red:23.0/255.0, green:37.0/255.0, blue:96.0/255.0, alpha:1.0);
+                m_searchController.searchBar.searchBarStyle = UISearchBar.Style.prominent;*/
+
+                /*let appearance = UINavigationBarAppearance()
+                appearance.backgroundColor = UIColor(red:23.0/255.0, green:37.0/255.0, blue:96.0/255.0, alpha:1.0);
+                appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white];
+                self.navigationItem.standardAppearance = appearance;
+                self.navigationItem.scrollEdgeAppearance = appearance;*/
+                
+                //m_searchController.searchBar.searchTextField.backgroundColor = .systemBackground;
+            }
+            
             self.navigationItem.searchController = m_searchController
             self.definesPresentationContext = true
         }
@@ -143,7 +160,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             if arrBtnItems.count > 0 {
                 self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
             }
-            m_tableView.rowHeight = UITableViewAutomaticDimension;
+            m_tableView.rowHeight = UITableView.automaticDimension;
             m_tableView.estimatedRowHeight = 90.0;
             
             // footer
@@ -406,7 +423,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         
         if let sErrorText = error {
             m_refreshCtl.attributedTitle = NSAttributedString(string: sErrorText);
-            Timer.scheduledTimer(timeInterval: 2, target: m_refreshCtl, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
+            Timer.scheduledTimer(timeInterval: 2, target: m_refreshCtl as Any, selector: #selector(UIRefreshControl.endRefreshing), userInfo: nil, repeats: false);
         }
         else {
             setRecordsDistance();
@@ -496,7 +513,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             
             let sText = NSMutableAttributedString(string:"");
             if let sRecFilter = rec.m_sFilter {
-                let aBoldAttr = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: cellNews.m_lbText.font.pointSize)];
+                let aBoldAttr = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: cellNews.m_lbText.font.pointSize)];
                 sText.append(NSAttributedString(string:sRecFilter, attributes: aBoldAttr));
             }
             if let sRecText = rec.m_sText, !sRecText.isEmpty {
@@ -612,13 +629,22 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             if let date = rec.m_aDate {
                 bInFuture = (date > Date());
             }
-            cellPlace.m_lbTitle.textColor = UIColor(white: bInFuture ? 0.5 : 0.0, alpha: 1.0);
+            var titleTextColor = UIColor(white: 0.5, alpha: 1.0);
+            if !bInFuture {
+                if #available(iOS 13, *) {
+                    titleTextColor = UIColor.label;
+                } else {
+                    titleTextColor = UIColor.black;
+                }
+            }
+            //cellPlace.m_lbTitle.textColor = UIColor(white: bInFuture ? 0.5 : 0.0, alpha: 1.0);
+            cellPlace.m_lbTitle.textColor = titleTextColor;
             
             var bObsolete = false;   // strike-out obsolete accidents
             if let dateTo = rec.m_aDateTo {
                 bObsolete = (dateTo < Date());
             }
-            let aTitleAttr = (bObsolete ? [NSAttributedStringKey.strikethroughStyle: 2] : nil);
+            let aTitleAttr = (bObsolete ? [NSAttributedString.Key.strikethroughStyle: 2] : nil);
             cellPlace.m_lbTitle.attributedText = NSAttributedString(string: sRecTitle, attributes: aTitleAttr);
             
             var sDistance = "";
@@ -1031,4 +1057,9 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil);
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKeyDictionary(_ input: [String: Any]) -> [NSAttributedString.Key: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

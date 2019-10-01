@@ -106,7 +106,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     // MARK: - UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        if kind == UICollectionElementKindSectionHeader {
+        if kind == UICollectionView.elementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerGame", for: indexPath) as! CRxGameHeader;
             let aPlayerStats = CRxGame.shared.playerLevel();
             headerView.m_lbLevel.text = NSLocalizedString("Level", comment: "") + " \(aPlayerStats.level)";
@@ -114,7 +114,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             headerView.m_lbXp.text = "\(aPlayerStats.points) / \(aPlayerStats.pointsNextLevel) XP";
             return headerView;
         }
-        if kind == UICollectionElementKindSectionFooter {
+        if kind == UICollectionView.elementKindSectionFooter {
             let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footerGame", for: indexPath) as! CRxGameFooter;
             
             if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
@@ -174,7 +174,7 @@ class GameCtl: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         let nCellWidth = floor((nViewWidth-nSpacing-2*nMinInsets) / nItemsPerRow);
         let leftInset = (collectionView.frame.width - CGFloat(nCellWidth*nItemsPerRow + nSpacing)) / 2; // center
         
-        return UIEdgeInsetsMake(12, leftInset-1, 24, leftInset-1);
+        return UIEdgeInsets.init(top: 12, left: leftInset-1, bottom: 24, right: leftInset-1);
     }
     
     //---------------------------------------------------------------------------

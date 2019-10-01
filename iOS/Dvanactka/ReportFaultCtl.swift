@@ -59,7 +59,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
             m_locManager.startUpdatingLocation();
         }
         // for scrolling the vew when keyboard showing / hiding
-        NotificationCenter.default.addObserver(self, selector: #selector(ReportFaultCtl.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(ReportFaultCtl.keyboardNotification(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil);
     }
     
     //---------------------------------------------------------------------------
@@ -82,11 +82,11 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
     //---------------------------------------------------------------------------
     @objc func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
-            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration:TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            let animationCurve:UIView.AnimationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw)
             let iKeyboardSize = endFrame?.size.height ?? 0.0;
             let bHiding = ((endFrame?.origin.y)! >= UIScreen.main.bounds.size.height);
             if bHiding {
@@ -188,7 +188,7 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
             UIGraphicsEndImageContext()
             
             // encode in JPEG and add attachment
-            if let imageData = UIImageJPEGRepresentation(newImage, 0.8){
+            if let imageData = newImage.jpegData(compressionQuality: 0.8){
                 mailer.addAttachmentData(imageData, mimeType: "image/jpeg", fileName: "photo.jpg")
             }
         }
@@ -230,18 +230,17 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
 
     //---------------------------------------------------------------------------
     // MARK: - UIImagePickerControllerDelegate (taking a photo)
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
-            // set mode to scale photo while keeping aspect
-            m_btnPhoto.contentHorizontalAlignment = .fill
-            m_btnPhoto.contentVerticalAlignment = .fill
-            m_btnPhoto.imageView?.contentMode = .scaleAspectFit;
-            
-            m_btnPhoto.setImage(image, for: .normal);
-            m_bImageSelected = true;
-        }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+               m_btnPhoto.contentHorizontalAlignment = .fill
+               m_btnPhoto.contentVerticalAlignment = .fill
+               m_btnPhoto.imageView?.contentMode = .scaleAspectFit;
+               
+               m_btnPhoto.setImage(image, for: .normal);
+               m_bImageSelected = true;
+           }
+        
+        picker.dismiss(animated: true, completion: nil);
     }
     
     //---------------------------------------------------------------------------
@@ -326,3 +325,4 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
 }
+

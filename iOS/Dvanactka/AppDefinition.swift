@@ -43,7 +43,7 @@ class CRxAppDefinition: NSObject {
         // detect the localization I'm in
         let sLang = NSLocale.preferredLanguages[0];
         if !sLang.isEmpty {
-            if let index = sLang.index(of: "-") {
+            if let index = sLang.firstIndex(of: "-") {
                 m_sCurrentLocale = String(sLang[..<index]);
             }
             else {

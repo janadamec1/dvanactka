@@ -89,7 +89,7 @@ class GameLeaderCtl: UITableViewController {
         if m_bLoading {
             cell.textLabel?.text = NSLocalizedString("Downloading data...", comment: "");
             cell.detailTextLabel?.text = "";
-            let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray);
+            let spinner = UIActivityIndicatorView(style: .gray);
             spinner.frame = CGRect(x:0, y:0, width:24, height:24);
             spinner.startAnimating();
             cell.accessoryView = spinner;
@@ -148,7 +148,7 @@ class GameLeaderCtl: UITableViewController {
         m_arrItems.removeAll();
         if arrNewItems.count > 0 {
             // sort by score
-            var arrSortedItems: [CRxBoardItem] = arrNewItems.sorted(by: {$0.m_iScore > $1.m_iScore; });
+            let arrSortedItems: [CRxBoardItem] = arrNewItems.sorted(by: {$0.m_iScore > $1.m_iScore; });
             // calc places and filter out places with same score
             var arrFilteredItems = [CRxBoardItem]();
             var iPrevScore: Int = 99999999;
