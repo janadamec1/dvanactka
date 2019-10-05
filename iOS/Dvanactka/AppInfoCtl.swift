@@ -38,7 +38,13 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
         else {
             m_btnContact.isHidden = true;
         }
-        
+        if let copyright = CRxAppDefinition.shared.m_sCopyright {
+            m_lbCopyright.text = copyright;
+        }
+        else {
+            m_lbCopyright.isHidden = true;
+        }
+
         m_chkWifi.isOn = UserDefaults.standard.bool(forKey: "wifiDataOnly");
         
         #if DEBUG

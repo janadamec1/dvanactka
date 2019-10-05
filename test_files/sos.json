@@ -281,6 +281,13 @@
 "category":"wc"
 },
 {
+"title":"V areálu VOSA",
+"locationLat":"50.0123844",
+"locationLong":"14.4248564",
+"openingHours":"1: 800-1900, 2: 800-1900, 3: 800-1900, 4: 800-1900, 5: 800-1900, 6: 800-1900, 7: 800-1900",
+"category":"wc"
+},
+{
 "title":"V poliklinice",
 "locationLat":"50.0056775",
 "locationLong":"14.4143325",
