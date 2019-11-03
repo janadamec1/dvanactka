@@ -17,6 +17,7 @@ import MapKit
 import MessageUI
 import EventKit
 import EventKitUI
+import SDWebImage
 
 protocol CRxDetailRefreshParentDelegate {
     func detailRequestsRefresh();
@@ -25,6 +26,7 @@ protocol CRxDetailRefreshParentDelegate {
 class NewsCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
+    @IBOutlet weak var m_imgIllustration: UIImageView!
     @IBOutlet weak var m_lbDate: UILabel!
     @IBOutlet weak var m_btnWebsite: UIButton!
     @IBOutlet weak var m_btnFavorite: UIButton!
@@ -539,6 +541,14 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 }
             }
             cellNews.m_lbDate.text = sDateText
+
+            var bImgPresent = false;
+            if let sIllustrLink = rec.m_sIllustrationImgLink, !sIllustrLink.isEmpty {
+                bImgPresent = true;
+                cellNews.m_imgIllustration.sd_setImage(with: URL(string: sIllustrLink), placeholderImage: nil); // with SDWebImage package (using Swift Package Manager)
+            }
+            cellNews.m_imgIllustration.isHidden = !bImgPresent;
+
             cellNews.m_btnWebsite.isHidden = (rec.m_sInfoLink==nil);
             cellNews.m_btnAction.isHidden = (rec.m_sInfoLink==nil);
             cellNews.m_btnFavorite.setImage(UIImage(named: (rec.m_bMarkFavorite ? "goldstar25" : "goldstar25dis")), for: .normal);

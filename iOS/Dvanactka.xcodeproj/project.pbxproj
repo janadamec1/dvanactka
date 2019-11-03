@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		4D0469D61DFA0DF300E7B760 /* ds_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0469CA1DFA0DF300E7B760 /* ds_work@2x.png */; };
 		4D1F44451E2D33640013EE52 /* ds_magazine.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F44431E2D33640013EE52 /* ds_magazine.png */; };
 		4D1F44461E2D33640013EE52 /* ds_magazine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F44441E2D33640013EE52 /* ds_magazine@2x.png */; };
+		4D26A884236F76BA00D348CA /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D26A883236F76BA00D348CA /* SDWebImage */; };
 		4D2C34BD1DF751C600165EAC /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2C34BC1DF751C600165EAC /* Game.swift */; };
 		4D30AABD1DCA891200A402C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D30AABF1DCA891200A402C9 /* InfoPlist.strings */; };
 		4D30AAC21DCA8B8900A402C9 /* MapCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30AAC11DCA8B8900A402C9 /* MapCtl.swift */; };
@@ -268,6 +269,7 @@
 			files = (
 				4D6677141DCBA4DA004876FA /* EventKitUI.framework in Frameworks */,
 				4D6677101DCB8CDD004876FA /* MessageUI.framework in Frameworks */,
+				4D26A884236F76BA00D348CA /* SDWebImage in Frameworks */,
 				4D66770A1DCB340F004876FA /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,6 +455,9 @@
 			dependencies = (
 			);
 			name = Dvanactka;
+			packageProductDependencies = (
+				4D26A883236F76BA00D348CA /* SDWebImage */,
+			);
 			productName = Dvanactka;
 			productReference = 4D9019311DC65E16001488D3 /* Dvanactka.app */;
 			productType = "com.apple.product-type.application";
@@ -485,6 +490,9 @@
 				cs,
 			);
 			mainGroup = 4D9019281DC65E16001488D3;
+			packageReferences = (
+				4D26A882236F76BA00D348CA /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 4D9019321DC65E16001488D3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -787,8 +795,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Dvanactka/Dvanactka-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -802,7 +811,10 @@
 				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = E3AKAD9KNP;
 				INFOPLIST_FILE = Dvanactka/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -823,7 +835,10 @@
 				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = E3AKAD9KNP;
 				INFOPLIST_FILE = Dvanactka/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roomarranger.Dvanactka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -856,6 +871,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4D26A882236F76BA00D348CA /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4D26A883236F76BA00D348CA /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D26A882236F76BA00D348CA /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4D9019291DC65E16001488D3 /* Project object */;
 }

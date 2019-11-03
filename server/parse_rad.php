@@ -31,6 +31,18 @@ foreach ($nodes as $i => $node) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
+
+		$nodeIllustration = firstItem($xpath->query("object/noscript/img", $nodeTitle));
+		if ($nodeIllustration != NULL) {
+      $linkImg = $nodeIllustration->getAttribute("src");
+      if ($linkImg != "") {
+        if (substr($linkImg, 0, 4) != "http") {
+          $linkImg = "https://www.praha12.cz" . $linkImg;
+        }
+        $aNewRecord["illustrationImgLink"] = $linkImg;
+      }
+		}
+
 		$aNewRecord["filter"] = "Úřad MČ P12";
 		if (array_key_exists("date", $aNewRecord))
 	    	array_push($arrItems, $aNewRecord);
@@ -67,6 +79,18 @@ foreach ($nodes as $i => $node) {
 			$text = $nodeText->nodeValue;
 			$aNewRecord["text"] = $text;
 		}
+
+		$nodeIllustration = firstItem($xpath->query("object/noscript/img", $nodeTitle));
+		if ($nodeIllustration != NULL) {
+      $linkImg = $nodeIllustration->getAttribute("src");
+      if ($linkImg != "") {
+        if (substr($linkImg, 0, 4) != "http") {
+          $linkImg = "https://www.praha12.cz" . $linkImg;
+        }
+        $aNewRecord["illustrationImgLink"] = $linkImg;
+      }
+		}
+
 		$aNewRecord["filter"] = "Úřad MČ P12";
 		if (array_key_exists("date", $aNewRecord))
 	    	array_push($arrItems, $aNewRecord);
