@@ -36,6 +36,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.Collator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -109,6 +111,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         Button m_btnEmail;
         Button m_btnPhone;
         ImageView m_imgIcon;
+        ImageView m_imgIllustration;
     }
 
     public class ExpandListAdapter extends BaseExpandableListAdapter {
@@ -208,6 +211,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     switch (m_aDataSource.m_eType) {
                         case CRxDataSource.DATATYPE_news:
                             cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
+                            cell.m_imgIllustration = (ImageView) view.findViewById(R.id.imgIllustration);
                             cell.m_lbText = (TextView) view.findViewById(R.id.text);
                             cell.m_btnFavorite = (ImageButton) view.findViewById(R.id.btnFavorite);
                             cell.m_lbDate = (TextView) view.findViewById(R.id.date);
@@ -413,6 +417,14 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                         }
                     }
                     cell.m_lbDate.setText(sDateText);
+
+                    boolean bImgPresent = false;
+                    if (rec.m_sIllustrationImgLink != null && !rec.m_sIllustrationImgLink.isEmpty()) {
+                        bImgPresent = true;
+                        Picasso.get().load(rec.m_sIllustrationImgLink).into(cell.m_imgIllustration); // with Picasso library for downloading and caching (using Gradle)
+                    }
+                    cell.m_imgIllustration.setVisibility(!bImgPresent ? View.GONE : View.VISIBLE);
+
                     cell.m_btnWebsite.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
                     cell.m_btnAction.setVisibility(rec.m_sInfoLink == null ? View.GONE : View.VISIBLE);
                     cell.m_btnFavorite.setImageResource(rec.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);

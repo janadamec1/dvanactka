@@ -265,6 +265,7 @@ class CRxEventRecord
     String m_eCategory = null;
     String m_sFilter = null;  // filter records accoring to this member
     String m_sText = null;
+    String m_sIllustrationImgLink = null; // link to illustration image
     Date m_aDate = null;      // date and time of an event start or publish date of an article
     Date m_aDateTo = null;    // date and time of an evend end
     String m_sAddress = null; // location address
@@ -318,6 +319,7 @@ class CRxEventRecord
         pThis.m_eCategory = jsonItem.optString("category", null);
         pThis.m_sFilter = jsonItem.optString("filter", null);
         pThis.m_sText = jsonItem.optString("text", null);
+        pThis.m_sIllustrationImgLink = jsonItem.optString("illustrationImgLink", null);
         pThis.m_sPhoneNumber = jsonItem.optString("phone", null);
         pThis.m_sPhoneMobileNumber = jsonItem.optString("phoneMobile", null);
         pThis.m_sEmail = jsonItem.optString("email", null);
@@ -389,6 +391,7 @@ class CRxEventRecord
         try { item.put("category", m_eCategory); } catch (JSONException e) {}
         try { item.put("filter", m_sFilter); } catch (JSONException e) {}
         try { item.put("text", m_sText); } catch (JSONException e) {}
+        try { item.put("illustrationImgLink", m_sIllustrationImgLink); } catch (JSONException e) {}
         try { item.put("phone", m_sPhoneNumber); } catch (JSONException e) {}
         try { item.put("phoneMobile", m_sPhoneMobileNumber); } catch (JSONException e) {}
         try { item.put("email", m_sEmail); } catch (JSONException e) {}
