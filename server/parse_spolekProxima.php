@@ -6,7 +6,7 @@ $arrMonths = array("0", "ledna", "února", "března", "dubna", "května", "červ
 $arrItems = array();
 $dom = new DomDocument;
 //$dom->loadHTMLFile("http://www.proximasociale.cz/proxima-sociale/aktuality/");
-$html = file_get_contents("http://www.proximasociale.cz/proxima-sociale/aktuality/");
+$html = file_get_contents("https://www.proximasociale.cz/proxima-sociale/aktuality/");
 $html = mb_convert_encoding($html,'HTML-ENTITIES','UTF-8');
 $dom->loadHTML($html);
 $xpath = new DomXPath($dom);
@@ -34,7 +34,7 @@ foreach ($nodes as $i => $node) {
 		$nodeLink = firstItem($xpath->query("a", $nodeTitle));
 		if ($nodeLink != NULL) {
 			$link = $nodeLink->getAttribute("href");
-			$aNewRecord["infoLink"] = "http://www.proximasociale.cz" . $link;
+			$aNewRecord["infoLink"] = "https://www.proximasociale.cz" . $link;
 		}
 
 		$nodeText = firstItem($xpath->query("div/p", $node));
@@ -43,16 +43,16 @@ foreach ($nodes as $i => $node) {
 			$aNewRecord["text"] = $text;
 		}
 
-		$nodeIllustration = firstItem($xpath->query("div[@class='to-left']/img", $node));
+		/*$nodeIllustration = firstItem($xpath->query("div[@class='to-left']/img", $node));
 		if ($nodeIllustration != NULL) {
       $linkImg = $nodeIllustration->getAttribute("src");
       if ($linkImg != "") {
         if (substr($linkImg, 0, 4) != "http") {
-          $linkImg = "http://www.proximasociale.cz" . $linkImg;
+          $linkImg = "https://www.proximasociale.cz" . $linkImg;
         }
         $aNewRecord["illustrationImgLink"] = $linkImg;
       }
-		}
+		}*/  // fails to load on iOS due to SSL error
 
 		$aNewRecord["filter"] = "Proxima Sociale";
 		if (array_key_exists("date", $aNewRecord))
