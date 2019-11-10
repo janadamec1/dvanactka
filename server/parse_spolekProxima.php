@@ -16,7 +16,7 @@ foreach ($nodes as $i => $node) {
 	if ($nodeTitle != NULL) {
 		$title = trim($nodeTitle->nodeValue);
 		$aNewRecord = array("title" => $title);
-		
+
 		$nodeDate = firstItem($xpath->query("div/div[@class='date']", $node));
 		if ($nodeDate != NULL) {
 			$arrParts = explode(" ", trim($nodeDate->nodeValue));
@@ -36,12 +36,24 @@ foreach ($nodes as $i => $node) {
 			$link = $nodeLink->getAttribute("href");
 			$aNewRecord["infoLink"] = "http://www.proximasociale.cz" . $link;
 		}
-			
+
 		$nodeText = firstItem($xpath->query("div/p", $node));
 		if ($nodeText != NULL) {
 			$text = trim($nodeText->nodeValue);
 			$aNewRecord["text"] = $text;
 		}
+
+		$nodeIllustration = firstItem($xpath->query("div[@class='to-left']/img", $node));
+		if ($nodeIllustration != NULL) {
+      $linkImg = $nodeIllustration->getAttribute("src");
+      if ($linkImg != "") {
+        if (substr($linkImg, 0, 4) != "http") {
+          $linkImg = "http://www.proximasociale.cz" . $linkImg;
+        }
+        $aNewRecord["illustrationImgLink"] = $linkImg;
+      }
+		}
+
 		$aNewRecord["filter"] = "Proxima Sociale";
 		if (array_key_exists("date", $aNewRecord))
 			array_push($arrItems, $aNewRecord);

@@ -43,7 +43,7 @@ foreach ($nodes as $i => $node) {
       }
 		}
 
-		$aNewRecord["filter"] = "Úřad MČ P12";
+		$aNewRecord["filter"] = "MČ Praha 12";
 		if (array_key_exists("date", $aNewRecord))
 	    	array_push($arrItems, $aNewRecord);
     }
@@ -91,7 +91,7 @@ foreach ($nodes as $i => $node) {
       }
 		}
 
-		$aNewRecord["filter"] = "Úřad MČ P12";
+		$aNewRecord["filter"] = "MČ Praha 12";
 		if (array_key_exists("date", $aNewRecord))
 	    	array_push($arrItems, $aNewRecord);
     }
