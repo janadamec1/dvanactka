@@ -11,6 +11,12 @@
                   style="@style/NewsItemLayout"
                   android:layout_centerHorizontal="true">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingBottom="2dp"
+            android:id="@+id/imgIllustration"/>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -30,12 +36,6 @@
                 android:background="@null"/>
 
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:paddingBottom="2dp"
-            android:id="@+id/imgIllustration"/>
 
         <TextView
             android:layout_width="match_parent"
