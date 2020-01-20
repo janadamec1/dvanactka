@@ -76,10 +76,11 @@ function downloadKontakty(&$arrItems, $linkKontakty, $sOdbor) {
 
 //------------------------------------------------------------------------
 function downloadAgenda($linkAgenda, $sOdbor) {
+  //echo "agenda download\n";
 	$domAgenda = new DomDocument;
 	$domAgenda->loadHTMLFile($linkAgenda);
 	$xpathAgenda = new DomXPath($domAgenda);
-	$nodeAgenda = firstItem($xpathAgenda->query("//div[@class='obsah']/div[@class='editor text-to-speech']"));
+	$nodeAgenda = firstItem($xpathAgenda->query("//div[@id='dokument']/div[@class='editor text-to-speech']"));
 	if ($nodeAgenda != NULL) {
 		$sHtml = $domAgenda->saveHTML($nodeAgenda);
 		if ($sHtml !== FALSE) {
@@ -142,8 +143,10 @@ function downloadOdbor(&$arrItems, $title, $link) {
 	$linkKontakty = "";
 	$linkSituations = "";
 
+  //echo "odbor download\n";
+
   // find kategories
-	$nodesOdkazy = $xpathOdbor->query("//div[@class='odkazy souvisejici text-to-speech']/ul[@class='ui']/li/strong/a");
+	$nodesOdkazy = $xpathOdbor->query("//div[@class='obsah mapa-stranek-2016']/div/ul[@class='ui']/li/strong/a");
 	foreach ($nodesOdkazy as $i => $nodeOdkaz) {
 		$linkOdkaz = $nodeOdkaz->getAttribute("href");
 		if (substr($linkOdkaz, 0, 4) != "http") {
@@ -203,6 +206,12 @@ foreach ($nodes as $i => $node) {
 		if (substr($link, 0, 4) != "http") {
 			$link = "http://www.praha12.cz" . $link;
 		}
+
+    //echo "odbor " . $title . "\n";
+
+		//if (substr($title, 0, 16) === "Odbor komunikace")
+		//  downloadOdbor($arrItems, $title, $link);
+
 		downloadOdbor($arrItems, $title, $link);
 
     //if (count($arrItems) > 0) break;

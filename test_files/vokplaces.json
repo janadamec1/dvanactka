@@ -225,10 +225,26 @@
 "category":"wasteTextile"
 },
 {
+"title":"Obzor",
+"locationLat":"50.0088611",
+"locationLong":"14.4540336",
+"infoLink":"http:\/\/www.kloktex.cz",
+"phone":"774 026 712",
+"email":"koutex@koutecky.cz",
+"contactNote":"V případě zaplnění kontaktujte firmu na:",
+"category":"wasteTextile"
+},
+{
 "title":"Palmetová",
 "locationLat":"49.9873158",
 "locationLong":"14.4117833",
 "infoLink":"http:\/\/textil-eco.cz",
+"category":"wasteTextile"
+},
+{
+"title":"Komořanské náměstí",
+"locationLat":"49.9909322",
+"locationLong":"14.4100211",
 "category":"wasteTextile"
 },
 
