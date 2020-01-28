@@ -77,7 +77,13 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             
             var bTextSet = false;
             if rec.hasHtmlText() {
-                let sHtmlText = String.init(format: "<style>div {font-family: '%@'; font-size:%fpx;}</style>", m_lbText.font.fontName, m_lbText.font.pointSize) + rec.m_sText!;
+                var sTextColor = "#000000";
+                if #available(iOS 13.0, *) {
+                    if UITraitCollection.current.userInterfaceStyle == .dark {
+                        sTextColor = "#FFFFFF";
+                    }
+                }
+                let sHtmlText = String.init(format: "<style>div, dl {font-family: '%@'; font-size:%fpx; color:%@;}</style>", m_lbText.font.fontName, m_lbText.font.pointSize, sTextColor) + rec.m_sText!;
                 if let htmlData = sHtmlText.data(using: String.Encoding.unicode) {
                     do {
                         let attributedText = try NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil);

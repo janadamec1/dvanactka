@@ -555,8 +555,8 @@ class CRxEventRecord: NSObject {
     }
     //---------------------------------------------------------------------------
     func hasHtmlText() -> Bool {
-        if let text = m_sText, text.hasPrefix("<div") {
-            return true;
+        if let text = m_sText {
+            return text.hasPrefix("<div") || text.hasPrefix("<dl")
         }
         return false;
     }
