@@ -35,6 +35,7 @@ class CRxDataSource : NSObject {
     var m_dateLastRefreshed: Date?;
     var m_bIsBeingRefreshed: Bool = false;
     var m_arrItems: [CRxEventRecord] = [CRxEventRecord]();   // the data
+    var m_arrQaLabels: [String]?;       // level labels for Q&A in items (usually inside loaded data)
     var delegate: CRxDataSourceRefreshDelegate?;
     
     enum DataType: String {
@@ -144,6 +145,9 @@ class CRxDataSource : NSObject {
                 
             }
         }
+        if let jsonQaLabels = json["qaLables"] as? [String] {
+            m_arrQaLabels = jsonQaLabels;
+        }
         
         // load config
         if let config = json["config"] as? [String : AnyObject] {
@@ -164,6 +168,10 @@ class CRxDataSource : NSObject {
         }
         
         var json: [String : AnyObject] = ["items" : jsonItems as AnyObject];
+        
+        if let qaLabels = m_arrQaLabels, qaLabels.count > 0 {
+            json["qaLables"] = qaLabels as AnyObject;
+        }
         
         // save config
         var config = [String: AnyObject]();

@@ -166,6 +166,43 @@ class CRxEventInterval: NSObject {
 }
 
 //---------------------------------------------------------------------------
+// this class is for questions and answers
+class CRxQuestionAnswer: NSObject {
+    var m_iLevel: Int = 0;     // detail level 0 is "all info", higher value means less info
+    var m_sQuestion: String;
+    var m_sAnswer: String;
+    
+    init(q: String, a: String, level: Int?) {
+        m_sQuestion = q
+        m_sAnswer = a;
+        if let l = level {
+            m_iLevel = l;
+        }
+    }
+    
+    init?(from jsonItem: [String: AnyObject]) { // load from JSON
+        if let q = jsonItem["q"] as? String, let a = jsonItem["a"] as? String {
+            m_sQuestion = q;
+            m_sAnswer = a;
+            if let level = jsonItem["lvl"] as? Int {
+                m_iLevel = level;
+            }
+            super.init()
+        }
+        else {
+            return nil;
+        }
+    }
+
+    func saveToJSON() -> [String: AnyObject] {
+        var item: [String: AnyObject] = ["q": m_sQuestion as AnyObject];
+        item["a"] = m_sAnswer as AnyObject;
+        item["lvl"] = m_iLevel as AnyObject;
+        return item;
+    }
+}
+
+//---------------------------------------------------------------------------
 enum CRxCategory: String {
     case informace, lekarna, prvniPomoc, policie, havarie, wc
     case pamatka, pamatnyStrom, vyznamnyStrom, zajimavost, ohniste
@@ -195,7 +232,8 @@ class CRxEventRecord: NSObject {
     var m_sContactNote: String?
     var m_arrOpeningHours: [CRxHourInterval]?
     var m_arrEvents: [CRxEventInterval]?
-    
+    var m_arrQa: [CRxQuestionAnswer]?
+
     // members for display only, not stored or read in the record
     var m_distFromUser: CLLocationDistance = Double.greatestFiniteMagnitude;
     var m_bMarkFavorite: Bool = false;      // saved news, marked dumpsters
@@ -268,6 +306,17 @@ class CRxEventRecord: NSObject {
                 m_arrEvents = arrEvents.sorted(by: { $0.m_dateStart < $1.m_dateStart });
             }
         }
+        if let qas = jsonItem["qa"] as? [[String: AnyObject]] {
+            var arrQa = [CRxQuestionAnswer]();
+            for jsonQaItem in qas {
+                if let item = CRxQuestionAnswer(from: jsonQaItem) {
+                    arrQa.append(item);
+                }
+            }
+            if arrQa.count > 0 {
+                m_arrQa = arrQa;
+            }
+        }
     }
     
     //---------------------------------------------------------------------------
@@ -316,6 +365,15 @@ class CRxEventRecord: NSObject {
                 sVal += it.toString();
             }
             item["events"] = sVal as AnyObject;
+        }
+        if let qas = m_arrQa {
+            var jsonQaItems = [AnyObject]()
+            for item in qas {
+                jsonQaItems.append(item.saveToJSON() as AnyObject);
+            }
+            if jsonQaItems.count > 0 {
+                item["qa"] = jsonQaItems as AnyObject;
+            }
         }
         
         return item;
