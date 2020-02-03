@@ -237,7 +237,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         m_orderedItems.removeAll();
         m_orderedCategories.removeAll();
         
-        m_tableView.allowsSelection = (ds.m_eType == .places || isAskForFilterActive());
+        m_tableView.allowsSelection = (ds.m_eType == .places || ds.m_eType == .questions || isAskForFilterActive());
         let bAskingForFilter = isAskForFilterActive();
         if bAskingForFilter {
             var arrFilter = [String]();
@@ -306,6 +306,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             var dateCat: Date?;
             switch ds.m_eType {
             case .news: break;    // one category for news
+            case .questions: break;
                 
             case .places:
                 if ds.m_bGroupByCategory {
@@ -366,6 +367,8 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 sortedItems[groupIt.key] = groupIt.value.sorted(by: {$0.m_aDate! < $1.m_aDate! });
             case .places:
                 sortedItems[groupIt.key] = groupIt.value.sorted(by: {($0.m_bMarkFavorite && !$1.m_bMarkFavorite) || ($0.m_bMarkFavorite == $1.m_bMarkFavorite && $0.m_distFromUser < $1.m_distFromUser) });
+            case .questions:
+                sortedItems[groupIt.key] = groupIt.value; // no sorting
             }
         }
         m_orderedItems = sortedItems;
@@ -705,6 +708,12 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             cellPlace.m_imgIcon.isHidden = (cellPlace.m_imgIcon.image == nil);
             cell = cellPlace;
         }
+        else if ds.m_eType == .questions {
+            let cellFilter = tableView.dequeueReusableCell(withIdentifier: "cellFilter", for: indexPath) as! FilterCell;
+            cellFilter.m_lbTitle.text = rec.m_sTitle;
+            cell = cellFilter;
+            return cell;
+        }
         else {
             cell = UITableViewCell();
         }
@@ -733,12 +742,21 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             eventCtl.m_sParentFilter = m_arrFilterSelection[indexPath.row];
             navigationController?.pushViewController(eventCtl, animated: true);
         }
-        else if let rec = record(at: indexPath) {
-            let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl;
-            placeCtl.m_aDataSource = m_aDataSource;
-            placeCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
-            placeCtl.m_refreshParentDelegate = self;
-            navigationController?.pushViewController(placeCtl, animated: true);
+        else if let rec = record(at: indexPath), let ds = m_aDataSource {
+            if ds.m_eType == .places {
+                let placeCtl = storyboard.instantiateViewController(withIdentifier: "placeDetailCtl") as! PlaceDetailCtl;
+                placeCtl.m_aDataSource = m_aDataSource;
+                placeCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
+                placeCtl.m_refreshParentDelegate = self;
+                navigationController?.pushViewController(placeCtl, animated: true);
+            }
+            else if ds.m_eType == .questions {
+                let questionsCtl = storyboard.instantiateViewController(withIdentifier: "questionsCtl") as! QuestionsCtl;
+                questionsCtl.m_aDataSource = m_aDataSource;
+                questionsCtl.m_aRecord = rec;     // addRefs the object, keeps it even when it is deleted in DS during refresh
+                navigationController?.pushViewController(questionsCtl, animated: true);
+
+            }
         }
     }
 

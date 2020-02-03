@@ -47,7 +47,7 @@
     "title":"Life Situations",
     "title@cs":"Životní situace",
     "icon":"ds_events",
-    "type":"places",
+    "type":"questions",
     "serverDataFile":"dyn_radSituations.json",
     "offlineDataFile":"test_files/dyn_radSituations.json",
     "backgroundColor":"#884d3f",

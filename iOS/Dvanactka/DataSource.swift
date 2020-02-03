@@ -42,6 +42,7 @@ class CRxDataSource : NSObject {
         case events
         case news
         case places
+        case questions
     }
     var m_eType: DataType;
     var m_bGroupByCategory = true;      // UI should show sections for each category

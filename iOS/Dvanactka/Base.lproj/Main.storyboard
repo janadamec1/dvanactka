@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pkf-eV-m1o">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1012,6 +1012,110 @@ line 3</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j1L-f1-FmW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3941.25" y="-789.08450704225356"/>
+        </scene>
+        <!--Questions Ctl-->
+        <scene sceneID="6DV-uZ-vMf">
+            <objects>
+                <viewController storyboardIdentifier="questionsCtl" id="IV3-gn-TEl" customClass="QuestionsCtl" customModule="Dvanactka" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qbj-gJ-28P"/>
+                        <viewControllerLayoutGuide type="bottom" id="LXt-sk-mcy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1Bc-tg-hyG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OCo-mj-LAT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="d5m-uZ-b4A">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="518"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellQuestion" id="ecx-Ed-Fjt" customClass="QuestionsCell" customModule="Dvanactka" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="320" height="97"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ecx-Ed-Fjt" id="q2V-j4-flH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="97"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="61z-XY-Mzs">
+                                                            <rect key="frame" x="8" y="8" width="304" height="81"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Title title title title title title title title end" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3D-kR-Lz3">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="42.5"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="G0E-z1-6Jh"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. Multi-line text. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHY-z9-xfT">
+                                                                    <rect key="frame" x="0.0" y="46.5" width="304" height="34.5"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="61z-XY-Mzs" firstAttribute="top" secondItem="q2V-j4-flH" secondAttribute="top" constant="8" id="JZ2-ez-mhE"/>
+                                                        <constraint firstAttribute="trailing" secondItem="61z-XY-Mzs" secondAttribute="trailing" constant="8" id="Kza-KI-4gB"/>
+                                                        <constraint firstItem="61z-XY-Mzs" firstAttribute="leading" secondItem="q2V-j4-flH" secondAttribute="leading" constant="8" id="PQB-Fy-xBr"/>
+                                                        <constraint firstAttribute="bottom" secondItem="61z-XY-Mzs" secondAttribute="bottom" constant="8" id="ar5-uO-lmT"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="m_lbText" destination="FHY-z9-xfT" id="prn-yh-Vpp"/>
+                                                    <outlet property="m_lbTitle" destination="c3D-kR-Lz3" id="ea8-Ik-bZJ"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="IV3-gn-TEl" id="IQ5-9V-mD1"/>
+                                            <outlet property="delegate" destination="IV3-gn-TEl" id="ZtR-kz-RLn"/>
+                                        </connections>
+                                    </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="smG-ng-hag">
+                                        <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jvA-Ve-wbm">
+                                                <rect key="frame" x="94.5" y="8" width="131" height="35"/>
+                                                <segments>
+                                                    <segment title="First"/>
+                                                    <segment title="Second"/>
+                                                </segments>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="jvA-Ve-wbm" firstAttribute="top" secondItem="smG-ng-hag" secondAttribute="top" constant="8" id="PfR-JW-cO6"/>
+                                            <constraint firstAttribute="bottom" secondItem="jvA-Ve-wbm" secondAttribute="bottom" constant="8" id="b5G-7z-SqO"/>
+                                            <constraint firstItem="jvA-Ve-wbm" firstAttribute="centerX" secondItem="smG-ng-hag" secondAttribute="centerX" id="raM-dh-Evd"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="OCo-mj-LAT" firstAttribute="leading" secondItem="1Bc-tg-hyG" secondAttribute="leading" id="PvV-ZD-Nyo"/>
+                            <constraint firstItem="LXt-sk-mcy" firstAttribute="top" secondItem="OCo-mj-LAT" secondAttribute="bottom" id="S4M-tY-4ES"/>
+                            <constraint firstItem="OCo-mj-LAT" firstAttribute="top" secondItem="Qbj-gJ-28P" secondAttribute="bottom" id="dNS-Tk-0jc"/>
+                            <constraint firstAttribute="trailing" secondItem="OCo-mj-LAT" secondAttribute="trailing" id="zPW-Pb-dF5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="m_segmLevel" destination="jvA-Ve-wbm" id="8OF-Zy-6Oy"/>
+                        <outlet property="m_tableView" destination="d5m-uZ-b4A" id="PpM-oh-Q4X"/>
+                        <outlet property="m_viewFooter" destination="smG-ng-hag" id="xmn-5m-cfr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1FB-Rp-SOb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4820.625" y="-957.04225352112678"/>
         </scene>
         <!--Place Detail Ctl-->
         <scene sceneID="S4x-P4-KSf">
