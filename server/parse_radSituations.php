@@ -8,13 +8,13 @@ ini_set('html_errors', false);
 function downloadSituation(&$aNewRecord, $linkSit) {
 
   $arrDetailLevel = array(0,
-    0, 0, 2, 2, 2,  /* 1 - 5 */
-    2, 0, 2, 3, 3,  /* 6 - 10 */
-    3, 3, 2, 2, 2,  /* 11 - 15 */
-    2, 1, 0, 1, 1,  /* 16 - 20 */
-    0, 0, 1, 1, 0,  /* 21 - 25 */
-    0, 0, 2, 2, 0,  /* 25 - 30 */
-    0, 0, 0, 0, 0
+    3, 3, 1, 1, 1,  /* 1 - 5 */
+    1, 3, 1, 0, 0,  /* 6 - 10 */
+    0, 0, 1, 1, 1,  /* 11 - 15 */
+    1, 2, 3, 2, 2,  /* 16 - 20 */
+    3, 3, 2, 2, 3,  /* 21 - 25 */
+    3, 3, 1, 1, 3,  /* 25 - 30 */
+    3, 3, 3, 0, 3
     );
   //var_dump($arrDetailLevel);
 
@@ -51,8 +51,10 @@ function downloadSituation(&$aNewRecord, $linkSit) {
 	      array_push($arrQAs, $aNewQA);
 	    }
       $aNewRecord["qa"] = $arrQAs;
+      return count($arrQAs);
 		}
 	}
+	return 0;
 }
 
 $arrItems = array();
@@ -82,15 +84,16 @@ foreach ($nodes as $i => $node) {
       $aNewRecord["infoLink"] = $link;
       $aNewRecord["filter"] = $title;
 
-			downloadSituation($aNewRecord, $link);
-
-	    array_push($arrItems, $aNewRecord);
+			if (downloadSituation($aNewRecord, $link) > 0)
+  	    array_push($arrItems, $aNewRecord);
 	    //break;  // break after 1st category
     }
   }
 }
 if (count($arrItems) > 0) {
+
 	$arr = array("items" => $arrItems);
+	$arr["qaLables"] = array("Stručné", "Základní", "Rozšířené", "Úplné");
 	$encoded = json_encode($arr, JSON_UNESCAPED_UNICODE);
 	$filename = "dyn_radSituations.json";
 	file_put_contents($filename, $encoded, LOCK_EX);

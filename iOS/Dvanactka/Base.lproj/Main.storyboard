@@ -1082,11 +1082,14 @@ line 3</string>
                                         <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                         <subviews>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jvA-Ve-wbm">
-                                                <rect key="frame" x="94.5" y="8" width="131" height="35"/>
+                                                <rect key="frame" x="8" y="8" width="304" height="35"/>
                                                 <segments>
                                                     <segment title="First"/>
                                                     <segment title="Second"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="onSegmLevelChanged:" destination="IV3-gn-TEl" eventType="valueChanged" id="aio-2n-38z"/>
+                                                </connections>
                                             </segmentedControl>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1094,6 +1097,7 @@ line 3</string>
                                             <constraint firstItem="jvA-Ve-wbm" firstAttribute="top" secondItem="smG-ng-hag" secondAttribute="top" constant="8" id="PfR-JW-cO6"/>
                                             <constraint firstAttribute="bottom" secondItem="jvA-Ve-wbm" secondAttribute="bottom" constant="8" id="b5G-7z-SqO"/>
                                             <constraint firstItem="jvA-Ve-wbm" firstAttribute="centerX" secondItem="smG-ng-hag" secondAttribute="centerX" id="raM-dh-Evd"/>
+                                            <constraint firstItem="jvA-Ve-wbm" firstAttribute="leading" secondItem="smG-ng-hag" secondAttribute="leading" constant="8" id="vaU-fx-k8x"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1115,7 +1119,7 @@ line 3</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1FB-Rp-SOb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4820.625" y="-957.04225352112678"/>
+            <point key="canvasLocation" x="4631" y="-789"/>
         </scene>
         <!--Place Detail Ctl-->
         <scene sceneID="S4x-P4-KSf">
