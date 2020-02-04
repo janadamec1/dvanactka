@@ -68,9 +68,10 @@ class CRxDataSource {
     Date m_dateLastRefreshed = null;
     boolean m_bIsBeingRefreshed = false;
     ArrayList<CRxEventRecord> m_arrItems = new ArrayList<>();   // the data
+    ArrayList<String> m_arrQaLabels = null;   // level labels for Q&A in items (usually inside loaded data)
     CRxDataSourceRefreshDelegate delegate = null;
 
-    static final int DATATYPE_events = 0, DATATYPE_news = 1, DATATYPE_places = 2;
+    static final int DATATYPE_events = 0, DATATYPE_news = 1, DATATYPE_places = 2, DATATYPE_questions = 3;
     int m_eType;        // contains DATATYPE_xxxx
 
     boolean m_bGroupByCategory = true;      // UI should show sections for each category
@@ -116,6 +117,7 @@ class CRxDataSource {
         if (sType.equals("news")) eType = DATATYPE_news;
         else if (sType.equals("events")) eType = DATATYPE_events;
         else if (sType.equals("places")) eType = DATATYPE_places;
+        else if (sType.equals("questions")) eType = DATATYPE_questions;
         else return null;
 
         CRxDataSource pThis = new CRxDataSource(sId, sTitle, sIcon, eType, iBackgroundColor);
@@ -191,6 +193,16 @@ class CRxDataSource {
             }
         }
         catch (JSONException e) {}
+        try {
+            JSONArray jsonQaLabels = json.getJSONArray("qaLables");
+            m_arrQaLabels = new ArrayList<>();
+            for (int i = 0; i < jsonQaLabels.length(); i++) {
+                String qaItem = jsonQaLabels.getString(i);
+                if (qaItem != null)
+                    m_arrQaLabels.add(qaItem);
+            }
+        }
+        catch (JSONException e) {}
 
         // load config
         try {
@@ -218,6 +230,13 @@ class CRxDataSource {
 
         JSONObject json = new JSONObject();
         try { json.put("items", jsonItems); } catch (JSONException e) {}
+
+        if (m_arrQaLabels != null && !m_arrQaLabels.isEmpty()) {
+            JSONArray jsonQaItems = new JSONArray();
+            for (String it: m_arrQaLabels)
+                jsonQaItems.put(it);
+            try { json.put("qaLables", jsonQaItems); } catch (JSONException e) {}
+        }
 
         // save config
         JSONObject config = new JSONObject();

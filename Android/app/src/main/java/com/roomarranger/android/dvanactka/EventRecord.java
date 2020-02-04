@@ -8,6 +8,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -182,6 +183,40 @@ class CRxEventInterval
 }
 
 //---------------------------------------------------------------------------
+// this class is for questions and answers
+class CRxQuestionAnswer {
+    int m_iLevel = 0;     // detail level 0 is "all info", higher value means less info
+    String m_sQuestion;
+    String m_sAnswer;
+
+    CRxQuestionAnswer(String q, String a, int level) {
+        m_sQuestion = q;
+        m_sAnswer = a;
+        m_iLevel = level;
+    }
+
+    static CRxQuestionAnswer fromJson(JSONObject jsonItem) { // load from JSON
+
+        String q, a;
+        try { q = jsonItem.getString("q"); } catch (JSONException e) { return null; }
+        try { a = jsonItem.getString("a"); } catch (JSONException e) { return null; }
+
+        CRxQuestionAnswer pThis = new CRxQuestionAnswer(q, a, 0);
+        pThis.m_iLevel = jsonItem.optInt("lvl", 0);
+        return pThis;
+    }
+
+    //---------------------------------------------------------------------------
+    JSONObject saveToJSON() {
+        JSONObject item = new JSONObject();
+        try { item.put("q", m_sQuestion); } catch (JSONException e) { }
+        try { item.put("a", m_sAnswer); } catch (JSONException e) { }
+        try { item.put("lvl", m_iLevel); } catch (JSONException e) { }
+        return item;
+    }
+}
+
+//---------------------------------------------------------------------------
 class CRxCategory {
     static final String informace = "informace", lekarna = "lekarna", prvniPomoc = "prvniPomoc", policie = "policie", havarie = "havarie", wc = "wc";
     static final String pamatka = "pamatka", pamatnyStrom = "pamatnyStrom", vyznamnyStrom = "vyznamnyStrom", zajimavost = "zajimavost", ohniste = "ohniste";
@@ -277,6 +312,7 @@ class CRxEventRecord
     String m_sContactNote = null;
     ArrayList<CRxHourInterval> m_arrOpeningHours = null;
     ArrayList<CRxEventInterval> m_arrEvents = null;
+    ArrayList<CRxQuestionAnswer> m_arrQa = null;
 
     // members for display only, not stored or read in the record
     double m_distFromUser = Double.MAX_VALUE;
@@ -379,6 +415,20 @@ class CRxEventRecord
             });
         }
         catch (JSONException e) {}
+
+        try {
+            JSONArray qas = jsonItem.getJSONArray("qa");
+            ArrayList<CRxQuestionAnswer> arrQa = new ArrayList<CRxQuestionAnswer>();
+            for (int i = 0; i < qas.length(); i++) {
+                JSONObject jsonQaItem = qas.getJSONObject(i);
+                CRxQuestionAnswer item = CRxQuestionAnswer.fromJson(jsonQaItem);
+                if (item != null)
+                    arrQa.add(item);
+            }
+            if (!arrQa.isEmpty())
+                pThis.m_arrQa = arrQa;
+        }
+        catch (JSONException e) {}
         return pThis;
     }
 
@@ -424,6 +474,15 @@ class CRxEventRecord
                 sVal += it.toString();
             }
             try { item.put("events", sVal); } catch (JSONException e) {}
+        }
+        if (m_arrQa != null) {
+            JSONArray jsonQaItems = new JSONArray();
+            for (CRxQuestionAnswer qaItem: m_arrQa) {
+                jsonQaItems.put(qaItem.saveToJSON());
+            }
+            if (jsonQaItems.length() > 0) {
+                try { item.put("qa", jsonQaItems); } catch (JSONException e) {}
+            }
         }
         return item;
     }

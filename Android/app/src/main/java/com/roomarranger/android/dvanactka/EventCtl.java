@@ -187,6 +187,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     case CRxDataSource.DATATYPE_places:
                         resId = R.layout.list_item_places;
                         break;
+                    case CRxDataSource.DATATYPE_questions:
+                        resId = R.layout.list_item_filter;
+                        break;
                 }
             }
             NewsListItemHolder cell;
@@ -234,6 +237,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
                             cell.m_lbText = (TextView) view.findViewById(R.id.text);
                             cell.m_imgIcon = (ImageView) view.findViewById(R.id.icon);
+                            break;
+                        case CRxDataSource.DATATYPE_questions:
+                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
                             break;
                     }
                 }
@@ -549,6 +555,10 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     cell.m_imgIcon.setVisibility(iIcon != -1 ? View.VISIBLE : View.GONE);
                     break;
                 }
+                case CRxDataSource.DATATYPE_questions: {
+                    cell.m_lbTitle.setText(rec.m_sTitle);
+                    break;
+                }
             }
             return view;
         }
@@ -595,7 +605,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         ExpandableListView ExpandList = (ExpandableListView)findViewById(R.id.ExpList);
         m_adapter = new ExpandListAdapter(this);
         ExpandList.setAdapter(m_adapter);
-        if (m_bAskForFilter || m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
+        if (m_bAskForFilter || m_aDataSource.m_eType == CRxDataSource.DATATYPE_places || m_aDataSource.m_eType == CRxDataSource.DATATYPE_questions) {
             ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
                 @Override
                 public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
@@ -608,11 +618,22 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     }
                     else {
                         ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
-                        CRxEventRecord rec = arr.get(childPosition);
-                        Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
-                        intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                        intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
-                        startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
+                        try {
+                            CRxEventRecord rec = arr.get(childPosition);
+                            if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
+                                Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
+                                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                                intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
+                                startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
+                            }
+                            else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_questions) {
+                                Intent intent = new Intent(EventCtl.this, QuestionsCtl.class);
+                                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                                intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
+                                startActivity(intent);
+                            }
+                        }
+                        catch (NullPointerException e) {}
                         return false;
                     }
                 }
@@ -770,6 +791,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             Date dateCat = null;
             switch (ds.m_eType) {
             case CRxDataSource.DATATYPE_news: break;    // one category for news
+            case CRxDataSource.DATATYPE_questions: break;
 
             case CRxDataSource.DATATYPE_places:
                 if (ds.m_bGroupByCategory) {
@@ -862,6 +884,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             return Double.compare(t0.m_distFromUser, t1.m_distFromUser);
                         }
                     });
+                    break;
+                case CRxDataSource.DATATYPE_questions:
+                    // no sorting
                     break;
             }
         }

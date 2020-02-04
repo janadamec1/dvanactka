@@ -368,8 +368,8 @@ class CRxEventRecord: NSObject {
         }
         if let qas = m_arrQa {
             var jsonQaItems = [AnyObject]()
-            for item in qas {
-                jsonQaItems.append(item.saveToJSON() as AnyObject);
+            for qaItem in qas {
+                jsonQaItems.append(qaItem.saveToJSON() as AnyObject);
             }
             if jsonQaItems.count > 0 {
                 item["qa"] = jsonQaItems as AnyObject;
