@@ -43,17 +43,6 @@
     "listingSearchBarVisibleAtStart":true
   },
   {
-    "id":"dsRadSituations",
-    "title":"Life Situations",
-    "title@cs":"Životní situace",
-    "icon":"ds_events",
-    "type":"questions",
-    "serverDataFile":"dyn_radSituations.json",
-    "offlineDataFile":"test_files/dyn_radSituations.json",
-    "backgroundColor":"#884d3f",
-    "filterAsParentView":true
-  },
-  {
     "id":"dsRadEvents",
     "title":"Events",
     "title@cs":"Akce",
@@ -153,6 +142,17 @@
     "offlineDataFile":"test_files/p12kultpamatky.json",
     "backgroundColor":"#008000",
     "refreshFreqHours":48
+  },
+  {
+    "id":"dsRadSituations",
+    "title":"Life Situations",
+    "title@cs":"Životní situace",
+    "icon":"ds_situations",
+    "type":"questions",
+    "serverDataFile":"dyn_radSituations.json",
+    "offlineDataFile":"test_files/dyn_radSituations.json",
+    "backgroundColor":"#9f7308",
+    "filterAsParentView":true
   },
   {
     "id":"dsCityOffice",
