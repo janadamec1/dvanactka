@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="0dp"
+android:paddingLeft="0dp"
+android:paddingRight="0dp"
+android:paddingTop="0dp"
+tools:context=".QuestionsCtl">
+
+<ListView
+    android:id="@+id/listView"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_above="@+id/footer" />
+
+<RelativeLayout
+    android:id="@+id/footer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:paddingTop="8dp"
+    android:paddingBottom="6dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="#E3EFFC"
+    >
+
+    <org.nairteashop.SegmentedControl
+        android:id="@+id/segmLevel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        >
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_0" android:text="@string/standard" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_1" android:text="@string/satellite" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_2" android:text="@string/hybrid" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_3" android:text="@string/hybrid" />
+    </org.nairteashop.SegmentedControl>
+
+</RelativeLayout>
+</RelativeLayout>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.roomarranger.android.dvanactka"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.roomarranger.android.dvanactka">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -31,9 +31,9 @@
             android:launchMode="singleTop"
             android:screenOrientation="fullSensor">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -44,7 +44,7 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.MainActivity"/>
+                android:value="com.roomarranger.android.dvanactka.MainActivity" />
         </activity>
         <activity
             android:name=".GameCtl"
@@ -54,19 +54,19 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.MainActivity"/>
+                android:value="com.roomarranger.android.dvanactka.MainActivity" />
         </activity>
         <activity
             android:name=".GameLeaderCtl"
+            android:excludeFromRecents="true"
             android:label="@string/leaderboard"
             android:launchMode="singleTop"
             android:parentActivityName=".GameCtl"
-            android:theme="@android:style/Theme.Holo.Dialog"
-            android:excludeFromRecents="true"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="fullSensor"
+            android:theme="@android:style/Theme.Holo.Dialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.GameCtl"/>
+                android:value="com.roomarranger.android.dvanactka.GameCtl" />
         </activity>
         <activity
             android:name=".MapCtl"
@@ -76,7 +76,7 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.EventCtl"/>
+                android:value="com.roomarranger.android.dvanactka.EventCtl" />
         </activity>
         <activity
             android:name=".PlaceDetailCtl"
@@ -86,7 +86,7 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.EventCtl"/>
+                android:value="com.roomarranger.android.dvanactka.EventCtl" />
         </activity>
         <activity
             android:name=".FilterCtl"
@@ -96,7 +96,15 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.EventCtl"/>
+                android:value="com.roomarranger.android.dvanactka.EventCtl" />
+        </activity>
+        <activity android:name=".QuestionsCtl"
+            android:launchMode="singleTop"
+            android:parentActivityName=".EventCtl"
+            android:screenOrientation="fullSensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.roomarranger.android.dvanactka.EventCtl" />
         </activity>
         <activity
             android:name=".AppInfoCtl"
@@ -106,7 +114,7 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.MainActivity"/>
+                android:value="com.roomarranger.android.dvanactka.MainActivity" />
         </activity>
         <activity
             android:name=".ReportFaultCtl"
@@ -116,7 +124,7 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.MainActivity"/>
+                android:value="com.roomarranger.android.dvanactka.MainActivity" />
         </activity>
         <activity
             android:name=".RefineLocCtl"
@@ -126,20 +134,20 @@
             android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.roomarranger.android.dvanactka.ReportFaultCtl"/>
+                android:value="com.roomarranger.android.dvanactka.ReportFaultCtl" />
         </activity>
 
         <service
             android:name=".FetchAddressIntentService"
-            android:exported="false"/>
+            android:exported="false" />
 
-        <receiver android:name=".NotificationPublisher"/>
+        <receiver android:name=".NotificationPublisher" />
         <receiver
             android:name=".NotificationAtBootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
@@ -150,19 +158,22 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
-
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+            android:value="@string/google_maps_key" />
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>
