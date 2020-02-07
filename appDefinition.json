@@ -1,7 +1,7 @@
 {
 "title":"Dvanáctka",
 "website":"https://www.dvanactka.info",
-"copyright":"Copyright © 2019, Jan Adamec",
+"copyright":"Copyright © 2020, Jan Adamec",
 "contactEmail":"info@dvanactka.info",
 "recordUpdateEmail":"info@dvanactka.info",
 "reportFaultEmail":"informace@praha12.cz",
@@ -19,6 +19,7 @@
     "icon":"ds_news",
     "type":"news",
     "serverDataFile":"dyn_radAktual.json",
+    "linkBaseUrl":"https://www.praha12.cz/",
     "backgroundColor":"#884d3f"
   },
   {
@@ -38,6 +39,7 @@
     "icon":"ds_billboard",
     "type":"news",
     "serverDataFile":"dyn_radDeska.json",
+    "linkBaseUrl":"https://www.praha12.cz/",
     "backgroundColor":"#884d3f",
     "filterable":true,
     "listingSearchBarVisibleAtStart":true
@@ -49,6 +51,7 @@
     "icon":"ds_events",
     "type":"events",
     "serverDataFile":"dyn_events.php",
+    "linkBaseUrl":"https://www.praha12.cz/",
     "backgroundColor":"#2d55db",
     "filterable":true
   },
@@ -151,6 +154,7 @@
     "type":"questions",
     "serverDataFile":"dyn_radSituations.json",
     "offlineDataFile":"test_files/dyn_radSituations.json",
+    "linkBaseUrl":"https://www.praha12.cz/",
     "backgroundColor":"#9f7308",
     "filterAsParentView":true
   },
@@ -162,6 +166,7 @@
     "type":"places",
     "serverDataFile":"dyn_cityOffice.json",
     "offlineDataFile":"test_files/dyn_cityOffice.json",
+    "linkBaseUrl":"https://www.praha12.cz/",
     "backgroundColor":"#884d3f",
     "refreshFreqHours":100,
     "filterAsParentView":true,

@@ -30,6 +30,7 @@ class CRxDataSource : NSObject {
     var m_nRefreshFreqHours: Int = 18;  // refresh after 18 hours
     var m_sServerDataFile: String?;     // url where to get the current data
     var m_sOfflineDataFile: String?;    // offline data file
+    var m_sLinkBaseUrl: String?;        // base URL (server) when detected relative URL
     var m_sLastItemShown: String = "";  // hash of the last record user displayed (to count unread news, etc)
     var m_sUuid: String?;               // id used in game data source
     var m_dateLastRefreshed: Date?;
@@ -90,6 +91,7 @@ class CRxDataSource : NSObject {
         if let val = CRxAppDefinition.shared.loadLocalizedString(key: "shortTitle", from: json) { m_sShortTitle = val; }
         if let val = CRxAppDefinition.shared.loadLocalizedString(key: "serverDataFile", from: json) { m_sServerDataFile = val; }
         if let val = CRxAppDefinition.shared.loadLocalizedString(key: "offlineDataFile", from: json) { m_sOfflineDataFile = val; }
+        if let val = CRxAppDefinition.shared.loadLocalizedString(key: "linkBaseUrl", from: json) { m_sLinkBaseUrl = val; }
         if let val = json["refreshFreqHours"] as? Int { m_nRefreshFreqHours = val; }
         if let val = json["filterable"] as? Bool { m_bFilterable = val; }
         if let val = json["filterAsParentView"] as? Bool { m_bFilterAsParentView = val; }

@@ -63,6 +63,7 @@ class CRxDataSource {
     int m_nRefreshFreqHours = 18;   // refresh after 18 hours
     String m_sServerDataFile = null;    // url where to get the current data
     String m_sOfflineDataFile = null;   // offline data file
+    String m_sLinkBaseUrl = null;       // base URL (server) when detected relative URL
     String m_sLastItemShown = "";   // hash of the last record user displayed (to count unread news, etc)
     String m_sUuid = null;          // id used in game data source
     Date m_dateLastRefreshed = null;
@@ -126,6 +127,7 @@ class CRxDataSource {
         pThis.m_sShortTitle = CRxAppDefinition.shared.loadLocalizedString("shortTitle", json);
         pThis.m_sServerDataFile = CRxAppDefinition.shared.loadLocalizedString("serverDataFile", json);
         pThis.m_sOfflineDataFile = CRxAppDefinition.shared.loadLocalizedString("offlineDataFile", json);
+        pThis.m_sLinkBaseUrl = CRxAppDefinition.shared.loadLocalizedString("linkBaseUrl", json);
         pThis.m_nRefreshFreqHours = json.optInt("refreshFreqHours", pThis.m_nRefreshFreqHours);
         pThis.m_bFilterable = json.optBoolean("filterable", pThis.m_bFilterable);
         pThis.m_bFilterAsParentView = json.optBoolean("filterAsParentView", pThis.m_bFilterAsParentView);

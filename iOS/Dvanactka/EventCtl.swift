@@ -248,7 +248,12 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                     }
                 }
             }
-            m_arrFilterSelection = arrFilter.sorted();
+            if ds.m_eType == .questions {
+                m_arrFilterSelection = arrFilter;
+            }
+            else {
+                m_arrFilterSelection = arrFilter.sorted();
+            }
             m_orderedCategories.append(NSLocalizedString("Subcategories", comment: ""));
         }
         

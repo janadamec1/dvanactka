@@ -487,7 +487,7 @@ class CRxEventRecord: NSObject {
 
     //---------------------------------------------------------------------------
     static func openWebUrl(_ url: URL, fromCtl: UIViewController?) {
-        if let senderViewCtl = fromCtl {
+        if let senderViewCtl = fromCtl, let scheme = url.scheme, (scheme == "http" || scheme == "https")  {
             let safariCtl = SFSafariViewController(url: url);
             if #available(iOS 10.0, *) {
                 safariCtl.preferredBarTintColor = UIColor(red: 23.0/255.0, green: 37.0/255.0, blue: 96.0/255.0, alpha: 1.0);
@@ -500,6 +500,22 @@ class CRxEventRecord: NSObject {
         }
     }
     
+    //---------------------------------------------------------------------------
+    static func openWebUrl(_ url: URL, inDataSource: CRxDataSource?, fromCtl: UIViewController?) {
+        if let scheme = url.scheme, scheme == "applewebdata", let ds = inDataSource, let baseUrl = ds.m_sLinkBaseUrl  {
+            var newPath = url.path;
+            if let query = url.query {
+                newPath = newPath + "?" + query;
+            }
+            let newUrl = URL.init(string: baseUrl + newPath);
+            if let newUrl = newUrl {
+                CRxEventRecord.openWebUrl(newUrl, fromCtl: fromCtl);
+                return;
+            }
+        }
+        CRxEventRecord.openWebUrl(url, fromCtl: fromCtl);
+    }
+
     //---------------------------------------------------------------------------
     func recordHash() -> String {
         var sHash = m_sTitle;

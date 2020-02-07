@@ -11,9 +11,10 @@ import UIKit
 class QuestionsCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
     @IBOutlet weak var m_lbText: UILabel!
+    @IBOutlet weak var m_lvHtmlText: UITextView!
 }
 
-class QuestionsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class QuestionsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
 
     @IBOutlet weak var m_tableView: UITableView!
     @IBOutlet weak var m_viewFooter: UIView!
@@ -87,16 +88,18 @@ class QuestionsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate
         var bTextSet = false;
         if sAnswer.hasPrefix("<dd") {
             var sTextColor = "#000000";
+            var sLinkColor = "#1111FF";
             if #available(iOS 13.0, *) {
                 if UITraitCollection.current.userInterfaceStyle == .dark {
-                    sTextColor = "#FFFFFF";
+                    sTextColor = "#EFEFEF";
+                    sLinkColor = "#EEEEFF";
                 }
             }
-            let sHtmlText = String.init(format: "<style>div, dl, dd {font-family: '%@'; font-size:%fpx; color:%@;}</style>", cell.m_lbText.font.fontName, cell.m_lbText.font.pointSize, sTextColor) + sAnswer;
+            let sHtmlText = String.init(format: "<style>div, dl, dd, table {font-family: 'Helvetica'; font-size: %fpx; color: %@;} a {color: %@;}</style>", cell.m_lbText.font.pointSize, sTextColor, sLinkColor) + sAnswer;
             if let htmlData = sHtmlText.data(using: String.Encoding.unicode) {
                 do {
                     let attributedText = try NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil);
-                    cell.m_lbText.attributedText = attributedText;
+                    cell.m_lvHtmlText.attributedText = attributedText;
                     bTextSet = true;
                 } catch let error as NSError {
                     print("Translating HTML text failed: \(error.localizedDescription)");
@@ -106,12 +109,20 @@ class QuestionsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate
         if !bTextSet {
             cell.m_lbText.text = sAnswer;
         }
+        cell.m_lbText.isHidden = bTextSet;
+        cell.m_lvHtmlText.isHidden = !bTextSet;
         return cell;
     }
     
     //--------------------------------------------------------------------------
     @IBAction func onSegmLevelChanged(_ sender: Any) {
         filterQuestions();
+    }
+     
+    //--------------------------------------------------------------------------
+    func textView(_ textView: UITextView, shouldInteractWith textURL: URL, in characterRange: NSRange) -> Bool {
+        CRxEventRecord.openWebUrl(textURL, inDataSource: m_aDataSource, fromCtl: self);
+        return false;
     }
 }
 

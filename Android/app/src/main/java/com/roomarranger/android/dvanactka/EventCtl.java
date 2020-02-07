@@ -732,9 +732,15 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     }
                 }
             }
-            Collator coll = Collator.getInstance(); // for sorting with locale
-            coll.setStrength(Collator.PRIMARY);
-            Collections.sort(m_arrFilterSelection, coll);
+            if (ds.m_eType == CRxDataSource.DATATYPE_questions) {
+                // do not sort
+            }
+            else {
+                Collator coll = Collator.getInstance(); // for sorting with locale
+                coll.setStrength(Collator.PRIMARY);
+                Collections.sort(m_arrFilterSelection, coll);
+            }
+
             m_orderedCategories.add(getString(R.string.subcategories));
         }
 
