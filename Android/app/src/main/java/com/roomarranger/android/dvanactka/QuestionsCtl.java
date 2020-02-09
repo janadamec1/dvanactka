@@ -3,6 +3,7 @@ package com.roomarranger.android.dvanactka;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +99,7 @@ public class QuestionsCtl extends Activity {
                     cell = new QuestionsCtl.QuestionItemViewHolder();
                     cell.m_lbTitle = convertView.findViewById(R.id.title);
                     cell.m_lbText = convertView.findViewById(R.id.text);
+                    cell.m_lbText.setMovementMethod(LinkMovementMethod.getInstance()); // enable clicking through links in this textview
                     convertView.setTag(cell);
                 }
                 else

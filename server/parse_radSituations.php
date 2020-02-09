@@ -22,6 +22,12 @@ function downloadSituation(&$aNewRecord, $linkSit) {
   $domSit = new DomDocument;
   $domSit->loadHTMLFile($linkSit);
   $xpathSit = new DomXPath($domSit);
+
+  // replace all relative a.hrefs with absolute url
+  foreach ($xpathSit->query("//a[starts-with(@href, '/')]") as $node) {
+      $node->setAttribute("href", "https://www.praha12.cz" . $node->getAttribute("href"));
+  }
+
 	$nodeSitText = firstItem($xpathSit->query("//div[@class='text-to-speech']/dl"));
   if ($nodeSitText != NULL) {
     //echo " - found";
@@ -86,8 +92,9 @@ foreach ($nodes as $i => $node) {
 
 			if (downloadSituation($aNewRecord, $link) > 0)
   	    array_push($arrItems, $aNewRecord);
-	    //break;  // break after 1st category
+	    //break;  // break after 1st situation
     }
+	  //break;  // break after 1st category
   }
 }
 if (count($arrItems) > 0) {
