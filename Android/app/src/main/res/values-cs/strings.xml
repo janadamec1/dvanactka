@@ -8,22 +8,12 @@
     <string name="in_d_minutes" formatted="false">za %d minut</string>
     <string name="dumpster_at_s_arrived_s" formatted="false">Právě přijel kontejner k %s (%s)</string>
     <string name="dumpster_at_s_tomorrow_s" formatted="false">Zítra bude kontejner u %s (%s)</string>
-    <string name="news">Aktuality</string>
-    <string name="events">Akce</string>
     <string name="multi_day_events">Vícedenní akce</string>
-    <string name="official_board">Úřední deska</string>
-    <string name="associations">Spolky</string>
-    <string name="list">Seznam</string>
-    <string name="trips">Výlety</string>
     <string name="c_landmarks">Kulturní památky</string>
     <string name="c_associations">Spolky</string>
     <string name="c_information">Informace</string>
-    <string name="report_fault">Vyfotit závadu</string>
     <string name="c_shops">Firmy</string>
-    <string name="shops">Firmy</string>
-    <string name="work">Práce</string>
     <string name="game">Hra</string>
-    <string name="help">Pomoc</string>
     <string name="c_pharmacies">Lékárny</string>
     <string name="c_first_aid">První pomoc</string>
     <string name="c_police">Policie</string>
@@ -39,7 +29,6 @@
     <string name="c_waste_electro">Elektroodpad</string>
     <string name="c_waste_textile">Kontejnery na textil</string>
     <string name="c_waste">Odpad</string>
-    <string name="traffix">Doprava</string>
     <string name="c_accident">Nehoda</string>
     <string name="c_roadblock">Uzavírka</string>
     <string name="g_forester">Lesník</string>
@@ -70,7 +59,6 @@
     <string name="continue_reading_on_website">Přejít na web</string>
     <string name="website">Web</string>
     <string name="yes">Ano</string>
-    <string name="waste">Odpad</string>
     <string name="buy">Koupit</string>
     <string name="add_to_calendar">Přidat do kalendáře</string>
     <string name="address">Adresa</string>
@@ -121,7 +109,6 @@
     <string name="gamestart_note">Hru začnete hrát tak, že dojdete k nejbližšímu místu ve Výletech, Odpadu nebo Firmách, a ťuknete na Jsem tu!</string>
     <string name="downloading_data">Data se stahují...</string>
     <string name="error_downloading_data">Chyba při stahování dat</string>
-    <string name="city_office">Úřad</string>
     <string name="c_fault">Havárie</string>
     <string name="c_toilet">WC</string>
     <string name="wifi_download_only">Stahovat nová data jen přes WiFi</string>

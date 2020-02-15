@@ -30,19 +30,7 @@
     <string name="c_accident">Accident</string>
     <string name="c_roadblock">Roadblock</string>
     <string name="closed_today">closed today</string>
-    <string name="news">News</string>
-    <string name="events">Events</string>
-    <string name="associations">Associations</string>
-    <string name="list">List</string>
-    <string name="trips">Trips</string>
-    <string name="waste">Waste</string>
-    <string name="help">Help</string>
-    <string name="report_fault">Report Fault</string>
     <string name="game">Game</string>
-    <string name="shops">Shops</string>
-    <string name="work">Work</string>
-    <string name="traffix">Traffic</string>
-    <string name="official_board">Official Board</string>
     <string name="g_forester">Forester</string>
     <string name="g_culturist">Culturist</string>
     <string name="g_visitor">Visitor</string>
@@ -120,7 +108,6 @@
     <string name="downloading_data">Downloading data...</string>
     <string name="game_you">YOU</string>
     <string name="error_downloading_data">Error when downloading data</string>
-    <string name="city_office">Office</string>
     <string name="c_fault">Fault</string>
     <string name="c_toilet">Toilet</string>
     <string name="wifi_download_only">Download new data only via WiFi</string>
