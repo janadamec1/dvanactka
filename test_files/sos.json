@@ -212,16 +212,6 @@
 "category":"lekarna"
 },
 {
-"title":"U sv. Václava",
-"locationLat":"50.0129968",
-"locationLong":"14.4221272",
-"address":"Mráčkova 3\nPraha 12",
-"phone":"241 761 195",
-"infoLink":"http:\/\/www.lekarnavaclav.cz",
-"openingHours":"1: 730-1830, 2: 730-1830, 3: 730-1830, 4: 730-1830, 5: 730-1830, 6: 800-1200",
-"category":"lekarna"
-},
-{
 "title":"Lékárna Vltava",
 "locationLat":"50.003119",
 "locationLong":"14.4061768",
@@ -245,7 +235,7 @@
 "locationLat":"50.0017294",
 "locationLong":"14.466446",
 "address":"Libušská 126\nPraha 4",
-"phone":"244 091 111",
+"phone":"244 092 111",
 "openingHours":"1: 900-1800, 2: 900-1800, 3: 900-1800, 4: 900-1800, 5: 900-1800, 6: 900-1500",
 "category":"lekarna"
 },
