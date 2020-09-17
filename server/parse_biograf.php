@@ -5,7 +5,7 @@ $sAddress = "Modřanský biograf\nU Kina 1\n143 00 Praha 12 - Modřany";
 
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.modranskybiograf.cz/klient-2774/kino-433/stranka-14487");
+$dom->loadHTMLFile("http://www.modranskybiograf.eu/klient-2774/kino-433/stranka-14487");
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//div[@class='calendar-left-table-tr']");
 foreach ($nodes as $i => $node) {
@@ -17,7 +17,7 @@ foreach ($nodes as $i => $node) {
 
 		$link = $nodeTitle->getAttribute("href");
 		if (substr($link, 0, 4) != "http") {
-			$link = "http://www.modranskybiograf.cz" . $link;
+			$link = "http://www.modranskybiograf.eu" . $link;
 		}
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;

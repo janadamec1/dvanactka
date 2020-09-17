@@ -1,338 +1,139 @@
 Datum;Od;Do;Lokalita;Zajistuje;Poznamka;
-30.03.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-20.04.2019;13:00;16:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-04.05.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-11.05.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-25.05.2019;13:00;16:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-08.06.2019;13:00;16:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-22.06.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-31.03.2019;13:00;16:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-21.04.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-05.05.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-12.05.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-26.05.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-16.06.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-07.04.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-27.04.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-05.05.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-12.05.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-18.05.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-16.06.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-30.06.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-01.04.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-02.05.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-03.06.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-01.07.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-15.04.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-20.05.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-17.06.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-16.07.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-01.04.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-02.05.2018;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-03.06.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-01.07.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-15.04.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-20.05.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-17.06.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-16.07.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-02.04.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-06.05.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-04.06.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-02.07.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-16.04.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-21.05.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-18.06.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-17.07.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-02.04.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-06.05.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-04.06.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-02.07.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-16.04.2019;12:00;23:00;U modřanské školy;MČ;větve;
-21.05.2019;12:00;23:00;U modřanské školy;MČ;větve;
-18.06.2019;12:00;23:00;U modřanské školy;MČ;větve;
-17.07.2019;12:00;23:00;U modřanské školy;MČ;větve;
-03.04.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-07.05.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-05.06.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-03.07.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-17.04.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-22.05.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-19.06.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-18.07.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-03.04.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-07.05.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-05.06.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-03.07.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-17.04.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-22.05.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-19.06.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-18.07.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-04.04.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-09.05.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-06.06.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-08.07.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-23.04.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-23.05.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-20.06.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-22.07.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-04.04.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-09.05.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-06.06.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-08.07.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-23.04.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-23.05.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-20.06.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-22.07.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-08.04.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-13.05.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-10.06.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-09.07.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-24.04.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-27.05.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-14.06.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-23.07.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-08.04.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-13.05.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-10.06.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-09.07.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-24.04.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-27.05.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-14.06.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-23.07.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-09.04.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-14.05.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-11.06.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-10.07.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-25.04.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-28.05.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-15.06.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-24.07.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-09.04.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-14.05.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-11.06.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-10.07.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-25.04.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-28.05.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-15.06.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-24.07.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-10.04.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-15.05.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-12.06.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-11.07.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-29.04.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-29.05.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-26.06.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-25.07.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-10.04.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-15.05.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-12.06.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-11.07.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-29.04.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-29.05.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-26.06.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-25.07.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-10.04.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-15.05.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-12.06.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-11.07.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-29.04.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-29.05.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-26.06.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-25.07.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-11.04.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-16.05.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-13.06.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-15.07.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-30.04.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-30.05.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-27.06.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-29.07.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-11.04.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-16.05.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-13.06.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-15.07.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-30.04.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-30.05.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-27.06.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-29.07.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-05.04.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-12.04.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-03.05.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-10.05.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-31.05.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-07.06.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-28.06.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-12.07.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-18.04.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-26.04.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-17.05.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-24.05.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-14.06.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-21.06.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-19.07.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-26.07.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-05.04.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-03.05.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-31.05.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-28.06.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-18.04.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-17.05.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-14.06.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-19.07.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-12.04.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-10.05.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-07.06.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-12.07.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-26.04.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-24.05.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-21.06.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-26.07.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-31.08.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-15.09.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-22.09.2019;13:00;16:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-05.10.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-12.10.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-26.10.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-16.11.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-24.11.2019;09:00;12:00;Křižovatka ulic Ražická a Ke Kálku;MHMP;bioodpad;
-01.09.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-07.09.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-22.09.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-28.09.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-12.10.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-26.10.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-09.11.2019;09:00;12:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-16.11.2019;13:00;16:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-24.11.2019;13:00;16:00;Náměstí Antonína Pecáka;MHMP;bioodpad;
-08.09.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-22.09.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-05.10.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-27.10.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-09.11.2019;13:00;16:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-17.11.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-24.11.2019;09:00;12:00;Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická;MHMP;bioodpad;
-02.09.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-30.09.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-29.10.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;bioodpad;
-16.09.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-14.10.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-12.11.2019;12:00;23:00;Tyršova čtvrť – ul. Do čtvrti U Šumavěnky;MČ;větve;
-02.09.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-30.09.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-29.10.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;bioodpad;
-16.09.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-14.10.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-12.11.2019;12:00;23:00;Křižovatka ulic Lysinská a K Orionce;MČ;větve;
-03.09.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-01.10.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-30.10.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;bioodpad;
-17.09.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-15.10.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-13.11.2019;12:00;23:00;Křižovatka ulic Darwinova a Voborského;MČ;větve;
-03.09.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-01.10.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-30.10.2019;12:00;23:00;U modřanské školy;MČ;bioodpad;
-17.09.2019;12:00;23:00;U modřanské školy;MČ;větve;
-15.10.2019;12:00;23:00;U modřanské školy;MČ;větve;
-13.11.2019;12:00;23:00;U modřanské školy;MČ;větve;
-04.09.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-02.10.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-31.10.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;bioodpad;
-18.09.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-16.10.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-14.11.2019;12:00;23:00;Křižovatka ulic Na Floře a U čokoládoven;MČ;větve;
-04.09.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-02.10.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-31.10.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;bioodpad;
-18.09.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-16.10.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-14.11.2019;12:00;23:00;Křižovatka ulic Šumavského a Emlerova;MČ;větve;
-05.09.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-03.10.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-04.11.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;bioodpad;
-19.09.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-17.10.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-21.11.2019;12:00;23:00;Křižovatka ulic K dolům a Na Havránce;MČ;větve;
-05.09.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-03.10.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-04.11.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;bioodpad;
-19.09.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-17.10.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-21.11.2019;12:00;23:00;Křižovatka ulic Nad Rážákem a Bojovská;MČ;větve;
-09.09.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-07.10.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-05.11.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;bioodpad;
-23.09.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-21.10.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-20.11.2019;12:00;23:00;Křižovatka ulic Kolářova a K Beránku;MČ;větve;
-09.09.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-07.10.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-05.11.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;bioodpad;
-23.09.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-21.10.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-20.11.2019;12:00;23:00;Násirovo náměstí Baba III;MČ;větve;
-10.09.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-08.10.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-06.11.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;bioodpad;
-24.09.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-22.10.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-18.11.2019;12:00;23:00;Komořany proti restauraci U Bukačů;MČ;větve;
-10.09.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-08.10.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-06.11.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;bioodpad;
-24.09.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-22.10.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-18.11.2019;12:00;23:00;Hornocholupická – u transformátoru;MČ;větve;
-11.09.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-09.10.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-07.11.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;bioodpad;
-25.09.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-23.10.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-25.11.2019;12:00;23:00;Ploštilova – pod hřištěm multikára;MČ;větve;
-11.09.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-09.10.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-07.11.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;bioodpad;
-25.09.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-23.10.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-25.11.2019;12:00;23:00;Cholupický vrch, Malá lada u lesa;MČ;větve;
-11.09.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-09.10.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-07.11.2019;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad;
-25.09.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-23.10.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-25.11.2019;12:00;23:00;Liškova x Cihlářova;MČ;větve;
-12.09.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-10.10.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-11.11.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;bioodpad;
-26.09.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-24.10.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-26.11.2019;12:00;23:00;Křižovatka ulic Palmetová a Pod lesem;MČ;větve;
-12.09.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-10.10.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-11.11.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;bioodpad;
-26.09.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-24.10.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-26.11.2019;12:00;23:00;Křižovatka ulic U klubu a Nad teplárnou;MČ;větve;
-30.08.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-27.09.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-04.10.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-25.10.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-01.11.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-13.09.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-20.09.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-11.10.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-18.10.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-08.11.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-15.11.2019;00:00;00:00;Křižovatka ulic Na Stráňkách a K závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-30.08.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-27.09.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-25.10.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-13.09.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-11.10.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-08.11.2019;00:00;00:00;Křižovatka ulic Starý lis a Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-06.09.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-04.10.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-01.11.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;bioodpad;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-20.09.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-18.10.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
-15.11.2019;00:00;00:00;Křižovatka ulic Starý lis a Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+01.09.2020;12:00;23:00;Darwinova x Voborského;MČ;větve;
+01.09.2020;12:00;23:00;U Modřanské školy;MČ;větve;
+02.09.2020;12:00;23:00;Na Floře x U Čokoládoven;MČ;větve;
+02.09.2020;12:00;23:00;Šumavského x Emlerova;MČ;větve;
+03.09.2020;12:00;23:00;K Dolům x Na Havránce;MČ;větve;
+03.09.2020;12:00;23:00;Nad Rážákem x Bojovská;MČ;větve;
+05.09.2020;09:00;12:00;Cholupice: Ke Křížku - konec ulice;MČ;veškerý bioodpad;
+05.09.2020;09:00;12:00;Cholupický vrch: Hornocholupická x K Ladům;MČ;veškerý bioodpad;
+06.09.2020;09:00;12:00;Točná: Na Stráňkách x K Závorám;MČ;veškerý bioodpad;
+06.09.2020;13:00;16:00;Točná: Starý lis x Hájíčkova;MČ;veškerý bioodpad;
+07.09.2020;12:00;23:00;Kolářova x K Beránku;MČ;větve;
+07.09.2020;12:00;23:00;Násirovo náměstí;MČ;větve;
+08.09.2020;12:00;23:00;Do Čtvrti x u Šumavěnky;MČ;větve;
+08.09.2020;12:00;23:00;Lysinská x K Orionce;MČ;větve;
+08.09.2020;12:00;23:00;Komořany: Okružní 2025/19;MČ;větve;
+09.09.2020;12:00;23:00;Hornocholupická - u trafostanice;MČ;větve;
+09.09.2020;12:00;23:00;Cholupický vrch: Malá Lada - u lesa;MČ;větve;
+10.09.2020;12:00;23:00;Komořany: Palmetová x Pod Lesem;MČ;větve;
+10.09.2020;12:00;23:00;Komořany: U Klubu x Nad Teplárnou;MČ;větve;
+11.09.2020;00:00;00:00;Komořany: ulice Revoluce;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+11.09.2020;00:00;00:00;K Dolům - u trafostanice;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+13.09.2020;10:00;16:00;Točná: Starý lis x Zahrádkářská;MČ;bioodpad, objemný odpad, dřevo, suť do 1 m3;
+13.09.2020;09:00;12:00;Cholupice: Ražická x Ke Kálku;MČ;veškerý bioodpad;
+14.09.2020;12:00;23:00;Do Čtvrti x u Šumavěnky;MČ;bioodpad bez větví;
+14.09.2020;12:00;23:00;Lysinská x K Orionce;MČ;bioodpad bez větví;
+15.09.2020;12:00;23:00;Darwinova x Voborského;MČ;bioodpad bez větví;
+15.09.2020;12:00;23:00;U Modřanské školy;MČ;bioodpad bez větví;
+16.09.2020;12:00;23:00;Na Floře x U Čokoládoven;MČ;bioodpad bez větví;
+16.09.2020;12:00;23:00;Šumavského x Emlerova;MČ;bioodpad bez větví;
+17.09.2020;12:00;23:00;K Dolům x Na Havránce;MČ;bioodpad bez větví;
+17.09.2020;12:00;23:00;Nad Rážákem x Bojovská;MČ;bioodpad bez větví;
+20.09.2020;08:00;14:00;Cholupice: Cholupické náměstí;MČ;bioodpad, objemný odpad, dřevo, suť do 1 m3;
+20.09.2020;10:00;16:00;Cholupický vrch: Hornocholupická x K Ladům;MČ;bioodpad, objemný odpad, dřevo, suť do 1 m3;
+20.09.2020;09:00;12:00;Točná: Na Stráňkách x K Závorám;MČ;veškerý bioodpad;
+20.09.2020;13:00;16:00;Točná: Starý lis x Hájíčkova;MČ;veškerý bioodpad;
+21.09.2020;12:00;23:00;Komořany: Okružní 2025/19;MČ;bioodpad bez větví;
+22.09.2020;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad bez větví;
+22.09.2020;12:00;23:00;Hornocholupická - u trafostanice;MČ;bioodpad bez větví;
+23.09.2020;12:00;23:00;Kolářova x K Beránku;MČ;bioodpad bez větví;
+23.09.2020;12:00;23:00;Násirovo náměstí;MČ;bioodpad bez větví;
+24.09.2020;12:00;23:00;Komořany: Palmetová x Pod Lesem;MČ;bioodpad bez větví;
+24.09.2020;12:00;23:00;Komořany: U Klubu x Nad Teplárnou;MČ;bioodpad bez větví;
+25.09.2020;00:00;00:00;Točná: Na Stráňkách x K Závorám;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+25.09.2020;00:00;00:00;Točná: Starý lis x Zahrádkářská;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+27.09.2020;09:00;12:00;Cholupice: Ke Křížku - konec ulice;MČ;veškerý bioodpad;
+27.09.2020;13:00;16:00;Cholupický vrch: Hornocholupická x K Ladům;MČ;veškerý bioodpad;
+30.09.2020;12:00;23:00;Darwinova x Voborského;MČ;větve;
+30.09.2020;12:00;23:00;U Modřanské školy;MČ;větve;
+01.10.2020;12:00;23:00;Na Floře x U Čokoládoven;MČ;větve;
+01.10.2020;12:00;23:00;Šumavského x Emlerova;MČ;větve;
+02.10.2020;00:00;00:00;Cholupický vrch: Malá Lada - u lesa;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+03.10.2020;09:00;12:00;Cholupice: Ražická x Ke Kálku;MČ;veškerý bioodpad;
+04.10.2020;09:00;12:00;Točná: Na Stráňkách x K Závorám;MČ;veškerý bioodpad;
+04.10.2020;09:00;12:00;Točná: Starý lis x Hájíčkova;MČ;veškerý bioodpad;
+05.10.2020;12:00;23:00;K Dolům x Na Havránce;MČ;větve;
+05.10.2020;12:00;23:00;Nad Rážákem x Bojovská;MČ;větve;
+06.10.2020;12:00;23:00;Kolářova x K Beránku;MČ;větve;
+06.10.2020;12:00;23:00;Násirovo náměstí;MČ;větve;
+07.10.2020;12:00;23:00;Komořany: Okružní 2025/19;MČ;větve;
+07.10.2020;12:00;23:00;Hornocholupická - u trafostanice;MČ;větve;
+08.10.2020;12:00;23:00;Liškova x Cihlářova;MČ;větve;
+08.10.2020;12:00;23:00;Ploštilova - pod hřištěm;MČ;větve;
+09.10.2020;00:00;00:00;Točná: Na Stráňkách x K Závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+09.10.2020;00:00;00:00;Točná: Starý lis x Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+10.10.2020;09:00;12:00;Cholupice: Ke Křížku - konec ulice;MČ;veškerý bioodpad;
+10.10.2020;13:00;16:00;Cholupický vrch: Hornocholupická x K Ladům;MČ;veškerý bioodpad;
+12.10.2020;12:00;23:00;Komořany: Palmetová x Pod Lesem;MČ;větve;
+12.10.2020;12:00;23:00;Komořany: U Klubu x Nad Teplárnou;MČ;větve;
+13.10.2020;12:00;23:00;Do Čtvrti x u Šumavěnky;MČ;bioodpad bez větví;
+13.10.2020;12:00;23:00;Lysinská x K Orionce;MČ;bioodpad bez větví;
+14.10.2020;12:00;23:00;Darwinova x Voborského;MČ;bioodpad bez větví;
+14.10.2020;12:00;23:00;U Modřanské školy;MČ;bioodpad bez větví;
+15.10.2020;12:00;23:00;Na Floře x U Čokoládoven;MČ;bioodpad bez větví;
+15.10.2020;12:00;23:00;Šumavského x Emlerova;MČ;bioodpad bez větví;
+16.10.2020;00:00;00:00;Komořany: ulice Revoluce;MČ;bioodpad bez větví;
+18.10.2020;09:00;12:00;Točná: Na Stráňkách x K Závorám;MČ;veškerý bioodpad;
+18.10.2020;13:00;16:00;Cholupice: Ražická x Ke Kálku;MČ;veškerý bioodpad;
+18.10.2020;13:00;16:00;Cholupice: Ražická x Ke Kálku;MČ;veškerý bioodpad;
+19.10.2020;12:00;23:00;K Dolům x Na Havránce;MČ;bioodpad bez větví;
+19.10.2020;12:00;23:00;Nad Rážákem x Bojovská;MČ;bioodpad bez větví;
+20.10.2020;12:00;23:00;Kolářova x K Beránku;MČ;bioodpad bez větví;
+20.10.2020;12:00;23:00;Násirovo náměstí;MČ;bioodpad bez větví;
+21.10.2020;12:00;23:00;Komořany: Okružní 2025/19;MČ;bioodpad bez větví;
+21.10.2020;12:00;23:00;Hornocholupická - u trafostanice;MČ;bioodpad bez větví;
+22.10.2020;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad bez větví;
+22.10.2020;12:00;23:00;Ploštilova - pod hřištěm;MČ;bioodpad bez větví;
+23.10.2020;00:00;00:00;Točná: Na Stráňkách x K Závorám;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+23.10.2020;00:00;00:00;Cholupický vrch: Malá Lada - u lesa;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+25.10.2020;08:00;14:00;Cholupice: Cholupické náměstí;MČ;bioodpad, objemný odpad, dřevo, suť do 1 m3;
+25.10.2020;10:00;16:00;Točná: Starý lis x Zahrádkářská;MČ;bioodpad, objemný odpad, dřevo, suť do 1 m3;
+26.10.2020;12:00;23:00;Komořany: Palmetová x Pod Lesem;MČ;bioodpad bez větví;
+26.10.2020;12:00;23:00;Komořany: U Klubu x Nad Teplárnou;MČ;bioodpad bez větví;
+27.10.2020;12:00;23:00;Do Čtvrti x U Šumavěnky;MČ;větve;
+27.10.2020;12:00;23:00;Lysinská x K Orionce;MČ;větve;
+29.10.2020;12:00;23:00;Darwinova x Voborského;MČ;větve;
+29.10.2020;12:00;23:00;U Modřanské školy;MČ;větve;
+30.10.2020;12:00;23:00;Točná: Starý lis x Hájíčkova;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+31.10.2020;09:00;12:00;Točná: Na Stráňkách x K Závorám;MČ;veškerý bioodpad;
+01.11.2020;13:00;16:00;Cholupice: Ke Křížku - konec ulice;MČ;veškerý bioodpad;
+02.11.2020;12:00;23:00;Na Floře x U Čokoládoven;MČ;větve;
+02.11.2020;12:00;23:00;Šumavského x Emlerova;MČ;větve;
+03.11.2020;12:00;23:00;K Dolům x Na Havránce;MČ;větve;
+03.11.2020;12:00;23:00;Nad Rážákem x Bojovská;MČ;větve;
+04.11.2020;12:00;23:00;Kolářova x K Beránku;MČ;větve;
+04.11.2020;12:00;23:00;Násirovo náměstí;MČ;větve;
+05.11.2020;12:00;23:00;Komořany: Okružní 2025/19;MČ;větve;
+05.11.2020;12:00;23:00;Hornocholupická - u trafostanice;MČ;větve;
+06.11.2020;00:00;00:00;Točná: Na Stráňkách x K Závorám;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+06.11.2020;00:00;00:00;Točná: Starý lis x Zahrádkářská;MČ;větve;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+08.11.2020;09:00;12:00;Cholupice: Ražická x Ke Kálku;MČ;veškerý bioodpad;
+08.11.2020;13:00;16:00;Cholupický vrch: Hornocholupická x K Ladům;MČ;veškerý bioodpad;
+09.11.2020;12:00;23:00;Liškova x Cihlářova;MČ;větve;
+09.11.2020;12:00;23:00;Cholupický vrch: Malá Lada - u lesa;MČ;větve;
+10.11.2020;12:00;23:00;Komořany: Palmetová x Pod Lesem;MČ;větve;
+10.11.2020;12:00;23:00;Komořany: U Klubu x Nad Teplárnou;MČ;větve;
+11.11.2020;12:00;23:00;Do Čtvrti x U Šumavěnky;MČ;bioodpad bez větví;
+11.11.2020;12:00;23:00;Lysinská x K Orionce;MČ;bioodpad bez větví;
+12.11.2020;12:00;23:00;Darwinova x Voborského;MČ;bioodpad bez větví;
+12.11.2020;12:00;23:00;U Modřanské školy;MČ;bioodpad bez větví;
+13.11.2020;00:00;00:00;Točná: Na Stráňkách x K Závorám;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+13.11.2020;00:00;00:00;Točná: Starý lis x Hájíčkova;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+15.11.2020;13:00;16:00;Cholupice: Ke Křížku - konec ulice;MČ;veškerý bioodpad;
+16.11.2020;00:00;00:00;Na Floře x U Čokoládoven;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+16.11.2020;00:00;00:00;Šumavského x Emlerova;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+18.11.2020;12:00;23:00;K Dolům x Na Havránce;MČ;bioodpad bez větví;
+18.11.2020;12:00;23:00;Nad Rážákem x Bojovská;MČ;bioodpad bez větví;
+19.11.2020;12:00;23:00;Kolářova x K Beránku;MČ;bioodpad bez větví;
+19.11.2020;12:00;23:00;Násirovo náměstí;MČ;bioodpad bez větví;
+20.11.2020;00:00;00:00;Točná: Na Stráňkách x K Závorám;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+20.11.2020;00:00;00:00;Točná: Starý lis x Zahrádkářská;MČ;bioodpad bez větví;kontejner přistaven po celý víkend od pátku odpoledne do pondělí ráno
+22.11.2020;09:00;12:00;Cholupice: Ražická x Ke Kálku;MČ;veškerý bioodpad;
+22.11.2020;13:00;16:00;Cholupický vrch: Hornocholupická x K Ladům;MČ;veškerý bioodpad;
+23.11.2020;12:00;23:00;Komořany: Okružní 2025/19;MČ;bioodpad bez větví;
+23.11.2020;12:00;23:00;Hornocholupická - u trafostanice;MČ;bioodpad bez větví;
+24.11.2020;12:00;23:00;Liškova x Cihlářova;MČ;bioodpad bez větví;
+24.11.2020;12:00;23:00;Cholupický vrch: Malá Lada - u lesa;MČ;bioodpad bez větví;
+25.11.2020;12:00;23:00;Komořany: Palmetová x Pod Lesem;MČ;bioodpad bez větv;
+25.11.2020;12:00;23:00;Komořany: U Klubu x Nad Teplárnou;MČ;bioodpad bez větv;

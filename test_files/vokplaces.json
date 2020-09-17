@@ -214,140 +214,6 @@
 "contactNote":"V případě zaplnění kontaktujte firmu na:",
 "category":"wasteTextile"
 },
-{
-"title":"Mazancova",
-"locationLat":"50.0135781",
-"locationLong":"14.4200553",
-"infoLink":"http:\/\/www.kloktex.cz",
-"phone":"774 026 712",
-"email":"koutex@koutecky.cz",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"Obzor",
-"locationLat":"50.0088611",
-"locationLong":"14.4540336",
-"infoLink":"http:\/\/www.kloktex.cz",
-"phone":"774 026 712",
-"email":"koutex@koutecky.cz",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"K Vystrkovu",
-"locationLat":"49.9996553",
-"locationLong":"14.4064297",
-"infoLink":"http:\/\/www.kloktex.cz",
-"phone":"774 026 712",
-"email":"koutex@koutecky.cz",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"Palmetová",
-"locationLat":"49.9873158",
-"locationLong":"14.4117833",
-"infoLink":"http:\/\/textil-eco.cz",
-"category":"wasteTextile"
-},
-{
-"title":"Komořanské náměstí",
-"locationLat":"49.9909322",
-"locationLong":"14.4100211",
-"category":"wasteTextile"
-},
-
-{
-"title":"MŠ Oáza - Nechanická",
-"locationLat":"50.0194369",
-"locationLong":"14.4443722",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"MŠ Hvězdička - Liškova 10",
-"locationLat":"50.0150017",
-"locationLong":"14.4426261",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"MŠ Karásek - Vojtova",
-"locationLat":"50.0082242",
-"locationLong":"14.4106675",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"MŠ Srdíčko - Levského 19",
-"locationLat":"50.0079406",
-"locationLong":"14.4317819",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"ZŠ Na Beránku - Pavelkova",
-"locationLat":"50.0002947",
-"locationLong":"14.4314439",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"ZŠ ANGEL - Angelovova",
-"locationLat":"50.0099875",
-"locationLong":"14.4287617",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"ZŠ Písnická - Libeřská",
-"locationLat":"50.0196928",
-"locationLong":"14.4400458",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"ZŠ Rakovského",
-"locationLat":"50.0095722",
-"locationLong":"14.4240142",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"ZŠ Smolkova",
-"locationLat":"50.0087050",
-"locationLong":"14.4507533",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
-{
-"title":"ZŠ Zárubova",
-"locationLat":"50.0141761",
-"locationLong":"14.4328764",
-"infoLink":"http:\/\/www.diakoniebroumov.cz",
-"phone":"224 316 800",
-"contactNote":"V případě zaplnění kontaktujte firmu na:",
-"category":"wasteTextile"
-},
 
 {
 "title":"Botevova x Pejevové",
@@ -361,7 +227,7 @@
 "title":"Cílkova",
 "locationLong":"14.443877007923007",
 "locationLat":"50.01449100509505",
-"text":"Cílkova u ÚMČ Praha 12",
+"text":"Cílkova u ÚMČ Praha 12\nCílkova - u ÚMČ Praha 12",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -369,7 +235,7 @@
 "title":"Dolnojirčanská",
 "locationLong":"14.445243086228862",
 "locationLat":"50.01611403982279",
-"text":"Parkoviště v ulici Dolnojirčanská",
+"text":"Dolnojirčanská - parkoviště",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -377,15 +243,15 @@
 "title":"Durychova",
 "locationLong":"14.4426139",
 "locationLat":"50.0168122",
-"text":"Durychova – parkoviště u prodejny Jasná\nParkoviště u prodejny Jasná blíže k  ulici Krhanická",
+"text":"Durychova - parkoviště u prodejny Albert (Jasná)\nParkoviště u prodejny Jasná blíže k  ulici Krhanická",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
 {
-"title":"Hasova",
-"locationLong":"14.427930007818173",
-"locationLat":"50.01203900490191",
-"text":"Hasova ulice",
+"title":"Hasova 2",
+"locationLong":"14.4279614",
+"locationLat":"50.0121158",
+"text":"Hasova 3091/2",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -393,7 +259,7 @@
 "title":"Hornocholupická u trafa",
 "locationLong":"14.426946007210518",
 "locationLat":"49.99734600511373",
-"text":"Hornocholupická u trafa proti ulici Skalnatá\nHornocholupická – u transformátoru",
+"text":"Hornocholupická - u trafa proti ulici Skalnatá\nHornocholupická - u trafostanice\nHornocholupická",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -401,7 +267,7 @@
 "title":"Cholupický vrch Malá Lada",
 "locationLong":"14.43436430875908",
 "locationLat":"49.99444148076273",
-"text":"Cholupický vrch v ulici Malá Lada\nCholupický vrch, Malá lada u lesa",
+"text":"Cholupický vrch v ulici Malá Lada\nCholupický vrch: Malá Lada\nCholupický vrch: Malá Lada - u lesa",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -409,7 +275,7 @@
 "title":"Hornocholupická x K Ladům",
 "locationLong":"14.436952923690642",
 "locationLat":"49.99345304330027",
-"text":"Cholupický vrch, Křižovatka ulic K Ladům a Hornocholupická",
+"text":"Cholupický vrch: Hornocholupická x K Ladům",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -433,7 +299,7 @@
 "title":"Komořanská",
 "locationLong":"14.409790029570072",
 "locationLat":"49.989846717185564",
-"text":"Komořany – proti restauraci U Bukačů\nKomořany proti restauraci U Bukačů",
+"text":"Komořany – proti restauraci U Bukačů\nKomořany: proti restauraci U Bukačů",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -457,7 +323,7 @@
 "title":"Levského",
 "locationLong":"14.433228007477247",
 "locationLat":"50.00770700521481",
-"text":"Ulice Levského u lesa",
+"text":"Levského - u lesa",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -473,7 +339,7 @@
 "title":"Mráčkova",
 "locationLong":"14.421200007865979",
 "locationLat":"50.01279700534304",
-"text":"Mráčkova u prodejny Billa (Labe)",
+"text":"Mráčkova - u prodejny Billa (Labe)",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -489,7 +355,7 @@
 "title":"Na Stráňkách x K Závorám",
 "locationLong":"14.424131007408741",
 "locationLat":"49.97133700461486",
-"text":"Křižovatka ulic Na Stráňkách a K Závorám\nKřižovatka ulic Na Stráňkách a K závorám",
+"text":"Točná: Na Stráňkách x K Závorám",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -505,7 +371,7 @@
 "title":"Nad Teplárnou",
 "locationLong":"14.405267082704569",
 "locationLat":"49.99243998304472",
-"text":"Ulice Nad Teplárnou",
+"text":"Komořany: Nad Teplárnou",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -513,7 +379,7 @@
 "title":"Náměstí Antonína Pecáka",
 "locationLong":"14.431916047809404",
 "locationLat":"49.97257776874021",
-"text":"Točná – nám. Antonína Pecáka\nNáměstí Antonína Pecáka",
+"text":"Točná: náměstí Antonína Pecáka\nNáměstí Antonína Pecáka",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -529,7 +395,7 @@
 "title":"Palmetová x Pod Lesem",
 "locationLong":"14.40963200731891",
 "locationLat":"49.98726000468932",
-"text":"Křižovatka ulic Palmetová a Pod Lesem\nKřižovatka ulic Palmetová a Pod lesem",
+"text":"Komořany: Palmetová x Pod Lesem",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -537,7 +403,7 @@
 "title":"Pavlíkova",
 "locationLong":"14.45354100762694",
 "locationLat":"50.01139600546314",
-"text":"Pavlíkova ulice – parkoviště u kotelny",
+"text":"Pavlíkova - parkoviště u kotelny",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -545,7 +411,7 @@
 "title":"Pejevové",
 "locationLong":"14.423621007533692",
 "locationLat":"50.008947005080785",
-"text":"ul. Pejevové parkoviště před školou",
+"text":"Pejevové - parkoviště před školou",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -561,7 +427,7 @@
 "title":"Ploštilova",
 "locationLong":"14.424134006877877",
 "locationLat":"49.996184005257795",
-"text":"Ploštilova – u hřiště\nPloštilova – pod hřištěm multikára",
+"text":"Ploštilova – u hřiště\nPloštilova - pod hřištěm",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -569,7 +435,7 @@
 "title":"Rabyňská",
 "locationLong":"14.442122726699347",
 "locationLat":"50.02146944246503",
-"text":"Parkoviště v ulici Rabyňská",
+"text":"Rabyňská - parkoviště",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -577,7 +443,7 @@
 "title":"Ražická x Ke Kálku",
 "locationLong":"14.447488007591629",
 "locationLat":"49.987289005162516",
-"text":"Cholupice – křižovatka ulic Ražická a Ke Kálku\nKřižovatka ulic Ražická a Ke Kálku",
+"text":"Cholupice: Ražická x Ke Kálku\nCholupice: Cholupické náměstí (mobilní sběrný dvůr)",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -585,15 +451,23 @@
 "title":"Starý lis x Hájíčkova",
 "locationLong":"14.429003007096028",
 "locationLat":"49.96941100485677",
-"text":"Křižovatka ulic Starý lis a Hájíčkova\nKřižovatka ulic Starý lis a Hájíčkova",
+"text":"Točná: Starý lis x Hájíčkova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
 {
 "title":"Starý lis x Zahrádkářská",
-"locationLong":"14.4252831",
-"locationLat":"49.9669981",
-"text":"Křižovatka ulic Starý lis a Zahrádkářská",
+"locationLong":" 14.4252172",
+"locationLat":"49.966943",
+"text":"Točná: Starý lis x Zahrádkářská",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Ke Spálence x Hájíčkova",
+"locationLong":"14.4314828",
+"locationLat":"49.9694867",
+"text":"Točná: Ke Spálence x Hájíčkova",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -606,18 +480,18 @@
 "category":"waste"
 },
 {
-"title":"Urbánkova",
-"locationLong":"14.430804799515903",
-"locationLat":"50.00217594138188",
-"text":"Baba III – ulice Urbánkova u parkoviště",
+"title":"Urbánkova x Mezihorská",
+"locationLong":"14.4277994",
+"locationLat":"50.0022719",
+"text":"Urbánkova x Mezihorská",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
 {
-"title":"Zárubova",
-"locationLong":"14.433998006831237",
-"locationLat":"50.013511005203206",
-"text":"Parkoviště při ulici Zárubova",
+"title":"Zárubova x Vnoučkova",
+"locationLong":"14.4343383",
+"locationLat":"50.0135522",
+"text":"Zárubova x Vnoučkova - parkoviště",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -657,7 +531,7 @@
 "title":"U Klubu x Nad Teplárnou",
 "locationLong":"14.4079042",
 "locationLat":"49.9921042",
-"text":"Křižovatka ulic U klubu a Nad teplárnou",
+"text":"Komořany: U Klubu x Nad Teplárnou",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -665,7 +539,7 @@
 "title":"Do Čtvrti x U Šumavěnky",
 "locationLong":"14.4118161",
 "locationLat":"50.0149303",
-"text":"Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky",
+"text":"Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky\nDo Čtvrti x u Šumavěnky",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -674,6 +548,302 @@
 "locationLong":"14.4410161",
 "locationLat":"50.0148875",
 "text":"Křižovatka ulic Liškova a Cihlářova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Ke Křížku - konec ulice",
+"locationLong":"14.4470744",
+"locationLat":"49.9846108",
+"text":"Cholupice: Ke Křížku - konec ulice",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Okružní 19",
+"locationLong":"14.4067847",
+"locationLat":"49.9901508",
+"text":"Komořany: Okružní 2025/19",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Ulice Revoluce",
+"locationLong":"14.4133614",
+"locationLat":"49.9897750",
+"text":"Komořany: ulice Revoluce",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"K Dolům - u trafostanice",
+"locationLong":"14.4137625",
+"locationLat":"50.0030608",
+"text":"K Dolům - u trafostanice",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"K Dolům 14",
+"locationLong":"14.4071361",
+"locationLat":"50.0026011",
+"text":"K Dolům 901/14",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"K Závorám 1a",
+"locationLong":"14.4222036",
+"locationLat":"49.9729361",
+"text":"Točná: K Závorám 146/1a",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Zárubova naproti Pol. akademii",
+"locationLong":"14.4323006",
+"locationLat":"50.0166508",
+"text":"Zárubova - parkoviště u zast. MHD naproti Pol. akademii",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Okružní x U Vlečky",
+"locationLong":"14.4092103",
+"locationLat":"49.9906083",
+"text":"Komořany: Okružní x U Vlečky",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Platónova x Sokratova",
+"locationLong":"14.4177728",
+"locationLat":"49.9987450",
+"text":"Platónova x Sokratova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Daškova 1",
+"locationLong":"14.4260411",
+"locationLat":"50.0131272",
+"text":"Daškova 3078/1",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Lehárova 5",
+"locationLong":"14.4059322",
+"locationLat":"50.0064503",
+"text":"Lehárova 1820/5",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Rytířova x Kabeláčova",
+"locationLong":"14.4199264",
+"locationLat":"50.0147842",
+"text":"Rytířova x Kabeláčova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Krouzova x Mádrova",
+"locationLong":"14.4194925",
+"locationLat":"50.0109819",
+"text":"Krouzova x Mádrova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Do Koutů x Boženy Jandlové",
+"locationLong":"14.4147231",
+"locationLat":"49.9914483",
+"text":"Komořany: Do Koutů x Boženy Jandlové\nKomořany: Boženy Jandlové 2205/1",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Krhanická x Olbramovická",
+"locationLong":"14.4388708",
+"locationLat":"50.0158086",
+"text":"Krhanická x Olbramovická",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"K Otočce 22 - parkoviště",
+"locationLong":"14.4165947",
+"locationLat":"50.0140381",
+"text":"K Otočce 1877/22 - parkoviště",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Mezihorská x Nad Doly",
+"locationLong":"14.4241731",
+"locationLat":"50.0030531",
+"text":"Mezihorská x Nad Doly",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Chuchelská x Na Cikorce",
+"locationLong":"14.4130675",
+"locationLat":"50.0117908",
+"text":"Chuchelská x Na Cikorce",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Poljanovova x Angelovova",
+"locationLong":"14.4270331",
+"locationLat":"50.0090392",
+"text":"Poljanovova x Angelovova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Na Komořsku 1a",
+"locationLong":"14.4135594",
+"locationLat":"49.9891794",
+"text":"Komořany: Na Komořsku 2173/1a",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Dolnocholupická x Písková",
+"locationLong":"14.4087208",
+"locationLat":"50.0009592",
+"text":"Dolnocholupická x Písková",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Čechtická x Nechanická",
+"locationLong":"14.4441697",
+"locationLat":"50.0198347",
+"text":"Čechtická x Nechanická",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Růženínská 5",
+"locationLong":"14.4335442",
+"locationLat":"50.0188728",
+"text":"Růženínská 908/5",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Klostermannova x Karasova",
+"locationLong":"14.4086544",
+"locationLat":"50.0068722",
+"text":"Klostermannova x Karasova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Nesvadbova x Na Havránce",
+"locationLong":"14.4102264",
+"locationLat":"50.0044175",
+"text":"Nesvadbova x Na Havránce",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Palmetová x Za Sídlištěm",
+"locationLong":"14.4126028",
+"locationLat":"49.9882558",
+"text":"Komořany: Palmetová x Za Sídlištěm",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Petržílova - před trafostanicí",
+"locationLong":"14.4245225",
+"locationLat":"49.9996475",
+"text":"Petržílova - před trafostanicí",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Levského x Vazovova",
+"locationLong":"14.4363269",
+"locationLat":"50.0059556",
+"text":"Levského x Vazovova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Levského x Mladenovova",
+"locationLong":"14.4331411",
+"locationLat":"50.0075597",
+"text":"Levského x Mladenovova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"U Obce 162",
+"locationLong":"14.4414875",
+"locationLat":"49.9933911",
+"text":"Cholupický vrch: U Obce ev.č. 162",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Plovdivská x Jordana Jovkova",
+"locationLong":"14.4200350",
+"locationLat":"50.0064622",
+"text":"Plovdivská x Jordana Jovkova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Jordana Jovkova 3",
+"locationLong":"14.4228375",
+"locationLat":"50.0073864",
+"text":"Jordana Jovkova 3252/3",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Urbánkova - u trafostanice",
+"locationLong":"14.4307956",
+"locationLat":"50.0021564",
+"text":"Urbánkova - u trafostanice",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Imrychova 3",
+"locationLong":"14.4317128",
+"locationLat":"50.0129114",
+"text":"Imrychova 981/3",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Platónova x Popovova",
+"locationLong":"14.4189025",
+"locationLat":"49.9993822",
+"text":"Platónova x Popovova",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Za Sídlištěm - parkoviště",
+"locationLong":"14.4087844",
+"locationLat":"49.9880719",
+"text":"Komořany: Za Sídlištěm - parkoviště u kulturního domu",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Otradovická 1",
+"locationLong":"14.4464250",
+"locationLat":"50.0180478",
+"text":"Otradovická 726/1",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 }

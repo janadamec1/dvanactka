@@ -3,7 +3,7 @@
 function &findVokLocation(&$alias, &$ds) {	// return reference
 	$keys = array_keys($ds);
 	$size = count($ds);
-	
+
 	// first find exact match in title (new records have same name as in our vokplaces.json)
 	for ($i = 0; $i < $size; $i++) {		// iterate like this, foreach can make copy
 		$key = $keys[$i];
@@ -13,7 +13,7 @@ function &findVokLocation(&$alias, &$ds) {	// return reference
 	}
 
 	$aliasCompressed = str_replace(" ", "", $alias);
-	
+
 	for ($i = 0; $i < $size; $i++) {		// iterate like this, foreach can make copy
 		$key = $keys[$i];
 		$rec = &$ds[$key];					// reference!
@@ -44,7 +44,11 @@ function processWasteDataFile(&$csv, $type, &$ds) {
 		if (count($lineItems) < 5)
 			continue;
 		$rec = &findVokLocation($lineItems[$iLocCol], $ds);	// take reference
-		if ($rec != NULL) {
+		if ($rec == NULL) {
+    	echo "File " . $type . " cannot find " . $lineItems[$iLocCol] ."\n";
+		}
+		else
+		{
 			$bWeekend = FALSE;
 			if ($lineItems[$iTimeStartCol] === "0:00" && $lineItems[$iTimeEndCol] === "0:00") {
 				// exception, duration is entire weekend
@@ -61,11 +65,11 @@ function processWasteDataFile(&$csv, $type, &$ds) {
 			if ($bWeekend) {
 				$dateTo = date_add($dateTo, new DateInterval('P3D'));
 			}
-			
+
 			$sRecType = $type;
 			if ($iTypeCol >= 0 && $iTypeCol < count($lineItems))
 				$sRecType = $lineItems[$iTypeCol];
-			
+
 			$sItem = $sRecType . ";" . date_format($dateFrom, "Y-m-d\TH:i") . ";" . date_format($dateTo, "Y-m-d\TH:i");
 			// add new record to rec
 			if (array_key_exists("events", $rec))
@@ -121,7 +125,7 @@ $size = count($arrItems);
 for ($i = 0; $i < $size; $i++) {	// iterate like this, foreach can make copy
     $key = $keys[$i];
     $rec = &$arrItems[$key];		// reference!
-    
+
 	if (array_key_exists("category", $rec) && $rec["category"] === "waste") {
 		$rec["infoLink"] = "https://www.praha12.cz/odpady/ds-1138/";
 	}

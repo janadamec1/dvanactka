@@ -24,6 +24,17 @@
 "filter":"Restaurace"
 },
 {
+"title":"Sasy.re",
+"locationLat":"50.0016408",
+"locationLong":"14.4226153",
+"address":"Hubičkova 2\nPraha 12",
+"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
+"infoLink":"http:\/\/www.sasyre.cz",
+"phone":"774 303 628",
+"category":"restaurace",
+"filter":"Restaurace"
+},
+{
 "title":"Rosmarina",
 "locationLat":"50.0140494",
 "locationLong":"14.3970908",
