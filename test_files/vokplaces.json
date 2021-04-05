@@ -275,7 +275,7 @@
 "title":"Hornocholupická x K Ladům",
 "locationLong":"14.436952923690642",
 "locationLat":"49.99345304330027",
-"text":"Cholupický vrch: Hornocholupická x K Ladům",
+"text":"Cholupický vrch: Hornocholupická x K Ladům\nCholupický vrch: K Ladům x Hornocholupická",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -424,7 +424,7 @@
 "category":"waste"
 },
 {
-"title":"Ploštilova",
+"title":"Ploštilova - u hřiště",
 "locationLong":"14.424134006877877",
 "locationLat":"49.996184005257795",
 "text":"Ploštilova – u hřiště\nPloštilova - pod hřištěm",
@@ -835,6 +835,22 @@
 "title":"Za Sídlištěm - parkoviště",
 "locationLong":"14.4087844",
 "locationLat":"49.9880719",
+"text":"Komořany: Za Sídlištěm - parkoviště u kulturního domu",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Cholupická x Mařatkova",
+"locationLong":"14.4378369",
+"locationLat":"50.0194231",
+"text":"Komořany: Za Sídlištěm - parkoviště u kulturního domu",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Daškova 3078/1 - parkoviště",
+"locationLong":"14.4257878",
+"locationLat":"50.0132994",
 "text":"Komořany: Za Sídlištěm - parkoviště u kulturního domu",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
