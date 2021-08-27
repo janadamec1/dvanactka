@@ -339,7 +339,7 @@
 "title":"Mráčkova",
 "locationLong":"14.421200007865979",
 "locationLat":"50.01279700534304",
-"text":"Mráčkova - u prodejny Billa (Labe)",
+"text":"Mráčkova - u prodejny Billa (Labe)\nKutilova - u prodejny Billa (Labe)",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -459,7 +459,7 @@
 "title":"Starý lis x Zahrádkářská",
 "locationLong":" 14.4252172",
 "locationLat":"49.966943",
-"text":"Točná: Starý lis x Zahrádkářská",
+"text":"Točná: Starý lis x Zahrádkářská\nTočná: Starý lis 176/18",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
@@ -540,6 +540,14 @@
 "locationLong":"14.4118161",
 "locationLat":"50.0149303",
 "text":"Tyršova čtvrť – ul. Do čtvrti  U Šumavěnky\nDo Čtvrti x u Šumavěnky",
+"filter":"Velkoobjemové kontejnery",
+"category":"waste"
+},
+{
+"title":"Do Čtvrti 25",
+"locationLong":"14.4142764",
+"locationLat":"50.0150447",
+"text":"Do Čtvrti 1987/25",
 "filter":"Velkoobjemové kontejnery",
 "category":"waste"
 },
