@@ -79,6 +79,13 @@
 "category":"associations"
 },
 {
+"title":"Duha Střelka",
+"text":"Oddíl Střelka je od roku 1992 pobočný spolek sdružení Duha, které organizuje formou zážitkové pedagogiky volnočasové aktivity pro děti a mládež. V průběhu roku připravujeme pro děti a veřejnost soutěže a společná setkání. K tradičním akcím připojujeme také akce nové.",
+"infoLink":"https:\/\/duhastrelka.cz",
+"email":"strelka.duha@seznam.cz",
+"category":"associations"
+},
+{
 "title":"Klub sportovního bruslení Modřany",
 "text":"Oddíl in-line bruslení",
 "infoLink":"http:\/\/ksbm.cz",
@@ -103,6 +110,23 @@
 "category":"sport"
 },
 {
+"title":"SK Modřany",
+"text":"Fotbalový klub",
+"locationLat":"49.9973417",
+"locationLong":"14.4064811",
+"address":"Komořanská 47\nPraha 12",
+"infoLink":"https:\/\/skmodrany.cz",
+"category":"sport"
+},
+{
+"title":"TJ Točná",
+"text":"Fotbalový klub",
+"locationLat":"49.9698067",
+"locationLong":"14.4320278",
+"address":"Ke Spálence\nPraha 12",
+"category":"sport"
+},
+{
 "title":"Jezdecký klub Cholupice",
 "text":"Jezdecký výcvik, pronájem koní, vyjížďky do terénu či ustájení",
 "locationLat":"49.9954833",
@@ -118,6 +142,33 @@
 "locationLong":"14.4249756",
 "address":"Modřanská rokle",
 "infoLink":"http:\/\/modrany.narodnihazena.cz",
+"category":"sport"
+},
+{
+"title":"Spartak Modřany - tenis",
+"text":"Tenisový oddíl",
+"locationLat":"50.0158764",
+"locationLong":"14.4226628",
+"address":"Kabeláčova 4\nPraha 12",
+"infoLink":"https:\/\/www.tenismodrany.cz",
+"category":"sport"
+},
+{
+"title":"Tempo Praha - baseball",
+"text":"Baseballový a softballový oddíl založený roku 1963",
+"locationLat":"50.0090681",
+"locationLong":"14.4466847",
+"address":"Zelenkova 3\nPraha 12",
+"infoLink":"https:\/\/tempopraha.cz",
+"category":"sport"
+},
+{
+"title":"TJ Sokol Modřany",
+"text":"Všestrannost, cvičení žen, mužů, seniorů a mládeže.",
+"infoLink":"http:\/\/www.sokolmodrany.cz",
+"locationLat":"50.0062514",
+"locationLong":"14.4075058",
+"address":"K Vltavě 410\nPraha 12",
 "category":"sport"
 },
 {

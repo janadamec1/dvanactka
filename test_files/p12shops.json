@@ -723,6 +723,16 @@
 "filter":"Potraviny"
 },
 {
+"title":"Farmář Ježek",
+"text":"Tak trochu jiný zemědělec",
+"locationLat":"49.9877275",
+"locationLong":"14.4470167",
+"address":"Podchýšská 224\nPraha 12",
+"infoLink":"https:\/\/www.farmarjezek.cz",
+"category":"obchod",
+"filter":"Potraviny"
+},
+{
 "title":"Med p. Ouřada ml.",
 "text":"dle cedule na plotě\nvčelař",
 "locationLat":"50.0014669",
