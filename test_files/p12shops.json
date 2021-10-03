@@ -205,17 +205,6 @@
 "filter":"Restaurace"
 },
 {
-"title":"Xfitness",
-"locationLat":"50.0360303",
-"locationLong":"14.4126936",
-"address":"Branická 48\nPraha 4",
-"openingHours":"1: 600-2200, 2: 600-2200, 3: 600-2200, 4: 600-2200, 5: 600-2200, 6: 800-2000, 7: 800-2200",
-"infoLink":"http:\/\/www.xfitness.cz",
-"phone":"605 189 822",
-"category":"obchod",
-"filter":"Fitness"
-},
-{
 "title":"Fitness for Joy",
 "locationLat":"50.0156339",
 "locationLong":"14.4035472",
@@ -272,12 +261,13 @@
 "filter":"Fitness"
 },
 {
-"title":"Expreska",
+"title":"Fitimo",
+"text":"Fitness pro ženy",
 "locationLat":"50.0059892",
 "locationLong":"14.4171925",
 "address":"Sofijské náměstí 2\nPraha 12",
-"openingHours":"1: 900-2000, 2: 900-2000, 3: 900-2000, 4: 900-2000, 5: 900-2000, 6: 900-1300, 7: 1600-2000",
-"infoLink":"http:\/\/www.expreska.cz\/cz\/sit-center-expreska\/Praha-Modrany-43",
+"openingHours":"1: 1400-2000, 2: 1500-2100, 3: 900-1800, 4: 1500-2100, 5: 900-1500, 6: 900-1200",
+"infoLink":"http:\/\/www.fitimo.cz",
 "phone":"777 868 222",
 "category":"obchod",
 "filter":"Fitness"
