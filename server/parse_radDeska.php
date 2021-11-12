@@ -65,5 +65,6 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "done.";
+echo "parse_radDeska done, " . count($arrItems) . " items\n";
+
 ?>
