@@ -80,13 +80,13 @@
 "filter":"Restaurace"
 },
 {
-"title":"Pod vinicí",
-"locationLat":"50.010337",
-"locationLong":"14.403813",
-"address":"Chuchelská 6\nPraha 12",
-"openingHours":"1: 1500-2230, 2: 1500-2230, 3: 1500-2230, 4: 1500-2230, 5: 1500-2230, 6: 1200-2230",
-"infoLink":"http:\/\/www.podvinici.cz",
-"phone":"241 773 867",
+"title":"Restarace U Radnice",
+"locationLat":"50.0025836",
+"locationLong":"14.4147828",
+"address":"Generála Šišky 6\nPraha 12",
+"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2300, 6: 1100-2300, 7: 1100-2300",
+"infoLink":"https:\/\/www.restaurace-uradnice.cz",
+"phone":"603 200 180",
 "category":"restaurace",
 "filter":"Restaurace"
 },
