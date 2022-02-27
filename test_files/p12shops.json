@@ -124,13 +124,13 @@
 "filter":"Restaurace"
 },
 {
-"title":"Dřevák",
+"title":"Chuť Hanoi",
 "locationLat":"49.9924736",
 "locationLong":"14.4098778",
 "address":"U klubu 2\nPraha 12",
-"openingHours":"1: 1100-2200, 2: 1100-2200, 3: 1100-2200, 4: 1100-2200, 5: 1100-2300, 6: 1130-2300, 7: 1130-2100",
-"infoLink":"http:\/\/drevakrestaurace.cz",
-"phone":"273 139 327",
+"openingHours":"1: 1000-2100, 2: 1000-2100, 3: 1000-2100, 4: 1000-2100, 5: 1000-2100, 6: 1000-2100, 7: 1000-2100",
+"infoLink":"https:\/\/www.chut-hanoi.com",
+"phone":"601 556 066",
 "category":"restaurace",
 "filter":"Restaurace"
 },
@@ -171,13 +171,14 @@
 "filter":"Restaurace"
 },
 {
-"title":"Di Carlo",
+"title":"Novodvorka",
 "locationLat":"50.0168097",
 "locationLong":"14.4504233",
 "address":"Novodvorská 12\nPraha 4",
-"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2359, 4: 1100-2359, 5: 1100-2359, 6: 1100-2359, 7: 1130-2300",
-"phone":"261 342 508",
-"infoLink":"http:\/\/www.dicarlo.cz",
+"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2359, 6: 1100-2359, 7: 1200-2300",
+"phone":"244 465 551",
+"infoLink":"https:\/\/novodvorka.cz",
+"buyLink":"https:\/\/novodvorka.cz\/denni-jidelni-listek\/",
 "category":"restaurace",
 "filter":"Restaurace"
 },
@@ -187,7 +188,7 @@
 "locationLong":"14.4549450",
 "address":"Papírníkova 4\nPraha 12",
 "openingHours":"1: 1030-2300, 2: 1030-2300, 3: 1030-2300, 4: 1030-2300, 5: 1030-2300, 6: 1030-2300, 7: 1030-2300",
-"infoLink":"http:\/\/www.restaurace-vinarna.cz\/senkyrna-obzor",
+"infoLink":"https:\/\/www.senkyrna.cz",
 "phone":"725 348 902",
 "category":"restaurace",
 "filter":"Restaurace"
