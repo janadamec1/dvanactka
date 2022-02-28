@@ -4,117 +4,105 @@ include_once "parse_common.php";
 $sKlubSlunicko = "Sluníčko";
 $sTypAkce = "Typ akce";
 
+$response_xml_data = file_get_contents("https://www.praha12.cz/rss2/?12");
+//print_r($response_xml_data);
+
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.praha12.cz/vismo/kalendar-akci.asp?pocet=100");
+$dom->loadXML($response_xml_data);
 $xpath = new DomXPath($dom);
-$nodes = $xpath->query("//div[@class='dok']//ul[@class='ui']//li");
+$nodes = $xpath->query("//event");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("strong/a", $node));
+	$nodeTitle = firstItem($xpath->query("name", $node));
 	if ($nodeTitle != NULL) {
-	    if ($nodeTitle->lastChild != NULL)
-		    $title = $nodeTitle->lastChild->textContent;    // remove script
-	    else
-		    $title = $nodeTitle->nodeValue;
+		$title = $nodeTitle->nodeValue;
+
+		//echo $title, "\n";
 
 		if (substr($title, 0, strlen($sKlubSlunicko)) == $sKlubSlunicko)
 			continue;
 
-		$link = $nodeTitle->getAttribute("href");
-		if (substr($link, 0, 4) != "http") {
-			$link = "https://www.praha12.cz" . $link;
+		$link = "";
+		$nodeLink = firstItem($xpath->query("url", $node));
+		if ($nodeLink != NULL) {
+			$link = $nodeLink->nodeValue;
 		}
+
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 
-		$sFilter = "praha12.cz";
-		$nodeDate = firstItem($xpath->query("div[1]", $node));
+		$nodeDate = firstItem($xpath->query("dates/date", $node));
 		if ($nodeDate != NULL) {
-			// strip address, is after comma
-			$sDateFromTo = $nodeDate->nodeValue;
-			$iCommaPos = strpos($sDateFromTo, ",");
-			if ($iCommaPos !== FALSE) {
-				$sAddress = trim(substr($sDateFromTo, $iCommaPos+1));
-				$sDateFromTo = substr($sDateFromTo, 0, $iCommaPos);
+			$nodeDateStart = firstItem($xpath->query("start_date", $nodeDate));
+			if ($nodeDateStart != NULL) {
+				$sDateFrom = $nodeDateStart->nodeValue;
 
-				if (strpos($sAddress, "Pertoldova") !== FALSE) {
-					$sAddress = "KC \"12\" @ Pertoldova 10, Praha 12";
-					$sFilter = "KC \"12\" pobočka Pertoldova";
+				$sDateFromTime = "00:00";
+				$nodeDateStartTime = firstItem($xpath->query("start_time", $nodeDate));
+				if ($nodeDateStartTime != NULL) {
+					$sDateFromTime = $nodeDateStartTime->nodeValue;
+			
 				}
-				else if (strpos($sAddress, "Jordana Jovkova") !== FALSE) {
-					$sAddress = "KC \"12\" @ Jordana Jovkova 20, Praha 12";
-					$sFilter = "KC \"12\" pobočka Jordana Jovkova";
+				$sDateTo = $sDateFrom;
+				$nodeDateEnd = firstItem($xpath->query("end_date", $nodeDate));
+				if ($nodeDateEnd != NULL) {
+					$sDateTo = $nodeDateEnd->nodeValue;
+			
 				}
-				else if (strpos($sAddress, "KC Novodv") !== FALSE) {
-					$sAddress = "KC Novodvorská @ Novodvorská 151, Praha 4";
-					$sFilter = "KC Novodvorská";
+				$sDateToTime = "00:00";
+				$nodeDateEndTime = firstItem($xpath->query("end_time", $nodeDate));
+				if ($nodeDateEndTime != NULL) {
+					$sDateToTime = $nodeDateEndTime->nodeValue;
+			
 				}
-				else if (strpos($sAddress, "Husova knihovna") !== FALSE) {
-					$sAddress = "Husova knihovna @ Komořanská 12, Praha 12";
-					$sFilter = "Husova knihovna";
-				}
-				else if (strpos($sAddress, "MC Balónek") !== FALSE) {
-					$sAddress = "MC Balónek @ Ke Kamýku 2, Praha 12";
-					$sFilter = "MC Balónek";
-				}
-				else if (strpos($sAddress, "Viniční domek") !== FALSE) {
-					$sAddress = "Viniční domek @ Chuchelská 1, Praha 12";
-				}
-				else if (strpos($sAddress, "PRIOR") !== FALSE) {
-					$sAddress = "PRIOR @ Sofijské náměstí 6, Praha 12";
-				}
-				else if (strpos($sAddress, "biograf") !== FALSE)
-					$sAddress = "Modřanský biograf @ U Kina 1, Praha 12";
-				$aNewRecord["address"] = $sAddress;
-			}
-			// split time from - to
-			$arrFromTo = explode("-", $sDateFromTo);
-			$iArrFromToCount = count($arrFromTo);
-			if ($iArrFromToCount > 0) {		// date & time from
-				$sDateFrom = trim($arrFromTo[0]);
-				//echo $sDateFrom, "\n";
-				$arrFrom = explode(" ", $sDateFrom);
-				$dateFrom = NULL;
-				if (count($arrFrom) > 1) {	// time from (optional)
-					$dateFrom = date_create_from_format("!j.n.Y G:i+", $sDateFrom);
-				}
-				else {
-					$dateFrom = date_create_from_format("!j.n.Y+", $sDateFrom);
-				}
-				if ($dateFrom === NULL || $dateFrom === FALSE) {
-					echo "Error date: " . $sDateFrom;
-				}
-				else
-					$aNewRecord["date"] = date_format($dateFrom, "Y-m-d\TH:i");
 
-				if ($iArrFromToCount > 1) {		// date & time to
-					$sDateTo = trim($arrFromTo[1]);
-					//echo $sDateTo, " -- TO\n";
-					$arrTo = explode(" ", $sDateTo);
-					$iArrToCount = count($arrTo);
-					$dateTo = NULL;
-					if ($iArrToCount > 1) {	// we have both date and time
-						$dateTo = date_create_from_format("!j.n.Y G:i", $sDateTo);
-					}
-					else {
-						// determine if date or time is given
-						if (strstr($sDateTo, ":") === FALSE) {
-							$dateTo = date_create_from_format("!j.n.Y", $sDateTo); // only date
-						}
-						else {
-							$sFullTo = $arrFrom[0] . " " . $sDateTo;
-							//echo $sFullTo, " -- FULL\n";
-							$dateTo = date_create_from_format("!j.n.Y G:i", $sFullTo); // only time
-						}
-					}
-					if ($dateTo == null)
-						echo $nodeDate->nodeValue ."\n";
-					$aNewRecord["dateTo"] = date_format($dateTo, "Y-m-d\TH:i");
-				}
+				$aNewRecord["date"] = $sDateFrom."T".$sDateFromTime;
+				$aNewRecord["dateTo"] = $sDateTo."T".$sDateToTime;
 			}
+			
+		}
+		
+
+		$sFilter = "praha12.cz";
+		$nodePlace = firstItem($xpath->query("places/place/other", $node));
+		if ($nodePlace != NULL) {
+			$sAddress = $nodePlace->nodeValue;
+
+			if (strpos($sAddress, "Pertoldova") !== FALSE) {
+				$sAddress = "KC \"12\" @ Pertoldova 10, Praha 12";
+				$sFilter = "KC \"12\" pobočka Pertoldova";
+			}
+			else if (strpos($sAddress, "Jordana Jovkova") !== FALSE) {
+				$sAddress = "KC \"12\" @ Jordana Jovkova 20, Praha 12";
+				$sFilter = "KC \"12\" pobočka Jordana Jovkova";
+			}
+			else if (strpos($sAddress, "KC Novodv") !== FALSE) {
+				$sAddress = "KC Novodvorská @ Novodvorská 151, Praha 4";
+				$sFilter = "KC Novodvorská";
+			}
+			else if (strpos($sAddress, "Husova knihovna") !== FALSE) {
+				$sAddress = "Husova knihovna @ Komořanská 12, Praha 12";
+				$sFilter = "Husova knihovna";
+			}
+			else if (strpos($sAddress, "MC Balónek") !== FALSE) {
+				$sAddress = "MC Balónek @ Ke Kamýku 2, Praha 12";
+				$sFilter = "MC Balónek";
+			}
+			else if (strpos($sAddress, "Viniční domek") !== FALSE) {
+				$sAddress = "Viniční domek @ Chuchelská 1, Praha 12";
+			}
+			else if (strpos($sAddress, "PRIOR") !== FALSE) {
+				$sAddress = "PRIOR @ Sofijské náměstí 6, Praha 12";
+			}
+			else if (strpos($sAddress, "Poliklinika Mod") !== FALSE) {
+				$sAddress = "Poliklinika Modřany @ Soukalova 3355, Praha 12";
+			}
+			else if (strpos($sAddress, "biograf") !== FALSE)
+				$sAddress = "Modřanský biograf @ U Kina 1, Praha 12";
+			$aNewRecord["address"] = $sAddress;
 		}
 
-		$nodeText = firstItem($xpath->query("div[2]", $node));
+		$nodeText = firstItem($xpath->query("description", $node));
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce) {
@@ -146,5 +134,5 @@ if (count($arrItems) > 0) {
 	chmod($filename, 0644);
 	//echo $encoded;
 }
-echo "radEvents done, " . count($arrItems) . " items\n";
+echo "radEvents_od done, " . count($arrItems) . " items\n";
 ?>
