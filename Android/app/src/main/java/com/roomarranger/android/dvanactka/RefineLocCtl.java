@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.Manifest;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 
@@ -59,17 +59,12 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (m_map != null) {
-                    switch (checkedId) {
-                        case R.id.opt_0:
-                            m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                            break;
-                        case R.id.opt_1:
-                            m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                            break;
-                        case R.id.opt_2:
-                            m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                            break;
-                    }
+                    if (checkedId == R.id.opt_0)
+                        m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    else if (checkedId == R.id.opt_1)
+                        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    else if (checkedId == R.id.opt_2)
+                        m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             }
         });
@@ -78,11 +73,11 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
     //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

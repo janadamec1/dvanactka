@@ -3,9 +3,9 @@ package com.roomarranger.android.dvanactka;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -71,17 +71,12 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (m_map != null) {
-                    switch (checkedId) {
-                        case R.id.opt_0:
-                            m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                            break;
-                        case R.id.opt_1:
-                            m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                            break;
-                        case R.id.opt_2:
-                            m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                            break;
-                    }
+                    if (checkedId == R.id.opt_0)
+                        m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    else if (checkedId == R.id.opt_1)
+                        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    else if (checkedId == R.id.opt_2)
+                        m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             }
         });
@@ -147,7 +142,7 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
                     opt = opt.icon(BitmapDescriptorFactory.fromResource(iIcon));
 
                 Marker aMarker = m_map.addMarker(opt);
-                m_mapMarkers.put(aMarker, Integer.valueOf(i));
+                m_mapMarkers.put(aMarker, i);
 
                 if (nCount == 0) {
                     coordMin.set(coord); coordMax.set(coord);
@@ -196,28 +191,24 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         UiSettings settings = m_map.getUiSettings();
         settings.setZoomControlsEnabled(true);
 
-        m_map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Integer aInt = m_mapMarkers.get(marker);
-                if (aInt != null) {
-                    CRxEventRecord rec = m_aDataSource.m_arrItems.get(aInt.intValue());
-                    if (rec == null) return;
-                    Intent intent = new Intent(MapCtl.this, PlaceDetailCtl.class);
-                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                    intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
-                    startActivity(intent);
-                }
+        m_map.setOnInfoWindowClickListener(marker -> {
+            Integer aInt = m_mapMarkers.get(marker);
+            if (aInt != null) {
+                CRxEventRecord rec = m_aDataSource.m_arrItems.get(aInt);
+                if (rec == null) return;
+                Intent intent = new Intent(MapCtl.this, PlaceDetailCtl.class);
+                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
+                startActivity(intent);
             }
         });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

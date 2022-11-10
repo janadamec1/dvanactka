@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.net.Uri;
-import android.support.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsIntent;
 
 import org.json.JSONArray;
 import org.json.JSONException;

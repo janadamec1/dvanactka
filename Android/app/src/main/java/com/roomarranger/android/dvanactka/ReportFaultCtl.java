@@ -20,8 +20,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.Menu;
@@ -177,15 +177,15 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
     //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
-
-            case R.id.action_send_email:
-                onBtnSend();
-                return true;
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
+        }
+        else if (id == R.id.action_send_email) {
+            onBtnSend();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -590,7 +590,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
      */
     private static Bitmap rotateImageIfRequired(Bitmap img, Context context, Uri selectedImage) throws IOException {
 
-        ExifInterface ei = null;
+        ExifInterface ei;
         if (Build.VERSION.SDK_INT >= 24) {
             InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
             ei = new ExifInterface(imageStream);

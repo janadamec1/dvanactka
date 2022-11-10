@@ -11,7 +11,7 @@ import android.location.Location;
 import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -375,12 +375,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 m_LocationRequest.setFastestInterval(5000);
                 m_LocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-                m_btnGameCheckIn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onBtnGameCheckIn();
-                    }
-                });
+                m_btnGameCheckIn.setOnClickListener(view -> onBtnGameCheckIn());
             }
         }
         else {
@@ -390,48 +385,40 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         }
 
         // define button actions
-        m_btnWebsite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rec.openInfoLink(PlaceDetailCtl.this);
-            }
-        });
+        m_btnWebsite.setOnClickListener(view -> rec.openInfoLink(PlaceDetailCtl.this));
         if (rec.m_sPhoneNumber != null) {
-            m_btnPhone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /*
-                    AlertDialog.Builder builder = new AlertDialog.Builder(PlaceDetailCtl.this);
-                    String sMessage = getString(R.string.call_prompt);
-                    builder.setMessage(sMessage + ": " + rec.m_sPhoneNumber);
-                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+            m_btnPhone.setOnClickListener(view -> {
+                /*
+                AlertDialog.Builder builder = new AlertDialog.Builder(PlaceDetailCtl.this);
+                String sMessage = getString(R.string.call_prompt);
+                builder.setMessage(sMessage + ": " + rec.m_sPhoneNumber);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
 
-                            Intent intent = new Intent(Intent.ACTION_CALL);
-                            intent.setData(Uri.parse("tel:" + rec.m_sPhoneNumber.replace(" ", "")));
-                            startActivity(intent);
-                        }
-                    });
-
-                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-
-                    AlertDialog alert = builder.create();
-                    alert.show();*/
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + rec.m_sPhoneNumber.replace(" ", "")));
                         startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                });
+
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();*/
+                try {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
             // enable only if it is possible to make calls
@@ -441,16 +428,13 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             m_btnPhone.setEnabled(!infos.isEmpty());
         }
         if (rec.m_sPhoneMobileNumber != null) {
-            m_btnPhoneMobile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneMobileNumber.replace(" ", ""), null));
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            m_btnPhoneMobile.setOnClickListener(view -> {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneMobileNumber.replace(" ", ""), null));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
             PackageManager pm = getPackageManager();
@@ -459,78 +443,61 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
             m_btnPhoneMobile.setEnabled(!infos.isEmpty());
         }
         if (rec.m_sEmail != null) {
-            m_btnEmail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{rec.m_sEmail});
+            m_btnEmail.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{rec.m_sEmail});
 
-                    if (rec.m_eCategory != null) {
-                        if (rec.m_eCategory.equals(CRxCategory.wasteTextile) || rec.m_eCategory.equals(CRxCategory.waste) || rec.m_eCategory.equals(CRxCategory.wasteElectro)) {
-                            String sMunicipality = "";
-                            if (CRxAppDefinition.shared.m_sMunicipality != null) {
-                                sMunicipality = CRxAppDefinition.shared.m_sMunicipality;
-                            }
-                            intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + ", " + sMunicipality +" - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this));
-                            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
+                if (rec.m_eCategory != null) {
+                    if (rec.m_eCategory.equals(CRxCategory.wasteTextile) || rec.m_eCategory.equals(CRxCategory.waste) || rec.m_eCategory.equals(CRxCategory.wasteElectro)) {
+                        String sMunicipality = "";
+                        if (CRxAppDefinition.shared.m_sMunicipality != null) {
+                            sMunicipality = CRxAppDefinition.shared.m_sMunicipality;
                         }
+                        intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + ", " + sMunicipality +" - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this));
+                        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
                     }
-                    try {
-                        startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                    }
+                }
+                try {
+                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
         if (rec.m_sBuyLink != null) {
-            m_btnBuy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rec.openBuyLink(PlaceDetailCtl.this);
-                }
-            });
+            m_btnBuy.setOnClickListener(view -> rec.openBuyLink(PlaceDetailCtl.this));
         }
         if (CRxAppDefinition.shared.recordUpdateEmail() != null) {
-            m_btnReportMistake.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.recordUpdateEmail()});
-                    intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + " - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this) + " - problem (Android)");
-                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
-                    try {
-                        startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                    }
+            m_btnReportMistake.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.recordUpdateEmail()});
+                intent.putExtra(Intent.EXTRA_SUBJECT, rec.m_sTitle + " - " + CRxCategory.categoryLocalName(rec.m_eCategory, PlaceDetailCtl.this) + " - problem (Android)");
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_describe_problem));
+                try {
+                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(PlaceDetailCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
 
         if (m_chkShowNotifications.getVisibility() != View.GONE) {
-            m_chkShowNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
-                    rec.m_bMarkFavorite = bChecked;
-                    CRxDataSourceManager.shared.setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
-                    setResult(RESULT_OK);       // change star icon, resort, to refresh EventCtl using CODE_DETAIL_PLACE_REFRESH
-                }
+            m_chkShowNotifications.setOnCheckedChangeListener((compoundButton, bChecked) -> {
+                rec.m_bMarkFavorite = bChecked;
+                CRxDataSourceManager.shared.setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
+                setResult(RESULT_OK);       // change star icon, resort, to refresh EventCtl using CODE_DETAIL_PLACE_REFRESH
             });
         }
         if (rec.m_aLocation != null) {
-            m_btnNavigate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String sLoc = String.format(Locale.US, "%.4f,%.4f", rec.m_aLocation.getLatitude(), rec.m_aLocation.getLongitude());
-                    String sTitle = rec.m_sTitle.replaceAll(" ", "+");
-                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + sLoc + "(" + sTitle + ")&mode=w");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    startActivity(mapIntent);
-                }
+            m_btnNavigate.setOnClickListener(view -> {
+                String sLoc = String.format(Locale.US, "%.4f,%.4f", rec.m_aLocation.getLatitude(), rec.m_aLocation.getLongitude());
+                String sTitle = rec.m_sTitle.replaceAll(" ", "+");
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + sLoc + "(" + sTitle + ")&mode=w");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             });
         }
     }
@@ -538,11 +505,11 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -673,11 +640,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(sAlertMessage).setTitle(R.string.game);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
             AlertDialog dialog = builder.create();
             dialog.show();
 

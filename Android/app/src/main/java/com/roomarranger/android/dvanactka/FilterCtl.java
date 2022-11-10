@@ -117,28 +117,27 @@ public class FilterCtl extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
-
-            case R.id.action_all: {
-                m_setOut.clear();
-                if (m_adapter != null)
-                    m_adapter.notifyDataSetChanged();
-                notifyFilterChanged();
-                return true;
-            }
-            case R.id.action_none: {
-                m_setOut.clear();
-                if (m_arrFilter != null)
-                    m_setOut.addAll(m_arrFilter);
-                if (m_adapter != null)
-                    m_adapter.notifyDataSetChanged();
-                notifyFilterChanged();
-                return true;
-            }
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
+        }
+        else if (id == R.id.action_all) {
+            m_setOut.clear();
+            if (m_adapter != null)
+                m_adapter.notifyDataSetChanged();
+            notifyFilterChanged();
+            return true;
+        }
+        else if (id == R.id.action_none) {
+            m_setOut.clear();
+            if (m_arrFilter != null)
+                m_setOut.addAll(m_arrFilter);
+            if (m_adapter != null)
+                m_adapter.notifyDataSetChanged();
+            notifyFilterChanged();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

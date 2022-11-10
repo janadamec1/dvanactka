@@ -13,8 +13,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.Manifest;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -299,12 +299,11 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_info: {
-                Intent intent = new Intent(MainActivity.this, AppInfoCtl.class);
-                startActivity(intent);
-                return true;
-            }
+        int id = item.getItemId();
+        if (id == R.id.action_info) {
+            Intent intent = new Intent(MainActivity.this, AppInfoCtl.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

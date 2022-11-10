@@ -12,8 +12,8 @@ import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -244,116 +244,95 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                     }
                 }
                 if (cell.m_btnWebsite != null)
-                    cell.m_btnWebsite.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null)
-                                aRecClicked.openInfoLink(EventCtl.this);
-                        }
+                    cell.m_btnWebsite.setOnClickListener(view17 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view17.getTag();
+                        if (aRecClicked != null)
+                            aRecClicked.openInfoLink(EventCtl.this);
                     });
                 if (cell.m_btnBuy != null)
-                    cell.m_btnBuy.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null)
-                                aRecClicked.openBuyLink(EventCtl.this);
-                        }
+                    cell.m_btnBuy.setOnClickListener(view16 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view16.getTag();
+                        if (aRecClicked != null)
+                            aRecClicked.openBuyLink(EventCtl.this);
                     });
                 if (cell.m_btnFavorite != null)
-                    cell.m_btnFavorite.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null) {
-                                aRecClicked.m_bMarkFavorite = !aRecClicked.m_bMarkFavorite;
-                                ImageButton btn = (ImageButton)view;
-                                btn.setImageResource(aRecClicked.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);
-                                CRxDataSourceManager.shared.setFavorite(aRecClicked, aRecClicked.m_bMarkFavorite);
+                    cell.m_btnFavorite.setOnClickListener(view15 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view15.getTag();
+                        if (aRecClicked != null) {
+                            aRecClicked.m_bMarkFavorite = !aRecClicked.m_bMarkFavorite;
+                            ImageButton btn = (ImageButton) view15;
+                            btn.setImageResource(aRecClicked.m_bMarkFavorite ? R.drawable.goldstar25 : R.drawable.goldstar25dis);
+                            CRxDataSourceManager.shared.setFavorite(aRecClicked, aRecClicked.m_bMarkFavorite);
 
-                                if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews)){
-                                    setResult(EventCtl.CODE_DETAIL_REFRESH_PARENT);
-                                }
+                            if (m_aDataSource.m_sId.equals(CRxDataSourceManager.dsSavedNews)){
+                                setResult(EventCtl.CODE_DETAIL_REFRESH_PARENT);
                             }
                         }
                     });
                 if (cell.m_btnAddToCalendar != null)
-                    cell.m_btnAddToCalendar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null) {
-                                Intent calIntent = new Intent(Intent.ACTION_INSERT);
-                                calIntent.setData(CalendarContract.Events.CONTENT_URI);
-                                calIntent.putExtra(CalendarContract.Events.TITLE, aRecClicked.m_sTitle);
-                                if (aRecClicked.m_sAddress != null)
-                                    calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, aRecClicked.m_sAddress);
-                                if (aRecClicked.m_sText != null)
-                                    calIntent.putExtra(CalendarContract.Events.DESCRIPTION, aRecClicked.m_sText);
-                                if (aRecClicked.m_aDate != null)
-                                    calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, aRecClicked.m_aDate.getTime());
-                                if (aRecClicked.m_aDateTo != null)
-                                    calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, aRecClicked.m_aDateTo.getTime());
-                                startActivity(calIntent);
-                            }
+                    cell.m_btnAddToCalendar.setOnClickListener(view1 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view1.getTag();
+                        if (aRecClicked != null) {
+                            Intent calIntent = new Intent(Intent.ACTION_INSERT);
+                            calIntent.setData(CalendarContract.Events.CONTENT_URI);
+                            calIntent.putExtra(CalendarContract.Events.TITLE, aRecClicked.m_sTitle);
+                            if (aRecClicked.m_sAddress != null)
+                                calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, aRecClicked.m_sAddress);
+                            if (aRecClicked.m_sText != null)
+                                calIntent.putExtra(CalendarContract.Events.DESCRIPTION, aRecClicked.m_sText);
+                            if (aRecClicked.m_aDate != null)
+                                calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, aRecClicked.m_aDate.getTime());
+                            if (aRecClicked.m_aDateTo != null)
+                                calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, aRecClicked.m_aDateTo.getTime());
+                            startActivity(calIntent);
                         }
                     });
                 if (cell.m_btnAction != null)
-                    cell.m_btnAction.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null) {
-                                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                                sharingIntent.setType("text/plain");
-                                String shareText = aRecClicked.m_sTitle;
-                                if (aRecClicked.m_sText != null)
-                                    shareText += "\n" + aRecClicked.m_sText;
-                                if (aRecClicked.m_sInfoLink != null)
-                                    shareText += "\n" + aRecClicked.m_sInfoLink;
-                                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareText);
-                                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, aRecClicked.m_sTitle);
-                                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
-                            }
+                    cell.m_btnAction.setOnClickListener(view14 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view14.getTag();
+                        if (aRecClicked != null) {
+                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                            sharingIntent.setType("text/plain");
+                            String shareText = aRecClicked.m_sTitle;
+                            if (aRecClicked.m_sText != null)
+                                shareText += "\n" + aRecClicked.m_sText;
+                            if (aRecClicked.m_sInfoLink != null)
+                                shareText += "\n" + aRecClicked.m_sInfoLink;
+                            sharingIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, aRecClicked.m_sTitle);
+                            startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
                         }
                     });
                 if (cell.m_btnEmail != null)
-                    cell.m_btnEmail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null) {
-                                Intent intent = new Intent(Intent.ACTION_SEND);
-                                intent.setType("message/rfc822");
-                                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{aRecClicked.m_sEmail});
+                    cell.m_btnEmail.setOnClickListener(view12 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view12.getTag();
+                        if (aRecClicked != null) {
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.setType("message/rfc822");
+                            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{aRecClicked.m_sEmail});
 
-                                String sSubject = "Zájem o " + aRecClicked.m_sTitle;
-                                if (aRecClicked.m_aDate != null) {
-                                    sSubject += " @ " + EventCtl.formatDate(DateFormat.SHORT, DateFormat.SHORT, aRecClicked.m_aDate);
-                                }
-                                intent.putExtra(Intent.EXTRA_SUBJECT, sSubject);
-                                try {
-                                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
-                                } catch (android.content.ActivityNotFoundException ex) {
-                                    Toast.makeText(EventCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                                }
+                            String sSubject = "Zájem o " + aRecClicked.m_sTitle;
+                            if (aRecClicked.m_aDate != null) {
+                                sSubject += " @ " + EventCtl.formatDate(DateFormat.SHORT, DateFormat.SHORT, aRecClicked.m_aDate);
+                            }
+                            intent.putExtra(Intent.EXTRA_SUBJECT, sSubject);
+                            try {
+                                startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                            } catch (android.content.ActivityNotFoundException ex) {
+                                Toast.makeText(EventCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 if (cell.m_btnPhone != null)
-                    cell.m_btnPhone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CRxEventRecord aRecClicked = (CRxEventRecord)view.getTag();
-                            if (aRecClicked != null) {
-                                try {
-                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", aRecClicked.m_sPhoneNumber.replace(" ", ""), null));
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                    cell.m_btnPhone.setOnClickListener(view13 -> {
+                        CRxEventRecord aRecClicked = (CRxEventRecord) view13.getTag();
+                        if (aRecClicked != null) {
+                            try {
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", aRecClicked.m_sPhoneNumber.replace(" ", ""), null));
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                     });
@@ -606,36 +585,33 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         m_adapter = new ExpandListAdapter(this);
         ExpandList.setAdapter(m_adapter);
         if (m_bAskForFilter || m_aDataSource.m_eType == CRxDataSource.DATATYPE_places || m_aDataSource.m_eType == CRxDataSource.DATATYPE_questions) {
-            ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
-                    if (isAskForFilterActive() && groupPosition == 0) {
-                        Intent intent = new Intent(EventCtl.this, EventCtl.class);
-                        intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                        intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_arrFilterSelection.get(childPosition));
-                        startActivity(intent);
-                        return false;
-                    }
-                    else {
-                        ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
-                        try {
-                            CRxEventRecord rec = arr.get(childPosition);
-                            if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
-                                Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
-                                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                                intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
-                                startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
-                            }
-                            else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_questions) {
-                                Intent intent = new Intent(EventCtl.this, QuestionsCtl.class);
-                                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                                intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
-                                startActivity(intent);
-                            }
+            ExpandList.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
+                if (isAskForFilterActive() && groupPosition == 0) {
+                    Intent intent = new Intent(EventCtl.this, EventCtl.class);
+                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                    intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_arrFilterSelection.get(childPosition));
+                    startActivity(intent);
+                    return false;
+                }
+                else {
+                    ArrayList<CRxEventRecord> arr = m_orderedItems.get(m_orderedCategories.get(groupPosition));
+                    try {
+                        CRxEventRecord rec = arr.get(childPosition);
+                        if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_places) {
+                            Intent intent = new Intent(EventCtl.this, PlaceDetailCtl.class);
+                            intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                            intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
+                            startActivityForResult(intent, EventCtl.CODE_DETAIL_PLACE_REFRESH);
                         }
-                        catch (NullPointerException e) {}
-                        return false;
+                        else if (m_aDataSource.m_eType == CRxDataSource.DATATYPE_questions) {
+                            Intent intent = new Intent(EventCtl.this, QuestionsCtl.class);
+                            intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+                            intent.putExtra(MainActivity.EXTRA_EVENT_RECORD, rec.recordHash());
+                            startActivity(intent);
+                        }
                     }
+                    catch (NullPointerException e) {}
+                    return false;
                 }
             });
         }
@@ -848,12 +824,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         if (ds.m_eType == CRxDataSource.DATATYPE_events) {
             DateCategoryZip[] zip = new DateCategoryZip[Math.min(arrDateCategories.size(), m_orderedCategories.size())];
             for (int i = 0; i < zip.length; i++) zip[i] = new DateCategoryZip(m_orderedCategories.get(i), arrDateCategories.get(i));
-            Arrays.sort(zip, new Comparator<DateCategoryZip>() {
-                @Override
-                public int compare(DateCategoryZip t0, DateCategoryZip t1) {
-                    return t0.m_date.compareTo(t1.m_date);
-                }
-            });
+            Arrays.sort(zip, (t0, t1) -> t0.m_date.compareTo(t1.m_date));
             m_orderedCategories.clear();
             for (int i = 0; i < zip.length; i++) m_orderedCategories.add(zip[i].m_sName);
         }
@@ -863,32 +834,16 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             ArrayList<CRxEventRecord> arr = groupIt.getValue();
             switch (ds.m_eType) {
                 case CRxDataSource.DATATYPE_news:
-                    Collections.sort(arr, new Comparator<CRxEventRecord>() {
-                        @Override
-                        public int compare(CRxEventRecord t0, CRxEventRecord t1)
-                        {
-                            return -t0.m_aDate.compareTo(t1.m_aDate);
-                        }
-                    });
+                    Collections.sort(arr, (t0, t1) -> -t0.m_aDate.compareTo(t1.m_aDate));
                     break;
                 case CRxDataSource.DATATYPE_events:
-                    Collections.sort(arr, new Comparator<CRxEventRecord>() {
-                        @Override
-                        public int compare(CRxEventRecord t0, CRxEventRecord t1)
-                        {
-                            return t0.m_aDate.compareTo(t1.m_aDate);
-                        }
-                    });
+                    Collections.sort(arr, (t0, t1) -> t0.m_aDate.compareTo(t1.m_aDate));
                     break;
                 case CRxDataSource.DATATYPE_places:
-                    Collections.sort(arr, new Comparator<CRxEventRecord>() {
-                        @Override
-                        public int compare(CRxEventRecord t0, CRxEventRecord t1)
-                        {
-                            if (t0.m_bMarkFavorite != t1.m_bMarkFavorite)        // show favorite first
-                                return t0.m_bMarkFavorite ? -1 : 1;
-                            return Double.compare(t0.m_distFromUser, t1.m_distFromUser);
-                        }
+                    Collections.sort(arr, (t0, t1) -> {
+                        if (t0.m_bMarkFavorite != t1.m_bMarkFavorite)        // show favorite first
+                            return t0.m_bMarkFavorite ? -1 : 1;
+                        return Double.compare(t0.m_distFromUser, t1.m_distFromUser);
                     });
                     break;
                 case CRxDataSource.DATATYPE_questions:
@@ -971,38 +926,36 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
-
-            case R.id.action_map: {
-                Intent intent = new Intent(EventCtl.this, MapCtl.class);
-                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                if (m_sParentFilter != null)
-                    intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_sParentFilter);
-                if (m_bUserLocationAcquired)
-                {
-                    intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_coordLast.getLatitude());
-                    intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_coordLast.getLongitude());
-                }
-                startActivity(intent);
-                return true;
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
+        }
+        else if (id == R.id.action_map) {
+            Intent intent = new Intent(EventCtl.this, MapCtl.class);
+            intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+            if (m_sParentFilter != null)
+                intent.putExtra(MainActivity.EXTRA_PARENT_FILTER, m_sParentFilter);
+            if (m_bUserLocationAcquired)
+            {
+                intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_coordLast.getLatitude());
+                intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_coordLast.getLongitude());
             }
-            case R.id.action_saved: {
-                Intent intent = new Intent(EventCtl.this, EventCtl.class);
-                intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSavedNews);
-                startActivityForResult(intent, EventCtl.CODE_DETAIL_REFRESH_PARENT);
-                return true;
-            }
-
-            case R.id.action_filter: {
-                Intent intent = new Intent(EventCtl.this, FilterCtl.class);
-                intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
-                startActivityForResult(intent, EventCtl.CODE_FILTER_CTL);
-                return true;
-            }
+            startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_saved) {
+            Intent intent = new Intent(EventCtl.this, EventCtl.class);
+            intent.putExtra(MainActivity.EXTRA_DATASOURCE, CRxDataSourceManager.dsSavedNews);
+            startActivityForResult(intent, EventCtl.CODE_DETAIL_REFRESH_PARENT);
+            return true;
+        }
+        else if (id == R.id.action_filter) {
+            Intent intent = new Intent(EventCtl.this, FilterCtl.class);
+            intent.putExtra(MainActivity.EXTRA_DATASOURCE, m_aDataSource.m_sId);
+            startActivityForResult(intent, EventCtl.CODE_FILTER_CTL);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
