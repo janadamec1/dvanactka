@@ -260,13 +260,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
     void showError(String message, View viewSetFocus) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
-        /*  // this requires API 17
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-
-            }
-        });*/
+        builder.setOnDismissListener(dialogInterface -> viewSetFocus.requestFocus());
         AlertDialog alert = builder.create();
         alert.show();
     }
@@ -492,7 +486,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
      * @param context       The current context
      * @param selectedImage The Image URI
      * @return Bitmap image results
-     * @throws IOException
+     * @throws IOException  when the image is invalid
      */
     public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
             throws IOException {
@@ -576,14 +570,21 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
      */
     private static Bitmap rotateImageIfRequired(Bitmap img, Context context, Uri selectedImage) throws IOException {
 
-        ExifInterface ei;
+        ExifInterface ei = null;
         if (Build.VERSION.SDK_INT >= 24) {
             InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
-            ei = new ExifInterface(imageStream);
-            imageStream.close();
+            if (imageStream != null) {
+                ei = new ExifInterface(imageStream);
+                imageStream.close();
+            }
         }
-        else
-            ei = new ExifInterface(selectedImage.getPath());
+        else {
+            String sPath = selectedImage.getPath();
+            if (sPath != null)
+                ei = new ExifInterface(sPath);
+        }
+        if (ei == null)
+            return img;
 
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
