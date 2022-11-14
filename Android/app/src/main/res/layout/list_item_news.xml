@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:paddingBottom="2dp"
-            android:id="@+id/imgIllustration"/>
+            android:id="@+id/imgIllustration"
+            android:contentDescription="@string/photo" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -33,7 +34,8 @@
                 android:id="@+id/btnFavorite"
                 android:src="@drawable/goldstar25dis"
                 android:scaleType="centerCrop"
-                android:background="@null"/>
+                android:background="@null"
+                android:contentDescription="@string/saveNews" />
 
         </LinearLayout>
 
@@ -70,7 +72,8 @@
                 android:src="@drawable/action"
                 android:scaleType="centerCrop"
                 android:id="@+id/btnAction"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:contentDescription="@string/share" />
 
         </LinearLayout>
 

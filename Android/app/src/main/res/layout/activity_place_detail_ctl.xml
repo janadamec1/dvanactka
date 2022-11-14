@@ -21,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/MyHeading"
-        android:id="@+id/title"/>
+        android:id="@+id/title"
+        tools:ignore="HardcodedText" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,13 +64,15 @@
             android:text="Po: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/hours"/>
+            android:id="@+id/hours"
+            tools:ignore="HardcodedText" />
         <TextView
             android:text="10:00 - 19:00"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:id="@+id/hours2"/>
+            android:id="@+id/hours2"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <CheckBox
@@ -102,7 +105,8 @@
         android:text="contact.note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/contactNote"/>
+        android:id="@+id/contactNote"
+        tools:ignore="HardcodedText" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -112,7 +116,8 @@
             android:text="Phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnPhone"/>
+            android:id="@+id/btnPhone"
+            tools:ignore="HardcodedText" />
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -122,7 +127,8 @@
             android:text="Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnEmail"/>
+            android:id="@+id/btnEmail"
+            tools:ignore="HardcodedText" />
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -132,7 +138,8 @@
             android:text="Buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnBuy"/>
+            android:id="@+id/btnBuy"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <LinearLayout
@@ -143,7 +150,8 @@
             android:text="PhoneMobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnPhoneMobile"/>
+            android:id="@+id/btnPhoneMobile"
+            tools:ignore="HardcodedText" />
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -167,7 +175,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:id="@+id/gameDistance"/>
+            android:id="@+id/gameDistance"
+            tools:ignore="HardcodedText" />
         <Button
             android:text="@string/i_m_here"
             android:layout_width="wrap_content"
@@ -177,7 +186,6 @@
 
     <fragment android:id="@+id/map"
               android:name="com.google.android.gms.maps.MapFragment"
-              xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="180dp"
               android:paddingTop="4dp"/>
@@ -207,7 +215,8 @@
         android:text="Note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/note"/>
+        android:id="@+id/note"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>
 </ScrollView>

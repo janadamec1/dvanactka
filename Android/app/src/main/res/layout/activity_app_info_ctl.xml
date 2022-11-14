@@ -25,12 +25,13 @@
           android:background="@android:color/darker_gray"
           android:id="@+id/line1"/>
     <TextView
-        android:text="Copyright © 2018, Jan Adamec"
+        android:text="Copyright © 2016-2018, Jan Adamec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/line1"
         android:gravity="center"
-        android:id="@+id/copyright"/>
+        android:id="@+id/copyright"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:text="info@email.cz"
@@ -38,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/copyright"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btnEmail"/>
+        android:id="@+id/btnEmail"
+        tools:ignore="HardcodedText" />
 
     <CheckBox
         android:layout_width="match_parent"
@@ -46,7 +48,7 @@
         android:layout_above="@+id/btnEmail"
         android:text="DEBUG: Use test data"
         android:id="@+id/chkDebugUseTestData"
-        />
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:text="@string/appinfo_longtext"

@@ -116,4 +116,6 @@
     <string name="photo_recommended">Photo (recommended)</string>
     <string name="subcategories">Subcategories</string>
     <string name="c_waste_separated">Separated Waste</string>
+    <string name="saveNews">Save</string>
+    <string name="share">Share</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
               android:layout_width="@dimen/main_columnWidth"
               android:layout_height="@dimen/main_columnWidth"
               android:paddingBottom="10dp"
@@ -21,7 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageView"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:contentDescription="News"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:text="12"
@@ -34,7 +37,8 @@
             android:maxLines="1"
             android:paddingLeft="7sp"
             android:paddingRight="7sp"
-            android:layout_gravity="top|right"/>
+            android:layout_gravity="top|right"
+            tools:ignore="HardcodedText" />
 
     </FrameLayout>
 
@@ -46,5 +50,6 @@
         android:textColor="@android:color/white"
         android:textAlignment="center"
         android:gravity="center"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        tools:ignore="HardcodedText" />
 </LinearLayout>

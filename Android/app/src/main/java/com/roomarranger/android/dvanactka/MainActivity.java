@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -205,6 +204,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                     cell.lbName.setText(ds.m_sShortTitle);
                 else
                     cell.lbName.setText(ds.m_sTitle);
+                cell.imgIcon.setContentDescription(cell.lbName.getText());
 
                 if (MainActivity.dsHasBadge(ds) && !ds.m_bIsBeingRefreshed) {
                     int iUnread = ds.unreadItemsCount();

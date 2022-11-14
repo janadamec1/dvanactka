@@ -35,10 +35,14 @@ tools:context=".QuestionsCtl">
         android:layout_margin="10dp"
         android:orientation="horizontal"
         >
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_0" android:text="@string/standard" />
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_1" android:text="@string/satellite" />
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_2" android:text="@string/hybrid" />
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_3" android:text="@string/hybrid" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_0" android:text="Brief"
+            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_1" android:text="Standard"
+            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_2" android:text="Extended"
+            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_3" android:text="Full"
+            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
     </org.nairteashop.SegmentedControl>
 
 </RelativeLayout>

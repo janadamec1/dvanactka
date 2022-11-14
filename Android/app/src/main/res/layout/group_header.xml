@@ -9,7 +9,8 @@
         android:id="@android:id/text1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15sp"
+        android:paddingStart="15sp"
+        android:paddingEnd="0sp"
         android:gravity="center_vertical"
         android:textSize="17sp"
         android:textColor="@android:color/white"/>

@@ -26,7 +26,8 @@
             android:textSize="20sp"
             android:textColor="@android:color/white"
             android:gravity="center"
-            android:id="@+id/level"/>
+            android:id="@+id/level"
+            tools:ignore="HardcodedText" />
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
@@ -46,7 +47,8 @@
             android:textSize="16sp"
             android:textColor="#90FFFFFF"
             android:gravity="center"
-            android:id="@+id/xp"/>
+            android:id="@+id/xp"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

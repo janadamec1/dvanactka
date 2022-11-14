@@ -117,4 +117,6 @@
     <string name="photo_recommended">Fotografie (doporučeno)</string>
     <string name="c_waste_separated">Tříděný odpad</string>
     <string name="subcategories">Podkategorie</string>
+    <string name="saveNews">Uložit</string>
+    <string name="share">Sdílet</string>
 </resources>

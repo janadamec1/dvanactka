@@ -50,7 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:src="@drawable/photo"
-        android:id="@+id/btnPhoto"/>
+        android:id="@+id/btnPhoto"
+        android:contentDescription="@string/photo_recommended" />
 
     <TextView
         android:text="@string/location"
@@ -69,7 +70,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/lbLocation"
             android:layout_weight="1"
-            android:layout_gravity="left"/>
+            android:layout_gravity="left"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:text="@string/refine"
