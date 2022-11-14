@@ -6,13 +6,14 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.Manifest;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
@@ -110,36 +111,33 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         GridView gridview = (GridView)findViewById(R.id.gridview);
         gridview.setAdapter(m_adapter);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                String sDsSelected = CRxAppDefinition.shared.m_arrDataSourceOrder.get(position);
-                CRxDataSource aDS = CRxDataSourceManager.shared.m_dictDataSources.get(sDsSelected);
+        gridview.setOnItemClickListener((parent, v, position, id) -> {
+            String sDsSelected = CRxAppDefinition.shared.m_arrDataSourceOrder.get(position);
+            CRxDataSource aDS = CRxDataSourceManager.shared.m_dictDataSources.get(sDsSelected);
 
-                // hide unread badge
-                try {
-                    if (v != null && v.getTag() != null){
-                        CollectionViewHolder cell = (CollectionViewHolder)v.getTag();
-                        if (cell.lbBadge != null)
-                            cell.lbBadge.setVisibility(View.INVISIBLE);
-                    }
-                } catch (Exception e) {e.printStackTrace();}
+            // hide unread badge
+            try {
+                if (v != null && v.getTag() != null){
+                    CollectionViewHolder cell = (CollectionViewHolder)v.getTag();
+                    if (cell.lbBadge != null)
+                        cell.lbBadge.setVisibility(View.INVISIBLE);
+                }
+            } catch (Exception e) {e.printStackTrace();}
 
-                Intent intent = null;
-                if (sDsSelected.equals(CRxDataSourceManager.dsReportFault)) {
-                    intent = new Intent(MainActivity.this, ReportFaultCtl.class);
-                }
-                else if (sDsSelected.equals(CRxDataSourceManager.dsGame)) {
-                    intent = new Intent(MainActivity.this, GameCtl.class);
-                }
-                else {
-                    intent = new Intent(MainActivity.this, EventCtl.class);
-                    intent.putExtra(MainActivity.EXTRA_DATASOURCE, sDsSelected);
-                    intent.putExtra(MainActivity.EXTRA_ASK_FOR_FILTER, aDS != null && aDS.m_bFilterAsParentView);
-                }
-                if (intent != null)
-                    startActivity(intent);
+            Intent intent = null;
+            if (sDsSelected.equals(CRxDataSourceManager.dsReportFault)) {
+                intent = new Intent(MainActivity.this, ReportFaultCtl.class);
             }
+            else if (sDsSelected.equals(CRxDataSourceManager.dsGame)) {
+                intent = new Intent(MainActivity.this, GameCtl.class);
+            }
+            else {
+                intent = new Intent(MainActivity.this, EventCtl.class);
+                intent.putExtra(MainActivity.EXTRA_DATASOURCE, sDsSelected);
+                intent.putExtra(MainActivity.EXTRA_ASK_FOR_FILTER, aDS != null && aDS.m_bFilterAsParentView);
+            }
+            if (intent != null)
+                startActivity(intent);
         });
     }
 
@@ -156,8 +154,8 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     }
 
     public class ImageAdapter extends BaseAdapter {
-        private Context m_Context;
-        private ArrayList<String> m_list;
+        private final Context m_Context;
+        private final ArrayList<String> m_list;
 
         ImageAdapter(Context c, ArrayList<String> list) {
             m_Context = c;
@@ -241,13 +239,10 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(R.string.permission_explain_location);
-                    builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialogInterface) {
-                            m_bAskPermissionLocation = false;
-                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                                    MY_PERMISSION_REQUEST_LOCATION);
-                        }
+                    builder.setOnCancelListener(dialogInterface -> {
+                        m_bAskPermissionLocation = false;
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                                MY_PERMISSION_REQUEST_LOCATION);
                     });
                     builder.create().show();
                 }
@@ -264,7 +259,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     //---------------------------------------------------------------------------
     // ActivityCompat.OnRequestPermissionsResultCallback
     @Override
-    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSION_REQUEST_LOCATION) {
             m_bAskPermissionLocation = (permissions.length == 0);   // dialog cancelled, ask again later
         }

@@ -3,7 +3,6 @@ package com.roomarranger.android.dvanactka;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -20,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import android.os.ResultReceiver;
@@ -95,10 +96,10 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                 m_fileFromCamera = new File(sFile);
         }
 
-        m_btnPhoto = (ImageButton)findViewById(R.id.btnPhoto);
-        m_edDescription = (EditText)findViewById(R.id.edDescription);
-        m_lbLocation = (TextView)findViewById(R.id.lbLocation);
-        m_btnRefineLocation = (Button)findViewById(R.id.btnRefine);
+        m_btnPhoto = findViewById(R.id.btnPhoto);
+        m_edDescription = findViewById(R.id.edDescription);
+        m_lbLocation = findViewById(R.id.lbLocation);
+        m_btnRefineLocation = findViewById(R.id.btnRefine);
 
         m_GoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -113,56 +114,44 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
         m_AddressResultReceiver = new AddressResultReceiver(new Handler());
 
-        m_btnPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideKeyboard();
+        m_btnPhoto.setOnClickListener(view -> {
+            hideKeyboard();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReportFaultCtl.this);
-                builder.setTitle(R.string.select_photo);
-                builder.setPositiveButton(R.string.take_a_photo, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intentTakePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        m_fileFromCamera = new File(getCacheDir(), "foto.jpg");
-                        Uri uriToStore = FileProvider.getUriForFile(ReportFaultCtl.this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);
+            AlertDialog.Builder builder = new AlertDialog.Builder(ReportFaultCtl.this);
+            builder.setTitle(R.string.select_photo);
+            builder.setPositiveButton(R.string.take_a_photo, (dialogInterface, i) -> {
+                Intent intentTakePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                m_fileFromCamera = new File(getCacheDir(), "foto.jpg");
+                Uri uriToStore = FileProvider.getUriForFile(ReportFaultCtl.this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);
 
-                        // need to set the permission to all possible camera apps
-                        List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(intentTakePicture, PackageManager.MATCH_DEFAULT_ONLY);
-                        for (ResolveInfo resolveInfo : resInfoList) {
-                            String sPackageName = resolveInfo.activityInfo.packageName;
-                            grantUriPermission(sPackageName, uriToStore, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        }
+                // need to set the permission to all possible camera apps
+                List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(intentTakePicture, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String sPackageName = resolveInfo.activityInfo.packageName;
+                    grantUriPermission(sPackageName, uriToStore, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
 
-                        intentTakePicture.putExtra(MediaStore.EXTRA_OUTPUT, uriToStore);
-                        intentTakePicture.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        startActivityForResult(intentTakePicture, ACT_RESULT_TAKE_PHOTO);
-                    }
-                });
-                builder.setNeutralButton(R.string.from_gallery, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(pickPhoto, ACT_RESULT_PICK_PHOTO);
-                    }
-                });
-                builder.create().show();
-            }
+                intentTakePicture.putExtra(MediaStore.EXTRA_OUTPUT, uriToStore);
+                intentTakePicture.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                startActivityForResult(intentTakePicture, ACT_RESULT_TAKE_PHOTO);
+            });
+            builder.setNeutralButton(R.string.from_gallery, (dialogInterface, i) -> {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, ACT_RESULT_PICK_PHOTO);
+            });
+            builder.create().show();
         });
 
-        m_btnRefineLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideKeyboard();
+        m_btnRefineLocation.setOnClickListener(view -> {
+            hideKeyboard();
 
-                Intent intent = new Intent(ReportFaultCtl.this, RefineLocCtl.class);
-                if (m_location != null) {
-                    intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_location.getLatitude());
-                    intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_location.getLongitude());
-                }
-                startActivityForResult(intent, ACT_RESULT_REFINE_LOCATION);
+            Intent intent = new Intent(ReportFaultCtl.this, RefineLocCtl.class);
+            if (m_location != null) {
+                intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, m_location.getLatitude());
+                intent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, m_location.getLongitude());
             }
+            startActivityForResult(intent, ACT_RESULT_REFINE_LOCATION);
         });
     }
 
@@ -262,7 +251,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
     //---------------------------------------------------------------------------
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection to Google Play Services failed.",
                 Toast.LENGTH_SHORT).show();
     }
@@ -302,12 +291,9 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         if (!m_bImageSelected && !m_bImageOmitted) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(getString(R.string.fill_photo));
-            builder.setPositiveButton(R.string.dlg_yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    m_bImageOmitted = true;
-                    onBtnSend();
-                }
+            builder.setPositiveButton(R.string.dlg_yes, (dialogInterface, i) -> {
+                m_bImageOmitted = true;
+                onBtnSend();
             });
             builder.setNegativeButton(R.string.dlg_cancel, null);
             AlertDialog alert = builder.create();
@@ -488,7 +474,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
     //---------------------------------------------------------------------------
     @Override
-    public void onSaveInstanceState(Bundle bundle)
+    public void onSaveInstanceState(@NonNull Bundle bundle)
     {
         super.onSaveInstanceState(bundle);
 
@@ -561,7 +547,7 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
 
             // Choose the smallest ratio as inSampleSize value, this will guarantee a final image
             // with both dimensions larger than or equal to the requested height and width.
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+            inSampleSize = Math.min(heightRatio, widthRatio);
 
             // This offers some additional logic in case the image has a strange
             // aspect ratio. For example, a panorama may have a much larger

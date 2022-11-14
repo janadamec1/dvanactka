@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ProgressBar;
@@ -47,9 +46,9 @@ public class GameCtl extends Activity {
 
         MainActivity.verifyDataInited(this);
 
-        TextView lbLevel = (TextView)findViewById(R.id.level);
-        ProgressBar progress = (ProgressBar)findViewById(R.id.progress);
-        TextView lbXp = (TextView)findViewById(R.id.xp);
+        TextView lbLevel = findViewById(R.id.level);
+        ProgressBar progress = findViewById(R.id.progress);
+        TextView lbXp = findViewById(R.id.xp);
         CRxGame.CRxPlayerStats aPlayerStats = CRxGame.shared.playerLevel();
         lbLevel.setText(getString(R.string.level) + " " + String.valueOf(aPlayerStats.level));
         progress.setMax(aPlayerStats.pointsNextLevel-aPlayerStats.pointsPrevLevel);
@@ -57,7 +56,7 @@ public class GameCtl extends Activity {
         lbXp.setText(String.format(Locale.US, "%d / %d XP", aPlayerStats.points, aPlayerStats.pointsNextLevel));
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            TextView lbNote = (TextView)findViewById(R.id.note);
+            TextView lbNote = findViewById(R.id.note);
             lbNote.setText(R.string.game_permission);
         }
 
@@ -66,15 +65,12 @@ public class GameCtl extends Activity {
                     Color.rgb(36, 90, 128), android.graphics.PorterDuff.Mode.SRC_IN);
         }
 
-        GridView gridview = (GridView)findViewById(R.id.gridview);
+        GridView gridview = findViewById(R.id.gridview);
         gridview.setAdapter(new GameCtl.GameAdapter(this));
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                CRxGameCategory item = CRxGame.shared.m_arrCategories.get(position);
-                Toast.makeText(GameCtl.this, item.m_sHintMessage, Toast.LENGTH_SHORT).show();
-            }
+        gridview.setOnItemClickListener((parent, v, position, id) -> {
+            CRxGameCategory item = CRxGame.shared.m_arrCategories.get(position);
+            Toast.makeText(GameCtl.this, item.m_sHintMessage, Toast.LENGTH_SHORT).show();
         });
 
         CRxDataSource aDS = CRxGame.dataSource();
@@ -90,7 +86,7 @@ public class GameCtl extends Activity {
     }
 
     public class GameAdapter extends BaseAdapter {
-        private Context m_context;
+        private final Context m_context;
 
         GameAdapter(Context c) {
             m_context = c;
@@ -109,9 +105,9 @@ public class GameCtl extends Activity {
                 //convertView.setLayoutParams(new GridView.LayoutParams(85, 105));
 
                 cell = new CollectionViewHolder();
-                cell.m_item = (GameItemView)convertView.findViewById(R.id.img);
-                cell.m_lbName = (TextView)convertView.findViewById(R.id.name);
-                cell.m_lbProgress = (TextView)convertView.findViewById(R.id.progress);
+                cell.m_item = convertView.findViewById(R.id.img);
+                cell.m_lbName = convertView.findViewById(R.id.name);
+                cell.m_lbProgress = convertView.findViewById(R.id.progress);
                 convertView.setTag(cell);
             } else {
                 cell = (CollectionViewHolder)convertView.getTag();
@@ -135,25 +131,24 @@ public class GameCtl extends Activity {
     //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
-
-            case R.id.action_leaderboard: {
-                CRxDataSource aDS = CRxGame.dataSource();
-                if (aDS != null && aDS.m_sUuid == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(R.string.gamestart_note);
-                    builder.create().show();
-                }
-                else {
-                    Intent intent = new Intent(GameCtl.this, GameLeaderCtl.class);
-                    startActivity(intent);
-                }
-                return true;
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
+        }
+        else if (id == R.id.action_leaderboard) {
+            CRxDataSource aDS = CRxGame.dataSource();
+            if (aDS != null && aDS.m_sUuid == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.gamestart_note);
+                builder.create().show();
             }
+            else {
+                Intent intent = new Intent(GameCtl.this, GameLeaderCtl.class);
+                startActivity(intent);
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

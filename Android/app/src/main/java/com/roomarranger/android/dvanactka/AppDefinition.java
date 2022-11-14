@@ -105,7 +105,7 @@ class CRxAppDefinition {
             m_aMunicipalityCenter.setLatitude(dLocLat);
             m_aMunicipalityCenter.setLongitude(dLocLong);
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         // load dataSources
         try {
@@ -120,7 +120,7 @@ class CRxAppDefinition {
                 }
             }
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
     }
 
     //--------------------------------------------------------------------------
@@ -147,7 +147,7 @@ class CRxAppDefinition {
                     int cl = Integer.parseInt(sVal, 16); // hex to int
                     return ((cl & 0xFF0000) >> 16) + (cl & 0xFF00) + ((cl & 0xFF) << 16);
                 }
-                catch (NumberFormatException e) {}
+                catch (NumberFormatException ignored) {}
             }
         }
         catch (JSONException e) { return iDef; }

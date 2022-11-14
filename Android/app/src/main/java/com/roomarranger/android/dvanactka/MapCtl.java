@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.RadioGroup;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -65,19 +64,16 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
         MapFragment mapFragment = (MapFragment)(getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
-        SegmentedControl segmMapSwitch = (SegmentedControl) findViewById(R.id.segmMapSwitch);
+        SegmentedControl segmMapSwitch = findViewById(R.id.segmMapSwitch);
         segmMapSwitch.check(R.id.opt_0);
-        segmMapSwitch.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (m_map != null) {
-                    if (checkedId == R.id.opt_0)
-                        m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    else if (checkedId == R.id.opt_1)
-                        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                    else if (checkedId == R.id.opt_2)
-                        m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                }
+        segmMapSwitch.setOnCheckedChangeListener((group, checkedId) -> {
+            if (m_map != null) {
+                if (checkedId == R.id.opt_0)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                else if (checkedId == R.id.opt_1)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                else if (checkedId == R.id.opt_2)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             }
         });
     }
@@ -139,7 +135,7 @@ public class MapCtl extends FragmentActivity implements OnMapReadyCallback {
                         .snippet(sSubtitle);
                 int iIcon = CRxCategory.categoryIconName(rec.m_eCategory);
                 if (iIcon != -1)
-                    opt = opt.icon(BitmapDescriptorFactory.fromResource(iIcon));
+                    opt.icon(BitmapDescriptorFactory.fromResource(iIcon));
 
                 Marker aMarker = m_map.addMarker(opt);
                 m_mapMarkers.put(aMarker, i);

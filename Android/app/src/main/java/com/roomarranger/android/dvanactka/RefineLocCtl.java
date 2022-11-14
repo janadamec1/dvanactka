@@ -8,7 +8,6 @@ import android.Manifest;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
-import android.widget.RadioGroup;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,19 +52,16 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
         MapFragment mapFragment = (MapFragment)(getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
-        SegmentedControl segmMapSwitch = (SegmentedControl) findViewById(R.id.segmMapSwitch);
+        SegmentedControl segmMapSwitch = findViewById(R.id.segmMapSwitch);
         segmMapSwitch.check(R.id.opt_0);
-        segmMapSwitch.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (m_map != null) {
-                    if (checkedId == R.id.opt_0)
-                        m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    else if (checkedId == R.id.opt_1)
-                        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                    else if (checkedId == R.id.opt_2)
-                        m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                }
+        segmMapSwitch.setOnCheckedChangeListener((group, checkedId) -> {
+            if (m_map != null) {
+                if (checkedId == R.id.opt_0)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                else if (checkedId == R.id.opt_1)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                else if (checkedId == R.id.opt_2)
+                    m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             }
         });
     }
@@ -114,20 +110,17 @@ public class RefineLocCtl extends Activity implements OnMapReadyCallback {
         UiSettings settings = m_map.getUiSettings();
         settings.setZoomControlsEnabled(true);
 
-        m_map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                if (m_aPin != null)
-                    m_aPin.remove();
+        m_map.setOnMapLongClickListener(latLng -> {
+            if (m_aPin != null)
+                m_aPin.remove();
 
-                m_aPin = m_map.addMarker(new MarkerOptions().position(latLng));
+            m_aPin = m_map.addMarker(new MarkerOptions().position(latLng));
 
-                // send result
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, latLng.latitude);
-                resultIntent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, latLng.longitude);
-                setResult(RESULT_OK, resultIntent);
-            }
+            // send result
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(MainActivity.EXTRA_USER_LOCATION_LAT, latLng.latitude);
+            resultIntent.putExtra(MainActivity.EXTRA_USER_LOCATION_LONG, latLng.longitude);
+            setResult(RESULT_OK, resultIntent);
         });
     }
 }

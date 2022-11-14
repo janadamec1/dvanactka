@@ -1,7 +1,6 @@
 package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +11,8 @@ import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.text.Spannable;
@@ -45,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -77,9 +77,9 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     static final int CODE_DETAIL_REFRESH_PARENT = 4;        // from saved news
     static final int CODE_FILTER_CTL = 5;                   // from filter control
 
-    HashMap<String, ArrayList<CRxEventRecord>> m_orderedItems = new HashMap<String, ArrayList<CRxEventRecord>>();
-    ArrayList<String> m_orderedCategories = new ArrayList<String>();    // sorted category local names
-    ArrayList<String> m_arrFilterSelection = new ArrayList<String>();   // array when asing for filter (m_bAskForFilter). Used instead of orderedItems
+    HashMap<String, ArrayList<CRxEventRecord>> m_orderedItems = new HashMap<>();
+    ArrayList<String> m_orderedCategories = new ArrayList<>();    // sorted category local names
+    ArrayList<String> m_arrFilterSelection = new ArrayList<>();   // array when asing for filter (m_bAskForFilter). Used instead of orderedItems
     boolean m_bUserLocationAcquired = false;
     Location m_coordLast = null;
     GoogleApiClient m_GoogleApiClient = null;
@@ -115,7 +115,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
     }
 
     public class ExpandListAdapter extends BaseExpandableListAdapter {
-        private Context m_context;
+        private final Context m_context;
 
         ExpandListAdapter(Context context) {
             super();
@@ -213,33 +213,33 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 else {
                     switch (m_aDataSource.m_eType) {
                         case CRxDataSource.DATATYPE_news:
-                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
-                            cell.m_imgIllustration = (ImageView) view.findViewById(R.id.imgIllustration);
-                            cell.m_lbText = (TextView) view.findViewById(R.id.text);
-                            cell.m_btnFavorite = (ImageButton) view.findViewById(R.id.btnFavorite);
-                            cell.m_lbDate = (TextView) view.findViewById(R.id.date);
-                            cell.m_btnWebsite = (Button) view.findViewById(R.id.btnWebsite);
-                            cell.m_btnAction = (ImageButton) view.findViewById(R.id.btnAction);
+                            cell.m_lbTitle = view.findViewById(R.id.title);
+                            cell.m_imgIllustration = view.findViewById(R.id.imgIllustration);
+                            cell.m_lbText = view.findViewById(R.id.text);
+                            cell.m_btnFavorite = view.findViewById(R.id.btnFavorite);
+                            cell.m_lbDate = view.findViewById(R.id.date);
+                            cell.m_btnWebsite = view.findViewById(R.id.btnWebsite);
+                            cell.m_btnAction = view.findViewById(R.id.btnAction);
                             break;
                         case CRxDataSource.DATATYPE_events:
-                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
-                            cell.m_lbText = (TextView) view.findViewById(R.id.text);
-                            cell.m_lbDate = (TextView) view.findViewById(R.id.date);
-                            cell.m_lbAddress = (TextView) view.findViewById(R.id.address);
-                            cell.m_btnWebsite = (Button) view.findViewById(R.id.btnWebsite);
-                            cell.m_btnBuy = (Button) view.findViewById(R.id.btnBuy);
-                            cell.m_btnAddToCalendar = (Button) view.findViewById(R.id.btnAddToCalendar);
+                            cell.m_lbTitle = view.findViewById(R.id.title);
+                            cell.m_lbText = view.findViewById(R.id.text);
+                            cell.m_lbDate = view.findViewById(R.id.date);
+                            cell.m_lbAddress = view.findViewById(R.id.address);
+                            cell.m_btnWebsite = view.findViewById(R.id.btnWebsite);
+                            cell.m_btnBuy = view.findViewById(R.id.btnBuy);
+                            cell.m_btnAddToCalendar = view.findViewById(R.id.btnAddToCalendar);
                             cell.m_stackContact = view.findViewById(R.id.stackContact);
-                            cell.m_btnEmail = (Button) view.findViewById(R.id.btnEmail);
-                            cell.m_btnPhone = (Button) view.findViewById(R.id.btnPhone);
+                            cell.m_btnEmail = view.findViewById(R.id.btnEmail);
+                            cell.m_btnPhone = view.findViewById(R.id.btnPhone);
                             break;
                         case CRxDataSource.DATATYPE_places:
-                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
-                            cell.m_lbText = (TextView) view.findViewById(R.id.text);
-                            cell.m_imgIcon = (ImageView) view.findViewById(R.id.icon);
+                            cell.m_lbTitle = view.findViewById(R.id.title);
+                            cell.m_lbText = view.findViewById(R.id.text);
+                            cell.m_imgIcon = view.findViewById(R.id.icon);
                             break;
                         case CRxDataSource.DATATYPE_questions:
-                            cell.m_lbTitle = (TextView) view.findViewById(R.id.title);
+                            cell.m_lbTitle = view.findViewById(R.id.title);
                             break;
                     }
                 }
@@ -581,7 +581,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
         setRecordsDistance();
         sortRecords();
 
-        ExpandableListView ExpandList = (ExpandableListView)findViewById(R.id.ExpList);
+        ExpandableListView ExpandList = findViewById(R.id.ExpList);
         m_adapter = new ExpandListAdapter(this);
         ExpandList.setAdapter(m_adapter);
         if (m_bAskForFilter || m_aDataSource.m_eType == CRxDataSource.DATATYPE_places || m_aDataSource.m_eType == CRxDataSource.DATATYPE_questions) {
@@ -610,7 +610,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                             startActivity(intent);
                         }
                     }
-                    catch (NullPointerException e) {}
+                    catch (NullPointerException ignored) {}
                     return false;
                 }
             });
@@ -629,7 +629,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
             m_LocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         }
 
-        m_refreshControl = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
+        m_refreshControl = findViewById(R.id.swipe_container);
         m_refreshControl.setOnRefreshListener(this);
         m_refreshMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
         if (m_aDataSource.m_bIsBeingRefreshed)
@@ -637,8 +637,8 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
         // footer
         View viewFooter = findViewById(R.id.footer);
-        TextView lbFooterText = (TextView)findViewById(R.id.footerText);
-        Button btnFooterButton = (Button)findViewById(R.id.btnFooter);
+        TextView lbFooterText = findViewById(R.id.footerText);
+        Button btnFooterButton = findViewById(R.id.btnFooter);
 
         if (!m_aDataSource.m_bListingFooterVisible) {
             viewFooter.setVisibility(View.GONE);
@@ -652,39 +652,36 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
                 btnFooterButton.setText(CRxAppDefinition.shared.recordUpdateEmail());
         }
 
-        btnFooterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (m_aDataSource.m_sListingFooterCustomButtonTargetUrl != null) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(m_aDataSource.m_sListingFooterCustomButtonTargetUrl));
-                    startActivity(browserIntent);
-                }
-                else if (CRxAppDefinition.shared.recordUpdateEmail() != null) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.recordUpdateEmail()});
+        btnFooterButton.setOnClickListener(view -> {
+            if (m_aDataSource.m_sListingFooterCustomButtonTargetUrl != null) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(m_aDataSource.m_sListingFooterCustomButtonTargetUrl));
+                startActivity(browserIntent);
+            }
+            else if (CRxAppDefinition.shared.recordUpdateEmail() != null) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{CRxAppDefinition.shared.recordUpdateEmail()});
 
-                    String sAppName = "CityApp";
-                    if (CRxAppDefinition.shared.m_sTitle != null)
-                        sAppName = CRxAppDefinition.shared.m_sTitle;
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace " + sAppName + " - přidat záznam");
+                String sAppName = "CityApp";
+                if (CRxAppDefinition.shared.m_sTitle != null)
+                    sAppName = CRxAppDefinition.shared.m_sTitle;
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Aplikace " + sAppName + " - přidat záznam");
 
-                    String sTitle = m_aDataSource.m_sTitle;
-                    if (m_sParentFilter != null)
-                        sTitle += m_sParentFilter;
-                    intent.putExtra(Intent.EXTRA_TEXT, sTitle);
-                    try {
-                        startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(EventCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                    }
+                String sTitle = m_aDataSource.m_sTitle;
+                if (m_sParentFilter != null)
+                    sTitle += m_sParentFilter;
+                intent.putExtra(Intent.EXTRA_TEXT, sTitle);
+                try {
+                    startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(EventCtl.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     //--------------------------------------------------------------------------
-    private class DateCategoryZip {
+    private static class DateCategoryZip {
         String m_sName;
         Date m_date;
         DateCategoryZip(String name, Date date) { m_sName = name; m_date = date;}
@@ -1056,7 +1053,7 @@ public class EventCtl extends Activity implements GoogleApiClient.ConnectionCall
 
     //---------------------------------------------------------------------------
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection to Google Play Services failed.",
                 Toast.LENGTH_SHORT).show();
     }

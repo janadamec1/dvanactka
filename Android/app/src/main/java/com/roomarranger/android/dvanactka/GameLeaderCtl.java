@@ -2,7 +2,6 @@ package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Locale;
 
 /*
@@ -38,7 +36,7 @@ import java.util.Locale;
 
 public class GameLeaderCtl extends Activity {
 
-    class CRxBoardItem {
+    static class CRxBoardItem {
         int m_iPlaceFrom = 0;
         int m_iPlaceTo = 0;
         int m_iScore;
@@ -101,9 +99,9 @@ public class GameLeaderCtl extends Activity {
                     convertView = inflater.inflate(R.layout.list_item_game_board, parent, false);
 
                     cell = new BoardItemViewHolder();
-                    cell.lbName = (TextView) convertView.findViewById(R.id.name);
-                    cell.lbScore = (TextView) convertView.findViewById(R.id.playerScore);
-                    cell.spinner = (ProgressBar) convertView.findViewById(R.id.spinner);
+                    cell.lbName = convertView.findViewById(R.id.name);
+                    cell.lbScore = convertView.findViewById(R.id.playerScore);
+                    cell.spinner = convertView.findViewById(R.id.spinner);
                     convertView.setTag(cell);
                 }
                 else
@@ -138,7 +136,7 @@ public class GameLeaderCtl extends Activity {
                 return convertView;
             }
         };
-        ListView lvList = (ListView)findViewById(R.id.listView);
+        ListView lvList = findViewById(R.id.listView);
         lvList.setAdapter(m_listAdapter);
 
         URL urlDownload = null;
@@ -160,23 +158,17 @@ public class GameLeaderCtl extends Activity {
                     if (sError != null)
                         Log.e("JSON", sError);
 
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {   // run in main thread
-                        @Override
-                        public void run() {
-                            showDownloadError();
-                        }
-                    });
+                    // run in main thread
+                    new Handler(Looper.getMainLooper()).post(() -> showDownloadError());
                     return;
                 }
                 // process the data
                 loadTableFrom(sData);
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {   // run in main thread
-                    @Override
-                    public void run() {
-                        m_bLoading = false;
-                        m_listAdapter.notifyDataSetChanged();
-                    }
+                // run in main thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    m_bLoading = false;
+                    m_listAdapter.notifyDataSetChanged();
                 });
             }
         });
@@ -200,7 +192,7 @@ public class GameLeaderCtl extends Activity {
                 if (m_sMyUuid != null && m_sMyUuid.equals(lineItems[0])) {
                     bPlayerFound = true;
                 }
-            } catch (NumberFormatException e) {}
+            } catch (NumberFormatException ignored) {}
         }
         if (!bPlayerFound && m_iMyScore > 0) {
             arrNewItems.add(new CRxBoardItem(m_iMyScore));
@@ -209,14 +201,10 @@ public class GameLeaderCtl extends Activity {
         m_arrItems.clear();
         if (arrNewItems.size() > 0) {
             // sort by score
-            Collections.sort(arrNewItems, new Comparator<CRxBoardItem>() {
-                @Override
-                public int compare(CRxBoardItem t0, CRxBoardItem t1)
-                {
-                    if (t0.m_iScore == t1.m_iScore) return 0;
-                    else if (t0.m_iScore > t1.m_iScore) return -1;
-                    else return 1;
-                }
+            Collections.sort(arrNewItems, (t0, t1) -> {
+                if (t0.m_iScore == t1.m_iScore) return 0;
+                else if (t0.m_iScore > t1.m_iScore) return -1;
+                else return 1;
             });
             // calc places and filter out places with same score
             ArrayList<CRxBoardItem> arrFilteredItems = new ArrayList<>();
@@ -257,11 +245,8 @@ public class GameLeaderCtl extends Activity {
     void showDownloadError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.error_downloading_data);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                onBackPressed();    // navigate back to GameCtl
-            }
+        builder.setOnCancelListener(dialogInterface -> {
+            onBackPressed();    // navigate back to GameCtl
         });
         builder.create().show();
     }

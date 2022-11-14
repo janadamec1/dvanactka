@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -138,16 +137,11 @@ public class QuestionsCtl extends Activity {
                     btn.setVisibility(View.INVISIBLE);
             }
 
-            segmLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch (checkedId) {
-                        case R.id.opt_0: m_iLevel = 0; filterQuestions(); break;
-                        case R.id.opt_1: m_iLevel = 1; filterQuestions(); break;
-                        case R.id.opt_2: m_iLevel = 2; filterQuestions(); break;
-                        case R.id.opt_3: m_iLevel = 3; filterQuestions(); break;
-                    }
-                }
+            segmLevel.setOnCheckedChangeListener((group, checkedId) -> {
+                if (checkedId == R.id.opt_0) { m_iLevel = 0; filterQuestions(); }
+                else if (checkedId == R.id.opt_1) { m_iLevel = 1; filterQuestions(); }
+                else if (checkedId == R.id.opt_2) { m_iLevel = 2; filterQuestions(); }
+                else if (checkedId == R.id.opt_3) { m_iLevel = 3; filterQuestions(); }
             });
         }
 
@@ -172,11 +166,11 @@ public class QuestionsCtl extends Activity {
     //---------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();        // go to the activity that brought user here, not to parent activity
-                return true;
+            onBackPressed();        // go to the activity that brought user here, not to parent activity
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

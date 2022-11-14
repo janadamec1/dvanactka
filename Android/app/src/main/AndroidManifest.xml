@@ -15,6 +15,13 @@
 
     <uses-feature android:name="android.hardware.location.gps" />
 
+    <queries>
+        <!-- Specific intents you query for -->
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+        </intent>
+    </queries>
+
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"

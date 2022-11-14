@@ -1,16 +1,17 @@
 package com.roomarranger.android.dvanactka;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.location.Location;
 import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +45,6 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /*
@@ -101,6 +100,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     GoogleApiClient m_GoogleApiClient = null;
     LocationRequest m_LocationRequest;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,33 +116,33 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
         rec = m_aDataSource.recordWithHash(sRecordHash);
         if (rec == null) return;
 
-        m_lbTitle = (TextView)findViewById(R.id.title);
-        m_lbCategory = (TextView)findViewById(R.id.category);
-        m_lbValidDates = (TextView)findViewById(R.id.date);
-        m_lbText = (TextView)findViewById(R.id.text);
-        m_lbAddressTitle = (TextView)findViewById(R.id.address_title);
-        m_lbAddress = (TextView)findViewById(R.id.address);
-        m_lbOpeningHoursTitle = (TextView)findViewById(R.id.hours_title);
-        m_lbOpeningHours = (TextView)findViewById(R.id.hours);
-        m_lbOpeningHours2 = (TextView)findViewById(R.id.hours2);
-        m_lbNote = (TextView)findViewById(R.id.note);
-        m_btnWebsite = (Button)findViewById(R.id.btnWebsite);
-        m_btnEmail = (Button)findViewById(R.id.btnEmail);
-        m_btnPhone = (Button)findViewById(R.id.btnPhone);
-        m_btnPhoneMobile = (Button)findViewById(R.id.btnPhoneMobile);
-        m_btnBuy = (Button)findViewById(R.id.btnBuy);
-        m_spaceEmail = (Space)findViewById(R.id.spaceEmail);
-        m_spaceBuy = (Space)findViewById(R.id.spaceBuy);
+        m_lbTitle = findViewById(R.id.title);
+        m_lbCategory = findViewById(R.id.category);
+        m_lbValidDates = findViewById(R.id.date);
+        m_lbText = findViewById(R.id.text);
+        m_lbAddressTitle = findViewById(R.id.address_title);
+        m_lbAddress = findViewById(R.id.address);
+        m_lbOpeningHoursTitle = findViewById(R.id.hours_title);
+        m_lbOpeningHours = findViewById(R.id.hours);
+        m_lbOpeningHours2 = findViewById(R.id.hours2);
+        m_lbNote = findViewById(R.id.note);
+        m_btnWebsite = findViewById(R.id.btnWebsite);
+        m_btnEmail = findViewById(R.id.btnEmail);
+        m_btnPhone = findViewById(R.id.btnPhone);
+        m_btnPhoneMobile = findViewById(R.id.btnPhoneMobile);
+        m_btnBuy = findViewById(R.id.btnBuy);
+        m_spaceEmail = findViewById(R.id.spaceEmail);
+        m_spaceBuy = findViewById(R.id.spaceBuy);
 
         //m_map: MKMapView!
-        m_chkShowNotifications = (CheckBox)findViewById(R.id.chkNotifications);
-        m_lbNotificationExplanation = (TextView)findViewById(R.id.notificationNote);
-        m_lbContactNote = (TextView)findViewById(R.id.contactNote);
-        m_btnNavigate = (Button)findViewById(R.id.btnNavigate);
-        m_btnReportMistake = (Button)findViewById(R.id.btnReportMistake);
-        m_lbGame = (TextView)findViewById(R.id.gameTitle);
-        m_lbGameDist = (TextView)findViewById(R.id.gameDistance);
-        m_btnGameCheckIn = (Button)findViewById(R.id.btnGameCheckIn);
+        m_chkShowNotifications = findViewById(R.id.chkNotifications);
+        m_lbNotificationExplanation = findViewById(R.id.notificationNote);
+        m_lbContactNote = findViewById(R.id.contactNote);
+        m_btnNavigate = findViewById(R.id.btnNavigate);
+        m_btnReportMistake = findViewById(R.id.btnReportMistake);
+        m_lbGame = findViewById(R.id.gameTitle);
+        m_lbGameDist = findViewById(R.id.gameDistance);
+        m_btnGameCheckIn = findViewById(R.id.btnGameCheckIn);
 
         setTitle("  "); // empty action bar title
         m_lbTitle.setText(rec.m_sTitle);
@@ -422,10 +422,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 }
             });
             // enable only if it is possible to make calls
-            PackageManager pm = getPackageManager();
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
-            List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
-            m_btnPhone.setEnabled(!infos.isEmpty());
+            m_btnPhone.setEnabled(intent.resolveActivity(getPackageManager()) != null);
         }
         if (rec.m_sPhoneMobileNumber != null) {
             m_btnPhoneMobile.setOnClickListener(view -> {
@@ -437,10 +435,8 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                     e.printStackTrace();
                 }
             });
-            PackageManager pm = getPackageManager();
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", rec.m_sPhoneNumber.replace(" ", ""), null));
-            List<ResolveInfo> infos = pm.queryIntentActivities(intent, 0);
-            m_btnPhoneMobile.setEnabled(!infos.isEmpty());
+            m_btnPhoneMobile.setEnabled(intent.resolveActivity(getPackageManager()) != null);
         }
         if (rec.m_sEmail != null) {
             m_btnEmail.setOnClickListener(view -> {
@@ -525,7 +521,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 .title(rec.m_sTitle);
         int iIcon = CRxCategory.categoryIconName(rec.m_eCategory);
         if (iIcon != -1)
-            opt = opt.icon(BitmapDescriptorFactory.fromResource(iIcon));
+            opt.icon(BitmapDescriptorFactory.fromResource(iIcon));
         m_map.addMarker(opt);
 
         if (rec.m_aLocCheckIn != null) {
@@ -607,7 +603,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
     //---------------------------------------------------------------------------
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection to Google Play Services failed.",
                 Toast.LENGTH_SHORT).show();
     }

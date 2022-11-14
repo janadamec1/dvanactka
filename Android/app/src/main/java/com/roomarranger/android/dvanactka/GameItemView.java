@@ -27,8 +27,8 @@ public class GameItemView extends View {
     Paint m_paint;
     RectF m_rect;
 
-    Drawable m_imgStar = null;
-    Drawable m_imgEmptyStar = null;
+    Drawable m_imgStar;
+    Drawable m_imgEmptyStar;
     int m_iGameCategory = 0;
 
     public GameItemView(Context context, AttributeSet attrs) {

@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +37,8 @@ import java.util.Set;
 public class FilterCtl extends Activity {
 
     CRxDataSource m_aDataSource = null;
-    Set<String> m_setOut = new HashSet<String>();
-    ArrayList<String> m_arrFilter = new ArrayList<String>();
+    Set<String> m_setOut = new HashSet<>();
+    ArrayList<String> m_arrFilter = new ArrayList<>();
     ArrayAdapter<String> m_adapter = null;
 
     public class FilterSourceAdapter extends ArrayAdapter<String> {
@@ -44,28 +47,26 @@ public class FilterCtl extends Activity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @NonNull
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
             String sValue = getItem(position);
-            CheckedTextView tvName = (CheckedTextView)view.findViewById(android.R.id.text1);
+            CheckedTextView tvName = view.findViewById(android.R.id.text1);
             tvName.setText(sValue);
 
             boolean bChecked = !m_setOut.contains(sValue);
             tvName.setChecked(bChecked);
 
-            tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    CheckedTextView chk = (CheckedTextView)view;
-                    String sChkValue = chk.getText().toString();
-                    boolean bCheck = !chk.isChecked();
-                    if (bCheck)
-                        m_setOut.remove(sChkValue);
-                    else
-                        m_setOut.add(sChkValue);
-                    chk.setChecked(bCheck);
-                    notifyFilterChanged();
-                }
+            tvName.setOnClickListener(view1 -> {
+                CheckedTextView chk = (CheckedTextView) view1;
+                String sChkValue = chk.getText().toString();
+                boolean bCheck = !chk.isChecked();
+                if (bCheck)
+                    m_setOut.remove(sChkValue);
+                else
+                    m_setOut.add(sChkValue);
+                chk.setChecked(bCheck);
+                notifyFilterChanged();
             });
             return view;
         }
@@ -97,7 +98,7 @@ public class FilterCtl extends Activity {
         Collections.sort(m_arrFilter, coll);
 
         m_adapter = new FilterSourceAdapter(this, m_arrFilter);
-        ListView lvList = (ListView)findViewById(R.id.listView);
+        ListView lvList = findViewById(R.id.listView);
         lvList.setAdapter(m_adapter);
     }
 

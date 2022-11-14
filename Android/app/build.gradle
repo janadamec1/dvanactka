@@ -4,7 +4,7 @@ android {
     compileSdkVersion 32
     defaultConfig {
         applicationId "com.roomarranger.android.dvanactka"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 32
         versionCode 30
         versionName "2.9"

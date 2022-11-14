@@ -29,7 +29,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -194,7 +193,7 @@ class CRxDataSource {
                     m_arrItems.add(aNewRecord);
             }
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
         try {
             JSONArray jsonQaLabels = json.getJSONArray("qaLables");
             m_arrQaLabels = new ArrayList<>();
@@ -204,7 +203,7 @@ class CRxDataSource {
                     m_arrQaLabels.add(qaItem);
             }
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
 
         // load config
         try {
@@ -214,12 +213,12 @@ class CRxDataSource {
             m_sUuid = config.optString("uuid", null);
             try {
                 String filter = config.getString("filter");
-                m_setFilter = new HashSet<String>(Arrays.asList(filter.split("|")));
+                m_setFilter = new HashSet<>(Arrays.asList(filter.split("|")));
             }
-            catch (JSONException e) {}
+            catch (JSONException ignored) {}
 
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
     }
 
     //--------------------------------------------------------------------------
@@ -231,19 +230,19 @@ class CRxDataSource {
         }
 
         JSONObject json = new JSONObject();
-        try { json.put("items", jsonItems); } catch (JSONException e) {}
+        try { json.put("items", jsonItems); } catch (JSONException ignored) {}
 
         if (m_arrQaLabels != null && !m_arrQaLabels.isEmpty()) {
             JSONArray jsonQaItems = new JSONArray();
             for (String it: m_arrQaLabels)
                 jsonQaItems.put(it);
-            try { json.put("qaLables", jsonQaItems); } catch (JSONException e) {}
+            try { json.put("qaLables", jsonQaItems); } catch (JSONException ignored) {}
         }
 
         // save config
         JSONObject config = new JSONObject();
-        try { config.put("dateLastRefreshed", CRxEventRecord.saveDate(m_dateLastRefreshed)); } catch (JSONException e) {}
-        try { config.put("lastItemShown", m_sLastItemShown); } catch (JSONException e) {}
+        try { config.put("dateLastRefreshed", CRxEventRecord.saveDate(m_dateLastRefreshed)); } catch (JSONException ignored) {}
+        try { config.put("lastItemShown", m_sLastItemShown); } catch (JSONException ignored) {}
         if (m_setFilter != null)
         {
             StringBuilder sb = new StringBuilder();
@@ -251,12 +250,12 @@ class CRxDataSource {
                 if (sb.length() != 0) sb.append("|");
                 sb.append(sFilter);
             }
-            try { config.put("filter", sb.toString()); } catch (JSONException e) {}
+            try { config.put("filter", sb.toString()); } catch (JSONException ignored) {}
         }
-        if (m_sUuid != null) { try { config.put("uuid", m_sUuid); } catch (JSONException e) {} }
+        if (m_sUuid != null) { try { config.put("uuid", m_sUuid); } catch (JSONException ignored) {} }
 
         if (config.length() > 0) {
-            try { json.put("config", config); } catch (JSONException e) {}
+            try { json.put("config", config); } catch (JSONException ignored) {}
         }
 
         // encode to JSON
@@ -290,13 +289,7 @@ class CRxDataSource {
     //--------------------------------------------------------------------------
     void sortNewsByDate() {
         if (m_eType == DATATYPE_news) {
-            Collections.sort(m_arrItems, new Comparator<CRxEventRecord>() {
-                @Override
-                public int compare(CRxEventRecord t0, CRxEventRecord t1)
-                {
-                    return -t0.m_aDate.compareTo(t1.m_aDate);
-                }
-            });
+            Collections.sort(m_arrItems, (t0, t1) -> -t0.m_aDate.compareTo(t1.m_aDate));
         }
     }
 
@@ -459,7 +452,7 @@ class CRxDataSourceManager {
 
             inputStream.close();
             String sLoaded = stringBuilder.toString();
-            m_setPlacesNotified = new HashSet<String>(Arrays.asList(sLoaded.split("\\|")));
+            m_setPlacesNotified = new HashSet<>(Arrays.asList(sLoaded.split("\\|")));
         } catch (Exception e) {
             Log.e("loadFavorities", "Loading favorite places failed: " + e.getMessage()); return;
         }
@@ -520,7 +513,7 @@ class CRxDataSourceManager {
         // check the last refresh date
         Date now = new Date();
         if (!force && ds.m_dateLastRefreshed != null  &&
-                (now.getTime() - ds.m_dateLastRefreshed.getTime())/1000 < ds.m_nRefreshFreqHours*60*60) {
+                (now.getTime() - ds.m_dateLastRefreshed.getTime())/1000 < (long)ds.m_nRefreshFreqHours *60*60) {
             if (ds.delegate != null)
                 ds.delegate.dataSourceRefreshEnded(id, null);
             return;
@@ -540,41 +533,38 @@ class CRxDataSourceManager {
         abstract void run(String sData, String sError);
     }
     static void getDataFromUrl(final URL url, final DownloadCompletion completion) {
-        Thread thread = new Thread(new Runnable(){
-            @Override
-            public void run(){
-                String sError = null;
-                String sData = null;
+        Thread thread = new Thread(() -> {
+            String sError = null;
+            String sData = null;
+            try {
+                InputStream inStream;
+                if (url.toString().startsWith("file:///android_asset/") && m_assetMan != null)
+                    inStream = m_assetMan.open(url.toString().substring(22));
+                else
+                    inStream = url.openStream();
+
+                DataInputStream stream = new DataInputStream(inStream);
+                BufferedInputStream bufferedReader = new BufferedInputStream(stream);
+
+                byte[] buffer = new byte[2048];
+                int bytesRead;
+                ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+
+                while ((bytesRead = bufferedReader.read(buffer))!= -1) {
+                    byteArray.write(buffer, 0, bytesRead);
+                }
+
+                stream.close();
+                sData = byteArray.toString("UTF-8");    // send to callee
+            }
+            catch (Exception e) {
+                sError = e.getMessage();
+            }
+            if (completion != null) {
                 try {
-                    InputStream inStream;
-                    if (url.toString().startsWith("file:///android_asset/") && m_assetMan != null)
-                        inStream = m_assetMan.open(url.toString().substring(22));
-                    else
-                        inStream = url.openStream();
-
-                    DataInputStream stream = new DataInputStream(inStream);
-                    BufferedInputStream bufferedReader = new BufferedInputStream(stream);
-
-                    byte[] buffer = new byte[2048];
-                    int bytesRead;
-                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-
-                    while ((bytesRead = bufferedReader.read(buffer))!= -1) {
-                        byteArray.write(buffer, 0, bytesRead);
-                    }
-
-                    stream.close();
-                    sData = byteArray.toString("UTF-8");    // send to callee
-                }
-                catch (Exception e) {
-                    sError = e.getMessage();
-                }
-                if (completion != null) {
-                    try {
-                        completion.run(sData, sError);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    completion.run(sData, sError);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -620,33 +610,29 @@ class CRxDataSourceManager {
                     if (sError != null)
                         Log.e("JSON", sError);
 
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {   // run in main thread
-                        @Override
-                        public void run() {
-                            aDS.m_bIsBeingRefreshed = false;
-                            if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, "Error when downloading data");
-                            hideNetworkIndicator();
-                        }
+                    // run in main thread
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        aDS.m_bIsBeingRefreshed = false;
+                        if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, "Error when downloading data");
+                        hideNetworkIndicator();
                     });
                     return;
                 }
                 // process the data
                 aDS.loadFromJSONString(sData);
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {   // run in main thread
-                    @Override
-                    public void run() {
-                        aDS.sortNewsByDate();
-                        aDS.m_dateLastRefreshed = new Date();
-                        aDS.m_bIsBeingRefreshed = false;
-                        save(aDS);
-                        hideNetworkIndicator();
-                        if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, null);
-                        if (delegate != null) delegate.dataSourceRefreshEnded(aDS.m_sId, null);     // to refresh unread count badge
+                // run in main thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    aDS.sortNewsByDate();
+                    aDS.m_dateLastRefreshed = new Date();
+                    aDS.m_bIsBeingRefreshed = false;
+                    save(aDS);
+                    hideNetworkIndicator();
+                    if (aDS.delegate != null) aDS.delegate.dataSourceRefreshEnded(aDS.m_sId, null);
+                    if (delegate != null) delegate.dataSourceRefreshEnded(aDS.m_sId, null);     // to refresh unread count badge
 
-                        if (aDS.m_bLocalNotificationsForEvents)
-                            MainActivity.resetAllNotifications();
-                    }
+                    if (aDS.m_bLocalNotificationsForEvents)
+                        MainActivity.resetAllNotifications();
                 });
             }
         });
