@@ -136,8 +136,8 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
                 startActivityForResult(intentTakePicture, ACT_RESULT_TAKE_PHOTO);
             });
             builder.setNeutralButton(R.string.from_gallery, (dialogInterface, i) -> {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK);
+                pickPhoto.setType("image/*");
                 startActivityForResult(pickPhoto, ACT_RESULT_PICK_PHOTO);
             });
             builder.create().show();
@@ -324,8 +324,8 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         intent.putExtra(Intent.EXTRA_TEXT, sMessageBody);
 
         // add image
+        Uri uriAttach = null;
         if (m_bImageSelected) {
-            Uri uriAttach = null;
             if (m_fileFromCamera != null) {
                 //uriAttach = Uri.fromFile(m_fileFromCamera);
                 uriAttach = FileProvider.getUriForFile(this, "com.roomarranger.android.dvanactka.fileprovider", m_fileFromCamera);   // this way we don't need permission to write_external_storage
@@ -351,7 +351,18 @@ public class ReportFaultCtl extends Activity implements GoogleApiClient.Connecti
         }
 
         try {
-            startActivity(Intent.createChooser(intent, getString(R.string.send_mail)));
+            Intent chooser = Intent.createChooser(intent, getString(R.string.send_mail));
+
+            if (uriAttach != null) {
+                // grant permission to read the FileProvider attachment and API 31+ (see https://stackoverflow.com/questions/57689792/permission-denial-while-sharing-file-with-fileprovider)
+                List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String packageName = resolveInfo.activityInfo.packageName;
+                    grantUriPermission(packageName, uriAttach, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
+            }
+
+            startActivity(chooser);
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
