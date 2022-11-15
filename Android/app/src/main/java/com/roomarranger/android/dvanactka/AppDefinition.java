@@ -78,7 +78,7 @@ class CRxAppDefinition {
     //--------------------------------------------------------------------------
     private void loadFromJSONString(String data) {
         // decode JSON
-        JSONObject json = null;
+        JSONObject json;
         try {
             json = new JSONObject(data);
         } catch(Exception e) {
@@ -124,12 +124,12 @@ class CRxAppDefinition {
     }
 
     //--------------------------------------------------------------------------
-    // load string with possible localizatio into current locale (in json: "key@locale":value)
+    // load string with possible localization into current locale (in json: "key@locale":value)
     String loadLocalizedString(String key, JSONObject json) {
 
-        String sVal = json.optString(key + "@" + m_sCurrentLocale, null); // load localized
-        if (sVal == null) {
-            sVal = json.optString(key, null);       // load english
+        String sVal = json.optString(key + "@" + m_sCurrentLocale, ""); // load localized
+        if (sVal.isEmpty()) {
+            sVal = json.optString(key, key);       // load english
         }
         return sVal;
     }
