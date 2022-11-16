@@ -64,7 +64,7 @@ class CRxHourInterval
 
                 return new CRxHourInterval(iDay, iHourStart, iHourEnd);
             }
-            catch (NumberFormatException e) {}
+            catch (NumberFormatException ignored) {}
         }
         return null;
     }

@@ -106,11 +106,19 @@ foreach ($nodes as $i => $node) {
 		if ($nodeText != NULL) {
 			$text = $nodeText->nodeValue;
 			if (substr($text, 0, strlen($sTypAkce)) != $sTypAkce) {
-				$aNewRecord["text"] = $text;
+				$aNewRecord["text"] = strip_tags($text);
 
 				if (strpos($text, "jara@kc12.cz") !== FALSE) {
 					$aNewRecord["email"] = "jara@kc12.cz";
 					$aNewRecord["phone"] = "778 482 787";
+				}
+				if (strpos($text, "slivkova@kc12.cz") !== FALSE) {
+					$aNewRecord["email"] = "slivkova@kc12.cz";
+					$aNewRecord["phone"] = "778 482 787";
+				}
+				if (strpos($text, "nemeckova@kc12.cz") !== FALSE) {
+					$aNewRecord["email"] = "nemeckova@kc12.cz";
+					$aNewRecord["phone"] = "778 827 786";
 				}
 			}
 		}

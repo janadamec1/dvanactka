@@ -129,9 +129,12 @@ class CRxAppDefinition {
 
         String sVal = json.optString(key + "@" + m_sCurrentLocale, ""); // load localized
         if (sVal.isEmpty()) {
-            sVal = json.optString(key, key);       // load english
+            sVal = json.optString(key, "");       // load english
         }
-        return sVal;
+        if (sVal.isEmpty())
+            return null;        // our function expect null when not founds
+        else
+            return sVal;
     }
 
     //--------------------------------------------------------------------------
