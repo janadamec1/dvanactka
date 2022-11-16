@@ -1,10 +1,7 @@
 package com.roomarranger.android.dvanactka;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +13,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,13 +28,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
 
  This file is part of "Dvanactka".
 
@@ -305,6 +309,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
 
     //---------------------------------------------------------------------------
     static private void scheduleNotification(Context ctx, String content, Date date, int iId) {
+        /*
         // https://gist.github.com/BrandonSmith/6679223
         Notification.Builder builder = new Notification.Builder(ctx);
         builder.setContentTitle(ctx.getString(R.string.app_name))
@@ -322,6 +327,22 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null)
             alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
+         */
+
+        Calendar dateToday = Calendar.getInstance();
+
+        Data inputData = new Data.Builder()
+                .putString(NotificationHelper.NOTIFICATION_DATA_TEXT, content)
+                .putString(NotificationHelper.NOTIFICATION_DATA_TITLE, ctx.getString(R.string.app_name))
+                .putInt(NotificationHelper.NOTIFICATION_ID, iId)
+                .build();
+
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationPublisher.class)
+                .setInitialDelay(date.getTime() - dateToday.getTimeInMillis(), TimeUnit.MILLISECONDS)
+                .setInputData(inputData)
+                .addTag(NotificationHelper.NOTIFICATION_WORK_TAG)
+                .build();
+        WorkManager.getInstance(ctx).enqueue(notificationWork);
     }
 
     //---------------------------------------------------------------------------
@@ -330,11 +351,12 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
     }
     static void resetAllNotifications(Context ctx) {
 
-        // TODO: rewrite this later to use AlarmManager.OnAlarmListener (API level 24)
-
-        // cancel all previous notifications  ??? does it work
         SharedPreferences prefs = ctx.getSharedPreferences("com.roomarranger.android.dvanactka", Context.MODE_PRIVATE);
         int iLastNotificationCount = prefs.getInt("iLastNotificationCount", 0);
+
+        WorkManager.getInstance(ctx).cancelAllWorkByTag(NotificationHelper.NOTIFICATION_WORK_TAG);
+        /*
+        // cancel all previous notifications  ??? does it work
 
         if (iLastNotificationCount > 0) {
             AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
@@ -345,6 +367,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                     alarmManager.cancel(pendingIntent);
             }
         }
+        */
 
         // go through all favorite locations and set notifications to future intervals
         Date dateNow = Calendar.getInstance().getTime();
@@ -385,6 +408,17 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 }
             }
         }
+
+        /*
+        // and one more test notification
+        Calendar calTest = Calendar.getInstance();
+        calTest.add(Calendar.SECOND, 20);
+        //calTest.add(Calendar.MINUTE, 5);
+        String sTestTime = new SimpleDateFormat("dd.MM.yy HH:mm:ss", Locale.US).format(calTest.getTime());
+        Log.v("DVANACTKA", String.format("Scheduling TEST notification at (%s)!", sTestTime));
+        scheduleNotification(ctx, String.format("Dvanactka notification test at (%s)", sTestTime), calTest.getTime(), iNotificationId);
+        iNotificationId++;
+        */
         prefs.edit().putInt("iLastNotificationCount", iNotificationId).apply();  // save number of notification in order to be able to cancel them next time
     }
 }

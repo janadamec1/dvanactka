@@ -1,14 +1,22 @@
 package com.roomarranger.android.dvanactka;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
-import androidx.legacy.content.WakefulBroadcastReceiver;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.work.Data;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
+
+import android.os.Build;
 import android.util.Log;
 
 /*
- Copyright 2017-2018 Jan Adamec.
+ Copyright 2017-2022 Jan Adamec.
 
  This file is part of "Dvanactka".
 
@@ -21,24 +29,70 @@ import android.util.Log;
  ----------------------------------------------------------------------------
 */
 
-/**
- * This class receives the scheduled intents from AlertManager, and shows the notification
- */
+public class NotificationPublisher extends Worker {
 
-public class NotificationPublisher extends WakefulBroadcastReceiver {
+    private final Context m_context;
+
+    public NotificationPublisher(@NonNull Context context, @NonNull WorkerParameters params) {
+        super(context, params);
+        m_context = context;
+    }
+
+    @NonNull
+    @Override
+    public Result doWork() {
+
+        NotificationHelper.triggerNotification(m_context, getInputData());
+
+        return Result.success();
+        // (Returning RETRY tells WorkManager to try this task again
+        // later; FAILURE says not to try again.)
+    }
+}
+
+class NotificationHelper {
     public static String NOTIFICATION_ID = "notification-id";
-    public static String NOTIFICATION = "notification";
+    public static String CHANNEL_ID  = "dvanactka-channel-id";
+    public static String NOTIFICATION_WORK_TAG = "com.roomarranger.dvanactka-notify.tag";
+    public static String NOTIFICATION_DATA_TITLE = "contentTitle";
+    public static String NOTIFICATION_DATA_TEXT = "contentText";
 
-    public void onReceive(Context context, Intent intent) {
+    public NotificationHelper() {
+    }
+
+    static public void triggerNotification(Context ctx, Data inputData) {
 
         Log.v("DVANACTKA", "Show notification!");
 
-        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(ctx);
 
-        Notification notification = intent.getParcelableExtra(NOTIFICATION);
-        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        notificationManager.notify(id, notification);
+        Notification notification = new NotificationCompat.Builder(ctx, NotificationHelper.CHANNEL_ID)
+                .setContentTitle(inputData.getString(NotificationHelper.NOTIFICATION_DATA_TITLE))
+                .setContentText(inputData.getString(NotificationHelper.NOTIFICATION_DATA_TEXT))
+                .setSmallIcon(R.mipmap.ic_notification)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_EVENT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .build();
 
-        completeWakefulIntent(intent);
+        NotificationManagerCompat.from(ctx).notify(inputData.getInt(NotificationHelper.NOTIFICATION_ID, 1), notification);
+    }
+
+    //---------------------------------------------------------------------------
+    static void createNotificationChannel(Context ctx) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(NotificationHelper.CHANNEL_ID, NotificationHelper.CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(ctx.getString(R.string.app_name));
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                channel.setAllowBubbles(true);
+            }
+
+            NotificationManager notificationManager = (NotificationManager)ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
