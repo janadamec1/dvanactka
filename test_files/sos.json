@@ -19,7 +19,7 @@
 {
 "title":"FB skupina obyvatel",
 "text":"Modřany, Praha 12",
-"infoLink":"https:\/\/www.facebook.com\/groups\/modrany",
+"infoLink":"https:\/\/www.facebook.com\/groups\/1677444912493517",
 "category":"informace"
 },
 {
@@ -59,7 +59,7 @@
 "category":"policie"
 },
 {
-"title":"Městská policie - obvodní ředitelství",
+"title":"Městská policie - obvodní ředitelství Praha 12",
 "locationLat":"50.00107",
 "locationLong":"14.4221574",
 "address":"Násirovo náměstí 1\nPraha 12",
@@ -70,9 +70,9 @@
 },
 {
 "title":"Městská policie - služebna Libuš",
-"locationLat":"50.0048786",
-"locationLong":"14.4616769",
-"address":"Zahrádecká 376\nPraha 4",
+"locationLat":"49.9922831",
+"locationLong":"14.4655811",
+"address":"Ladislava Coňka 6\nPraha 4",
 "phone":"244 471 687",
 "infoLink":"http:\/\/www.mppraha.cz",
 "text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
@@ -90,30 +90,9 @@
 },
 {
 "title":"Městská policie - služebna Modřany",
-"locationLat":"50.0016803",
-"locationLong":"14.4126269",
-"address":"Písková 23\nPraha 12",
-"phone":"244 400 541",
-"infoLink":"http:\/\/www.mppraha.cz",
-"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
-"category":"policie"
-},
-{
-"title":"Městská policie - služebna Komořany",
-"locationLat":"49.9871786",
-"locationLong":"14.4117528",
-"address":"Palmetová 3\nPraha 12",
-"phone":"244 400 507",
-"infoLink":"http:\/\/www.mppraha.cz",
-"text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
-"category":"policie"
-},
-{
-"title":"Městská policie - služebna Kamýk",
-"locationLat":"50.0192833",
-"locationLong":"14.4431044",
-"address":"Čechtická 758\nPraha 12",
-"phone":"261 397 309",
+"locationLat":"50.0022061",
+"locationLong":"14.4139206",
+"address":"Gen. Šišky 6\nPraha 12",
 "infoLink":"http:\/\/www.mppraha.cz",
 "text":"Okrskové služebny nejsou v provozu 24 hodin denně. Obraťte se případně na obvodní ředitelství.",
 "category":"policie"
@@ -254,6 +233,14 @@
 "locationLong":"14.4182378",
 "address":"Sofijské náměstí\nPraha 12",
 "openingHours":"1: 900-1900, 2: 900-1900, 3: 900-1900, 4: 900-1900, 5: 900-1900, 6: 800-1200",
+"category":"wc"
+},
+{
+"title":"Radnice Prahy 12 (u restaurace)",
+"locationLat":"50.0025575",
+"locationLong":"14.4147478",
+"address":"Generála Šišky 6\nPraha 12",
+"openingHours":"1: 800-2300, 2: 800-2300, 3: 800-2300, 4: 800-2300, 5: 800-2300, 6: 1100-2300, 7: 1100-2300",
 "category":"wc"
 },
 {
