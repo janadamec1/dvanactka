@@ -5,47 +5,53 @@ $sAddress = "Modřanský biograf\nU Kina 1\n143 00 Praha 12 - Modřany";
 
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.modranskybiograf.eu/klient-2774/kino-433/stranka-14487");
+$dom->loadHTMLFile("https://www.informuji.cz/kina/program-kina-modransky-biograf.html?id=97&na=tyden");
+//echo $dom->saveHTML();
+	
 $xpath = new DomXPath($dom);
-$nodes = $xpath->query("//div[@class='calendar-left-table-tr']");
+$nodes = $xpath->query("//div[@id='film']/div");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("h2/a[@class='cal-event-item shortName']", $node));
+	$nodeTitle = firstItem($xpath->query("div[@class='movieName']/h2", $node));
 	if ($nodeTitle != NULL) {
 		$title = $nodeTitle->nodeValue;
-		if ($title == "KINO NEHRAJE")
-			continue;
 
-		$link = $nodeTitle->getAttribute("href");
-		if (substr($link, 0, 4) != "http") {
-			$link = "http://www.modranskybiograf.eu" . $link;
-		}
-		$aNewRecord = array("title" => $title);
-		$aNewRecord["infoLink"] = $link;
+		//echo "title: " . $title . "\n";
 
-		//$aNewRecord["text"] = implode(" | ", explode("\n", $node->getAttribute("title")));
-		$aNewRecord["address"] = $sAddress;
+		$link = "http://www.modranskybiograf.cz";  // sadly cannot get the actual link to this website
+		
+		$nodesDates = $xpath->query("div[@class='movieTimes']/table/tr/td[@class='time']", $node);
+		foreach ($nodesDates as $id => $nodeDate) {
+			$nodeDateText = firstItem($xpath->query("strong/em", $nodeDate));
 
-		$nodeBuyLink = firstItem($xpath->query("div[@class='ap_price']//a[@class='cal-event-item-buy-span icon-shopping-cart']", $node));
-		if ($nodeBuyLink != NULL) {
-			$aNewRecord["buyLink"] = $nodeBuyLink->getAttribute("href");
-		}
+			if ($nodeDateText == NULL) continue;
 
-		$nodeDate = firstItem($xpath->query("div[@class='ap_date']", $node));
-		$nodeTime = firstItem($xpath->query("div[@class='ap_time']", $node));
-		if ($nodeDate != NULL && $nodeTime != NULL) {
-		    $sDateTime = $nodeDate->nodeValue . date("Y") . " ". $nodeTime->nodeValue;
-			$date = date_create_from_format("!j.n.Y G:i", $sDateTime);
-			if ($date !== FALSE) {
-				if ($date->format("n") < date("n")) {
-					$date = date_add($date, new DateInterval('P1Y'));
+			//echo "date: " . $nodeDateText->nodeValue . "\n";
+			
+			$nodesTimes = $xpath->query("span", $nodeDate);
+			foreach ($nodesTimes as $it => $nodeTime) {
+				
+				//echo "dateTime: " . $nodeDateText->nodeValue . " at " . $nodeTime->nodeValue . "\n";
+				
+				$sDateTime = $nodeDateText->nodeValue . date("Y") . " ". $nodeTime->nodeValue;
+				$date = date_create_from_format("!j.n.Y G:i", $sDateTime);
+				if ($date !== FALSE) {
+					if ($date->format("n") < date("n")) {  // when adding year manually, we may have to go to next year
+						$date = date_add($date, new DateInterval('P1Y'));
+					}
+					
+					$aNewRecord = array("title" => $title);
+					$aNewRecord["infoLink"] = $link;
+
+					$aNewRecord["address"] = $sAddress;
+					$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
+					
+					//$aNewRecord["buyLink"] = $nodeTime->getAttribute("href");
+					
+					array_push($arrItems, $aNewRecord);
 				}
-				$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
-		  }
+			}
 		}
-
-		if (array_key_exists("date", $aNewRecord))
-	    	array_push($arrItems, $aNewRecord);
-  }
+    }
 }
 if (count($arrItems) > 0) {
 	$arr = array("items" => $arrItems);
@@ -53,7 +59,7 @@ if (count($arrItems) > 0) {
 	$filename = "dyn_biograf.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
+	//echo $encoded;
 }
-//echo $encoded;
 echo "Biograf done, " . count($arrItems) . " items\n";
 ?>
