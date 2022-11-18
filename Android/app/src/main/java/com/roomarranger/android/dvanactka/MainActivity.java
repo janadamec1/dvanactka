@@ -418,7 +418,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         Log.v("DVANACTKA", String.format("Scheduling TEST notification at (%s)!", sTestTime));
         scheduleNotification(ctx, String.format("Dvanactka notification test at (%s)", sTestTime), calTest.getTime(), iNotificationId);
         iNotificationId++;
-        */
+        //*/
         prefs.edit().putInt("iLastNotificationCount", iNotificationId).apply();  // save number of notification in order to be able to cancel them next time
     }
 }

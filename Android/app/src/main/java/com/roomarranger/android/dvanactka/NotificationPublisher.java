@@ -13,6 +13,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 
 /*
@@ -73,6 +74,7 @@ class NotificationHelper {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_EVENT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .build();
 
         NotificationManagerCompat.from(ctx).notify(inputData.getInt(NotificationHelper.NOTIFICATION_ID, 1), notification);
@@ -81,17 +83,27 @@ class NotificationHelper {
     //---------------------------------------------------------------------------
     static void createNotificationChannel(Context ctx) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /*
+            NotificationChannelCompat channel = new NotificationChannelCompat.Builder(NotificationHelper.CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH)
+                    .setDescription(ctx.getString(R.string.app_name))
+                    .setLightsEnabled(true)
+                    .setVibrationEnabled(true)
+                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI, null)
+                    .build();
+            /*/
             NotificationChannel channel = new NotificationChannel(NotificationHelper.CHANNEL_ID, NotificationHelper.CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription(ctx.getString(R.string.app_name));
             channel.enableLights(true);
             channel.enableVibration(true);
             channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            channel.setSound(Settings.System.DEFAULT_NOTIFICATION_URI, null);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 channel.setAllowBubbles(true);
             }
+            //*/
 
-            NotificationManager notificationManager = (NotificationManager)ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
             notificationManager.createNotificationChannel(channel);
         }
     }
