@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.roomarranger.android.dvanactka">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />  <!-- downloading data sources -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />  <!-- sorting records by distance from user, maps -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />           <!-- maybe for notifications? -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/> <!-- For more precise notification timing  -->
 
     <uses-feature android:name="android.hardware.location.gps" />
 
