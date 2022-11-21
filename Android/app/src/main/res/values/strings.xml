@@ -102,6 +102,7 @@
     <string name="search">Search</string>
     <string name="game_permission">In order to play the game, please go to Settings and give the app the permission to access your location.</string>
     <string name="permission_explain_location">The app needs the permission to access your location to sort the objects by distance from you and locate you on map.</string>
+    <string name="permission_explain_notification">Notification will be shown 1 day before the dumpster arrival, and another at the scheduled arrival time.</string>
     <string name="lunch_menu">Lunch menu</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="gamestart_note">To start playing the game, walk to the nearest place in Landmarks, Waste or Shops and tap I\'m here!</string>

@@ -9,9 +9,11 @@ import android.graphics.Color;
 import android.location.Location;
 import android.Manifest;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
@@ -48,7 +50,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
 
  This file is part of "Dvanactka".
 
@@ -99,6 +101,7 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
     boolean m_bGameWrongTime = false;
     GoogleApiClient m_GoogleApiClient = null;
     LocationRequest m_LocationRequest;
+    static final int MY_PERMISSION_REQUEST_NOTIFICATION = 140;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -481,9 +484,28 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
 
         if (m_chkShowNotifications.getVisibility() != View.GONE) {
             m_chkShowNotifications.setOnCheckedChangeListener((compoundButton, bChecked) -> {
-                rec.m_bMarkFavorite = bChecked;
-                CRxDataSourceManager.shared.setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
-                setResult(RESULT_OK);       // change star icon, resort, to refresh EventCtl using CODE_DETAIL_PLACE_REFRESH
+
+                // ask for the permission to show notifications
+                if (bChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                        && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    // Should we show an explanation?
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage(R.string.permission_explain_notification);
+                        builder.setOnCancelListener(dialogInterface -> {
+                            ActivityCompat.requestPermissions(PlaceDetailCtl.this, new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                                    MY_PERMISSION_REQUEST_NOTIFICATION);
+                        });
+                        builder.create().show();
+                    }
+                    else {
+                        // No explanation needed, we can request the permission.
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                                MY_PERMISSION_REQUEST_NOTIFICATION);
+                    }
+                    return;
+                }
+                markPlaceAsFavorite(bChecked);
             });
         }
         if (rec.m_aLocation != null) {
@@ -496,6 +518,23 @@ public class PlaceDetailCtl extends Activity implements OnMapReadyCallback, Goog
                 startActivity(mapIntent);
             });
         }
+    }
+    //---------------------------------------------------------------------------
+    // ActivityCompat.OnRequestPermissionsResultCallback
+    @Override
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSION_REQUEST_NOTIFICATION) {
+            if (permissions.length > 0) {
+                markPlaceAsFavorite(true);
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------
+    void markPlaceAsFavorite(boolean bChecked) {
+        rec.m_bMarkFavorite = bChecked;
+        CRxDataSourceManager.shared.setFavorite(rec.m_sTitle, rec.m_bMarkFavorite);
+        setResult(RESULT_OK);       // change star icon, resort, to refresh EventCtl using CODE_DETAIL_PLACE_REFRESH
     }
 
     //---------------------------------------------------------------------------
