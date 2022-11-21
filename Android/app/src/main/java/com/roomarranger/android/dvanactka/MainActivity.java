@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
         } catch (Exception e) {}*/
 
         m_adapter = new ImageAdapter(this, CRxAppDefinition.shared.m_arrDataSourceOrder);
-        GridView gridview = (GridView)findViewById(R.id.gridview);
+        GridView gridview = findViewById(R.id.gridview);
         gridview.setAdapter(m_adapter);
 
         gridview.setOnItemClickListener((parent, v, position, id) -> {
@@ -178,9 +178,9 @@ public class MainActivity extends Activity implements CRxDataSourceRefreshDelega
                 //convertView.setLayoutParams(new GridView.LayoutParams(85, 105));
 
                 cell = new CollectionViewHolder();
-                cell.lbName = (TextView)convertView.findViewById(R.id.textView);
-                cell.imgIcon = (ImageView)convertView.findViewById(R.id.imageView);
-                cell.lbBadge = (TextView)convertView.findViewById(R.id.badge);
+                cell.lbName = convertView.findViewById(R.id.textView);
+                cell.imgIcon = convertView.findViewById(R.id.imageView);
+                cell.lbBadge = convertView.findViewById(R.id.badge);
 
                 /*convertView.setOnTouchListener(new View.OnTouchListener() {
                     @Override

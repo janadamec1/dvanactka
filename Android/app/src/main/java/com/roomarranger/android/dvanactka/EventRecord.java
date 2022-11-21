@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsIntent;
 
 import org.json.JSONArray;
@@ -24,7 +26,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
 
  This file is part of "Dvanactka".
 
@@ -69,6 +71,7 @@ class CRxHourInterval
         return null;
     }
 
+    @NonNull
     @Override
     public String toString()
     {
@@ -108,6 +111,7 @@ class CRxEventInterval
         return new CRxEventInterval(start, end, items[0]);
     }
 
+    @NonNull
     @Override
     public String toString()
     {
@@ -209,9 +213,9 @@ class CRxQuestionAnswer {
     //---------------------------------------------------------------------------
     JSONObject saveToJSON() {
         JSONObject item = new JSONObject();
-        try { item.put("q", m_sQuestion); } catch (JSONException e) { }
-        try { item.put("a", m_sAnswer); } catch (JSONException e) { }
-        try { item.put("lvl", m_iLevel); } catch (JSONException e) { }
+        try { item.put("q", m_sQuestion); } catch (JSONException ignored) { }
+        try { item.put("a", m_sAnswer); } catch (JSONException ignored) { }
+        try { item.put("lvl", m_iLevel); } catch (JSONException ignored) { }
         return item;
     }
 }
@@ -330,7 +334,7 @@ class CRxEventRecord
         try {
             date = df.parse(string);
         }
-        catch (ParseException e) {}
+        catch (ParseException ignored) {}
         return date;
     }
 
@@ -373,7 +377,7 @@ class CRxEventRecord
             pThis.m_aLocation.setLatitude(dLocLat);
             pThis.m_aLocation.setLongitude(dLocLong);
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         try {
             String locationLat = jsonItem.getString("checkinLocationLat");
@@ -384,7 +388,7 @@ class CRxEventRecord
             pThis.m_aLocCheckIn.setLatitude(dLocLat);
             pThis.m_aLocCheckIn.setLongitude(dLocLong);
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         try {
             String hours = jsonItem.getString("openingHours");
@@ -396,7 +400,7 @@ class CRxEventRecord
                     pThis.m_arrOpeningHours.add(interval);
             }
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
 
         try {
             String hours = jsonItem.getString("events");
@@ -414,7 +418,7 @@ class CRxEventRecord
                 }
             });
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
 
         try {
             JSONArray qas = jsonItem.getJSONArray("qa");
@@ -428,52 +432,52 @@ class CRxEventRecord
             if (!arrQa.isEmpty())
                 pThis.m_arrQa = arrQa;
         }
-        catch (JSONException e) {}
+        catch (JSONException ignored) {}
         return pThis;
     }
 
     //---------------------------------------------------------------------------
     JSONObject saveToJSON() {
         JSONObject item = new JSONObject();
-        try { item.put("title", m_sTitle); } catch (JSONException e) {}
-        try { item.put("infoLink", m_sInfoLink); } catch (JSONException e) {}
-        try { item.put("buyLink", m_sBuyLink); } catch (JSONException e) {}
-        try { item.put("category", m_eCategory); } catch (JSONException e) {}
-        try { item.put("filter", m_sFilter); } catch (JSONException e) {}
-        try { item.put("text", m_sText); } catch (JSONException e) {}
-        try { item.put("illustrationImgLink", m_sIllustrationImgLink); } catch (JSONException e) {}
-        try { item.put("phone", m_sPhoneNumber); } catch (JSONException e) {}
-        try { item.put("phoneMobile", m_sPhoneMobileNumber); } catch (JSONException e) {}
-        try { item.put("email", m_sEmail); } catch (JSONException e) {}
-        try { item.put("contactNote", m_sContactNote); } catch (JSONException e) {}
-        try { item.put("address", m_sAddress); } catch (JSONException e) {}
-        try { item.put("date", saveDate(m_aDate)); } catch (JSONException e) {}
-        try { item.put("dateTo", saveDate(m_aDateTo)); } catch (JSONException e) {}
+        try { item.put("title", m_sTitle); } catch (JSONException ignored) {}
+        try { item.put("infoLink", m_sInfoLink); } catch (JSONException ignored) {}
+        try { item.put("buyLink", m_sBuyLink); } catch (JSONException ignored) {}
+        try { item.put("category", m_eCategory); } catch (JSONException ignored) {}
+        try { item.put("filter", m_sFilter); } catch (JSONException ignored) {}
+        try { item.put("text", m_sText); } catch (JSONException ignored) {}
+        try { item.put("illustrationImgLink", m_sIllustrationImgLink); } catch (JSONException ignored) {}
+        try { item.put("phone", m_sPhoneNumber); } catch (JSONException ignored) {}
+        try { item.put("phoneMobile", m_sPhoneMobileNumber); } catch (JSONException ignored) {}
+        try { item.put("email", m_sEmail); } catch (JSONException ignored) {}
+        try { item.put("contactNote", m_sContactNote); } catch (JSONException ignored) {}
+        try { item.put("address", m_sAddress); } catch (JSONException ignored) {}
+        try { item.put("date", saveDate(m_aDate)); } catch (JSONException ignored) {}
+        try { item.put("dateTo", saveDate(m_aDateTo)); } catch (JSONException ignored) {}
         if (m_aLocation != null) {
-            try { item.put("locationLat", Double.toString(m_aLocation.getLatitude())); } catch (JSONException e) {}
-            try { item.put("locationLong", Double.toString(m_aLocation.getLongitude())); } catch (JSONException e) {}
+            try { item.put("locationLat", Double.toString(m_aLocation.getLatitude())); } catch (JSONException ignored) {}
+            try { item.put("locationLong", Double.toString(m_aLocation.getLongitude())); } catch (JSONException ignored) {}
         }
         if (m_aLocCheckIn != null) {
-            try { item.put("checkinLocationLat", Double.toString(m_aLocCheckIn.getLatitude())); } catch (JSONException e) {}
-            try { item.put("checkinLocationLong", Double.toString(m_aLocCheckIn.getLongitude())); } catch (JSONException e) {}
+            try { item.put("checkinLocationLat", Double.toString(m_aLocCheckIn.getLatitude())); } catch (JSONException ignored) {}
+            try { item.put("checkinLocationLong", Double.toString(m_aLocCheckIn.getLongitude())); } catch (JSONException ignored) {}
         }
         if (m_arrOpeningHours != null) {
-            String sVal = "";
+            StringBuilder sVal = new StringBuilder();
             for (CRxHourInterval it: m_arrOpeningHours) {
-                if (!sVal.isEmpty())
-                    sVal += ", ";
-                sVal += it.toString();
+                if (sVal.length() > 0)
+                    sVal.append(", ");
+                sVal.append(it.toString());
             }
-            try { item.put("openingHours", sVal); } catch (JSONException e) {}
+            try { item.put("openingHours", sVal.toString()); } catch (JSONException ignored) {}
         }
         if (m_arrEvents != null) {
-            String sVal = "";
+            StringBuilder sVal = new StringBuilder();
             for (CRxEventInterval it: m_arrEvents) {
-                if (!sVal.isEmpty())
-                    sVal += "|";
-                sVal += it.toString();
+                if (sVal.length() > 0)
+                    sVal.append("|");
+                sVal.append(it.toString());
             }
-            try { item.put("events", sVal); } catch (JSONException e) {}
+            try { item.put("events", sVal.toString()); } catch (JSONException ignored) {}
         }
         if (m_arrQa != null) {
             JSONArray jsonQaItems = new JSONArray();
@@ -481,7 +485,7 @@ class CRxEventRecord
                 jsonQaItems.put(qaItem.saveToJSON());
             }
             if (jsonQaItems.length() > 0) {
-                try { item.put("qa", jsonQaItems); } catch (JSONException e) {}
+                try { item.put("qa", jsonQaItems); } catch (JSONException ignored) {}
             }
         }
         return item;
@@ -616,19 +620,16 @@ class CRxEventRecord
             iWeekday += 7;
         }
 
-        String sString = "";
+        StringBuilder sString = new StringBuilder();
         for (CRxHourInterval aInt: m_arrOpeningHours) {
             if (aInt.m_weekday == iWeekday) {
-                if (sString.isEmpty()) {
-                    sString = aInt.toIntervalDisplayString();
-                }
-                else {
-                    sString += " " + aInt.toIntervalDisplayString();
-                }
+                if (sString.length() > 0)
+                    sString.append(" ");
+                sString.append(aInt.toIntervalDisplayString());
             }
         }
         Resources res = ctx.getResources();
-        if (sString.isEmpty()) {
+        if (sString.length() == 0) {
             return res.getString(R.string.closed_today);
         }
         return res.getString(R.string.today) + " " + sString;
