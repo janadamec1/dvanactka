@@ -36,9 +36,9 @@ public class Reachability {
         }
         
         //Only Working for WIFI
-        let isReachable = flags == .reachable
-        let needsConnection = flags == .connectionRequired
+        let isReachable = flags.contains(.reachable)
+        let isWWAN = flags.contains(.isWWAN)
          
-        return isReachable && !needsConnection
+        return isReachable && !isWWAN
     }
 }
