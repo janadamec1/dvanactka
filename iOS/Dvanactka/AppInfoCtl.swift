@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -27,6 +27,17 @@ class AppInfoCtl: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // set navigation bar color, as in ViewController::viewDidLoad
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance();
+            appearance.configureWithOpaqueBackground();
+            appearance.backgroundColor = UIColor(red: 23.0/255.0, green: 37.0/255.0, blue: 96.0/255.0, alpha: 1.0);
+            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white];
+
+            navigationController?.navigationBar.standardAppearance = appearance;
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance;
+        }
 
         title = NSLocalizedString("About the App", comment: "");
         m_lbText.text = NSLocalizedString("AppInfo.longtext", comment: "");

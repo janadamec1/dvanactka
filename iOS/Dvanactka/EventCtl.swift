@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -107,21 +107,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             m_searchController.searchBar.tintColor = UIColor.white;
             //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = convertToNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white]);
             UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white];
-            
-            // workaround for iOS 13.1 white background bug (https://stackoverflow.com/questions/57746292/navigation-bar-becomes-white-when-a-uisearchcontroller-is-added-to-it)
-            if #available(iOS 13.0, *) {
-                
-                /*m_searchController.searchBar.barTintColor = UIColor(red:23.0/255.0, green:37.0/255.0, blue:96.0/255.0, alpha:1.0);
-                m_searchController.searchBar.searchBarStyle = UISearchBar.Style.prominent;*/
-
-                /*let appearance = UINavigationBarAppearance()
-                appearance.backgroundColor = UIColor(red:23.0/255.0, green:37.0/255.0, blue:96.0/255.0, alpha:1.0);
-                appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white];
-                self.navigationItem.standardAppearance = appearance;
-                self.navigationItem.scrollEdgeAppearance = appearance;*/
-                
-                //m_searchController.searchBar.searchTextField.backgroundColor = .systemBackground;
-            }
             
             self.navigationItem.searchController = m_searchController
             self.definesPresentationContext = true
@@ -892,7 +877,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
             
             if let url = URL(string: "telprompt://\(cleanedNumber)") {
-                UIApplication.shared.openURL(url);
+                UIApplication.shared.open(url);
             }
         }
     }
@@ -1059,7 +1044,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         guard let ds = m_aDataSource else { return; }
         if let sFooterCustomButtonTargetUrl = ds.m_sListingFooterCustomButtonTargetUrl,
             let url = URL(string: sFooterCustomButtonTargetUrl) {
-            UIApplication.shared.openURL(url);
+            UIApplication.shared.open(url);
         }
         else if MFMailComposeViewController.canSendMail() {
 

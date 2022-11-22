@@ -32,15 +32,15 @@ foreach ($nodes as $i => $node) {
 			$aNewRecord["text"] = $text;
 		}
 
-		$nodeIllustration = firstItem($xpath->query("object/noscript/img", $nodeTitle));
+		$nodeIllustration = firstItem($xpath->query("img", $nodeTitle));
 		if ($nodeIllustration != NULL) {
-      $linkImg = $nodeIllustration->getAttribute("src");
-      if ($linkImg != "") {
-        if (substr($linkImg, 0, 4) != "http") {
-          $linkImg = "https://www.praha12.cz" . $linkImg;
-        }
-        $aNewRecord["illustrationImgLink"] = $linkImg;
-      }
+		  $linkImg = $nodeIllustration->getAttribute("src");
+		  if ($linkImg != "") {
+			if (substr($linkImg, 0, 4) != "http") {
+			  $linkImg = "https://www.praha12.cz" . $linkImg;
+			}
+			$aNewRecord["illustrationImgLink"] = $linkImg;
+		  }
 		}
 
 		$aNewRecord["filter"] = "MČ Praha 12";
@@ -55,7 +55,7 @@ if (count($arrItems) > 0) {
 	$filename = "dyn_radAktual.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
 echo "parse_rad done, " . count($arrItems) . " items\n";
 ?>

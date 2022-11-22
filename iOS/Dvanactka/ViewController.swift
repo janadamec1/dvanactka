@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -65,7 +65,18 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         btnInfo.addTarget(self, action: #selector(ViewController.onBtnInfo), for: .touchUpInside);
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btnInfo);
-        
+
+        // set the default colors for navigationBar in this controller tree (do not put it only into our navigationItem)
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance();
+            appearance.configureWithOpaqueBackground();
+            appearance.backgroundColor = UIColor(red: 23.0/255.0, green: 37.0/255.0, blue: 96.0/255.0, alpha: 1.0);
+            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white];
+
+            navigationController?.navigationBar.standardAppearance = appearance;
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance;
+        }
+
         CRxDataSourceManager.shared.delegate = self;
     }
 

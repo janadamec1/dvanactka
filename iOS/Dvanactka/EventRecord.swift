@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -496,7 +496,7 @@ class CRxEventRecord: NSObject {
             senderViewCtl.present(safariCtl, animated: true, completion: nil);
         }
         else {
-            UIApplication.shared.openURL(url);
+            UIApplication.shared.open(url);
         }
     }
     

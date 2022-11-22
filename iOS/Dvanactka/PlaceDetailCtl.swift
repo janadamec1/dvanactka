@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -419,7 +419,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
         
         if let url = URL(string: "telprompt://\(cleanedNumber)") {
-            UIApplication.shared.openURL(url);
+            UIApplication.shared.open(url);
         }
     }
     
@@ -432,7 +432,7 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
         let cleanedNumber = phone.replacingOccurrences(of: " ", with: "")
         
         if let url = URL(string: "telprompt://\(cleanedNumber)") {
-            UIApplication.shared.openURL(url);
+            UIApplication.shared.open(url);
         }
     }
 

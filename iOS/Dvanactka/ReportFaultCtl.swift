@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -16,7 +16,6 @@ import UIKit
 import MapKit
 import MessageUI
 import Contacts     // for formatting address
-//import AddressBookUI  // for formatting address < iOS 9
 
 class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UITextViewDelegate, MFMailComposeViewControllerDelegate, CRxRefineLocDelegate {
     @IBOutlet weak var m_lbHint: UILabel!
@@ -259,18 +258,12 @@ class ReportFaultCtl: UIViewController, UINavigationControllerDelegate, UIImageP
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             if let arrPlacemarks = placemarks,
                 let placemark = arrPlacemarks.first {
-                
-                let pf = CNPostalAddressFormatter();
-                let address = CNMutablePostalAddress()
-                let addressdictionary = placemark.addressDictionary!;
-                address.street = addressdictionary["Street"] as? String ?? ""
-                address.city = addressdictionary["City"] as? String ?? ""
-                address.postalCode = addressdictionary["ZIP"] as? String ?? ""
-                //address.state = addressdictionary["State"] as? String ?? ""
-                //address.country = addressdictionary["Country"] as? String ?? ""
-                
-                let sAddress = pf.string(from: address);
-                //let sAddress = ABCreateStringWithAddressDictionary(placemark.addressDictionary!, false).components(separatedBy: "\n").joined(separator: ", ");
+
+                var sAddress = "";
+                if let address = placemark.postalAddress {
+                    let pf = CNPostalAddressFormatter();
+                    sAddress = pf.string(from: address);
+                }
                 self.displayLocation(location, address: sAddress);
             }
         }
