@@ -59,7 +59,7 @@ if (count($arrItems) > 0) {
 	$filename = "dyn_biograf.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
 echo "Biograf done, " . count($arrItems) . " items\n";
 ?>

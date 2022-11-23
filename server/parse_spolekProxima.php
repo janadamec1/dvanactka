@@ -43,16 +43,16 @@ foreach ($nodes as $i => $node) {
 			$aNewRecord["text"] = $text;
 		}
 
-		/*$nodeIllustration = firstItem($xpath->query("div[@class='to-left']/img", $node));
+		$nodeIllustration = firstItem($xpath->query("div[@class='to-left']/img", $node));
 		if ($nodeIllustration != NULL) {
-      $linkImg = $nodeIllustration->getAttribute("src");
-      if ($linkImg != "") {
-        if (substr($linkImg, 0, 4) != "http") {
-          $linkImg = "https://www.proximasociale.cz" . $linkImg;
-        }
-        $aNewRecord["illustrationImgLink"] = $linkImg;
-      }
-		}*/  // fails to load on iOS due to SSL error
+		  $linkImg = $nodeIllustration->getAttribute("src");
+		  if ($linkImg != "") {
+			if (substr($linkImg, 0, 4) != "http") {
+			  $linkImg = "https://www.proximasociale.cz" . $linkImg;
+			}
+			$aNewRecord["illustrationImgLink"] = $linkImg;
+		  }
+		}
 
 		$aNewRecord["filter"] = "Proxima Sociale";
 		if (array_key_exists("date", $aNewRecord))
@@ -73,7 +73,7 @@ if (count($arrItems) > 0) {
 	$filename = "items_spolekProxima.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
 echo "Proxima done, " . count($arrItems) . " items\n";
 ?>
