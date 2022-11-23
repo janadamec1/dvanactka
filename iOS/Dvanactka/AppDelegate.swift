@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -15,7 +15,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -58,23 +58,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        if (application.applicationState == .active)
-        {
-            if let navCtl = application.keyWindow?.rootViewController as? UINavigationController,
-                let currentViewCtl = navCtl.visibleViewController {
-                let alertController =  UIAlertController(title: NSLocalizedString("Reminder", comment:""),
-                                                        message: notification.alertBody, preferredStyle: .alert);
-                let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
-                    print("OK")})
-                alertController.addAction(actionOK);
-                currentViewCtl.present(alertController, animated: true, completion: nil);
-            }
-        }
-        // Set icon badge number to zero
-        application.applicationIconBadgeNumber = 0;
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Play sound and show alert to the user
+        completionHandler([.alert,.sound])
     }
 
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let sMessage = response.notification.request.content.body;
+        let sMsgTitle = response.notification.request.content.title;
 
+        if let navCtl = window?.rootViewController as? UINavigationController,
+            let currentViewCtl = navCtl.visibleViewController {
+            let alertController = UIAlertController(title: sMsgTitle, message: sMessage, preferredStyle: .alert);
+            let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
+                print("OK")})
+            alertController.addAction(actionOK);
+            currentViewCtl.present(alertController, animated: true, completion: nil);
+        }
+        completionHandler();
+    }
 }
 

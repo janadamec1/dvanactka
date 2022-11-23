@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2018 Jan Adamec.
+ Copyright 2016-2022 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -361,8 +361,9 @@ class CRxDataSourceManager : NSObject {
         // go through all favorite locations and set notifications to future intervals
         let manager = CRxDataSourceManager.shared;
         let dateNow = Date();
-        var arrNewNotifications = [UILocalNotification]();
-
+        var arrNotificationRequests = [UNNotificationRequest]();
+        let sMsgTitle = CRxAppDefinition.shared.m_sTitle ?? "Dvanactka";
+        
         for itemIt in m_dictDataSources {
             let ds = itemIt.value;
             if !ds.m_bLocalNotificationsForEvents {
@@ -377,35 +378,72 @@ class CRxDataSourceManager : NSObject {
                 for aEvent in events {
                     if aEvent.m_dateStart > dateNow {
                         
-                        var aNotification = UILocalNotification();
-                        aNotification.fireDate = aEvent.m_dateStart;
-                        aNotification.timeZone = NSTimeZone.default;
-                        aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ just arrived (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
-                        aNotification.soundName = UILocalNotificationDefaultSoundName;
-                        //aNotification.applicationIconBadgeNumber = 1;
-                        arrNewNotifications.append(aNotification);
+                        let aNotTrigger = UNTimeIntervalNotificationTrigger(timeInterval: aEvent.m_dateStart.timeIntervalSinceNow, repeats: false);
+                        let aNotContent = UNMutableNotificationContent();
+                        aNotContent.title = sMsgTitle;
+                        aNotContent.body = String(format: NSLocalizedString("Dumpster at %@ just arrived (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType])
+                        aNotContent.sound = UNNotificationSound.default;
+                        
+                        arrNotificationRequests.append(UNNotificationRequest(identifier: UUID().uuidString, content: aNotContent, trigger: aNotTrigger))
                         
                         // also add a notification one day earlier
                         let dateBefore = aEvent.m_dateStart.addingTimeInterval(-24*60*60);
                         if dateBefore > dateNow {
-                            aNotification = UILocalNotification();
-                            aNotification.fireDate = dateBefore;
-                            aNotification.timeZone = NSTimeZone.default;
-                            aNotification.alertBody = String(format: NSLocalizedString("Dumpster at %@ tomorrow (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType]);
-                            aNotification.soundName = UILocalNotificationDefaultSoundName;
-                            //aNotification.applicationIconBadgeNumber = 1;
-                            arrNewNotifications.append(aNotification);
+                            
+                            let aNotTrigger = UNTimeIntervalNotificationTrigger(timeInterval: dateBefore.timeIntervalSinceNow, repeats: false);
+                            let aNotContent = UNMutableNotificationContent();
+                            aNotContent.title = sMsgTitle;
+                            aNotContent.body = String(format: NSLocalizedString("Dumpster at %@ tomorrow (%@)", comment:""), arguments: [rec.m_sTitle, aEvent.m_sType])
+                            aNotContent.sound = UNNotificationSound.default;
+                            
+                            arrNotificationRequests.append(UNNotificationRequest(identifier: UUID().uuidString, content: aNotContent, trigger: aNotTrigger))
                         }
                     }
                 }
             }
         }
-        // set those notifications
-        if !arrNewNotifications.isEmpty {
-            UIApplication.shared.scheduledLocalNotifications = arrNewNotifications;
-        }
-        else {
-            UIApplication.shared.scheduledLocalNotifications = nil;  // remove all our old notifications
+        
+        /*
+        // and one more test notification
+        let aNotTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false);
+        let aNotContent = UNMutableNotificationContent();
+        aNotContent.title = sMsgTitle;
+        aNotContent.body = "Testovaci notifikace";
+        aNotContent.sound = UNNotificationSound.default;
+        
+        arrNotificationRequests.append(UNNotificationRequest(identifier: UUID().uuidString, content: aNotContent, trigger: aNotTrigger))
+        */
+        
+        let aNotificationCenter = UNUserNotificationCenter.current();
+        aNotificationCenter.delegate = UIApplication.shared.delegate as! AppDelegate;
+
+        aNotificationCenter.getNotificationSettings { settings in
+         
+            if settings.authorizationStatus == .notDetermined && !arrNotificationRequests.isEmpty {
+                // ask once again (may happen after app update, notifications already planned but not asked again
+                let notTypes: UNAuthorizationOptions = [.alert, .sound, .badge/*, .provisional*/];
+                aNotificationCenter.requestAuthorization(options: notTypes) { (granted, error) in
+                    if granted {
+                        self.resetAllNotifications();  // call this function again
+                    }
+                }
+                return;
+            }
+            
+            guard (settings.authorizationStatus == .authorized)/* ||
+                  (settings.authorizationStatus == .provisional)*/ else { return }
+
+            // remove our old notifications
+            // aNotificationCenter.removeAllPendingNotificationRequests();  // do not use this func as it is async and may also remove new requests too
+            aNotificationCenter.getPendingNotificationRequests { arrOldRequests in
+                
+                if !arrOldRequests.isEmpty {
+                    let arrOldRequestIds = arrOldRequests.map { String($0.identifier) }
+                    aNotificationCenter.removePendingNotificationRequests(withIdentifiers: arrOldRequestIds);
+                }
+                // and add new notifications
+                arrNotificationRequests.forEach { aNotificationCenter.add($0) }
+            }
         }
     }
     

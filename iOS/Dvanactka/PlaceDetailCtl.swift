@@ -320,9 +320,12 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             CRxDataSourceManager.shared.setFavorite(place: rec.m_sTitle, set: rec.m_bMarkFavorite);
             m_refreshParentDelegate?.detailRequestsRefresh(); // change star icon, resort
             
-            let notTypes: UIUserNotificationType = ([.alert, .sound, .badge])
-            let notSettings = UIUserNotificationSettings(types:notTypes, categories:nil);
-            UIApplication.shared.registerUserNotificationSettings(notSettings);
+            let aNotificationCenter = UNUserNotificationCenter.current()
+            aNotificationCenter.delegate = UIApplication.shared.delegate as! AppDelegate;
+            let notTypes: UNAuthorizationOptions = [.alert, .sound, .badge/*, .provisional*/];
+            aNotificationCenter.requestAuthorization(options: notTypes) { (granted, error) in
+                if !granted { print("Not granted") }
+            }
         }
     }
 
