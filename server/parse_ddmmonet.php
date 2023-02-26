@@ -1,123 +1,63 @@
 <?php
 include_once "parse_common.php";
 
-function downloadEventDetail(&$rec) {
-	$domDetail = new DomDocument;
-	$domDetail->loadHTMLFile($rec["infoLink"]);
-	$xpathDetail = new DomXPath($domDetail);
-	$nodesDetail = $xpathDetail->query("//div[@id='akce_detail']/div/table/tr");
-	foreach ($nodesDetail as $id => $nodeRadek) {
-		$nodesTds = $xpathDetail->query("td", $nodeRadek);
-		if ($nodesTds !== NULL && $nodesTds !== FALSE && $nodesTds->length == 2) {
-			$sItemName = $nodesTds->item(0)->nodeValue;
-			$sItemText = $nodesTds->item(1)->nodeValue;
-			if ($sItemName === "Termín konání") {
-				// parse date like 14.05.2017 08:00 - 18:00
-				
-				// following code copied from parse_radEvents.php
-				$arrFromTo = explode("-", $sItemText);
-				$iArrFromToCount = count($arrFromTo);
-				if ($iArrFromToCount > 0) {		// date & time from
-					$sDateFrom = trim($arrFromTo[0]);
-					//echo $sDateFrom, "\n";
-					$arrFrom = explode(" ", $sDateFrom);
-					$dateFrom = NULL;
-					if (count($arrFrom) > 1) {	// time from (optional)
-						$dateFrom = date_create_from_format("!j.n.Y G:i+", $sDateFrom);
-					}
-					else {
-						$dateFrom = date_create_from_format("!j.n.Y+", $sDateFrom);
-					}
-					if ($dateFrom === NULL || $dateFrom === FALSE) {
-						echo "Error date: " . $sDateFrom;
-					}
-					else
-						$rec["date"] = date_format($dateFrom, "Y-m-d\TH:i");
-				
-					if ($iArrFromToCount > 1) {		// date & time to
-						$sDateTo = trim($arrFromTo[1]);
-						//echo $sDateTo, " -- TO\n";
-						$arrTo = explode(" ", $sDateTo);
-						$iArrToCount = count($arrTo);
-						$dateTo = NULL;
-						if ($iArrToCount > 1) {	// we have both date and time
-							$dateTo = date_create_from_format("!j.n.Y G:i", $sDateTo);
-						}
-						else {
-							// determine if date or time is given
-							if (strstr($sDateTo, ":") === FALSE) {
-								$dateTo = date_create_from_format("!j.n.Y", $sDateTo); // only date
-							}
-							else {
-								$sFullTo = $arrFrom[0] . " " . $sDateTo;
-								//echo $sFullTo, " -- FULL\n";
-								$dateTo = date_create_from_format("!j.n.Y G:i", $sFullTo); // only time
-							}
-						}
-						if ($dateTo == null)
-							echo "DateTo is null at " . $rec["title"] . $nodeDate->nodeValue . "\n";
-						$rec["dateTo"] = date_format($dateTo, "Y-m-d\TH:i");
-					}
-				}
-			}
-			if ($sItemName === "Místo konání") {
-				if ($sItemText == "DDM Herrmannova")
-					$sItemText = "DDM Monet @ Hermannova 24, Praha 12";
-				else if ($sItemText == "DDM Urbánkova")
-					$sItemText = "DDM Monet @ Urbánkova 4, Praha 12";
-				else if ($sItemText == "Mimo stálé objekty")
-					$sItemText = "DDM Monet - " . $sItemText;
-				$rec["address"] = $sItemText;
-			}
-		}
-	}
-}
-
 $arrItems = array();
 $dom = new DomDocument;
-$dom->loadHTMLFile("http://www.ddmmonet.cz/akce-a-udalosti");
+//$dom->loadHTMLFile("https://www.ddmm.cz/akce");
+$html = file_get_contents("https://www.ddmm.cz/akce");
+$html = mb_convert_encoding($html,'HTML-ENTITIES','UTF-8');
+$dom->loadHTML($html);
+
 $xpath = new DomXPath($dom);
-$nodes = $xpath->query("//div[@id='akce_seznam']/div[@class='box']");
+$nodes = $xpath->query("//div[@class='card-body border-top-5 px-3 border-custom-6']");
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("h2", $node));
+	$nodeTitle = firstItem($xpath->query("h3/a", $node));
 	if ($nodeTitle != NULL) {
-		$title = trim($nodeTitle->nodeValue);
-		if (strpos($title, "ZŠ prof. Švejcara") !== FALSE)
-			continue;
-			
+		$title = $nodeTitle->nodeValue;
+		//echo "found " . $title . "\n";
+
+		$link = $nodeTitle->getAttribute("href");
+		if (substr($link, 0, 4) != "http") {
+			$link = "https://www.ddmm.cz/" . $link;
+		}
 		$aNewRecord = array("title" => $title);
-		
-		$nodeDate = firstItem($xpath->query("p/span", $node));
+		$aNewRecord["infoLink"] = $link;
+
+		$nodePlace = firstItem($xpath->query("ul/li[2]/p", $node));
+		if ($nodePlace != NULL) {
+			$sItemText = $nodePlace->nodeValue;
+			//echo "found place " . $sItemText . "\n";
+			if ($sItemText == "DDM Herrmannova")
+				$sItemText = "DDM Modřany @ Hermannova 24, Praha 12";
+			else if ($sItemText == "DDM Urbánkova")
+				$sItemText = "DDM Modřany @ Urbánkova 4, Praha 12";
+			else if ($sItemText == "Mimo stálé objekty")
+				$sItemText = "DDM Modřany - " . $sItemText;
+			$aNewRecord["address"] = $sItemText;
+		}
+
+		$nodeDate = firstItem($xpath->query("ul/li[3]/p", $node));
 		if ($nodeDate != NULL) {
-			$date = date_create_from_format("!d.m.Y", $nodeDate->nodeValue);
-			if ($date !== FALSE)
-				$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
-			
-			$nodeText = firstItem($xpath->query("..", $nodeDate));
-			if ($nodeText != NULL) {
-				$sText = trim(str_replace($nodeDate->nodeValue, "", $nodeText->nodeValue));	// remove date
-				if (strpos($sText, "Akce pro uzavřenou") !== FALSE)
-					continue;
-				$aNewRecord["text"] = $sText;
+			// split time from - to
+			$sDateFromTo = $nodeDate->nodeValue;
+			//echo "found date " . $sDateFromTo . "\n";
+			$arrFromTo = explode("-", $sDateFromTo);
+			if (count($arrFromTo) > 1) {
+				$dateFrom = date_create_from_format("!j.n.Y+", trim($arrFromTo[0]));
+				$dateTo = date_create_from_format("!j.n.Y+", trim($arrFromTo[1]));
+				
+				if ($dateFrom != null)
+					$aNewRecord["date"] = date_format($dateFrom, "Y-m-d\TH:i");
+				if ($dateTo != null && $dateTo != $dateFrom)
+					$aNewRecord["dateTo"] = date_format($dateTo, "Y-m-d\TH:i");
 			}
 		}
 
-		$nodeLink = firstItem($xpath->query("div/a", $node));
-		if ($nodeLink != NULL) {
-			$link = $nodeLink->getAttribute("href");
-			$aNewRecord["infoLink"] = "http://www.ddmmonet.cz/" . $link;
-		}
-			
-		$aNewRecord["filter"] = "DDM Monet";
-		if (array_key_exists("date", $aNewRecord) && array_key_exists("infoLink", $aNewRecord)) {
-			
-			// download proper dates and location
-			downloadEventDetail($aNewRecord);
-			array_push($arrItems, $aNewRecord);
-		}
-	}
+		$aNewRecord["filter"] = "DDM Modřany";
+		if (array_key_exists("date", $aNewRecord))
+	    	array_push($arrItems, $aNewRecord);
+    }
 }
-
 if (count($arrItems) > 0) {
 	/*
 	$arr = array("items" => $arrItems);
@@ -131,7 +71,7 @@ if (count($arrItems) > 0) {
 	$filename = "items_ddmMonetEvents.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
-echo "done, " . count($arrItems) . " items";
+echo "ddmm done, " . count($arrItems) . " items\n";
 ?>
