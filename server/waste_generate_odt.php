@@ -1,9 +1,9 @@
 <?php
 // this waste_generate script version downloads the data from opendata.praha.eu and automatically merges it into our other data
 
-const g_sVokLokCsv = "https://storage.golemio.cz/lkod/praha-12/8e6e0983-e512-480a-8069-987ff16c02c2/opendata-harmonogram-odpady-lokace-mc-praha-122.csv";
-const g_sVokBioCsv = "https://storage.golemio.cz/lkod/praha-12/8e6e0983-e512-480a-8069-987ff16c02c2/opendata-harmonogram-odpady-bioodpad-mc-praha-121.csv";
-const g_sVokVokCsv = "https://storage.golemio.cz/lkod/praha-12/8e6e0983-e512-480a-8069-987ff16c02c2/opendata-harmonogram-odpady-vok-mc-praha-122.csv";
+const g_sVokLokCsv = "https://storage.golemio.cz/lkod/praha-12/8e6e0983-e512-480a-8069-987ff16c02c2/opendata-harmonogram-odpady-lokace-mc-praha-12.csv";
+const g_sVokBioCsv = "https://storage.golemio.cz/lkod/praha-12/8e6e0983-e512-480a-8069-987ff16c02c2/opendata-harmonogram-odpady-bioodpad-mc-praha-12.csv";
+const g_sVokVokCsv = "https://storage.golemio.cz/lkod/praha-12/8e6e0983-e512-480a-8069-987ff16c02c2/opendata-harmonogram-odpady-vok-mc-praha-12.csv";
 
 function findVokLocation(&$alias, &$ds) {	// returns key to found record in $ds
 	$keys = array_keys($ds);
