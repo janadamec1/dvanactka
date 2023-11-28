@@ -1,17 +1,5 @@
 {"items":[
 {
-"title":"Mont Fort",
-"locationLat":"50.0003400",
-"locationLong":"14.4273744",
-"address":"Pertoldova 8\nPraha 12",
-"openingHours":"1: 1100-2300, 2: 1100-2300, 3: 1100-2300, 4: 1100-2300, 5: 1100-2359, 6: 1100-2359, 7: 1200-2300",
-"infoLink":"http:\/\/www.montfort.cz",
-"buyLink":"http:\/\/montfort.cz\/poledni-menu",
-"phone":"244 402 404",
-"category":"restaurace",
-"filter":"Restaurace"
-},
-{
 "title":"Otava",
 "locationLat":"50.0004014",
 "locationLong":"14.4270833",
@@ -310,9 +298,9 @@
 {
 "title":"MIRKA - Opravna obuvi",
 "text":"Rychloopravna obuvi, výroba klíčů",
-"locationLat":"50.0056397",
-"locationLong":"14.4186564",
-"address":"Pasáž Sofie (Prior)\nSofijské náměstí 6\nPraha 12",
+"locationLat":"50.0059694",
+"locationLong":"14.4180333",
+"address":"Sofijské náměstí 5\nPraha 12",
 "openingHours":"1: 900-1900, 2: 900-1900, 3: 900-1900, 4: 900-1900, 5: 900-1900, 6:900-1200",
 "infoLink":"http:\/\/www.opravyobuvi.cz",
 "category":"remeslnik",
