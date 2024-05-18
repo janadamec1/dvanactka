@@ -30,7 +30,7 @@ foreach ($nodes as $i => $node) {
 		$aNewRecord = array("title" => $title);
 		$aNewRecord["infoLink"] = $link;
 
-		$nodeDate = firstItem($xpath->query("span[2]", $node));
+		$nodeDate = firstItem($xpath->query("span", $node));
 		if ($nodeDate != NULL) {
 			//echo $nodeDate->nodeValue, "\n";
 			$arrParts = explode(" ", rtrim($nodeDate->nodeValue, ")"));
@@ -63,7 +63,7 @@ if (count($arrItems) > 0) {
 	$filename = "dyn_radDeska.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
 echo "parse_radDeska done, " . count($arrItems) . " items\n";
 
