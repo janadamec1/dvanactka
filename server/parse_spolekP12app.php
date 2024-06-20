@@ -3,7 +3,9 @@ include_once "parse_common.php";
 
 $arrItems = array();
 $dom = new DomDocument;
-$dom->load("http://dvanactka.info/feed/");	// XML
+//$dom->load("http://dvanactka.info/feed/");	// XML
+$feed_content = file_get_contents("http://dvanactka.info/feed/");   // encoding OK with this
+$dom->loadXML($feed_content);
 $xpath = new DomXPath($dom);
 $nodes = $xpath->query("//item");
 foreach ($nodes as $i => $node) {
@@ -55,7 +57,7 @@ if (count($arrItems) > 0) {
 	$filename = "items_spolekP12app.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
 echo "RSS done, " . count($arrItems) . " items\n";
 
@@ -63,7 +65,9 @@ echo "RSS done, " . count($arrItems) . " items\n";
 
 $arrItems = array();
 $dom = new DomDocument;
-$dom->load("http://dvanactka.info/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&xml=true");	// XML
+//$dom->load("http://dvanactka.info/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&xml=true");	// XML
+$feed_content = file_get_contents("http://dvanactka.info/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&xml=true");   // encoding OK with this
+$dom->loadXML($feed_content);
 $xpath = new DomXPath($dom);
 //$nodes = $xpath->query("//vevent/properties"); //somehow XPath does not work
 $nodes = $dom->getElementsByTagName('properties');
@@ -168,7 +172,7 @@ if (count($arrItems) > 0) {
 	$filename = "items_P12app_calendar.json";
 	file_put_contents($filename, $encoded, LOCK_EX);
 	chmod($filename, 0644);
-	//echo $encoded;
+	echo $encoded;
 }
 echo "Events done, " . count($arrItems) . " items\n";
 ?>
