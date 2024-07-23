@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.roomarranger.android.dvanactka"
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 31
-        versionName "3.0"
+        targetSdkVersion 34
+        versionCode 32
+        versionName "3.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }
@@ -16,6 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    namespace 'com.roomarranger.android.dvanactka'
+    buildFeatures {
+        buildConfig true
     }
 }
 
@@ -30,8 +34,8 @@ dependencies {
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.work:work-runtime:2.7.1'
-    implementation 'com.google.android.gms:play-services-location:9.0.0'
-    implementation 'com.google.android.gms:play-services-maps:9.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.13.2'
     implementation project(':segmentedControl')
