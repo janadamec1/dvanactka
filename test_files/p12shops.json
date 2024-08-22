@@ -307,23 +307,13 @@
 "filter":"Oprava obuvi"
 },
 {
-"title":"Simona Tůmová",
+"title":"Krejčovství Simona Tůmová",
 "text":"Opravy a úpravy oděvů, šití záclon",
 "locationLat":"50.0058017",
 "locationLong":"14.4141717",
-"address":"Poliklinika Modřany, 2.patro\nSoukalova 3\nPraha 12",
-"openingHours":"1: 800-1430, 2: 800-1700, 3: 800-1430, 4: 800-1800, 5: 800-1300",
-"phone":"241 047 232",
-"category":"remeslnik",
-"filter":"Krejčovství"
-},
-{
-"title":"Eva Košnářová",
-"text":"Opravy a úpravy oděvů, šití bytového textilu",
-"locationLat":"50.0053706",
-"locationLong":"14.4144989",
 "address":"Poliklinika Modřany, přízemí\nSoukalova 3\nPraha 12",
-"openingHours":"1: 800-1500, 2: 1100-1800, 3: 800-1500, 4: 1100-1800, 5: 800-1200",
+"openingHours":"2: 800-1600, 3: 800-1430, 4: 800-1630",
+"phone":"241 047 232",
 "category":"remeslnik",
 "filter":"Krejčovství"
 },
