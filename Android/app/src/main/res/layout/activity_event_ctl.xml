@@ -10,57 +10,63 @@
     android:paddingTop="0dp"
     tools:context="com.roomarranger.android.dvanactka.EventCtl">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/footer"
-        >
-
-        <ExpandableListView
-            android:id="@+id/ExpList"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:groupIndicator="@null" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <RelativeLayout
-        android:id="@+id/footer"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingTop="8dp"
-        android:paddingBottom="6dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:background="#E3EFFC"
-        >
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerInParent="true"
+            android:layout_above="@+id/footer"
             >
 
-            <TextView
-                android:id="@+id/footerText"
-                android:text="@string/add_new_record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:paddingStart="0sp"
-                android:paddingEnd="8sp"
-                android:layout_gravity="center_vertical"
-                />
-            <Button
-                android:id="@+id/btnFooter"
-                android:text="update@email.cz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
+            <ExpandableListView
+                android:id="@+id/ExpList"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:groupIndicator="@null" />
 
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="#E3EFFC"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                >
+
+                <TextView
+                    android:id="@+id/footerText"
+                    android:text="@string/add_new_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:paddingStart="0sp"
+                    android:paddingEnd="8sp"
+                    android:layout_gravity="center_vertical"
+                    />
+                <Button
+                    android:id="@+id/btnFooter"
+                    android:text="update@email.cz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

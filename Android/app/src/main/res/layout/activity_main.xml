@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/activity_main"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.roomarranger.android.dvanactka.MainActivity"
     android:background="@color/colorBlueBackground">
 
-    <ImageView
+    <LinearLayout
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:src="@drawable/p12_logo"
-        android:contentDescription="@string/app_name" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <GridView
-        android:id="@+id/gridview"
-              android:layout_width="match_parent"
-              android:layout_height="fill_parent"
-              android:paddingStart="0dp"
-              android:paddingEnd="10dp"
-              android:paddingBottom="10dp"
-              android:columnWidth="@dimen/main_columnWidth"
-              android:numColumns="auto_fit"
-              android:verticalSpacing="8dp"
-              android:horizontalSpacing="8dp"
-              android:stretchMode="spacingWidthUniform"
-              android:gravity="center"/>
-</LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:src="@drawable/p12_logo"
+            android:contentDescription="@string/app_name" />
+
+        <GridView
+            android:id="@+id/gridview"
+                  android:layout_width="match_parent"
+                  android:layout_height="fill_parent"
+                  android:paddingStart="0dp"
+                  android:paddingEnd="10dp"
+                  android:paddingBottom="10dp"
+                  android:columnWidth="@dimen/main_columnWidth"
+                  android:numColumns="auto_fit"
+                  android:verticalSpacing="8dp"
+                  android:horizontalSpacing="8dp"
+                  android:stretchMode="spacingWidthUniform"
+                  android:gravity="center"/>
+    </LinearLayout>
+</RelativeLayout>

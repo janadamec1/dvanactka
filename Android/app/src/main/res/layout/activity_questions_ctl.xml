@@ -10,40 +10,46 @@ android:paddingRight="0dp"
 android:paddingTop="0dp"
 tools:context=".QuestionsCtl">
 
-<ListView
-    android:id="@+id/listView"
-    android:layout_height="match_parent"
-    android:layout_width="wrap_content"
-    android:layout_above="@+id/footer" />
+    <RelativeLayout
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<RelativeLayout
-    android:id="@+id/footer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:paddingTop="4dp"
-    android:paddingBottom="6dp"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
-    android:background="#E3EFFC"
-    >
+        <ListView
+            android:id="@+id/listView"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_above="@+id/footer" />
 
-    <org.nairteashop.SegmentedControl
-        android:id="@+id/segmLevel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        >
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_0" android:text="Brief"
-            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_1" android:text="Standard"
-            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_2" android:text="Extended"
-            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-        <org.nairteashop.SegmentedControlButton android:id="@+id/opt_3" android:text="Full"
-            tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-    </org.nairteashop.SegmentedControl>
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="4dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:background="#E3EFFC"
+            >
 
-</RelativeLayout>
+            <org.nairteashop.SegmentedControl
+                android:id="@+id/segmLevel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                >
+                <org.nairteashop.SegmentedControlButton android:id="@+id/opt_0" android:text="Brief"
+                    tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <org.nairteashop.SegmentedControlButton android:id="@+id/opt_1" android:text="Standard"
+                    tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <org.nairteashop.SegmentedControlButton android:id="@+id/opt_2" android:text="Extended"
+                    tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <org.nairteashop.SegmentedControlButton android:id="@+id/opt_3" android:text="Full"
+                    tools:ignore="HardcodedText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </org.nairteashop.SegmentedControl>
+
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>
