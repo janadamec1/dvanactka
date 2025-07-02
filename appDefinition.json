@@ -105,16 +105,6 @@
     "listingFooterCustomButtonTargetUrl":"https://www.kdejeprace.cz/pridat?utm_source=dvanactka.info&utm_medium=app"
   },
   {
-    "id":"dsTraffic",
-    "title":"Traffic",
-    "title@cs":"Doprava",
-    "icon":"ds_roadblock",
-    "type":"places",
-    "serverDataFile":"dyn_doprava.json",
-    "backgroundColor":"#411ab1",
-    "refreshFreqHours":4
-  },
-  {
     "id":"dsWaste",
     "title":"Waste",
     "title@cs":"Odpad",
