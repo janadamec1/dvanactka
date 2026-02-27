@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2022 Jan Adamec.
+ Copyright 2016-2026 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -67,15 +67,13 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btnInfo);
 
         // set the default colors for navigationBar in this controller tree (do not put it only into our navigationItem)
-        if #available(iOS 13.0, *) {
-            let appearance = UINavigationBarAppearance();
-            appearance.configureWithOpaqueBackground();
-            appearance.backgroundColor = UIColor(red: 23.0/255.0, green: 37.0/255.0, blue: 96.0/255.0, alpha: 1.0);
-            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white];
+        let appearance = UINavigationBarAppearance();
+        appearance.configureWithOpaqueBackground();
+        appearance.backgroundColor = UIColor(red: 23.0/255.0, green: 37.0/255.0, blue: 96.0/255.0, alpha: 1.0);
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white];
 
-            navigationController?.navigationBar.standardAppearance = appearance;
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance;
-        }
+        navigationController?.navigationBar.standardAppearance = appearance;
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance;
 
         CRxDataSourceManager.shared.delegate = self;
     }
@@ -85,10 +83,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewDidAppear(animated);
 
         // ask for rating
-        if #available( iOS 10.3,*){
-            if isAllowedToOpenStoreReview() {
-                SKStoreReviewController.requestReview()
-            }
+        if isAllowedToOpenStoreReview() {
+            SKStoreReviewController.requestReview()
         }
     }
     

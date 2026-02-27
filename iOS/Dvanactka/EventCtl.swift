@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2022 Jan Adamec.
+ Copyright 2016-2026 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -87,33 +87,22 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         m_refreshCtl = UIRefreshControl();
         m_refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
         m_refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
-        if #available(iOS 10.0, *) {
-            m_tableView.refreshControl = m_refreshCtl;
-        } else {
-            m_tableView.backgroundView = m_refreshCtl;
-        }
+        m_tableView.refreshControl = m_refreshCtl;
         
         m_searchBar.isHidden = true;
 
-        var bAddSearchToolbarButton = true;
-        if #available(iOS 11.0, *) {
-            bAddSearchToolbarButton = false;
-            m_searchController = UISearchController(searchResultsController: nil);
-            m_searchBar.removeFromSuperview();      // tableView must be directly after navigationItem, hiding searchBar is not enough
-            m_searchController.searchResultsUpdater = self
-            m_searchController.hidesNavigationBarDuringPresentation = false;
-            m_searchController.dimsBackgroundDuringPresentation = false;
-            m_searchController.searchBar.sizeToFit();
-            m_searchController.searchBar.tintColor = UIColor.white;
-            //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = convertToNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white]);
-            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white];
-            
-            self.navigationItem.searchController = m_searchController
-            self.definesPresentationContext = true
-        }
-        else {
-            m_refreshCtl.backgroundColor = UIColor(red:131.0/255.0, green:156.0/255.0, blue:192.0/255.0, alpha:1.0);
-        }
+        m_searchController = UISearchController(searchResultsController: nil);
+        m_searchBar.removeFromSuperview();      // tableView must be directly after navigationItem, hiding searchBar is not enough
+        m_searchController.searchResultsUpdater = self
+        m_searchController.hidesNavigationBarDuringPresentation = false;
+        //m_searchController.dimsBackgroundDuringPresentation = false;
+        m_searchController.searchBar.sizeToFit();
+        m_searchController.searchBar.tintColor = UIColor.white;
+        //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = convertToNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white]);
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white];
+        
+        self.navigationItem.searchController = m_searchController
+        self.definesPresentationContext = true
         
         m_locManager.delegate = self;
         m_locManager.distanceFilter = 5;
@@ -140,9 +129,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             }
             if ds.m_bFilterable {
                 arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(EventsCtl.onDefineFilter)));
-            }
-            if bAddSearchToolbarButton {
-                arrBtnItems.append(UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(EventsCtl.showSearch)));
             }
             if arrBtnItems.count > 0 {
                 self.navigationItem.setRightBarButtonItems(arrBtnItems, animated: false);
@@ -175,9 +161,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         // start with search bar visible in some cases
         if let ds = m_aDataSource {
             if ds.m_bListingSearchBarVisibleAtStart {
-                if #available(iOS 11.0, *) {
-                    self.navigationItem.hidesSearchBarWhenScrolling = false;
-                }
+                self.navigationItem.hidesSearchBarWhenScrolling = false;
             }
         }
     }
@@ -193,9 +177,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
 
-        if #available(iOS 11.0, *) {
-            self.navigationItem.hidesSearchBarWhenScrolling = true;
-        }
+        self.navigationItem.hidesSearchBarWhenScrolling = true;
 
         // clear selection when returning
         if let selIndexPath = m_tableView.indexPathForSelectedRow {
@@ -634,11 +616,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             }
             var titleTextColor = UIColor(white: 0.5, alpha: 1.0);
             if !bInFuture {
-                if #available(iOS 13, *) {
-                    titleTextColor = UIColor.label;
-                } else {
-                    titleTextColor = UIColor.black;
-                }
+                titleTextColor = UIColor.label;
             }
             //cellPlace.m_lbTitle.textColor = UIColor(white: bInFuture ? 0.5 : 0.0, alpha: 1.0);
             cellPlace.m_lbTitle.textColor = titleTextColor;

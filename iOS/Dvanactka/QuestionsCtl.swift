@@ -1,10 +1,16 @@
-//
-//  QuestionsCtl.swift
-//  Dvanactka
-//
-//  Created by Jan Adamec on 03/02/2020.
-//  Copyright © 2020 Jan Adamec. All rights reserved.
-//
+/*
+ Copyright 2020-2026 Jan Adamec.
+ 
+ This file is part of "Dvanactka".
+ 
+ "Dvanactka" is free software; see the file COPYING.txt,
+ included in this distribution, for details about the copyright.
+ 
+ "Dvanactka" is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ ----------------------------------------------------------------------------
+ */
 
 import UIKit
 
@@ -89,11 +95,9 @@ class QuestionsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate
         if sAnswer.hasPrefix("<dd") {
             var sTextColor = "#000000";
             var sLinkColor = "#1111FF";
-            if #available(iOS 13.0, *) {
-                if UITraitCollection.current.userInterfaceStyle == .dark {
-                    sTextColor = "#EFEFEF";
-                    sLinkColor = "#EEEEFF";
-                }
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                sTextColor = "#EFEFEF";
+                sLinkColor = "#EEEEFF";
             }
             let sHtmlText = String.init(format: "<style>div, dl, dd, table {font-family: 'Helvetica'; font-size: %fpx; color: %@;} a {color: %@;}</style>", cell.m_lbText.font.pointSize, sTextColor, sLinkColor) + sAnswer;
             if let htmlData = sHtmlText.data(using: String.Encoding.unicode) {

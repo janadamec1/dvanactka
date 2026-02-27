@@ -1,5 +1,5 @@
 /*
- Copyright 2016-2022 Jan Adamec.
+ Copyright 2016-2026 Jan Adamec.
  
  This file is part of "Dvanactka".
  
@@ -78,10 +78,8 @@ class PlaceDetailCtl: UIViewController, MFMailComposeViewControllerDelegate, MKM
             var bTextSet = false;
             if rec.hasHtmlText() {
                 var sTextColor = "#000000";
-                if #available(iOS 13.0, *) {
-                    if UITraitCollection.current.userInterfaceStyle == .dark {
-                        sTextColor = "#FFFFFF";
-                    }
+                if UITraitCollection.current.userInterfaceStyle == .dark {
+                    sTextColor = "#FFFFFF";
                 }
                 let sHtmlText = String.init(format: "<style>div, dl {font-family: '%@'; font-size:%fpx; color:%@;}</style>", m_lbText.font.fontName, m_lbText.font.pointSize, sTextColor) + rec.m_sText!;
                 if let htmlData = sHtmlText.data(using: String.Encoding.unicode) {
