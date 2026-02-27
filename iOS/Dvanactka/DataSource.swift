@@ -234,7 +234,6 @@ class CRxDataSourceManager : NSObject {
     static let dsGame = "dsGame";
     static let dsSavedNews = "dsSavedNews";
     
-    var m_nNetworkIndicatorUsageCount: Int = 0;
     var m_urlDocumentsDir: URL
     var m_aSavedNews = CRxDataSource(id: CRxDataSourceManager.dsSavedNews, title: NSLocalizedString("Saved News", comment: ""), icon: "ds_news", type: .news, backgroundColor:0x808080);    // (records over all news sources)
     var m_setPlacesNotified: Set<String> = [];  // (titles)
@@ -448,24 +447,6 @@ class CRxDataSourceManager : NSObject {
     }
     
     //--------------------------------------------------------------------------
-    func showNetworkIndicator() {
-        if m_nNetworkIndicatorUsageCount == 0 {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true;
-        }
-        m_nNetworkIndicatorUsageCount += 1;
-    }
-    
-    //--------------------------------------------------------------------------
-    func hideNetworkIndicator() {
-        if m_nNetworkIndicatorUsageCount > 0 {
-            m_nNetworkIndicatorUsageCount -= 1;
-        }
-        if m_nNetworkIndicatorUsageCount == 0 {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false;
-        }
-    }
-    
-    //--------------------------------------------------------------------------
     func refreshAllDataSources(force: Bool = false, removeOldData: Bool = false) {
         
         // check if WiFi only settings applies
@@ -532,7 +513,6 @@ class CRxDataSourceManager : NSObject {
         guard let url = urlDownload else { aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: "Cannot resolve URL"); return; }
         
         aDS.m_bIsBeingRefreshed = true;
-        showNetworkIndicator();
         
         CRxDataSourceManager.getDataFromUrl(url: url) { (data, response, error) in
             guard let data = data, error == nil
@@ -543,7 +523,6 @@ class CRxDataSourceManager : NSObject {
                     DispatchQueue.main.async() { () -> Void in
                         aDS.m_bIsBeingRefreshed = false;
                         aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: "Error when downloading data");
-                        self.hideNetworkIndicator();
                     }
                     return;
             }
@@ -556,7 +535,6 @@ class CRxDataSourceManager : NSObject {
                 aDS.m_dateLastRefreshed = Date();
                 aDS.m_bIsBeingRefreshed = false;
                 self.save(dataSource: aDS);
-                self.hideNetworkIndicator();
                 aDS.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: nil);
                 self.delegate?.dataSourceRefreshEnded(dsId: sDsId, error: nil);     // to refresh unread count badge
                 if (aDS.m_bLocalNotificationsForEvents) {
