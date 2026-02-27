@@ -404,6 +404,9 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             m_tableView.reloadData();
             m_refreshCtl.attributedTitle = NSAttributedString(string: stringWithLastUpdateDate());
             m_refreshCtl.endRefreshing();
+            // shrinks the navigation controller back to normal height
+            self.navigationController?.view.setNeedsLayout();
+            self.navigationController?.view.layoutIfNeeded();
         }
     }
     
