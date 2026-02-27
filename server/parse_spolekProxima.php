@@ -1,55 +1,99 @@
 <?php
 include_once "parse_common.php";
 
-$arrMonths = array("0", "ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince");
-
 $arrItems = array();
-$dom = new DomDocument;
-//$dom->loadHTMLFile("http://www.proximasociale.cz/proxima-sociale/aktuality/");
-$html = file_get_contents("https://www.proximasociale.cz/proxima-sociale/aktuality/");
+
+// Fetch HTML with caching and proper headers
+$html = fetchWebsiteWithHeaders("https://proximasociale.cz/aktuality/", "cache_proxima.html", 3600);
+
+if (!$html) {
+	echo "Error: Could not load website\n";
+	exit(1);
+}
+
 $html = mb_convert_encoding($html,'HTML-ENTITIES','UTF-8');
-$dom->loadHTML($html);
+$dom = new DomDocument;
+@$dom->loadHTML($html);
 $xpath = new DomXPath($dom);
-$nodes = $xpath->query("//div[@class='item clearfix']");
+
+// Articles with class "bde-loop-item ee-post"
+$nodes = $xpath->query("//article[contains(@class, 'bde-loop-item') and contains(@class, 'ee-post')]");
+
 foreach ($nodes as $i => $node) {
-	$nodeTitle = firstItem($xpath->query("h2", $node));
+	echo "Processing node " . ($i + 1) . " of " . $nodes->length . "\n";
+	// Try new structure first (h1 for title)
+	$nodeTitle = firstItem($xpath->query(".//h1[contains(@class, 'bde-heading')]", $node));
+	
 	if ($nodeTitle != NULL) {
+		echo "Found title node: " . $nodeTitle->nodeValue . "\n";
 		$title = trim($nodeTitle->nodeValue);
 		$aNewRecord = array("title" => $title);
 
-		$nodeDate = firstItem($xpath->query("div/div[@class='date']", $node));
+		// Try new structure for date (div with bde-text class, usually first one)
+		$nodeDate = firstItem($xpath->query(".//div[contains(@class, 'bde-text')][1]", $node));
+		
+		// Fallback to old structure
+		if ($nodeDate == NULL) {
+			$nodeDate = firstItem($xpath->query("div/div[@class='date']", $node));
+		}
+		
 		if ($nodeDate != NULL) {
-			$arrParts = explode(" ", trim($nodeDate->nodeValue));
+			echo "Found date node: " . $nodeDate->nodeValue . "\n";
+			$dateText = trim($nodeDate->nodeValue);
+			// Remove non-breaking spaces and normalize
+			$dateText = str_replace("\xc2\xa0", " ", $dateText);
+			$dateText = preg_replace('/\s+/', ' ', $dateText);
+			
+			$arrParts = explode(" ", $dateText);
 			if (count($arrParts) >= 3) {
-				$month = array_search($arrParts[1], $arrMonths);
-				if ($month !== FALSE) {
-					$date = new DateTime();
-					$date->setDate($arrParts[2], $month, trim($arrParts[0], "."));
-					$date->setTime(0, 0);
-					$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
-				}
+				$date = new DateTime();
+				$date->setDate($arrParts[2], $arrParts[1], trim($arrParts[0], "."));
+				$date->setTime(0, 0);
+				$aNewRecord["date"] = date_format($date, "Y-m-d\TH:i");
 			}
 		}
 
-		$nodeLink = firstItem($xpath->query("a", $nodeTitle));
+		// Try new structure for link (a with bde-container-link or in button)
+		$nodeLink = firstItem($xpath->query(".//a[contains(@class, 'bde-container-link')]", $node));
+		
 		if ($nodeLink != NULL) {
 			$link = $nodeLink->getAttribute("href");
-			$aNewRecord["infoLink"] = "https://www.proximasociale.cz" . $link;
+			echo "Found link: " . $link . "\n";
+			// Only add domain if it's a relative URL
+			if (substr($link, 0, 4) != "http") {
+				$aNewRecord["infoLink"] = "https://www.proximasociale.cz" . $link;
+			} else {
+				$aNewRecord["infoLink"] = $link;
+			}
 		}
 
-		$nodeText = firstItem($xpath->query("div/p", $node));
+		// Try new structure for text (second div with bde-text class, containing p tag)
+		$nodeText = firstItem($xpath->query(".//div[contains(@class, 'bde-text')][position()>1]//p", $node));
+		
+		// Alternative: just get the text content from the div
+		if ($nodeText == NULL) {
+			$nodeText = firstItem($xpath->query(".//div[contains(@class, 'bde-text')][2]", $node));
+		}
+		
 		if ($nodeText != NULL) {
 			$text = trim($nodeText->nodeValue);
+			// Remove excessive whitespace
+			$text = preg_replace('/\s+/', ' ', $text);
 			$aNewRecord["text"] = $text;
+			echo "Found text node: " . $text . "\n";
 		}
 
-		$nodeIllustration = firstItem($xpath->query("div[@class='to-left']/img", $node));
+		// Try new structure for illustration (img with bde-image2 class)
+		$nodeIllustration = firstItem($xpath->query(".//img[contains(@class, 'bde-image2')]", $node));
+		
 		if ($nodeIllustration != NULL) {
+		  echo "Found illustration node: " . $nodeIllustration->nodeValue . "\n";
 		  $linkImg = $nodeIllustration->getAttribute("src");
 		  if ($linkImg != "") {
 			if (substr($linkImg, 0, 4) != "http") {
 			  $linkImg = "https://www.proximasociale.cz" . $linkImg;
 			}
+			echo "Found illustration link: " . $linkImg . "\n";
 			$aNewRecord["illustrationImgLink"] = $linkImg;
 		  }
 		}
