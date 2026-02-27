@@ -54,9 +54,8 @@ class FilterCell: UITableViewCell {
     @IBOutlet weak var m_lbTitle: UILabel!
 }
 
-class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
+class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, CLLocationManagerDelegate, EKEventEditViewDelegate, MFMailComposeViewControllerDelegate, CRxDataSourceRefreshDelegate, CRxDetailRefreshParentDelegate, CRxFilterChangeDelegate {
     
-    @IBOutlet weak var m_searchBar: UISearchBar!
     @IBOutlet weak var m_tableView: UITableView!
     @IBOutlet weak var m_viewFooter: UIView!
     @IBOutlet weak var m_lbFooterText: UILabel!
@@ -89,10 +88,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         m_refreshCtl.addTarget(self, action:#selector(downloadData), for:.valueChanged);
         m_tableView.refreshControl = m_refreshCtl;
         
-        m_searchBar.isHidden = true;
-
         m_searchController = UISearchController(searchResultsController: nil);
-        m_searchBar.removeFromSuperview();      // tableView must be directly after navigationItem, hiding searchBar is not enough
         m_searchController.searchResultsUpdater = self
         m_searchController.hidesNavigationBarDuringPresentation = false;
         //m_searchController.dimsBackgroundDuringPresentation = false;
@@ -941,28 +937,6 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     }
     
     //--------------------------------------------------------------------------
-    @objc func showSearch() {
-
-        if m_searchBar.isHidden {
-            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
-                self.m_searchBar.isHidden = false;
-            });
-            m_searchBar.text = "";
-            m_searchBar.becomeFirstResponder();
-        }
-        else {
-            m_searchBar.resignFirstResponder();
-            UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
-                self.m_searchBar.isHidden = true;
-            });
-            m_searchBar.text = "";
-            m_sSearchString = nil;
-            sortRecords();
-            m_tableView.reloadData();
-        }
-    }
-
-    //--------------------------------------------------------------------------
     func isSearchActive() -> Bool {
         return m_sSearchString != nil;
     }
@@ -971,29 +945,7 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     func isAskForFilterActive() -> Bool {
         return m_bAskForFilter && !isSearchActive();
     }
-    
-    //--------------------------------------------------------------------------
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let bSearchActive = (searchText.count > 1);
-        let bWasActive = isSearchActive();
-        if !bSearchActive && !bWasActive {
-            return;
-        }
-        else if !bSearchActive && bWasActive {
-            m_sSearchString = nil;
-        }
-        else {
-            m_sSearchString = searchText;
-        }
-        sortRecords();
-        m_tableView.reloadData();
-    }
-    
-    //--------------------------------------------------------------------------
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        m_searchBar.resignFirstResponder(); // hide keyboard after Search button pressed
-    }
-    
+        
     //--------------------------------------------------------------------------
     // from UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
