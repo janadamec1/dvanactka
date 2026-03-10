@@ -55,11 +55,12 @@ foreach ($events as $event) {
 	$startsAt = $event['startsAt'] ?? null;
 	if (!$startsAt) continue;
 
-	$date = DateTime::createFromFormat('Y-m-d\TH:i:s.v\Z', $startsAt);
+	$date = DateTime::createFromFormat('Y-m-d\TH:i:s.v\Z', $startsAt, new DateTimeZone('UTC'));
 	if ($date === false) {
-		$date = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $startsAt);
+		$date = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $startsAt, new DateTimeZone('UTC'));
 	}
 	if ($date === false) continue;
+	$date->setTimezone(new DateTimeZone('Europe/Prague'));
 
 	// Extract and concatenate genres from show.genresTranslated
 	$genres = array();
