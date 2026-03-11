@@ -792,12 +792,14 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 
                 self.present(eventController, animated: true, completion: nil);
             } else {
-                let alertController = UIAlertController(title: NSLocalizedString("Access Denied", comment:""),
-                                              message: NSLocalizedString("Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for this app.", comment:""), preferredStyle: .alert);
-                let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
-                    print("OK")})
-                alertController.addAction(actionOK);
-                self.present(alertController, animated: true, completion: nil);
+                DispatchQueue.main.async() { () -> Void in
+                    let alertController = UIAlertController(title: NSLocalizedString("Access Denied", comment:""),
+                                                  message: NSLocalizedString("Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for this app.", comment:""), preferredStyle: .alert);
+                    let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
+                        print("OK")})
+                    alertController.addAction(actionOK);
+                    self.present(alertController, animated: true, completion: nil);
+                }
             }
         })
     }
