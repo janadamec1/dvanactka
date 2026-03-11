@@ -774,15 +774,28 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     func addEventToCalendar(_ title: String, description: String?, location: String?, startDate: Date, endDate: Date) {
         let eventStore = EKEventStore()
         
-        eventStore.requestAccess(to: .event, completion: { (granted, error) in
-            if (granted) && (error == nil) {
+        if #available(iOS 17.0, *) {
+            eventStore.requestWriteOnlyAccessToEvents { (granted, error) in
+                self.addEventToCalendarAccess(granted: granted, error: error, title: title, description: description, location: location, startDate: startDate, endDate: endDate)
+            }
+        } else {
+            eventStore.requestAccess(to: .event) { (granted, error) in
+                self.addEventToCalendarAccess(granted: granted, error: error, title: title, description: description, location: location, startDate: startDate, endDate: endDate)
+            }
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    func addEventToCalendarAccess(granted: Bool, error: Error?, title: String, description: String?, location: String?, startDate: Date, endDate: Date) {
+        DispatchQueue.main.async {
+            if granted && error == nil {
+                let eventStore = EKEventStore()
                 let event = EKEvent(eventStore: eventStore)
                 event.title = title
                 event.notes = description
                 event.location = location?.replacingOccurrences(of: "\n", with: ", ")
                 event.startDate = startDate
                 event.endDate = endDate
-                event.notes = description
                 event.calendar = eventStore.defaultCalendarForNewEvents
                 
                 let eventController = EKEventEditViewController()
@@ -792,16 +805,17 @@ class EventsCtl: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 
                 self.present(eventController, animated: true, completion: nil);
             } else {
-                DispatchQueue.main.async() { () -> Void in
-                    let alertController = UIAlertController(title: NSLocalizedString("Access Denied", comment:""),
-                                                  message: NSLocalizedString("Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for this app.", comment:""), preferredStyle: .alert);
-                    let actionOK = UIAlertAction(title: "OK", style: .default, handler: { (result : UIAlertAction) -> Void in
-                        print("OK")})
-                    alertController.addAction(actionOK);
-                    self.present(alertController, animated: true, completion: nil);
-                }
+                let alertController = UIAlertController(
+                    title: NSLocalizedString("Access Denied", comment:""),
+                    message: NSLocalizedString("Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for this app.", comment:""),
+                    preferredStyle: .alert
+                )
+
+                let actionOK = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(actionOK)
+                self.present(alertController, animated: true, completion: nil)
             }
-        })
+        }
     }
     
     func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
